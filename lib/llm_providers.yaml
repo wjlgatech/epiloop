@@ -1,0 +1,247 @@
+# LLM Provider Configuration
+#
+# Defines available LLM providers with their models, costs, and capabilities.
+# Used by lib/provider_selector.py for complexity-based routing and cost optimization.
+#
+# Complexity-based routing:
+# - 0-2: cheap models (<$1/M input) - Haiku, GPT-4o-mini, Gemini Flash
+# - 3-5: medium models ($1-5/M input) - Sonnet, GPT-4o, Gemini Pro
+# - 6+: powerful models (>$5/M input) - Opus, O1, Gemini Thinking
+#
+# Capabilities:
+# - vision: Can process images
+# - tools: Supports tool/function calling
+# - json_mode: Supports JSON mode for structured output
+
+# Anthropic Claude Models
+claude-haiku:
+  name: anthropic
+  model: claude-3-5-haiku-20241022
+  input_cost_per_1k: 0.25
+  output_cost_per_1k: 1.25
+  capabilities:
+    vision: true
+    tools: true
+    json_mode: false
+  enabled: true
+  max_tokens: 8192
+  timeout: 120
+
+claude-sonnet:
+  name: anthropic
+  model: claude-3-5-sonnet-20241022
+  input_cost_per_1k: 3.00
+  output_cost_per_1k: 15.00
+  capabilities:
+    vision: true
+    tools: true
+    json_mode: false
+  enabled: true
+  max_tokens: 8192
+  timeout: 120
+
+claude-opus:
+  name: anthropic
+  model: claude-opus-4-20250514
+  input_cost_per_1k: 15.00
+  output_cost_per_1k: 75.00
+  capabilities:
+    vision: true
+    tools: true
+    json_mode: false
+  enabled: true
+  max_tokens: 4096
+  timeout: 180
+
+# OpenAI Models (via LiteLLM)
+litellm/gpt-4o-mini:
+  name: litellm
+  model: gpt-4o-mini
+  input_cost_per_1k: 0.15
+  output_cost_per_1k: 0.60
+  capabilities:
+    vision: true
+    tools: true
+    json_mode: true
+  enabled: true
+  max_tokens: 16384
+  timeout: 120
+
+litellm/gpt-4o:
+  name: litellm
+  model: gpt-4o
+  input_cost_per_1k: 2.50
+  output_cost_per_1k: 10.00
+  capabilities:
+    vision: true
+    tools: true
+    json_mode: true
+  enabled: true
+  max_tokens: 16384
+  timeout: 120
+
+litellm/o1:
+  name: litellm
+  model: o1
+  input_cost_per_1k: 15.00
+  output_cost_per_1k: 60.00
+  capabilities:
+    vision: false
+    tools: false  # o1 doesn't support tools
+    json_mode: false
+  enabled: true
+  max_tokens: 32768
+  timeout: 300
+
+litellm/o1-mini:
+  name: litellm
+  model: o1-mini
+  input_cost_per_1k: 3.00
+  output_cost_per_1k: 12.00
+  capabilities:
+    vision: false
+    tools: false  # o1-mini doesn't support tools
+    json_mode: false
+  enabled: true
+  max_tokens: 65536
+  timeout: 180
+
+# Google Gemini Models
+gemini-flash:
+  name: google
+  model: gemini-2.0-flash-exp
+  input_cost_per_1k: 0.10
+  output_cost_per_1k: 0.40
+  capabilities:
+    vision: true
+    tools: true
+    json_mode: true
+  enabled: true
+  max_tokens: 8192
+  timeout: 120
+
+gemini-pro:
+  name: google
+  model: gemini-1.5-pro
+  input_cost_per_1k: 1.25
+  output_cost_per_1k: 5.00
+  capabilities:
+    vision: true
+    tools: true
+    json_mode: true
+  enabled: true
+  max_tokens: 8192
+  timeout: 120
+
+gemini-thinking:
+  name: google
+  model: gemini-2.0-flash-thinking-exp
+  input_cost_per_1k: 0.10
+  output_cost_per_1k: 0.40
+  capabilities:
+    vision: true
+    tools: true
+    json_mode: true
+  enabled: true
+  max_tokens: 8192
+  timeout: 180
+
+# DeepSeek Models
+deepseek-chat:
+  name: deepseek
+  model: deepseek-chat
+  input_cost_per_1k: 0.14
+  output_cost_per_1k: 0.28
+  capabilities:
+    vision: false
+    tools: true
+    json_mode: true
+  enabled: true
+  max_tokens: 4096
+  timeout: 120
+
+deepseek-r1:
+  name: deepseek
+  model: deepseek-reasoner
+  input_cost_per_1k: 0.55
+  output_cost_per_1k: 2.19
+  capabilities:
+    vision: false
+    tools: false  # reasoning models don't support tools
+    json_mode: false
+  enabled: true
+  max_tokens: 8192
+  timeout: 180
+
+# Fallback: Claude Code CLI
+# This is always available as ultimate fallback
+claude-code-cli:
+  name: claude-code
+  model: claude-sonnet-3.5
+  input_cost_per_1k: 3.00
+  output_cost_per_1k: 15.00
+  capabilities:
+    vision: true
+    tools: true
+    json_mode: false
+  enabled: true
+  max_tokens: 8192
+  timeout: 120
+
+# Additional LiteLLM models (disabled by default)
+# Enable these if you have API access
+
+litellm/gpt-3.5-turbo:
+  name: litellm
+  model: gpt-3.5-turbo
+  input_cost_per_1k: 0.50
+  output_cost_per_1k: 1.50
+  capabilities:
+    vision: false
+    tools: true
+    json_mode: true
+  enabled: false
+  max_tokens: 16384
+  timeout: 120
+
+litellm/claude-3-haiku:
+  name: litellm
+  model: claude-3-haiku-20240307
+  input_cost_per_1k: 0.25
+  output_cost_per_1k: 1.25
+  capabilities:
+    vision: true
+    tools: true
+    json_mode: false
+  enabled: false
+  max_tokens: 4096
+  timeout: 120
+
+litellm/claude-3-opus:
+  name: litellm
+  model: claude-3-opus-20240229
+  input_cost_per_1k: 15.00
+  output_cost_per_1k: 75.00
+  capabilities:
+    vision: true
+    tools: true
+    json_mode: false
+  enabled: false
+  max_tokens: 4096
+  timeout: 180
+
+# Configuration notes:
+#
+# 1. Enable/disable providers by setting "enabled: true/false"
+# 2. Cost is per 1K tokens (divide by 1000 for per-token cost)
+# 3. Complexity-based routing selects cheapest capable provider in tier
+# 4. Fallback chain: [selected] -> claude-sonnet -> litellm/gpt-4o -> claude-code-cli
+# 5. Vision required -> filters to vision-capable models only
+# 6. Tools required -> filters to tool-capable models only
+# 7. JSON mode required -> filters to JSON-mode-capable models only
+#
+# Environment variables required (set in .env or shell):
+# - OPENAI_API_KEY (for litellm/gpt-*)
+# - ANTHROPIC_API_KEY (for claude-*, litellm/claude-*)
+# - GOOGLE_API_KEY (for gemini-*)
+# - DEEPSEEK_API_KEY (for deepseek-*)

@@ -1,0 +1,2 @@
+Preparing worktree (checking out 'feature/claude-loop-integration')
+fatal: 'feature/claude-loop-integration' is already used by worktree at '/Users/jialiang.wu/Documents/Projects/clawdbot'

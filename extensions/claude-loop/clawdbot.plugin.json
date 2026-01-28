@@ -1,0 +1,8 @@
+{
+  "id": "claude-loop",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

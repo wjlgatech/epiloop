@@ -1,0 +1,24 @@
+[0;34m[DEBUG][0m CLI argument validation passed
+[0;34m[COORDINATOR][0m Initializing PRD Coordinator...
+[0;36m[DEBUG][0m Registry initialized at .claude-loop/coordinator/registry.json
+[0;32m[COORDINATOR][0m Coordinator initialized (PID: 71098)
+[0;34m[COORDINATOR][0m Max parallel PRDs: 5
+[0;34m[COORDINATOR][0m API limit: 10 concurrent requests
+[0;34m[COORDINATOR][0m Parallel PRD Execution Mode
+[0;34m[COORDINATOR][0m Max parallel PRDs: 5
+[1;33m[COORDINATOR][0m No PRDs in prds/active/
+[0;34m[DEBUG][0m CLI argument validation passed
+[0;34m[COORDINATOR][0m Initializing PRD Coordinator...
+[0;32m[COORDINATOR][0m Coordinator initialized (PID: 71461)
+[0;34m[COORDINATOR][0m Max parallel PRDs: 5
+[0;34m[COORDINATOR][0m API limit: 10 concurrent requests
+[0;34m[COORDINATOR][0m Parallel PRD Execution Mode
+[0;34m[COORDINATOR][0m Max parallel PRDs: 5
+[0;34m[COORDINATOR][0m Launching worker for claude-loop-integration...
+[0;34m[COORDINATOR][0m Creating worktree for claude-loop-integration on branch feature/claude-loop-integration...
+[0;31m[COORDINATOR][0m Failed to create worktree at .claude-loop/worktrees/claude-loop-integration
+Preparing worktree (checking out 'feature/claude-loop-integration')
+fatal: 'feature/claude-loop-integration' is already used by worktree at '/Users/jialiang.wu/Documents/Projects/clawdbot'
+[0;31m[COORDINATOR][0m Failed to create worktree for claude-loop-integration
+[0;32m[COORDINATOR][0m Launched 0 worker(s). Use --status to monitor.
+[0;32m[COORDINATOR][0m All workers completed

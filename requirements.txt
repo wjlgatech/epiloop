@@ -1,0 +1,11 @@
+# claude-loop Python Dependencies
+# Phase 2 - Tier 2 Library Integration
+
+# MCP (Model Context Protocol) for tool ecosystem integration
+mcp==1.13.1
+
+# LiteLLM for multi-provider LLM support (100+ providers)
+litellm>=1.54.0
+
+# Existing dependencies (if any)
+# Add other Python dependencies here

@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "created_at": "2026-01-28T20:25:17Z",
+  "coordinator_pid": 71098,
+  "max_parallel_prds": 5,
+  "api_limit": 10,
+  "active_prds": {},
+  "queued_prds": [],
+  "completed_prds": [],
+  "failed_prds": []
+}

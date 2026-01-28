@@ -1,0 +1,23 @@
+# Runtime configuration for this execution
+quality:
+  require_tests: true
+  require_typecheck: true
+  require_lint: true
+  min_coverage: 75
+  security_scan: true
+
+parallel:
+  max_prds: 5
+  max_workers: 5
+
+logging:
+  level: debug
+  output: ~/.clawdbot/logs/claude-loop/
+
+experience:
+  store_path: ~/.clawdbot/claude-loop/experience-store/
+  enabled: true
+
+improvement:
+  enabled: true
+  queue_path: ~/.clawdbot/claude-loop/improvements/

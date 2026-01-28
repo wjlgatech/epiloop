@@ -1,0 +1,82 @@
+# Claude-Loop Configuration for Clawdbot Integration
+# Optimized for maximum parallelization and comprehensive logging
+
+execution:
+  maxIterations: 10
+  delaySeconds: 1
+  parallel:
+    enabled: true
+    maxPRDs: 5
+    workerThreads: 5
+
+quality:
+  requireTests: true
+  requireTypecheck: true
+  requireLint: true
+  minCoverage: 75
+  securityScan: true
+
+agents:
+  enabled: true
+  maxAgentsPerIteration: 2
+  enabledTiers: "1,2"
+  maxTokensPerAgent: 2000
+
+experience:
+  enabled: true
+  minHelpfulRate: 0.30
+  maxExperiences: 5
+  storePath: "~/.clawdbot/claude-loop/experience-store"
+  domainAware: true
+  feedbackTracking: true
+
+logging:
+  enabled: true
+  level: "debug"
+  format: "jsonl"
+  outputPath: "~/.clawdbot/logs/claude-loop"
+  includeMetrics: true
+  rotationPolicy: "daily"
+
+selfImprovement:
+  enabled: true
+  failureAnalysis: true
+  patternDetection: true
+  improvementQueue: true
+  humanGating: true
+  calibrationTracking: true
+
+adaptiveSplitting:
+  enabled: true
+  complexityThreshold: 7
+  signals:
+    timeOverrun: 0.35
+    fileExpansion: 0.25
+    errorCount: 0.25
+    clarifications: 0.15
+
+multiLLM:
+  enabled: true
+  primaryProvider: "claude"
+  reviewEnabled: false  # Disable for initial integration
+  reviewThreshold: 7
+
+metrics:
+  enabled: true
+  collectTokenUsage: true
+  collectDuration: true
+  collectSuccessRate: true
+  collectFailureReasons: true
+  exportFormat: "prometheus"
+  exportPath: "~/.clawdbot/metrics/claude-loop"
+
+checkpoints:
+  enabled: true
+  frequency: "per-story"
+  retentionDays: 30
+
+workspace:
+  basePath: "~/.clawdbot/workspaces/claude-loop"
+  useGitWorktree: true
+  cleanupPolicy: "on-success"
+  maxConcurrentWorkspaces: 5
