@@ -1,0 +1,61 @@
+{
+  "project": "retry-logic",
+  "branchName": "feature/add-retry-logic",
+  "description": "Implement retry logic with exponential backoff for transient API failures. Handle rate limits, network issues, and temporary service unavailability gracefully.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Add exponential backoff retry wrapper",
+      "description": "As a developer, I want API calls to automatically retry with exponential backoff so that transient failures don't cause the entire task to fail",
+      "acceptanceCriteria": [
+        "Create retry_with_backoff() function in lib/api-retry.sh",
+        "Support 3 retry attempts by default (configurable)",
+        "Use exponential backoff: 2s, 4s, 8s delays",
+        "Log retry attempts with reason to execution log",
+        "Return last error if all retries fail"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "",
+      "fileScope": ["lib/api-retry.sh", "lib/execution-logger.sh"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-002",
+      "title": "Integrate retry logic into worker API calls",
+      "description": "As a system, I want all Claude API calls to use retry logic so that rate limits and network issues are handled automatically",
+      "acceptanceCriteria": [
+        "Wrap claude command invocations in lib/worker.sh with retry_with_backoff()",
+        "Detect rate limit errors (429) and retry with longer backoff",
+        "Detect network errors (timeout, connection refused) and retry",
+        "Log successful retries to provider_usage.jsonl with retry_count field",
+        "Test by simulating network failure and verifying retry behavior"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "",
+      "fileScope": ["lib/worker.sh", "lib/monitoring.sh"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-003",
+      "title": "Add retry configuration options",
+      "description": "As a user, I want to configure retry behavior via config.yaml so that I can tune it for my environment",
+      "acceptanceCriteria": [
+        "Add retry section to config.yaml with max_retries, base_delay, max_delay",
+        "Load retry config in claude-loop.sh and export as environment variables",
+        "Document retry configuration in CLAUDE.md",
+        "Test with different configurations (0 retries, 5 retries, custom delays)",
+        "Verify configuration is respected by retry logic"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "",
+      "fileScope": ["config.yaml", "claude-loop.sh", "CLAUDE.md"],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    }
+  ]
+}

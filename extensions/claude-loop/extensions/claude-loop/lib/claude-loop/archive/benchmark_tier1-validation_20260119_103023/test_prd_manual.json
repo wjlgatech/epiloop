@@ -1,0 +1,13 @@
+{
+  "project": "test-manual",
+  "branchName": "test/manual",
+  "description": "Simple test",
+  "userStories": [{
+    "id": "US-001",
+    "title": "Add comment",
+    "description": "Add a comment '# Test' to README.md file",
+    "acceptanceCriteria": ["README.md contains '# Test' comment"],
+    "priority": 1,
+    "passes": false
+  }]
+}

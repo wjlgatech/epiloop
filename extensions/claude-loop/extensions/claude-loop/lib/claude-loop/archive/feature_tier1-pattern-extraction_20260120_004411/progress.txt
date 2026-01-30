@@ -1,0 +1,63 @@
+# claude-loop Progress Log
+
+This file tracks learnings and progress across iterations for the phase1-tier1-pattern-extraction PRD.
+
+---
+
+### Iteration: 2026-01-20T00:00:00Z
+**Story**: US-003 - Implement Automatic Task Decomposition
+**Status**: Complete
+
+**What was implemented**:
+- Created `complexity_check()` function that evaluates stories against three thresholds:
+  * estimatedHours > 16
+  * description length > 1000 characters
+  * acceptance criteria count > 8
+- Created `decompose_story()` function that uses Claude to generate substory proposals:
+  * Builds structured decomposition prompt with story context
+  * Calls `claude -m sonnet` to generate 2-5 substories
+  * Parses JSON response and presents proposal to user
+  * Handles both interactive and auto-approve modes
+- Implemented atomic PRD updates with backup and rollback:
+  * Creates timestamped backup before modification
+  * Updates PRD using jq with atomic temp file + mv pattern
+  * Validates JSON before replacing original
+  * Marks parent story as "Decomposed into substories"
+  * Inserts substories after parent with sequential IDs
+- Added JSONL logging to `.claude-loop/logs/decomposition.jsonl`
+- Integrated decomposition into main execution loop:
+  * Checks complexity before story execution
+  * Triggers decomposition if thresholds exceeded
+  * Restarts iteration to pick up first substory
+- Added CLI commands:
+  * `--enable-decomposition`: Enable feature (disabled by default)
+  * `--auto-decompose`: Auto-approve decompositions
+  * `--decompose-story <ID>`: Force decomposition of specific story
+- Created comprehensive integration tests (6 tests, all passing)
+- Created extensive documentation in `docs/features/task-decomposition.md`
+
+**Files changed**:
+- claude-loop.sh: Added decomposition functions (lines 2017-2377), CLI flags, command handler, help text, main loop integration
+- tests/decomposition_test.sh: Created integration test suite (6 tests covering thresholds, logging, PRD validation)
+- docs/features/task-decomposition.md: Created comprehensive documentation (20 pages, examples, troubleshooting)
+
+**Learnings for future iterations**:
+- **Atomic PRD updates critical**: Using temp file + atomic `mv` prevents corruption if process interrupted
+- **User approval UX matters**: Detailed proposal display with rationale helps users make informed decisions
+- **Feature flags essential**: Disabled-by-default prevents surprise behavior for existing users
+- **LLM prompt engineering**: Structured JSON format request with examples improves response quality
+- **Testing complexity thresholds**: Multiple test cases needed to cover all threshold combinations
+- **Substory ID generation**: Sequential suffixes (US-XXX-1, US-XXX-2) maintain clarity and sortability
+- **Dependencies management**: Sequential dependencies (each substory depends on previous) provides safe default
+- **Backup strategy**: Timestamped backups enable recovery from failed updates or user mistakes
+- **Error handling**: Graceful fallback to original story if decomposition fails or is rejected
+- **Logging granularity**: Separate events (complexity_check, proposal_generated, approval, prd_updated) enable detailed auditing
+
+**Challenges encountered**:
+- None significant - implementation went smoothly following existing patterns from US-001 and US-002
+- Test initially had jq --argjson issue with context JSON - resolved by using string interpolation instead
+
+**Next steps**:
+- Implement US-004 (Structured JSON Output Parser) to complete Tier 1 Pattern Extraction phase
+- Consider adding template-based decomposition for common story patterns (future enhancement)
+- Monitor decomposition quality in practice and tune thresholds based on user feedback

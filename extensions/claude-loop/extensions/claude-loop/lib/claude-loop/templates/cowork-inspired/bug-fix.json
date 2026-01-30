@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "templateName": "bug-fix",
+    "templateVersion": "1.0.0",
+    "description": "Bug fix with reproduction, root cause analysis, fix implementation, and regression tests",
+    "estimatedComplexity": "simple",
+    "typicalDuration": "1-3 hours",
+    "requiredSkills": ["debugging", "testing", "root cause analysis"],
+    "variables": [
+      {
+        "name": "PROJECT_NAME",
+        "description": "Name of the project",
+        "required": true,
+        "example": "shopping-cart"
+      },
+      {
+        "name": "BUG_DESCRIPTION",
+        "description": "Short description of the bug",
+        "required": true,
+        "example": "cart-total-calculation-error"
+      },
+      {
+        "name": "BRANCH_NAME",
+        "description": "Git branch name for this bug fix",
+        "required": false,
+        "default": "fix/{{BUG_DESCRIPTION}}",
+        "example": "fix/cart-total-calculation-error"
+      },
+      {
+        "name": "BUG_SEVERITY",
+        "description": "Severity of the bug (critical, high, medium, low)",
+        "required": false,
+        "default": "medium",
+        "example": "high"
+      },
+      {
+        "name": "ISSUE_NUMBER",
+        "description": "Issue tracker number",
+        "required": false,
+        "example": "123"
+      }
+    ]
+  },
+  "prd": {
+    "project": "{{PROJECT_NAME}}-fix-{{BUG_DESCRIPTION}}",
+    "branchName": "{{BRANCH_NAME}}",
+    "description": "Fix bug: {{BUG_DESCRIPTION}} (severity: {{BUG_SEVERITY}}). Includes reproduction steps, root cause analysis, fix implementation, regression tests, and verification that fix doesn't introduce new issues.",
+    "userStories": [
+      {
+        "id": "BF-001",
+        "title": "Bug Reproduction and Analysis",
+        "description": "Reproduce the bug consistently and perform root cause analysis",
+        "acceptanceCriteria": [
+          "Document detailed reproduction steps",
+          "Create minimal reproduction test case",
+          "Identify exact conditions that trigger the bug",
+          "Document expected vs actual behavior",
+          "Analyze logs, stack traces, and error messages",
+          "Identify root cause using debugging tools",
+          "Document affected code paths and modules",
+          "Write failing test that captures the bug behavior",
+          "Verify bug exists in reported environment/version"
+        ],
+        "priority": 1,
+        "dependencies": [],
+        "fileScope": ["tests/bugs/", "docs/bugs/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "BF-002",
+        "title": "Fix Implementation",
+        "description": "Implement fix for {{BUG_DESCRIPTION}} with minimal code changes",
+        "acceptanceCriteria": [
+          "Implement fix targeting root cause",
+          "Keep changes minimal and focused",
+          "Avoid introducing new bugs or side effects",
+          "Maintain backwards compatibility",
+          "Add defensive programming checks if appropriate",
+          "Add input validation if missing",
+          "Update error messages if needed",
+          "Verify failing test now passes with fix",
+          "Run full test suite to ensure no regressions"
+        ],
+        "priority": 2,
+        "dependencies": ["BF-001"],
+        "fileScope": ["src/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "BF-003",
+        "title": "Regression Tests",
+        "description": "Add comprehensive regression tests to prevent bug from reoccurring",
+        "acceptanceCriteria": [
+          "Convert reproduction test into regression test",
+          "Add tests for edge cases related to the bug",
+          "Add tests for similar code paths that might have same issue",
+          "Test boundary conditions",
+          "Add integration tests if bug was in component interaction",
+          "Verify tests fail without fix and pass with fix",
+          "Add test documentation explaining what bug they prevent",
+          "Ensure test suite coverage increased in affected areas"
+        ],
+        "priority": 3,
+        "dependencies": ["BF-002"],
+        "fileScope": ["tests/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "BF-004",
+        "title": "Verification and Documentation",
+        "description": "Verify fix works in all environments and document the fix",
+        "acceptanceCriteria": [
+          "Test fix in development environment",
+          "Test fix in staging environment if available",
+          "Verify fix doesn't break existing functionality",
+          "Test on different browsers/platforms if applicable",
+          "Document the bug and fix in CHANGELOG.md",
+          "Update issue tracker with fix details",
+          "Add inline comments explaining non-obvious fix details",
+          "Document preventive measures to avoid similar bugs",
+          "Create pull request with detailed description",
+          "Link PR to issue tracker number"
+        ],
+        "priority": 4,
+        "dependencies": ["BF-003"],
+        "fileScope": ["CHANGELOG.md", "docs/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "project": "mcp-codebase-analysis",
+  "branchName": "feature/mcp-analysis-example",
+  "description": "Example PRD demonstrating MCP (Model Context Protocol) usage for codebase analysis. Uses MCP filesystem tools to read and analyze project structure.",
+  "metadata": {
+    "phase": "phase2-tier2",
+    "features": ["mcp"],
+    "example_purpose": "Demonstrate MCP filesystem tool integration"
+  },
+  "userStories": [
+    {
+      "id": "MCP-001",
+      "title": "Analyze Project Structure",
+      "description": "As a developer, I want to analyze the project directory structure to understand the codebase organization.",
+      "acceptanceCriteria": [
+        "Use MCP filesystem/list_directory to list top-level directories",
+        "Use MCP filesystem/read_directory to get detailed file information",
+        "Generate a summary report of project structure",
+        "Identify main components (src/, lib/, tests/, docs/)",
+        "Count total files and directories",
+        "Report is saved to analysis/project-structure.md"
+      ],
+      "priority": 1,
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku",
+      "mcp_tools_required": [
+        "filesystem/list_directory",
+        "filesystem/read_directory"
+      ],
+      "passes": false
+    },
+    {
+      "id": "MCP-002",
+      "title": "Read and Summarize Key Files",
+      "description": "As a developer, I want to read key configuration and documentation files to understand project setup.",
+      "acceptanceCriteria": [
+        "Use MCP filesystem/read_file to read README.md",
+        "Use MCP filesystem/read_file to read package.json or requirements.txt",
+        "Use MCP filesystem/read_file to read main configuration files",
+        "Extract key information: dependencies, scripts, project name",
+        "Generate summary document with extracted information",
+        "Summary is saved to analysis/key-files-summary.md"
+      ],
+      "priority": 2,
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku",
+      "dependencies": ["MCP-001"],
+      "mcp_tools_required": [
+        "filesystem/read_file"
+      ],
+      "passes": false
+    },
+    {
+      "id": "MCP-003",
+      "title": "Identify Code Patterns",
+      "description": "As a developer, I want to identify common code patterns and conventions used in the codebase.",
+      "acceptanceCriteria": [
+        "Use MCP filesystem/read_directory to list source files",
+        "Use MCP filesystem/read_file to read sample files from each directory",
+        "Analyze code style: indentation, naming conventions, file structure",
+        "Identify framework patterns (e.g., MVC, component-based)",
+        "Detect testing frameworks and patterns",
+        "Generate pattern analysis report",
+        "Report is saved to analysis/code-patterns.md"
+      ],
+      "priority": 3,
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "dependencies": ["MCP-001", "MCP-002"],
+      "mcp_tools_required": [
+        "filesystem/read_directory",
+        "filesystem/read_file"
+      ],
+      "passes": false
+    },
+    {
+      "id": "MCP-004",
+      "title": "Generate Architecture Diagram",
+      "description": "As a developer, I want a visual representation of the codebase architecture based on file organization and dependencies.",
+      "acceptanceCriteria": [
+        "Use MCP filesystem tools to map directory structure",
+        "Identify module relationships from imports/requires",
+        "Generate Mermaid diagram showing architecture",
+        "Include layers: UI, business logic, data access, utilities",
+        "Show major component dependencies",
+        "Diagram is saved to analysis/architecture-diagram.md"
+      ],
+      "priority": 4,
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet",
+      "dependencies": ["MCP-001", "MCP-002", "MCP-003"],
+      "mcp_tools_required": [
+        "filesystem/read_directory",
+        "filesystem/read_file",
+        "filesystem/list_directory"
+      ],
+      "passes": false
+    }
+  ],
+  "configuration": {
+    "enable_mcp": true,
+    "mcp_servers": [
+      {
+        "name": "filesystem",
+        "enabled": true,
+        "readonly": true,
+        "allowed_directories": ["./"]
+      }
+    ]
+  },
+  "successCriteria": {
+    "functional": [
+      "All 4 user stories implemented",
+      "MCP filesystem tools successfully called",
+      "Analysis reports generated and saved",
+      "No errors in MCP tool invocations"
+    ],
+    "documentation": [
+      "analysis/project-structure.md exists and is complete",
+      "analysis/key-files-summary.md exists and is complete",
+      "analysis/code-patterns.md exists and is complete",
+      "analysis/architecture-diagram.md exists with valid Mermaid syntax"
+    ]
+  }
+}

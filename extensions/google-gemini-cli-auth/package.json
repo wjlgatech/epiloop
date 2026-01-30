@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/google-gemini-cli-auth",
+  "name": "@epiloop/google-gemini-cli-auth",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot Gemini CLI OAuth provider plugin",
-  "clawdbot": {
+  "description": "Epiloop Gemini CLI OAuth provider plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ]

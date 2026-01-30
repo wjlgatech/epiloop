@@ -1,0 +1,29 @@
+task_id: PHASE2-TASK-007
+title: Add Dependency Graph Analyzer (Medium)
+description: |
+  Create a module to analyze dependency graphs from PRD user stories.
+  Detect circular dependencies and suggest optimal execution order.
+  Visualize dependency graph using ASCII art or GraphViz.
+
+acceptance_criteria:
+  - "DependencyGraph class with add_dependency() and detect_cycles() methods"
+  - "Cycle detection using depth-first search"
+  - "Topological sort for execution order"
+  - "ASCII art visualization of dependency graph"
+  - "Suggest parallel execution groups"
+  - "Unit tests cover various graph structures"
+  - "Documentation includes graph algorithms explanation"
+
+context:
+  background: "Medium complexity requiring graph algorithms and visualization."
+  constraints:
+    - "No external graph libraries (implement DFS/topological sort)"
+    - "ASCII visualization should fit in 80 columns"
+    - "Handle disconnected graphs"
+
+complexity: medium
+estimated_hours: 6
+fileScope:
+  - "lib/dependency_analyzer.py"
+  - "tests/test_dependency_analyzer.py"
+  - "docs/algorithms/dependency-graphs.md"

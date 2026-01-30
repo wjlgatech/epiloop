@@ -1,0 +1,58 @@
+# MANIFEST.yaml Template
+# Replace {{VAR}} placeholders with actual values before use.
+# This file conforms to schemas/manifest.schema.json
+
+# Required fields
+id: "{{PRD_ID}}"
+title: "{{TITLE}}"
+status: draft  # draft, active, completed, abandoned
+owner: "{{OWNER}}"
+created_at: "{{CREATED_AT}}"
+
+# Timestamps (auto-populated by prd-manager)
+updated_at: "{{CREATED_AT}}"
+
+# Optional fields
+description: "{{DESCRIPTION}}"
+priority: medium  # low, medium, high, critical
+branch_name: "{{BRANCH_NAME}}"
+
+# Tags for categorization and search
+tags: []
+  # - documentation
+  # - feature
+  # - infrastructure
+
+# Story tracking (auto-calculated from prd.json)
+story_count: {{STORY_COUNT}}
+completed_stories: 0
+
+# Contributors list
+contributors:
+  - name: "{{OWNER}}"
+    role: author
+    added_at: "{{CREATED_AT}}"
+
+# Related documentation (optional)
+# related_docs:
+#   - type: rfc
+#     id: RFC-001
+#     path: docs/rfcs/RFC-001.md
+#   - type: adr
+#     id: ADR-001
+#     path: docs/adrs/ADR-001.md
+
+# Approval block (added when PRD is approved)
+# approval:
+#   approved_by: "Approver Name"
+#   approved_at: "2026-01-12T00:00:00Z"
+#   approval_hash: "sha256-hash-of-prd.json"
+#   notes: "Optional approval notes"
+
+# Abandonment fields (added when PRD is abandoned)
+# abandon_reason: "Reason for abandonment"
+# superseded_by: "REPLACEMENT-PRD-ID"
+# abandoned_at: "2026-01-12T00:00:00Z"
+
+# Completion fields (added when PRD is completed)
+# completed_at: "2026-01-12T00:00:00Z"

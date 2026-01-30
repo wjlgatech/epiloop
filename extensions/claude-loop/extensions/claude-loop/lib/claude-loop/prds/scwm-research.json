@@ -1,0 +1,394 @@
+{
+  "project": "scwm-research",
+  "branchName": "research/self-calibrating-world-model",
+  "description": "Autonomous research execution plan for Self-Calibrating World Model (SCWM) - a differentiable world model with epistemic uncertainty quantification and online calibration for physical AI. Integrates with cosmos-predict2 for video prediction capabilities.",
+  "version": "0.1.0",
+  "researchDomain": "physical-ai",
+  "userStories": [
+    {
+      "id": "RS-001",
+      "title": "Literature Survey - World Models for Robotics",
+      "description": "As a researcher, I want to survey existing world model architectures (DreamerV3, TD-MPC2, IRIS) to identify gaps and position SCWM contributions.",
+      "acceptanceCriteria": [
+        "Search arXiv for papers on world models, model-based RL, uncertainty in planning (2022-2026)",
+        "Identify 15-25 relevant papers with citation counts and venues",
+        "Create taxonomy: deterministic vs stochastic, latent vs pixel, uncertainty methods",
+        "Document key findings from DreamerV3, TD-MPC2, IRIS, World Models (Ha & Schmidhuber)",
+        "Identify research gaps: calibration, online adaptation, uncertainty propagation",
+        "Generate literature-survey.md with structured findings and citations",
+        "Confidence score >= 80% for literature coverage"
+      ],
+      "dependencies": [],
+      "fileScope": ["research-outputs/scwm/literature-survey.md", "research-outputs/scwm/paper-citations.json"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "suggestedAgents": ["academic-scanner", "lead-researcher"],
+      "priority": 1,
+      "passes": false,
+      "researchType": "literature-review",
+      "qualityGates": ["source_recency", "citation_validity", "coverage_completeness"],
+      "notes": ""
+    },
+    {
+      "id": "RS-002",
+      "title": "Technical Deep Dive - Uncertainty Quantification Methods",
+      "description": "As a researcher, I want to understand state-of-the-art epistemic uncertainty methods for neural networks to select the best approach for SCWM.",
+      "acceptanceCriteria": [
+        "Survey uncertainty quantification methods: Deep Ensembles, MC Dropout, Spectral Normalization, Evidential Networks",
+        "Compare computational costs: training time, inference overhead, memory footprint",
+        "Analyze calibration quality metrics: ECE, MCE, Brier score, CRPS",
+        "Review propagation methods for multi-step predictions (moment matching, sigma points)",
+        "Benchmark existing implementations: GPyTorch, Pyro, uncertainty-toolbox",
+        "Create comparison matrix in uncertainty-methods.md",
+        "Recommend top 2-3 methods for SCWM with justification"
+      ],
+      "dependencies": ["RS-001"],
+      "fileScope": ["research-outputs/scwm/uncertainty-methods.md", "research-outputs/scwm/method-comparison.json"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "suggestedAgents": ["academic-scanner", "technical-diver", "benchmark-analyst"],
+      "priority": 1,
+      "passes": false,
+      "researchType": "technical-analysis",
+      "qualityGates": ["reproducibility", "benchmark_validity", "recency_weight"],
+      "notes": ""
+    },
+    {
+      "id": "RS-003",
+      "title": "Technical Deep Dive - Online Calibration Mechanisms",
+      "description": "As a researcher, I want to understand online calibration and domain adaptation techniques for continually learning systems.",
+      "acceptanceCriteria": [
+        "Survey online learning methods: EWC, PackNet, Progressive Networks, LoRA adapters",
+        "Review calibration techniques: temperature scaling, Platt scaling, isotonic regression",
+        "Analyze replay buffer strategies: reservoir sampling, prioritized experience replay",
+        "Study domain adaptation: DANN, CORAL, self-supervised adaptation",
+        "Review meta-learning approaches: MAML, Reptile, online meta-learning",
+        "Document catastrophic forgetting mitigation strategies",
+        "Create online-calibration.md with implementation recommendations"
+      ],
+      "dependencies": ["RS-001"],
+      "fileScope": ["research-outputs/scwm/online-calibration.md", "research-outputs/scwm/adaptation-methods.json"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "suggestedAgents": ["academic-scanner", "technical-diver"],
+      "priority": 1,
+      "passes": false,
+      "researchType": "technical-analysis",
+      "qualityGates": ["reproducibility", "code_availability"],
+      "notes": ""
+    },
+    {
+      "id": "RS-004",
+      "title": "Benchmark Analysis - Physical AI Datasets",
+      "description": "As a researcher, I want to identify benchmark datasets and evaluation protocols for physical AI world models.",
+      "acceptanceCriteria": [
+        "Survey robotics simulation benchmarks: DMControl, Meta-World, Maniskill, RLBench",
+        "Review real-world robotics datasets: Bridge, RT-1, Open X-Embodiment",
+        "Analyze video prediction benchmarks: Kinetics, Something-Something, RoboNet",
+        "Document evaluation metrics: FVD, LPIPS, SSIM for video; success rate for manipulation",
+        "Identify physics-based evaluation: contact prediction, collision accuracy",
+        "Review existing SOTA results on each benchmark",
+        "Create benchmarks-analysis.md with recommended evaluation suite"
+      ],
+      "dependencies": ["RS-001"],
+      "fileScope": ["research-outputs/scwm/benchmarks-analysis.md", "research-outputs/scwm/benchmark-sota.json"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "suggestedAgents": ["benchmark-analyst", "technical-diver"],
+      "priority": 2,
+      "passes": false,
+      "researchType": "benchmark-survey",
+      "qualityGates": ["benchmark_validity", "leaderboard_cross_check"],
+      "notes": ""
+    },
+    {
+      "id": "RS-005",
+      "title": "Architecture Design - SCWM Core Components",
+      "description": "As a researcher, I want to design the core SCWM architecture integrating world model, uncertainty, and calibration components.",
+      "acceptanceCriteria": [
+        "Design RSSM-based world model with stochastic and deterministic paths",
+        "Specify Deep Ensemble integration (N=5 ensemble members)",
+        "Design uncertainty propagation through multi-step rollouts",
+        "Specify online calibration network architecture (MLP with skip connections)",
+        "Design replay buffer with uncertainty-weighted sampling",
+        "Document computational requirements and GPU memory estimates",
+        "Create architecture-design.md with diagrams and specifications",
+        "Ensure differentiability for end-to-end training"
+      ],
+      "dependencies": ["RS-002", "RS-003"],
+      "fileScope": ["research-outputs/scwm/architecture-design.md", "research-outputs/scwm/architecture-specs.json"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "suggestedAgents": ["technical-diver", "lead-researcher"],
+      "priority": 2,
+      "passes": false,
+      "researchType": "design",
+      "qualityGates": ["technical_feasibility", "compute_budget"],
+      "notes": ""
+    },
+    {
+      "id": "RS-006",
+      "title": "Cosmos-Predict2 Integration Analysis",
+      "description": "As a researcher, I want to analyze how SCWM can integrate with NVIDIA's Cosmos-Predict2 for video prediction capabilities.",
+      "acceptanceCriteria": [
+        "Review Cosmos-Predict2 architecture: DiT-based video generation, tokenizers, conditioners",
+        "Identify integration points: latent space, conditioning mechanisms, action inputs",
+        "Analyze Video2World pipeline for action-conditioned generation",
+        "Document checkpoint compatibility and fine-tuning requirements",
+        "Design adapter layer between SCWM uncertainty estimates and Cosmos conditioning",
+        "Estimate compute requirements for joint training/inference",
+        "Create cosmos-integration.md with technical specifications",
+        "Identify potential contribution back to Cosmos codebase"
+      ],
+      "dependencies": ["RS-005"],
+      "fileScope": ["research-outputs/scwm/cosmos-integration.md", "research-outputs/scwm/integration-specs.json"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "suggestedAgents": ["technical-diver", "benchmark-analyst"],
+      "priority": 2,
+      "passes": false,
+      "researchType": "integration-analysis",
+      "qualityGates": ["code_availability", "api_compatibility"],
+      "cosmosIntegration": {
+        "targetRepo": "physical_ai_playground/cosmos-predict2",
+        "integrationPoints": ["video2world_action_model.py", "conditioner.py", "pipelines/video2world_action.py"],
+        "requiredCapabilities": ["action_conditioning", "uncertainty_injection", "latent_space_access"]
+      },
+      "notes": ""
+    },
+    {
+      "id": "RS-007",
+      "title": "Isaac Lab Integration Analysis",
+      "description": "As a researcher, I want to analyze how SCWM can integrate with NVIDIA Isaac Lab for robotics simulation.",
+      "acceptanceCriteria": [
+        "Review Isaac Lab architecture: environments, sensors, actuators, RL training",
+        "Identify integration points: observation/action spaces, reward functions, reset conditions",
+        "Analyze existing world model integrations in Isaac Lab ecosystem",
+        "Design SCWM as a learnable dynamics model within Isaac Lab training loop",
+        "Document uncertainty-aware planning interface",
+        "Estimate simulation-to-real transfer considerations",
+        "Create isaac-integration.md with implementation roadmap"
+      ],
+      "dependencies": ["RS-005"],
+      "fileScope": ["research-outputs/scwm/isaac-integration.md", "research-outputs/scwm/isaac-specs.json"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "suggestedAgents": ["technical-diver"],
+      "priority": 3,
+      "passes": false,
+      "researchType": "integration-analysis",
+      "qualityGates": ["api_compatibility", "compute_budget"],
+      "notes": ""
+    },
+    {
+      "id": "RS-008",
+      "title": "Experimental Design - Ablation Studies",
+      "description": "As a researcher, I want to design comprehensive ablation studies to validate each SCWM component's contribution.",
+      "acceptanceCriteria": [
+        "Design ablation: ensemble size (1, 3, 5, 7 members)",
+        "Design ablation: uncertainty propagation methods (naive, moment matching, sigma points)",
+        "Design ablation: calibration frequency (every step, every episode, every N steps)",
+        "Design ablation: replay buffer size and sampling strategies",
+        "Define evaluation metrics for each ablation",
+        "Estimate compute budget for full ablation study",
+        "Create experimental-design.md with detailed protocols",
+        "Define statistical significance tests (paired t-test, bootstrap CI)"
+      ],
+      "dependencies": ["RS-004", "RS-005"],
+      "fileScope": ["research-outputs/scwm/experimental-design.md", "research-outputs/scwm/ablation-matrix.json"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "suggestedAgents": ["benchmark-analyst", "lead-researcher"],
+      "priority": 3,
+      "passes": false,
+      "researchType": "experimental-design",
+      "qualityGates": ["statistical_validity", "compute_budget"],
+      "notes": ""
+    },
+    {
+      "id": "RS-009",
+      "title": "Implementation Plan - Core SCWM Module",
+      "description": "As a researcher, I want a detailed implementation plan for the core SCWM Python module.",
+      "acceptanceCriteria": [
+        "Define module structure: scwm/core/{world_model, uncertainty, calibration}",
+        "Specify class interfaces: WorldModel, EpistemicUncertaintyEstimator, OnlineCalibrator",
+        "Document dependencies: PyTorch, einops, hydra-core",
+        "Create unit test specifications for each component",
+        "Define integration test scenarios",
+        "Estimate lines of code and development time",
+        "Create implementation-plan.md with week-by-week milestones",
+        "Define code review and testing checkpoints"
+      ],
+      "dependencies": ["RS-005", "RS-006", "RS-007"],
+      "fileScope": ["research-outputs/scwm/implementation-plan.md", "research-outputs/scwm/module-specs.json"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "suggestedAgents": ["technical-diver", "lead-researcher"],
+      "priority": 3,
+      "passes": false,
+      "researchType": "implementation-planning",
+      "qualityGates": ["code_quality", "test_coverage"],
+      "notes": ""
+    },
+    {
+      "id": "RS-010",
+      "title": "Competitive Analysis - Related Systems",
+      "description": "As a researcher, I want to analyze competing/related systems to position SCWM's unique contributions.",
+      "acceptanceCriteria": [
+        "Analyze NVIDIA Cosmos-Reason1 for prompt refinement integration",
+        "Review Genesis World (if available) and similar foundation models",
+        "Compare with commercial offerings: Wayve GAIA, Tesla FSD world models",
+        "Analyze Google DeepMind's Genie and Genie 2 for generative world models",
+        "Document UniSim and other unified simulation approaches",
+        "Create competitive landscape matrix",
+        "Identify SCWM's unique value proposition: calibration + uncertainty + integration",
+        "Create competitive-analysis.md with positioning recommendations"
+      ],
+      "dependencies": ["RS-001"],
+      "fileScope": ["research-outputs/scwm/competitive-analysis.md", "research-outputs/scwm/competitive-matrix.json"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "suggestedAgents": ["market-analyst", "academic-scanner"],
+      "priority": 4,
+      "passes": false,
+      "researchType": "competitive-analysis",
+      "qualityGates": ["source_recency", "coverage_completeness"],
+      "notes": ""
+    },
+    {
+      "id": "RS-011",
+      "title": "Publication Strategy - Paper Outline",
+      "description": "As a researcher, I want to create a publication strategy and paper outline for SCWM.",
+      "acceptanceCriteria": [
+        "Identify target venues: ICRA, CoRL, RSS, NeurIPS (robotics track)",
+        "Create paper outline following venue format",
+        "Draft abstract (150-200 words)",
+        "Outline key contributions (3-4 main points)",
+        "Plan figure/diagram needs",
+        "Define related work positioning",
+        "Estimate timeline to submission",
+        "Create publication-strategy.md with detailed outline"
+      ],
+      "dependencies": ["RS-001", "RS-002", "RS-003", "RS-005"],
+      "fileScope": ["research-outputs/scwm/publication-strategy.md", "research-outputs/scwm/paper-outline.md"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "suggestedAgents": ["lead-researcher", "academic-scanner"],
+      "priority": 4,
+      "passes": false,
+      "researchType": "publication-planning",
+      "qualityGates": ["venue_alignment", "novelty_validation"],
+      "notes": ""
+    },
+    {
+      "id": "RS-012",
+      "title": "Research Synthesis - Final Report",
+      "description": "As a researcher, I want a comprehensive synthesis of all research findings into a final report.",
+      "acceptanceCriteria": [
+        "Synthesize all research outputs into cohesive narrative",
+        "Identify confirmed hypotheses and unexpected findings",
+        "Document open questions and future work",
+        "Create executive summary for stakeholders",
+        "Compile all citations and references",
+        "Generate final confidence scores for each research area",
+        "Create scwm-research-report.md as comprehensive deliverable",
+        "Include risk assessment and mitigation strategies"
+      ],
+      "dependencies": ["RS-001", "RS-002", "RS-003", "RS-004", "RS-005", "RS-006", "RS-007", "RS-008", "RS-009", "RS-010", "RS-011"],
+      "fileScope": ["research-outputs/scwm/scwm-research-report.md", "research-outputs/scwm/executive-summary.md"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "suggestedAgents": ["lead-researcher", "devils-advocate", "fact-checker"],
+      "priority": 5,
+      "passes": false,
+      "researchType": "synthesis",
+      "qualityGates": ["synthesis_completeness", "fact_verification", "counterargument_review"],
+      "notes": ""
+    }
+  ],
+  "metadata": {
+    "createdAt": "2026-01-24T00:00:00Z",
+    "totalStories": 12,
+    "estimatedDuration": "4-6 weeks",
+    "priority": "high",
+    "tags": ["physical-ai", "world-models", "uncertainty", "calibration", "cosmos", "isaac-lab"],
+    "researchDomain": "physical-ai",
+    "integrationTargets": ["cosmos-predict2", "isaac-lab", "scwm-module"]
+  },
+  "milestones": {
+    "week1": {
+      "name": "Foundation",
+      "stories": ["RS-001", "RS-002", "RS-003"],
+      "checkpoint": "Literature and technical foundations complete",
+      "deliverables": ["literature-survey.md", "uncertainty-methods.md", "online-calibration.md"]
+    },
+    "week2": {
+      "name": "Architecture",
+      "stories": ["RS-004", "RS-005"],
+      "checkpoint": "Architecture design validated",
+      "deliverables": ["benchmarks-analysis.md", "architecture-design.md"]
+    },
+    "week3": {
+      "name": "Integration",
+      "stories": ["RS-006", "RS-007"],
+      "checkpoint": "Integration analysis complete",
+      "deliverables": ["cosmos-integration.md", "isaac-integration.md"]
+    },
+    "week4": {
+      "name": "Planning",
+      "stories": ["RS-008", "RS-009", "RS-010"],
+      "checkpoint": "Experimental and implementation plans ready",
+      "deliverables": ["experimental-design.md", "implementation-plan.md", "competitive-analysis.md"]
+    },
+    "week5": {
+      "name": "Publication",
+      "stories": ["RS-011"],
+      "checkpoint": "Publication strategy defined",
+      "deliverables": ["publication-strategy.md", "paper-outline.md"]
+    },
+    "week6": {
+      "name": "Synthesis",
+      "stories": ["RS-012"],
+      "checkpoint": "Final research report delivered",
+      "deliverables": ["scwm-research-report.md", "executive-summary.md"]
+    }
+  },
+  "qualityGates": {
+    "global": {
+      "minConfidenceScore": 75,
+      "requireFactCheck": true,
+      "requireDevilsAdvocate": true,
+      "maxSourceAge": "2 years",
+      "minSourcesPerFinding": 2
+    },
+    "checkpoints": {
+      "afterLiteratureReview": {
+        "requiredStories": ["RS-001"],
+        "humanApproval": true,
+        "criteria": ["coverage >= 15 papers", "taxonomy complete"]
+      },
+      "afterArchitectureDesign": {
+        "requiredStories": ["RS-005"],
+        "humanApproval": true,
+        "criteria": ["technical feasibility validated", "compute budget acceptable"]
+      },
+      "afterIntegrationAnalysis": {
+        "requiredStories": ["RS-006", "RS-007"],
+        "humanApproval": true,
+        "criteria": ["integration points identified", "API compatibility confirmed"]
+      },
+      "beforeFinalReport": {
+        "requiredStories": ["RS-001", "RS-002", "RS-003", "RS-004", "RS-005", "RS-006", "RS-007", "RS-008", "RS-009", "RS-010", "RS-011"],
+        "humanApproval": true,
+        "criteria": ["all research complete", "fact-checked", "counterarguments addressed"]
+      }
+    }
+  },
+  "agents": {
+    "required": ["lead-researcher", "academic-scanner", "technical-diver", "benchmark-analyst"],
+    "optional": ["market-analyst", "fact-checker", "devils-advocate"],
+    "customPrompts": {
+      "physicalAI": "Focus on physical AI applications including robotics, simulation, and embodied agents. Prioritize sources from ICRA, CoRL, RSS, and NeurIPS robotics workshops."
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# Progress Log: phase-2-websocket-control-plane
+# Created: 2026-01-26 00:38:43
+#
+# This file tracks learnings and progress across claude-loop iterations.
+# Each iteration appends its findings here for future iterations to learn from.
+
+## Codebase Patterns
+<!-- Critical patterns discovered - updated by each iteration -->
+
+---
+
+## Iteration History
+

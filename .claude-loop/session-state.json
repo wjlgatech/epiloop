@@ -1,0 +1,15 @@
+{
+  "session_id": "claude-loop-integrat_feature_claude-loop-integratio_20260128_124140",
+  "project": "claude-loop-integration",
+  "branch": "feature/claude-loop-integration",
+  "prd_file": "/Users/jialiang.wu/Documents/Projects/clawdbot/prds/active/claude-loop-integration/prd.json",
+  "current_phase": "implementation",
+  "current_story": null,
+  "current_iteration": 0,
+  "started_at": "2026-01-28T20:41:40Z",
+  "last_saved_at": "2026-01-28T20:41:40Z",
+  "stories_completed": 0,
+  "stories_total": 15,
+  "auto_save_enabled": true,
+  "clean_shutdown": false
+}

@@ -1,0 +1,120 @@
+{
+  "project": "quest3-data-viz",
+  "branchName": "feature/quest3-data-viz",
+  "description": "Implement a basic 3D data visualization component in the Quest 3 app for real-time sensor data, integrating with the backend API and utilizing Meta's Spatial SDK for UI.",
+  "parallelization": {
+    "enabled": true,
+    "maxWorkers": 2
+  },
+  "userStories": [
+    {
+      "id": "VIZ-001",
+      "title": "Backend API for Real-time Sensor Data",
+      "description": "As a Quest 3 app, I need a backend API to fetch real-time sensor data for visualization.",
+      "acceptanceCriteria": [
+        "Create a new API endpoint POST /data/sensors/realtime that accepts device_id and sensor_type",
+        "The API should return a stream of sensor data points (e.g., JSON objects) over WebSocket or SSE.",
+        "Implement data simulation for testing purposes if real hardware is not connected.",
+        "Ensure the API is secured with JWT authentication.",
+        "Document the API endpoint, request/response format, and security considerations."
+      ],
+      "priority": 1,
+      "dependencies": [],
+      "fileScope": [
+        "backend/api/routes/data.py",
+        "backend/db/models.py"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false
+    },
+    {
+      "id": "VIZ-002",
+      "title": "Quest 3 Client Data Fetching",
+      "description": "As a Quest 3 app, I need to connect to the backend API to retrieve real-time sensor data.",
+      "acceptanceCriteria": [
+        "Implement a Unity C# script (e.g., `SensorDataManager.cs`) to connect to the backend's real-time sensor data endpoint.",
+        "Handle WebSocket/SSE connection lifecycle (connect, disconnect, reconnect).",
+        "Parse incoming sensor data streams and store them in an accessible data structure.",
+        "Implement error handling for network issues and API failures.",
+        "Ensure proper authentication is used when connecting to the backend."
+      ],
+      "priority": 2,
+      "dependencies": ["VIZ-001"],
+      "fileScope": [
+        "unity_quest3_client/Assets/Scripts/Network/SensorDataManager.cs"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false
+    },
+    {
+      "id": "VIZ-003",
+      "title": "Basic 3D Data Visualization",
+      "description": "As a Quest 3 app, I need to display real-time sensor data visually in a 3D environment.",
+      "acceptanceCriteria": [
+        "Create a new Unity scene (e.g., `DataVisualization.unity`) for displaying the 3D visualization.",
+        "Develop a Unity C# script (e.g., `DataVizController.cs`) to create and update 3D representations of sensor data.",
+        "Visualize at least one type of sensor data (e.g., temperature as a changing color on a 3D model, or pressure as a height map).",
+        "Utilize Meta's Spatial SDK for rendering the UI elements related to the visualization (e.g., labels, scales).",
+        "Ensure the visualization updates smoothly with incoming real-time data."
+      ],
+      "priority": 3,
+      "dependencies": ["VIZ-002"],
+      "fileScope": [
+        "unity_quest3_client/Assets/Scenes/DataVisualization.unity",
+        "unity_quest3_client/Assets/Scripts/Visualization/DataVizController.cs"
+      ],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": false
+    },
+    {
+      "id": "VIZ-004",
+      "title": "Spatial UI for Data Visualization Controls",
+      "description": "As a user, I need interactive UI controls within the XR environment to manipulate the 3D data visualization.",
+      "acceptanceCriteria": [
+        "Implement a spatial UI panel (e.g., a hand-attached menu) using Meta's Spatial SDK.",
+        "Include controls to switch between different sensor data types (e.g., temperature, humidity, pressure).",
+        "Add controls to adjust visualization parameters (e.g., scale, color gradient).",
+        "Ensure the UI is intuitive and easily accessible within the VR environment.",
+        "Integrate with Quest 3's hand tracking or controller input for interaction with the UI."
+      ],
+      "priority": 4,
+      "dependencies": ["VIZ-003"],
+      "fileScope": [
+        "unity_quest3_client/Assets/Scripts/UI/DataVizUIPanel.cs"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false
+    },
+    {
+      "id": "VIZ-005",
+      "title": "Performance Optimization for XR Visualization",
+      "description": "As a Quest 3 app, the 3D data visualization needs to run smoothly without performance drops.",
+      "acceptanceCriteria": [
+        "Profile the Unity application to identify performance bottlenecks in the data visualization.",
+        "Optimize 3D models and rendering techniques to maintain a target frame rate (e.g., 72fps).",
+        "Implement efficient data updating mechanisms to avoid stuttering during real-time data ingestion.",
+        "Utilize Unity's Job System or Burst Compiler for computationally intensive tasks if necessary.",
+        "Ensure garbage collection is minimized to prevent hitches."
+      ],
+      "priority": 5,
+      "dependencies": ["VIZ-004"],
+      "fileScope": [
+        "unity_quest3_client/Assets/Scripts/Visualization/DataVizController.cs",
+        "unity_quest3_client/Assets/Scripts/Performance/"
+      ],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": false
+    }
+  ],
+  "technicalNotes": {
+    "unity_version": "Unity 2022.3 LTS or later",
+    "meta_spatial_sdk": "Utilize latest Meta XR SDK for UI and spatial interactions.",
+    "backend_tech": "Python Flask for API, WebSockets/SSE for real-time data.",
+    "data_format": "JSON for sensor data."
+  }
+}

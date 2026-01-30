@@ -1,0 +1,50 @@
+{
+  "name": "physical-ai",
+  "version": "1.0.0",
+  "domain": "isaac_sim",
+  "domains": ["isaac_sim", "ros2", "unity_xr", "nvidia_omniverse", "robotics"],
+  "description": "Specialized adapter for Physical AI development: Isaac Sim, ROS2, Unity XR, NVIDIA Omniverse, and robotics workflows",
+  "maintainer": "claude-loop team",
+  "capabilities": [
+    {
+      "type": "prompts",
+      "name": "physical-ai-prompts",
+      "path": "prompts",
+      "description": "Domain-specific prompts for USD, URDF, sensor simulation, and robotics"
+    },
+    {
+      "type": "validators",
+      "name": "physical-ai-validators",
+      "path": "validators",
+      "description": "Validators for USD prim paths, ROS topic types, URDF structure, and XR configurations"
+    },
+    {
+      "type": "tools",
+      "name": "physical-ai-tools",
+      "path": "tools",
+      "description": "Tool integrations for Isaac Sim CLI, ROS2 commands, and Unity Editor automation"
+    },
+    {
+      "type": "embeddings",
+      "name": "physical-ai-embeddings",
+      "path": "embeddings",
+      "description": "Domain-optimized embedding configuration for Physical AI terminology"
+    }
+  ],
+  "dependencies": [],
+  "min_claude_loop_version": "1.0.0",
+  "keywords": [
+    "isaac-sim",
+    "nvidia",
+    "omniverse",
+    "ros2",
+    "robotics",
+    "unity-xr",
+    "simulation",
+    "usd",
+    "urdf",
+    "sensor",
+    "autonomous",
+    "physical-ai"
+  ]
+}

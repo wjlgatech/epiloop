@@ -1,0 +1,144 @@
+{
+  "project": "claude-loop-p2-features",
+  "branchName": "feature/p2-dashboard-computer-use",
+  "description": "Add web dashboard for monitoring and computer-use agent for GUI automation",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Create Flask web dashboard structure",
+      "description": "As a user, I want a web dashboard to view claude-loop run history and metrics so I can analyze performance visually",
+      "acceptanceCriteria": [
+        "Create dashboard/ directory with Flask app structure",
+        "Create dashboard/app.py with Flask routes",
+        "Create dashboard/templates/ for HTML templates",
+        "Add requirements.txt with Flask dependency",
+        "Dashboard runs on localhost:3000"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented in commit 6d02b70 - dashboard/ created with Flask app, routes, and responsive HTML templates"
+    },
+    {
+      "id": "US-001B",
+      "title": "Enhance terminal display to show agent-task association",
+      "description": "As a user, I want to see which agent is working on which task in real-time so I can understand what expertise is being applied",
+      "acceptanceCriteria": [
+        "Update lib/monitoring.sh to display agent names with current task",
+        "Show format: [AGENT: agent-name] Working on: story-id - story-title",
+        "Display agent selection reasoning if verbose mode",
+        "Update display_running_total to include current agent info",
+        "Add agent info to iteration tracking in JSON metrics"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented in commit 07b57a6 - Enhanced lib/monitoring.sh and claude-loop.sh with agent-task display, verbose reasoning, and JSON metrics"
+    },
+    {
+      "id": "US-002",
+      "title": "Implement dashboard run history view",
+      "description": "As a user, I want to see all past claude-loop runs with their costs and status so I can track usage over time",
+      "acceptanceCriteria": [
+        "Read metrics from .claude-loop/runs/ directories",
+        "Display table with: timestamp, project, stories completed, total cost, duration",
+        "Sort by most recent first",
+        "Link to detailed view for each run"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Implemented in commit 3ea02e4 - Updated get_all_runs() to normalize data from summary.json and metrics.json, properly extracting stories, cost, duration, and project info"
+    },
+    {
+      "id": "US-003",
+      "title": "Implement dashboard run detail view",
+      "description": "As a user, I want to drill into a specific run to see iteration-by-iteration metrics so I can understand where costs came from",
+      "acceptanceCriteria": [
+        "Show run summary: project, branch, total cost, duration",
+        "Display iteration table: story, agents used, tokens, cost, status",
+        "Show cost breakdown chart by agent",
+        "Display lessons learned from that run"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Implemented in commit b9b30dd - Enhanced run detail view with summary stats, iteration table, agent cost breakdown chart, and lessons learned section"
+    },
+    {
+      "id": "US-004",
+      "title": "Add dashboard agent analytics",
+      "description": "As a user, I want to see which agents are used most and their effectiveness so I can optimize agent selection",
+      "acceptanceCriteria": [
+        "Aggregate agent usage across all runs",
+        "Show table: agent name, times used, total cost, success rate",
+        "Identify most expensive and most effective agents",
+        "Display improvement suggestions"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Implemented in commit fe9dd9e - Added get_agent_analytics(), /api/agents endpoint, and enhanced analytics template with agent insights, usage table, and improvement suggestions"
+    },
+    {
+      "id": "US-005",
+      "title": "Create computer-use agent framework",
+      "description": "As a developer, I want a framework for GUI automation so claude-loop can perform actions beyond code changes",
+      "acceptanceCriteria": [
+        "Create agents/computer-use/ directory with __init__.py",
+        "Create contracts.py with ActionResult, ActionStatus enum, HumanCheckpoint dataclasses",
+        "Create safety.py with checkpoint detection logic (login/payment/captcha detection)",
+        "Create requirements.txt with: playwright>=1.40.0, pyautogui>=0.9.54, pillow>=10.0.0",
+        "Create README.md documenting module usage, safety features, and example workflows"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "Implemented in commit eb288af - Created agents/computer_use/ with contracts.py, safety.py, requirements.txt, README.md"
+    },
+    {
+      "id": "US-006",
+      "title": "Implement browser automation module",
+      "description": "As a user, I want claude-loop to automate browser tasks so it can interact with web UIs like Unity Asset Store",
+      "acceptanceCriteria": [
+        "Create browser.py with async BrowserAgent class using Playwright",
+        "Implement core actions: navigate, click, click_coordinates, type_text, screenshot",
+        "Implement wait actions: wait_for (selector), wait_for_human (checkpoint)",
+        "Auto-detect login pages (password fields) and payment pages (card inputs) for human checkpoints",
+        "Add retry logic with exponential backoff (max 3 retries)",
+        "Log all actions with before/after screenshots to .claude-loop/computer-use-logs/"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "Implemented in commit a93b5cc - browser.py with BrowserAgent class, core actions, wait actions, auto-detection, retry logic, and action logging"
+    },
+    {
+      "id": "US-007",
+      "title": "Implement macOS app automation module",
+      "description": "As a user, I want claude-loop to automate macOS apps like Unity so it can perform IDE operations",
+      "acceptanceCriteria": [
+        "Create macos.py with async MacOSAgent class using osascript/AppleScript",
+        "Implement app control: activate_app, get_frontmost_app",
+        "Implement menu actions: menu_click (with menu path hierarchy)",
+        "Implement input actions: keyboard_shortcut, type_text",
+        "Implement window actions: wait_for_window, screenshot (full or window)",
+        "Implement Finder actions: finder_open, finder_select",
+        "Handle permission dialogs with human checkpoint fallback"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": "Implemented in commit 4c68221 - macos.py with MacOSAgent class, app control, menu/input/window/Finder actions, permission dialog handling"
+    },
+    {
+      "id": "US-008",
+      "title": "Create computer-use orchestrator",
+      "description": "As a user, I want a unified orchestrator that coordinates browser and app automation so complex workflows work seamlessly",
+      "acceptanceCriteria": [
+        "Create orchestrator.py with ComputerUseOrchestrator class",
+        "Implement execute_workflow() for high-level natural language instructions",
+        "Implement execute_step() for individual action execution with module routing",
+        "Coordinate state between browser and macos modules",
+        "Implement error recovery: retry, skip, abort, or human fallback per step",
+        "Implement get_action_log() returning full action history with timestamps",
+        "Write action logs as JSON to .claude-loop/computer-use-logs/{session}/"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": "Implemented in commit 2f51dc6 - orchestrator.py with ComputerUseOrchestrator class, execute_workflow, execute_step, error recovery, state management, and JSON logging"
+    }
+  ]
+}

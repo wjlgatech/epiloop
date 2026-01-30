@@ -1,0 +1,18 @@
+⚠️ Checkpoint Required
+
+Task ID: {{TASK_ID}}
+Status: {{STATUS}}
+Project: {{PROJECT}}
+
+Progress:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+◆ Stories Completed: {{STORIES_COMPLETED}}
+◆ Time Taken: {{TIME_TAKEN}}
+◆ Cost: {{COST}}
+
+The task requires manual approval to continue. Please review the current state and provide input.
+
+Action Required: Review and approve the checkpoint to continue execution.
+
+--
+claude-loop autonomous feature implementation

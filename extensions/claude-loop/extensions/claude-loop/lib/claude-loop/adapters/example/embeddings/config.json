@@ -1,0 +1,32 @@
+{
+  "model": "all-MiniLM-L6-v2",
+  "prefix": "[cli]",
+  "domain_terms": [
+    "command",
+    "argument",
+    "flag",
+    "option",
+    "exit code",
+    "stdout",
+    "stderr",
+    "pipe",
+    "redirect",
+    "shell",
+    "terminal"
+  ],
+  "boost_patterns": [
+    {
+      "pattern": "exit code \\d+",
+      "boost": 1.2
+    },
+    {
+      "pattern": "command not found",
+      "boost": 1.5
+    },
+    {
+      "pattern": "permission denied",
+      "boost": 1.3
+    }
+  ],
+  "similarity_threshold": 0.75
+}

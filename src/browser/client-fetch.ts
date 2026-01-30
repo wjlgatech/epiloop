@@ -6,7 +6,7 @@ import { resolveBrowserConfig } from "./config.js";
 let cachedConfigToken: string | null | undefined = undefined;
 
 function getBrowserControlToken(): string | null {
-  const env = process.env.CLAWDBOT_BROWSER_CONTROL_TOKEN?.trim();
+  const env = process.env.EPILOOP_BROWSER_CONTROL_TOKEN?.trim();
   if (env) return env;
 
   if (cachedConfigToken !== undefined) return cachedConfigToken;
@@ -31,7 +31,7 @@ function enhanceBrowserFetchError(url: string, err: unknown, timeoutMs: number):
   const cause = unwrapCause(err);
   const code = extractErrorCode(cause) ?? extractErrorCode(err) ?? "";
 
-  const hint = `Start (or restart) the Clawdbot gateway (Clawdbot.app menubar, or \`${formatCliCommand("clawdbot gateway")}\`) and try again.`;
+  const hint = `Start (or restart) the Epiloop gateway (Epiloop.app menubar, or \`${formatCliCommand("epiloop gateway")}\`) and try again.`;
 
   if (code === "ECONNREFUSED") {
     return new Error(

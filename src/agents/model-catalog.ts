@@ -1,6 +1,6 @@
-import { type ClawdbotConfig, loadConfig } from "../config/config.js";
-import { resolveClawdbotAgentDir } from "./agent-paths.js";
-import { ensureClawdbotModelsJson } from "./models-config.js";
+import { type EpiloopConfig, loadConfig } from "../config/config.js";
+import { resolveEpiloopAgentDir } from "./agent-paths.js";
+import { ensureEpiloopModelsJson } from "./models-config.js";
 
 export type ModelCatalogEntry = {
   id: string;
@@ -37,7 +37,7 @@ export function __setModelCatalogImportForTest(loader?: () => Promise<PiSdkModul
 }
 
 export async function loadModelCatalog(params?: {
-  config?: ClawdbotConfig;
+  config?: EpiloopConfig;
   useCache?: boolean;
 }): Promise<ModelCatalogEntry[]> {
   if (params?.useCache === false) {
@@ -55,13 +55,13 @@ export async function loadModelCatalog(params?: {
       });
     try {
       const cfg = params?.config ?? loadConfig();
-      await ensureClawdbotModelsJson(cfg);
+      await ensureEpiloopModelsJson(cfg);
       // IMPORTANT: keep the dynamic import *inside* the try/catch.
       // If this fails once (e.g. during a pnpm install that temporarily swaps node_modules),
       // we must not poison the cache with a rejected promise (otherwise all channel handlers
       // will keep failing until restart).
       const piSdk = await importPiSdk();
-      const agentDir = resolveClawdbotAgentDir();
+      const agentDir = resolveEpiloopAgentDir();
       const authStorage = piSdk.discoverAuthStorage(agentDir);
       const registry = piSdk.discoverModels(authStorage, agentDir) as
         | {

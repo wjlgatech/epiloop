@@ -251,7 +251,7 @@ export async function processMessage(params: {
   const responsePrefix =
     prefixContext.responsePrefix ??
     (configuredResponsePrefix === undefined && isSelfChat
-      ? (resolveIdentityNamePrefix(params.cfg, params.route.agentId) ?? "[clawdbot]")
+      ? (resolveIdentityNamePrefix(params.cfg, params.route.agentId) ?? "[epiloop]")
       : undefined);
 
   const ctxPayload = finalizeInboundContext({

@@ -1,13 +1,13 @@
 {
-  "name": "@clawdbot/zalouser",
+  "name": "@epiloop/zalouser",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot Zalo Personal Account plugin via zca-cli",
+  "description": "Epiloop Zalo Personal Account plugin via zca-cli",
   "dependencies": {
-    "clawdbot": "workspace:*",
+    "epiloop": "workspace:*",
     "@sinclair/typebox": "0.34.47"
   },
-  "clawdbot": {
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,7 +25,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@clawdbot/zalouser",
+      "npmSpec": "@epiloop/zalouser",
       "localPath": "extensions/zalouser",
       "defaultChoice": "npm"
     }

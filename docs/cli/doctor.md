@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `clawdbot doctor` (health checks + guided repairs)"
+summary: "CLI reference for `epiloop doctor` (health checks + guided repairs)"
 read_when:
   - You have connectivity/auth issues and want guided fixes
   - You updated and want a sanity check
 ---
 
-# `clawdbot doctor`
+# `epiloop doctor`
 
 Health checks + quick fixes for the gateway and channels.
 
@@ -16,23 +16,23 @@ Related:
 ## Examples
 
 ```bash
-clawdbot doctor
-clawdbot doctor --repair
-clawdbot doctor --deep
+epiloop doctor
+epiloop doctor --repair
+epiloop doctor --deep
 ```
 
 Notes:
 - Interactive prompts (like keychain/OAuth fixes) only run when stdin is a TTY and `--non-interactive` is **not** set. Headless runs (cron, Telegram, no terminal) will skip prompts.
-- `--fix` (alias for `--repair`) writes a backup to `~/.clawdbot/clawdbot.json.bak` and drops unknown config keys, listing each removal.
+- `--fix` (alias for `--repair`) writes a backup to `~/.epiloop/epiloop.json.bak` and drops unknown config keys, listing each removal.
 
 ## macOS: `launchctl` env overrides
 
-If you previously ran `launchctl setenv CLAWDBOT_GATEWAY_TOKEN ...` (or `...PASSWORD`), that value overrides your config file and can cause persistent “unauthorized” errors.
+If you previously ran `launchctl setenv EPILOOP_GATEWAY_TOKEN ...` (or `...PASSWORD`), that value overrides your config file and can cause persistent “unauthorized” errors.
 
 ```bash
-launchctl getenv CLAWDBOT_GATEWAY_TOKEN
-launchctl getenv CLAWDBOT_GATEWAY_PASSWORD
+launchctl getenv EPILOOP_GATEWAY_TOKEN
+launchctl getenv EPILOOP_GATEWAY_PASSWORD
 
-launchctl unsetenv CLAWDBOT_GATEWAY_TOKEN
-launchctl unsetenv CLAWDBOT_GATEWAY_PASSWORD
+launchctl unsetenv EPILOOP_GATEWAY_TOKEN
+launchctl unsetenv EPILOOP_GATEWAY_PASSWORD
 ```

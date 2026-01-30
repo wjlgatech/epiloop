@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/nostr",
+  "name": "@epiloop/nostr",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot Nostr channel plugin for NIP-04 encrypted DMs",
-  "clawdbot": {
+  "description": "Epiloop Nostr channel plugin for NIP-04 encrypted DMs",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ],
@@ -18,13 +18,13 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@clawdbot/nostr",
+      "npmSpec": "@epiloop/nostr",
       "localPath": "extensions/nostr",
       "defaultChoice": "npm"
     }
   },
   "dependencies": {
-    "clawdbot": "workspace:*",
+    "epiloop": "workspace:*",
     "nostr-tools": "^2.20.0",
     "zod": "^4.3.6"
   }

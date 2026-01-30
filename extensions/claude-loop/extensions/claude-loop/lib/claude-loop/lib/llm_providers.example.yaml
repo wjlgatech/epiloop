@@ -1,0 +1,230 @@
+# LLM Provider Configuration for Multi-Provider Support
+# Copy to lib/llm_providers.yaml and customize
+
+providers:
+  # ========================================
+  # Anthropic Claude Models
+  # ========================================
+  - name: claude-opus
+    model: claude-opus-4-5-20250929
+    cost_per_1k_input: 0.015
+    cost_per_1k_output: 0.075
+    capabilities:
+      - vision
+      - tools
+      - json_mode
+    max_tokens: 200000
+    enabled: true
+    tier: premium
+    description: "Most powerful Claude model for complex reasoning"
+
+  - name: claude-sonnet
+    model: claude-sonnet-4-5-20250929
+    cost_per_1k_input: 0.003
+    cost_per_1k_output: 0.015
+    capabilities:
+      - vision
+      - tools
+      - json_mode
+    max_tokens: 200000
+    enabled: true
+    tier: standard
+    description: "Balanced performance and cost"
+
+  - name: claude-haiku
+    model: claude-haiku-3-5-20241106
+    cost_per_1k_input: 0.00025
+    cost_per_1k_output: 0.00125
+    capabilities:
+      - vision
+      - tools
+    max_tokens: 200000
+    enabled: true
+    tier: budget
+    description: "Fast and cost-effective for simple tasks"
+
+  # ========================================
+  # OpenAI Models
+  # ========================================
+  - name: gpt-4o
+    model: gpt-4o
+    cost_per_1k_input: 0.0025
+    cost_per_1k_output: 0.01
+    capabilities:
+      - vision
+      - tools
+      - json_mode
+    max_tokens: 128000
+    enabled: false  # Set to true if you have OPENAI_API_KEY
+    tier: standard
+    description: "OpenAI's flagship multimodal model"
+
+  - name: gpt-4o-mini
+    model: gpt-4o-mini
+    cost_per_1k_input: 0.00015
+    cost_per_1k_output: 0.0006
+    capabilities:
+      - vision
+      - tools
+    max_tokens: 128000
+    enabled: false
+    tier: budget
+    description: "Compact and efficient OpenAI model"
+
+  - name: o1
+    model: o1
+    cost_per_1k_input: 0.015
+    cost_per_1k_output: 0.06
+    capabilities:
+      - tools
+    max_tokens: 200000
+    enabled: false
+    tier: premium
+    description: "Reasoning-focused model for complex problems"
+
+  # ========================================
+  # Google Gemini Models
+  # ========================================
+  - name: gemini-2.0-flash
+    model: gemini-2.0-flash
+    cost_per_1k_input: 0.0001
+    cost_per_1k_output: 0.0004
+    capabilities:
+      - vision
+      - tools
+    max_tokens: 1000000  # 1M context window
+    enabled: false  # Set to true if you have GOOGLE_API_KEY
+    tier: budget
+    description: "Fast Gemini model with massive context"
+
+  - name: gemini-pro
+    model: gemini-1.5-pro
+    cost_per_1k_input: 0.00125
+    cost_per_1k_output: 0.005
+    capabilities:
+      - vision
+      - tools
+      - json_mode
+    max_tokens: 2000000  # 2M context window
+    enabled: false
+    tier: standard
+    description: "Gemini Pro with extended context"
+
+  # ========================================
+  # DeepSeek Models (Budget Option)
+  # ========================================
+  - name: deepseek-v3
+    model: deepseek-chat
+    cost_per_1k_input: 0.00014
+    cost_per_1k_output: 0.00028
+    capabilities:
+      - tools
+    max_tokens: 64000
+    enabled: false  # Set to true if you have DEEPSEEK_API_KEY
+    tier: budget
+    description: "Extremely cost-effective for coding tasks"
+
+  - name: deepseek-r1
+    model: deepseek-reasoner
+    cost_per_1k_input: 0.00055
+    cost_per_1k_output: 0.0022
+    capabilities:
+      - tools
+    max_tokens: 64000
+    enabled: false
+    tier: standard
+    description: "Reasoning-focused DeepSeek model"
+
+# ========================================
+# Routing Configuration
+# ========================================
+routing:
+  # Strategy: how to select providers
+  # Options: complexity_based, cost_optimized, always_cheapest, always_best
+  strategy: complexity_based
+
+  # Complexity thresholds for routing
+  thresholds:
+    simple: 3     # complexity < 3 → budget tier (haiku, gpt-4o-mini, gemini-flash)
+    medium: 7     # 3 ≤ complexity < 7 → standard tier (sonnet, gpt-4o, gemini-pro)
+                  # complexity ≥ 7 → premium tier (opus, o1)
+
+  # Fallback chain if primary provider fails
+  # Providers tried in order until one succeeds
+  fallback_chain:
+    - claude-sonnet    # Try sonnet first (good balance)
+    - claude-opus      # Then opus (most capable)
+    - gpt-4o           # Then OpenAI
+    - claude-haiku     # Finally haiku (cheapest, always works)
+
+  # Retry configuration
+  retry:
+    max_attempts: 3
+    backoff_multiplier: 2.0
+    initial_delay_ms: 1000
+
+# ========================================
+# Cost Management
+# ========================================
+cost_management:
+  # Budget alerts
+  daily_budget_usd: 50.0
+  monthly_budget_usd: 500.0
+  alert_threshold: 0.8  # Alert at 80% of budget
+
+  # Cost tracking
+  track_per_story: true
+  track_per_iteration: true
+  log_file: ".claude-loop/logs/provider_usage.jsonl"
+
+  # Auto-approve costs below threshold (no human confirmation)
+  auto_approve_threshold_usd: 5.0
+
+# ========================================
+# Performance Tuning
+# ========================================
+performance:
+  # Provider selection cache (avoid recomputing for same story)
+  cache_selection: true
+  cache_ttl_seconds: 3600
+
+  # Parallel requests (experimental)
+  max_concurrent_requests: 5
+
+  # Timeouts
+  default_timeout_seconds: 120
+  vision_timeout_seconds: 180
+
+# ========================================
+# Capabilities Mapping
+# ========================================
+capability_requirements:
+  vision:
+    preferred_providers: ["claude-opus", "gpt-4o", "gemini-pro"]
+    fallback_providers: ["claude-sonnet", "claude-haiku"]
+
+  tools:
+    preferred_providers: ["claude-opus", "claude-sonnet", "gpt-4o"]
+    fallback_providers: ["claude-haiku", "deepseek-v3"]
+
+  json_mode:
+    preferred_providers: ["claude-opus", "claude-sonnet", "gpt-4o"]
+    fallback_providers: ["gemini-pro"]
+
+  reasoning:
+    preferred_providers: ["o1", "deepseek-r1", "claude-opus"]
+    fallback_providers: ["claude-sonnet"]
+
+  long_context:
+    preferred_providers: ["gemini-pro", "gemini-2.0-flash", "claude-opus"]
+    fallback_providers: ["claude-sonnet"]
+
+# ========================================
+# Logging and Debugging
+# ========================================
+logging:
+  level: info  # debug, info, warn, error
+  log_provider_selection: true
+  log_costs: true
+  log_latency: true
+  detailed_errors: true

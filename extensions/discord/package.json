@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/discord",
+  "name": "@epiloop/discord",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot Discord channel plugin",
-  "clawdbot": {
+  "description": "Epiloop Discord channel plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ]

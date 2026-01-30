@@ -1,7 +1,7 @@
 import type { MatrixClient } from "matrix-bot-sdk";
 import { AutojoinRoomsMixin } from "matrix-bot-sdk";
 
-import type { RuntimeEnv } from "clawdbot/plugin-sdk";
+import type { RuntimeEnv } from "epiloop/plugin-sdk";
 import type { CoreConfig } from "../../types.js";
 import { getMatrixRuntime } from "../../runtime.js";
 

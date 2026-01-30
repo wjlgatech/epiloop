@@ -29,7 +29,7 @@ Venice offers two privacy levels — understanding this is key to choosing your 
 2. Go to **Settings → API Keys → Create new key**
 3. Copy your API key (format: `vapi_xxxxxxxxxxxx`)
 
-### 2. Configure Clawdbot
+### 2. Configure Epiloop
 
 **Option A: Environment Variable**
 
@@ -40,7 +40,7 @@ export VENICE_API_KEY="vapi_xxxxxxxxxxxx"
 **Option B: Interactive Setup (Recommended)**
 
 ```bash
-clawdbot onboard --auth-choice venice-api-key
+epiloop onboard --auth-choice venice-api-key
 ```
 
 This will:
@@ -52,7 +52,7 @@ This will:
 **Option C: Non-interactive**
 
 ```bash
-clawdbot onboard --non-interactive \
+epiloop onboard --non-interactive \
   --auth-choice venice-api-key \
   --token "vapi_xxxxxxxxxxxx" \
   --token-provider venice
@@ -61,12 +61,12 @@ clawdbot onboard --non-interactive \
 ### 3. Verify Setup
 
 ```bash
-clawdbot chat --model venice/llama-3.3-70b "Hello, are you working?"
+epiloop chat --model venice/llama-3.3-70b "Hello, are you working?"
 ```
 
 ## Model Selection
 
-After setup, Clawdbot shows all available Venice models. Pick based on your needs:
+After setup, Epiloop shows all available Venice models. Pick based on your needs:
 
 - **Privacy**: Choose "private" models for fully private inference
 - **Capability**: Choose "anonymized" models to access Claude, GPT, Gemini via Venice's proxy
@@ -74,14 +74,14 @@ After setup, Clawdbot shows all available Venice models. Pick based on your need
 Change your default model anytime:
 
 ```bash
-clawdbot models set venice/claude-opus-45
-clawdbot models set venice/llama-3.3-70b
+epiloop models set venice/claude-opus-45
+epiloop models set venice/llama-3.3-70b
 ```
 
 List all available models:
 
 ```bash
-clawdbot models list | grep venice
+epiloop models list | grep venice
 ```
 
 ## Which Model Should I Use?
@@ -135,7 +135,7 @@ clawdbot models list | grep venice
 
 ## Model Discovery
 
-Clawdbot automatically discovers models from the Venice API when `VENICE_API_KEY` is set. If the API is unreachable, it falls back to a static catalog.
+Epiloop automatically discovers models from the Venice API when `VENICE_API_KEY` is set. If the API is unreachable, it falls back to a static catalog.
 
 The `/models` endpoint is public (no auth needed for listing), but inference requires a valid API key.
 
@@ -168,19 +168,19 @@ Venice uses a credit-based system. Check [venice.ai/pricing](https://venice.ai/p
 
 ```bash
 # Use default private model
-clawdbot chat --model venice/llama-3.3-70b
+epiloop chat --model venice/llama-3.3-70b
 
 # Use Claude via Venice (anonymized)
-clawdbot chat --model venice/claude-opus-45
+epiloop chat --model venice/claude-opus-45
 
 # Use uncensored model
-clawdbot chat --model venice/venice-uncensored
+epiloop chat --model venice/venice-uncensored
 
 # Use vision model with image
-clawdbot chat --model venice/qwen3-vl-235b-a22b
+epiloop chat --model venice/qwen3-vl-235b-a22b
 
 # Use coding model
-clawdbot chat --model venice/qwen3-coder-480b-a35b-instruct
+epiloop chat --model venice/qwen3-coder-480b-a35b-instruct
 ```
 
 ## Troubleshooting
@@ -189,14 +189,14 @@ clawdbot chat --model venice/qwen3-coder-480b-a35b-instruct
 
 ```bash
 echo $VENICE_API_KEY
-clawdbot models list | grep venice
+epiloop models list | grep venice
 ```
 
 Ensure the key starts with `vapi_`.
 
 ### Model not available
 
-The Venice model catalog updates dynamically. Run `clawdbot models list` to see currently available models. Some models may be temporarily offline.
+The Venice model catalog updates dynamically. Run `epiloop models list` to see currently available models. Some models may be temporarily offline.
 
 ### Connection issues
 

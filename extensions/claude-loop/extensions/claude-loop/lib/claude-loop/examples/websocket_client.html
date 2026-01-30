@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude-Loop Progress Monitor</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+        }
+        h1 {
+            color: #4ec9b0;
+        }
+        .connection-status {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .connected {
+            background: #4ec9b0;
+            color: #1e1e1e;
+        }
+        .disconnected {
+            background: #f48771;
+            color: #1e1e1e;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #3c3c3c;
+            background: #252526;
+            color: #d4d4d4;
+        }
+        button {
+            cursor: pointer;
+            background: #0e639c;
+        }
+        button:hover {
+            background: #1177bb;
+        }
+        .events {
+            border: 1px solid #3c3c3c;
+            border-radius: 5px;
+            padding: 15px;
+            background: #252526;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .event {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #4ec9b0;
+            background: #1e1e1e;
+            border-radius: 3px;
+        }
+        .event.story-started {
+            border-left-color: #569cd6;
+        }
+        .event.story-completed {
+            border-left-color: #4ec9b0;
+        }
+        .event.test-run {
+            border-left-color: #dcdcaa;
+        }
+        .event.error {
+            border-left-color: #f48771;
+        }
+        .event-type {
+            font-weight: bold;
+            color: #4ec9b0;
+            margin-bottom: 5px;
+        }
+        .event-time {
+            font-size: 0.85em;
+            color: #858585;
+        }
+        .event-data {
+            margin-top: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #252526;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #3c3c3c;
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4ec9b0;
+        }
+        .stat-label {
+            color: #858585;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Claude-Loop Progress Monitor</h1>
+
+    <div id="connection-status" class="connection-status disconnected">
+        ⚠️ Disconnected
+    </div>
+
+    <div class="controls">
+        <input type="text" id="prd-id" placeholder="PRD ID (e.g., PRD-001)" />
+        <button onclick="subscribeToPRD()">Subscribe to PRD</button>
+        <button onclick="clearEvents()">Clear Events</button>
+    </div>
+
+    <div class="controls" style="border-top: 2px solid #3c3c3c; padding-top: 15px; margin-top: 10px;">
+        <h3 style="margin: 0 0 10px 0; color: #4ec9b0;">📱 Send Command to Claude-Loop</h3>
+        <input type="text" id="command-input" placeholder='e.g., "Add a hello world function"' style="width: 60%; min-width: 250px;" />
+        <button onclick="sendCommand()" style="background: #4ec9b0;">Send Command</button>
+        <button onclick="stopExecution()" style="background: #f48771;">Stop Execution</button>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-value" id="total-events">0</div>
+            <div class="stat-label">Total Events</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="stories-started">0</div>
+            <div class="stat-label">Stories Started</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="stories-completed">0</div>
+            <div class="stat-label">Stories Completed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="tests-passed">0</div>
+            <div class="stat-label">Tests Passed</div>
+        </div>
+    </div>
+
+    <h2>Events</h2>
+    <div class="events" id="events"></div>
+
+    <script>
+        // Connect to WebSocket server
+        // Auto-detect hostname (works for localhost, Tailscale, ngrok, etc.)
+        const hostname = window.location.hostname || '127.0.0.1';
+        const wsUrl = `http://${hostname}:18790`;
+        console.log('Connecting to WebSocket:', wsUrl);
+        const socket = io(wsUrl);
+
+        let eventCount = 0;
+        let storiesStarted = 0;
+        let storiesCompleted = 0;
+        let testsPassed = 0;
+
+        // Connection status
+        socket.on('connect', () => {
+            updateConnectionStatus(true);
+            addEvent('system', 'Connected to claude-loop', {});
+        });
+
+        socket.on('disconnect', () => {
+            updateConnectionStatus(false);
+            addEvent('system', 'Disconnected from claude-loop', {});
+        });
+
+        // Receive events
+        socket.on('event', (data) => {
+            console.log('Received event:', data);
+            // Visual debug - flash connection status
+            const statusEl = document.getElementById('connection-status');
+            statusEl.style.backgroundColor = '#ff0';
+            setTimeout(() => statusEl.style.backgroundColor = '', 200);
+            handleEvent(data);
+        });
+
+        // Subscribe confirmation
+        socket.on('subscribed', (data) => {
+            addEvent('system', `Subscribed to ${data.prd_id}`, data);
+        });
+
+        function updateConnectionStatus(connected) {
+            const statusEl = document.getElementById('connection-status');
+            if (connected) {
+                statusEl.className = 'connection-status connected';
+                statusEl.textContent = '✓ Connected';
+            } else {
+                statusEl.className = 'connection-status disconnected';
+                statusEl.textContent = '⚠️ Disconnected';
+            }
+        }
+
+        function subscribeToPRD() {
+            const prdId = document.getElementById('prd-id').value.trim();
+            if (!prdId) {
+                alert('Please enter a PRD ID');
+                return;
+            }
+            socket.emit('subscribe_prd', { prd_id: prdId });
+            addEvent('system', `Subscribing to ${prdId}`, { prd_id: prdId });
+        }
+
+        function handleEvent(event) {
+            eventCount++;
+            document.getElementById('total-events').textContent = eventCount;
+
+            // Update stats based on event type
+            if (event.type === 'story.started') {
+                storiesStarted++;
+                document.getElementById('stories-started').textContent = storiesStarted;
+            } else if (event.type === 'story.completed') {
+                storiesCompleted++;
+                document.getElementById('stories-completed').textContent = storiesCompleted;
+            } else if (event.type === 'test.run') {
+                testsPassed += event.data.passed || 0;
+                document.getElementById('tests-passed').textContent = testsPassed;
+            }
+
+            // Add to event list
+            addEvent(event.type, formatEventMessage(event), event.data, event.timestamp);
+        }
+
+        function formatEventMessage(event) {
+            const data = event.data;
+            const type = event.type;
+
+            if (type === 'story.started') {
+                return `Story ${data.story_id} started`;
+            } else if (type === 'story.completed') {
+                return `Story ${data.story_id} ${data.success ? 'completed ✓' : 'failed ✗'}`;
+            } else if (type === 'test.run') {
+                return `Tests: ${data.passed} passed, ${data.failed} failed`;
+            } else if (type === 'commit.created') {
+                return `Commit created: ${data.commit_hash}`;
+            } else if (type === 'error.occurred') {
+                return `Error: ${data.error}`;
+            } else if (type === 'command.started') {
+                return `🚀 Command started: ${data.command}`;
+            } else if (type === 'command.completed') {
+                return data.summary || `${data.success ? '✅ Task completed' : '❌ Task failed'}`;
+            } else {
+                return `Event: ${type}`;
+            }
+        }
+
+        function addEvent(type, message, data, timestamp) {
+            const eventsEl = document.getElementById('events');
+
+            const eventEl = document.createElement('div');
+            eventEl.className = `event ${type.replace(/\./g, '-')}`;
+
+            const typeEl = document.createElement('div');
+            typeEl.className = 'event-type';
+            typeEl.textContent = message;
+
+            const timeEl = document.createElement('div');
+            timeEl.className = 'event-time';
+            timeEl.textContent = timestamp || new Date().toLocaleTimeString();
+
+            const dataEl = document.createElement('div');
+            dataEl.className = 'event-data';
+            dataEl.textContent = JSON.stringify(data, null, 2);
+
+            eventEl.appendChild(typeEl);
+            eventEl.appendChild(timeEl);
+            eventEl.appendChild(dataEl);
+
+            // Add to top of list
+            eventsEl.insertBefore(eventEl, eventsEl.firstChild);
+
+            // Limit to 100 events
+            while (eventsEl.children.length > 100) {
+                eventsEl.removeChild(eventsEl.lastChild);
+            }
+        }
+
+        function clearEvents() {
+            document.getElementById('events').innerHTML = '';
+            eventCount = 0;
+            storiesStarted = 0;
+            storiesCompleted = 0;
+            testsPassed = 0;
+            document.getElementById('total-events').textContent = '0';
+            document.getElementById('stories-started').textContent = '0';
+            document.getElementById('stories-completed').textContent = '0';
+            document.getElementById('tests-passed').textContent = '0';
+        }
+
+        function sendCommand() {
+            const command = document.getElementById('command-input').value.trim();
+            if (!command) {
+                alert('Please enter a command');
+                return;
+            }
+
+            // Send command to server
+            socket.emit('execute_command', { command: command });
+            addEvent('system', `🚀 Executing: "${command}"`, { command: command });
+
+            // Clear input
+            document.getElementById('command-input').value = '';
+        }
+
+        function stopExecution() {
+            socket.emit('stop_execution', {});
+            addEvent('system', '⏹️ Stop signal sent', {});
+        }
+
+        // Listen for command responses
+        socket.on('command_started', (data) => {
+            addEvent('system', `✅ Command started: ${data.prd_id || data.command}`, data);
+        });
+
+        socket.on('command_error', (data) => {
+            addEvent('error', `❌ Error: ${data.error}`, data);
+        });
+
+        socket.on('command_completed', (data) => {
+            const icon = data.success ? '✅' : '❌';
+            const message = data.summary || (data.success ? 'Task completed successfully' : 'Task failed');
+            addEvent('system', `${icon} ${message}`, data);
+        });
+
+        // Allow Enter key to send command
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('command-input');
+            if (input) {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendCommand();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

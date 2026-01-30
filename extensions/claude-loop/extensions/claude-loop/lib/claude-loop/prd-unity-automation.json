@@ -1,0 +1,264 @@
+{
+  "project": "unity-automation-for-quest3",
+  "branchName": "feature/unity-automation",
+  "description": "Extend claude-loop computer_use module with Unity Editor automation for Quest 3 XR development workflows",
+  "parallelization": {
+    "enabled": true,
+    "maxWorkers": 3
+  },
+  "userStories": [
+    {
+      "id": "UNITY-001",
+      "title": "Create Unity automation module",
+      "description": "As a developer, I want a dedicated Unity automation module that extends the existing macOS agent with Unity-specific commands",
+      "acceptanceCriteria": [
+        "Create agents/computer_use/unity.py module",
+        "Implement UnityAgent class extending MacOSAgent patterns",
+        "Add Unity app detection (is Unity running, which project is open)",
+        "Add basic Unity menu navigation (File, Edit, Assets, etc.)",
+        "Add Unity window detection (Project, Hierarchy, Inspector, Console)",
+        "Export from __init__.py alongside existing agents",
+        "Add to requirements.txt if new dependencies needed"
+      ],
+      "priority": 1,
+      "dependencies": [],
+      "fileScope": ["agents/computer_use/unity.py", "agents/computer_use/__init__.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "UNITY-002",
+      "title": "Implement Package Manager automation",
+      "description": "As a developer, I want to automate Unity Package Manager operations for SDK installation",
+      "acceptanceCriteria": [
+        "Implement open_package_manager() - opens Window > Package Manager",
+        "Implement wait_for_package_import(timeout) - waits for import to complete",
+        "Implement search_package(query) - searches in Package Manager",
+        "Implement install_package_from_asset_store(package_name) - installs from My Assets",
+        "Implement get_package_status(package_id) - check if package is installed",
+        "Handle package import dialogs (restart prompts, input system prompts)",
+        "Add progress detection for long imports"
+      ],
+      "priority": 2,
+      "dependencies": ["UNITY-001"],
+      "fileScope": ["agents/computer_use/unity.py"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "UNITY-003",
+      "title": "Implement Project Settings automation",
+      "description": "As a developer, I want to automate Unity Project Settings modifications for XR configuration",
+      "acceptanceCriteria": [
+        "Implement open_project_settings() - opens Edit > Project Settings",
+        "Implement navigate_to_setting(category) - navigates to setting category",
+        "Implement set_checkbox(setting_path, value) - toggles checkbox settings",
+        "Implement enable_xr_plugin(platform, plugin_name) - enables XR plugin",
+        "Implement get_xr_plugins() - returns list of enabled XR plugins",
+        "Support Android and iOS platform tabs",
+        "Handle XR Plug-in Management installation if needed"
+      ],
+      "priority": 3,
+      "dependencies": ["UNITY-001"],
+      "fileScope": ["agents/computer_use/unity.py"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "UNITY-004",
+      "title": "Implement Meta XR Setup Tool automation",
+      "description": "As a developer, I want to automate the Meta XR Project Setup Tool for Quest 3 configuration",
+      "acceptanceCriteria": [
+        "Implement open_meta_setup_tool() - opens Meta > Tools > Project Setup Tool",
+        "Implement run_fix_all() - clicks Fix All button",
+        "Implement run_apply_all() - clicks Apply All button",
+        "Implement get_setup_issues() - reads current issues from the tool",
+        "Implement wait_for_setup_complete() - waits for all fixes applied",
+        "Handle case where Meta menu doesn't exist (SDK not installed)",
+        "Return structured results with fixed vs remaining issues"
+      ],
+      "priority": 4,
+      "dependencies": ["UNITY-002"],
+      "fileScope": ["agents/computer_use/unity.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "UNITY-005",
+      "title": "Implement Build automation",
+      "description": "As a developer, I want to automate Unity build process for Android APK generation",
+      "acceptanceCriteria": [
+        "Implement open_build_settings() - opens File > Build Settings (or Build Profiles)",
+        "Implement switch_platform(platform) - switches to Android/iOS",
+        "Implement set_build_options(options) - sets development build, profiler, etc.",
+        "Implement build(output_path) - triggers build and waits for completion",
+        "Implement build_and_run(device) - builds and deploys to connected device",
+        "Implement get_connected_devices() - lists ADB devices",
+        "Handle build errors and return structured error info"
+      ],
+      "priority": 5,
+      "dependencies": ["UNITY-001"],
+      "fileScope": ["agents/computer_use/unity.py"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "UNITY-006",
+      "title": "Implement Scripting Define Symbols automation",
+      "description": "As a developer, I want to automate scripting define symbol management for conditional compilation",
+      "acceptanceCriteria": [
+        "Implement get_define_symbols(platform) - reads current symbols",
+        "Implement add_define_symbol(platform, symbol) - adds a symbol",
+        "Implement remove_define_symbol(platform, symbol) - removes a symbol",
+        "Implement wait_for_recompilation() - waits for scripts to recompile",
+        "Navigate to Project Settings > Player > Scripting Define Symbols",
+        "Handle multi-platform symbol management",
+        "Return list of current symbols after modification"
+      ],
+      "priority": 6,
+      "dependencies": ["UNITY-003"],
+      "fileScope": ["agents/computer_use/unity.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "UNITY-007",
+      "title": "Implement Unity state detection",
+      "description": "As a developer, I want to detect Unity Editor state for waiting and error handling",
+      "acceptanceCriteria": [
+        "Implement is_compiling() - checks if scripts are compiling",
+        "Implement is_importing() - checks if assets are importing",
+        "Implement has_console_errors() - checks Console for errors",
+        "Implement get_console_messages(level) - reads Console output",
+        "Implement is_in_play_mode() - checks if Play mode is active",
+        "Implement wait_for_idle(timeout) - waits until no compilation/import",
+        "Use Console window and status bar detection"
+      ],
+      "priority": 7,
+      "dependencies": ["UNITY-001"],
+      "fileScope": ["agents/computer_use/unity.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "UNITY-008",
+      "title": "Implement Dialog handling",
+      "description": "As a developer, I want automatic handling of common Unity dialogs and prompts",
+      "acceptanceCriteria": [
+        "Detect 'Enable new Input System?' dialog and auto-click Yes",
+        "Detect 'API Update Required' dialog and auto-click 'I Made a Backup'",
+        "Detect 'Restart Editor?' dialog and auto-click Yes then wait",
+        "Detect 'Enter Safe Mode?' dialog and handle appropriately",
+        "Detect 'Build Failed' dialog and capture error message",
+        "Implement configurable dialog handlers via DialogConfig",
+        "Log all handled dialogs for debugging"
+      ],
+      "priority": 8,
+      "dependencies": ["UNITY-001", "UNITY-007"],
+      "fileScope": ["agents/computer_use/unity.py", "agents/computer_use/safety.py"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "UNITY-009",
+      "title": "Create Unity workflow orchestrator",
+      "description": "As a developer, I want high-level workflow commands for common Unity operations",
+      "acceptanceCriteria": [
+        "Create UnityWorkflows class in unity.py or separate file",
+        "Implement setup_quest3_project() - full Quest 3 SDK setup workflow",
+        "Implement install_meta_xr_sdk() - downloads and installs Meta XR SDK",
+        "Implement configure_xr_settings() - enables XR and applies settings",
+        "Implement build_and_deploy_quest() - builds and deploys to Quest",
+        "Each workflow uses lower-level methods from UNITY-001 through UNITY-008",
+        "Workflows support progress callbacks for status updates"
+      ],
+      "priority": 9,
+      "dependencies": ["UNITY-002", "UNITY-003", "UNITY-004", "UNITY-005", "UNITY-008"],
+      "fileScope": ["agents/computer_use/unity.py"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "UNITY-010",
+      "title": "Integrate Unity agent with claude-loop CLI",
+      "description": "As a developer, I want to invoke Unity automation from claude-loop commands",
+      "acceptanceCriteria": [
+        "Add unity.* command namespace to orchestrator.py",
+        "Support commands: unity.setup_quest3, unity.build, unity.deploy",
+        "Add --unity flag to claude-loop.sh for Unity-aware mode",
+        "Integrate with existing workflow YAML format",
+        "Add unity-specific dialog patterns to safety.py",
+        "Document Unity commands in README.md",
+        "Add example workflow: setup-quest3.yaml"
+      ],
+      "priority": 10,
+      "dependencies": ["UNITY-009"],
+      "fileScope": ["agents/computer_use/orchestrator.py", "agents/computer_use/README.md", "claude-loop.sh"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "UNITY-011",
+      "title": "Create Unity automation tests",
+      "description": "As a developer, I want tests to verify Unity automation works correctly",
+      "acceptanceCriteria": [
+        "Create agents/computer_use/tests/test_unity.py",
+        "Add mock Unity responses for testing without Unity running",
+        "Test menu navigation, dialog handling, state detection",
+        "Test error handling for Unity not running, permission denied",
+        "Test workflow orchestration with mocked steps",
+        "Integrate with existing pytest setup",
+        "Add CI-compatible test mode (no actual Unity required)"
+      ],
+      "priority": 11,
+      "dependencies": ["UNITY-001", "UNITY-007", "UNITY-008"],
+      "fileScope": ["agents/computer_use/tests/test_unity.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "UNITY-012",
+      "title": "Execute Quest 3 XR setup workflow",
+      "description": "As a user, I want to run the full Quest 3 setup workflow to configure my Unity project",
+      "acceptanceCriteria": [
+        "Workflow installs Meta XR SDK from Asset Store",
+        "Workflow enables XR Plug-in Management with Oculus plugin",
+        "Workflow runs Meta Project Setup Tool Fix All and Apply All",
+        "Workflow adds OCULUS_XR_SDK scripting define symbol",
+        "Workflow waits for all imports and recompilation",
+        "Workflow builds APK with development options",
+        "Workflow deploys to connected Quest 3",
+        "Workflow reports success/failure with detailed logs"
+      ],
+      "priority": 12,
+      "dependencies": ["UNITY-010"],
+      "fileScope": [],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku",
+      "passes": false,
+      "notes": "This is an execution story - uses the implemented features"
+    }
+  ]
+}

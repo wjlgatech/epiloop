@@ -56,7 +56,7 @@ export async function buildGatewayInstallPlan(params: {
     token: params.token,
     launchdLabel:
       process.platform === "darwin"
-        ? resolveGatewayLaunchAgentLabel(params.env.CLAWDBOT_PROFILE)
+        ? resolveGatewayLaunchAgentLabel(params.env.EPILOOP_PROFILE)
         : undefined,
   });
 
@@ -66,5 +66,5 @@ export async function buildGatewayInstallPlan(params: {
 export function gatewayInstallErrorHint(platform = process.platform): string {
   return platform === "win32"
     ? "Tip: rerun from an elevated PowerShell (Start → type PowerShell → right-click → Run as administrator) or skip service install."
-    : `Tip: rerun \`${formatCliCommand("clawdbot gateway install")}\` after fixing the error.`;
+    : `Tip: rerun \`${formatCliCommand("epiloop gateway install")}\` after fixing the error.`;
 }

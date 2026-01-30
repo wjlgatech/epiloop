@@ -21,52 +21,52 @@ describe("systemd runtime parsing", () => {
 });
 
 describe("resolveSystemdUserUnitPath", () => {
-  it("uses default service name when CLAWDBOT_PROFILE is default", () => {
-    const env = { HOME: "/home/test", CLAWDBOT_PROFILE: "default" };
+  it("uses default service name when EPILOOP_PROFILE is default", () => {
+    const env = { HOME: "/home/test", EPILOOP_PROFILE: "default" };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/clawdbot-gateway.service",
+      "/home/test/.config/systemd/user/epiloop-gateway.service",
     );
   });
 
-  it("uses default service name when CLAWDBOT_PROFILE is unset", () => {
+  it("uses default service name when EPILOOP_PROFILE is unset", () => {
     const env = { HOME: "/home/test" };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/clawdbot-gateway.service",
+      "/home/test/.config/systemd/user/epiloop-gateway.service",
     );
   });
 
-  it("uses profile-specific service name when CLAWDBOT_PROFILE is set to a custom value", () => {
-    const env = { HOME: "/home/test", CLAWDBOT_PROFILE: "jbphoenix" };
+  it("uses profile-specific service name when EPILOOP_PROFILE is set to a custom value", () => {
+    const env = { HOME: "/home/test", EPILOOP_PROFILE: "jbphoenix" };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/clawdbot-gateway-jbphoenix.service",
+      "/home/test/.config/systemd/user/epiloop-gateway-jbphoenix.service",
     );
   });
 
-  it("prefers CLAWDBOT_SYSTEMD_UNIT over CLAWDBOT_PROFILE", () => {
+  it("prefers EPILOOP_SYSTEMD_UNIT over EPILOOP_PROFILE", () => {
     const env = {
       HOME: "/home/test",
-      CLAWDBOT_PROFILE: "jbphoenix",
-      CLAWDBOT_SYSTEMD_UNIT: "custom-unit",
+      EPILOOP_PROFILE: "jbphoenix",
+      EPILOOP_SYSTEMD_UNIT: "custom-unit",
     };
     expect(resolveSystemdUserUnitPath(env)).toBe(
       "/home/test/.config/systemd/user/custom-unit.service",
     );
   });
 
-  it("handles CLAWDBOT_SYSTEMD_UNIT with .service suffix", () => {
+  it("handles EPILOOP_SYSTEMD_UNIT with .service suffix", () => {
     const env = {
       HOME: "/home/test",
-      CLAWDBOT_SYSTEMD_UNIT: "custom-unit.service",
+      EPILOOP_SYSTEMD_UNIT: "custom-unit.service",
     };
     expect(resolveSystemdUserUnitPath(env)).toBe(
       "/home/test/.config/systemd/user/custom-unit.service",
     );
   });
 
-  it("trims whitespace from CLAWDBOT_SYSTEMD_UNIT", () => {
+  it("trims whitespace from EPILOOP_SYSTEMD_UNIT", () => {
     const env = {
       HOME: "/home/test",
-      CLAWDBOT_SYSTEMD_UNIT: "  custom-unit  ",
+      EPILOOP_SYSTEMD_UNIT: "  custom-unit  ",
     };
     expect(resolveSystemdUserUnitPath(env)).toBe(
       "/home/test/.config/systemd/user/custom-unit.service",
@@ -74,23 +74,23 @@ describe("resolveSystemdUserUnitPath", () => {
   });
 
   it("handles case-insensitive 'Default' profile", () => {
-    const env = { HOME: "/home/test", CLAWDBOT_PROFILE: "Default" };
+    const env = { HOME: "/home/test", EPILOOP_PROFILE: "Default" };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/clawdbot-gateway.service",
+      "/home/test/.config/systemd/user/epiloop-gateway.service",
     );
   });
 
   it("handles case-insensitive 'DEFAULT' profile", () => {
-    const env = { HOME: "/home/test", CLAWDBOT_PROFILE: "DEFAULT" };
+    const env = { HOME: "/home/test", EPILOOP_PROFILE: "DEFAULT" };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/clawdbot-gateway.service",
+      "/home/test/.config/systemd/user/epiloop-gateway.service",
     );
   });
 
-  it("trims whitespace from CLAWDBOT_PROFILE", () => {
-    const env = { HOME: "/home/test", CLAWDBOT_PROFILE: "  myprofile  " };
+  it("trims whitespace from EPILOOP_PROFILE", () => {
+    const env = { HOME: "/home/test", EPILOOP_PROFILE: "  myprofile  " };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/clawdbot-gateway-myprofile.service",
+      "/home/test/.config/systemd/user/epiloop-gateway-myprofile.service",
     );
   });
 });

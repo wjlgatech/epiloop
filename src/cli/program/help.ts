@@ -5,40 +5,37 @@ import { formatCliBannerLine, hasEmittedCliBanner } from "../banner.js";
 import type { ProgramContext } from "./context.js";
 
 const EXAMPLES = [
+  ["epiloop channels login --verbose", "Link personal WhatsApp Web and show QR + connection logs."],
   [
-    "clawdbot channels login --verbose",
-    "Link personal WhatsApp Web and show QR + connection logs.",
-  ],
-  [
-    'clawdbot message send --target +15555550123 --message "Hi" --json',
+    'epiloop message send --target +15555550123 --message "Hi" --json',
     "Send via your web session and print JSON result.",
   ],
-  ["clawdbot gateway --port 18789", "Run the WebSocket Gateway locally."],
-  ["clawdbot --dev gateway", "Run a dev Gateway (isolated state/config) on ws://127.0.0.1:19001."],
-  ["clawdbot gateway --force", "Kill anything bound to the default gateway port, then start it."],
-  ["clawdbot gateway ...", "Gateway control via WebSocket."],
+  ["epiloop gateway --port 18789", "Run the WebSocket Gateway locally."],
+  ["epiloop --dev gateway", "Run a dev Gateway (isolated state/config) on ws://127.0.0.1:19001."],
+  ["epiloop gateway --force", "Kill anything bound to the default gateway port, then start it."],
+  ["epiloop gateway ...", "Gateway control via WebSocket."],
   [
-    'clawdbot agent --to +15555550123 --message "Run summary" --deliver',
+    'epiloop agent --to +15555550123 --message "Run summary" --deliver',
     "Talk directly to the agent using the Gateway; optionally send the WhatsApp reply.",
   ],
   [
-    'clawdbot message send --channel telegram --target @mychat --message "Hi"',
+    'epiloop message send --channel telegram --target @mychat --message "Hi"',
     "Send via your Telegram bot.",
   ],
 ] as const;
 
 export function configureProgramHelp(program: Command, ctx: ProgramContext) {
   program
-    .name("clawdbot")
+    .name("epiloop")
     .description("")
     .version(ctx.programVersion)
     .option(
       "--dev",
-      "Dev profile: isolate state under ~/.clawdbot-dev, default gateway port 19001, and shift derived ports (browser/canvas)",
+      "Dev profile: isolate state under ~/.epiloop-dev, default gateway port 19001, and shift derived ports (browser/canvas)",
     )
     .option(
       "--profile <name>",
-      "Use a named profile (isolates CLAWDBOT_STATE_DIR/CLAWDBOT_CONFIG_PATH under ~/.clawdbot-<name>)",
+      "Use a named profile (isolates EPILOOP_STATE_DIR/EPILOOP_CONFIG_PATH under ~/.epiloop-<name>)",
     );
 
   program.option("--no-color", "Disable ANSI colors", false);

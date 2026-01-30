@@ -1,0 +1,206 @@
+# claude-loop Configuration
+# Copy to config.yaml and customize
+
+# ============================================================================
+# Agent Integration
+# ============================================================================
+
+agents:
+  # Path to claude-agents directory (absolute or relative to claude-loop)
+  directory: "~/Documents/Projects/claude-agents"
+
+  # Enable automatic agent selection based on story keywords
+  auto_select: true
+
+  # Maximum agents to load per iteration (prevents context bloat)
+  max_per_iteration: 2
+
+  # Maximum tokens per agent prompt (truncate if exceeded)
+  max_tokens_per_agent: 1000
+
+  # Enabled tiers (1=core, 2=curated, 3=domain, 4=community)
+  # Higher tiers require explicit opt-in for security
+  enabled_tiers:
+    - 1  # Core (always trusted)
+    - 2  # Curated specialists
+
+  # Enable agent composition (combine multiple agent expertise)
+  composition_mode: true
+
+  # Fallback agent if no match found (empty = no fallback)
+  fallback_agent: ""
+
+# ============================================================================
+# Safety & Cost Controls
+# ============================================================================
+
+safety:
+  # Total token budget per story (agents + prompt + context)
+  token_budget_per_story: 15000
+
+  # Require agent manifest to exist (prevents loading unknown agents)
+  require_manifest: true
+
+  # Block community agents (tier 4) by default
+  block_community: true
+
+  # Sandbox mode for untrusted agents (restricts capabilities)
+  sandbox_untrusted: true
+
+  # Validate agent output before applying
+  validate_output: true
+
+# ============================================================================
+# Quality Gates
+# ============================================================================
+
+quality:
+  # Run tests before marking story complete
+  require_tests: true
+
+  # Run typecheck before marking story complete
+  require_typecheck: true
+
+  # Run linter before marking story complete
+  require_lint: false
+
+  # Minimum test coverage percentage (0 = disabled)
+  min_coverage: 0
+
+  # Run security scan on changes
+  security_scan: false
+
+# ============================================================================
+# Two-Stage Review System (US-005)
+# ============================================================================
+
+review:
+  # Enable two-stage review (spec compliance + code quality)
+  # When enabled, each story goes through:
+  #   Stage 1: Spec compliance (all requirements met, nothing extra)
+  #   Stage 2: Code quality review (code reviewer agent)
+  enabled: true
+
+  # Maximum review-fix cycles per story
+  # If review fails, agent will attempt fixes and re-review
+  # Set to 1 to require manual fixes after first failure
+  max_cycles: 2
+
+  # Reviewers to use for code quality stage (comma-separated)
+  # Options: claude (default), openai, gemini, deepseek
+  # Multiple reviewers provide diverse perspectives
+  reviewers: "claude"
+
+  # Minimum reviewer agreement (0.0-1.0)
+  # With multiple reviewers, this fraction must agree to pass
+  min_agreement: 0.67
+
+# ============================================================================
+# Execution Settings
+# ============================================================================
+
+execution:
+  # Maximum iterations before stopping
+  max_iterations: 10
+
+  # Delay between iterations (seconds)
+  delay_between_iterations: 2
+
+  # Verbose output
+  verbose: false
+
+  # Dry run (don't execute, just show what would happen)
+  dry_run: false
+
+  # Auto-commit changes after each story
+  auto_commit: true
+
+  # Create feature branch from PRD
+  auto_branch: true
+
+# ============================================================================
+# Logging & Monitoring
+# ============================================================================
+
+logging:
+  # Log level: debug, info, warn, error
+  level: "info"
+
+  # Log agent selection decisions
+  log_agent_selection: true
+
+  # Log token usage
+  log_token_usage: true
+
+  # Save iteration logs to file
+  save_logs: true
+  log_dir: "./logs"
+
+# ============================================================================
+# Model Failover (US-002)
+# ============================================================================
+
+failover:
+  # Enable automatic failover to different providers on errors
+  enabled: true
+
+  # Maximum total attempts across all providers
+  max_total_attempts: 12
+
+  # Exponential backoff configuration
+  backoff_base: 1.0  # Base delay in seconds
+  backoff_max: 60.0  # Maximum delay in seconds
+
+  # Provider chain (order matters: tries first provider, then falls back)
+  providers:
+    - name: anthropic
+      api_keys:
+        # Multiple keys for rotation on rate limits
+        - ${ANTHROPIC_API_KEY}
+        # - ${ANTHROPIC_API_KEY_2}  # Uncomment for key rotation
+      models:
+        - claude-3-5-sonnet-20241022
+        - claude-3-5-haiku-20241022
+      max_retries: 3
+      timeout: 60
+
+    - name: openai
+      api_keys:
+        - ${OPENAI_API_KEY}
+      models:
+        - gpt-4o
+        - gpt-4o-mini
+      max_retries: 3
+      timeout: 60
+
+    - name: google
+      api_keys:
+        - ${GOOGLE_API_KEY}
+      models:
+        - gemini-2.0-flash-exp
+        - gemini-1.5-pro
+      max_retries: 3
+      timeout: 60
+
+    - name: deepseek
+      api_keys:
+        - ${DEEPSEEK_API_KEY}
+      models:
+        - deepseek-chat
+        - deepseek-coder
+      base_url: https://api.deepseek.com
+      max_retries: 3
+      timeout: 60
+
+# ============================================================================
+# MCP Server (Optional)
+# ============================================================================
+
+mcp:
+  # Enable MCP server for additional agent discovery
+  enabled: false
+
+  # MCP server command
+  command: "python3"
+  args:
+    - "~/Documents/Projects/claude-agents/mcp-server/server.py"

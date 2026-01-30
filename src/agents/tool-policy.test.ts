@@ -20,8 +20,8 @@ describe("tool-policy", () => {
     expect(resolveToolProfilePolicy("nope")).toBeUndefined();
   });
 
-  it("includes core tool groups in group:clawdbot", () => {
-    const group = TOOL_GROUPS["group:clawdbot"];
+  it("includes core tool groups in group:epiloop", () => {
+    const group = TOOL_GROUPS["group:epiloop"];
     expect(group).toContain("browser");
     expect(group).toContain("message");
     expect(group).toContain("session_status");

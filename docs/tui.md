@@ -9,17 +9,17 @@ read_when:
 ## Quick start
 1) Start the Gateway.
 ```bash
-clawdbot gateway
+epiloop gateway
 ```
 2) Open the TUI.
 ```bash
-clawdbot tui
+epiloop tui
 ```
 3) Type a message and press Enter.
 
 Remote Gateway:
 ```bash
-clawdbot tui --url ws://<host>:<port> --token <gateway-token>
+epiloop tui --url ws://<host>:<port> --token <gateway-token>
 ```
 Use `--password` if your Gateway uses password auth.
 
@@ -46,7 +46,7 @@ Use `--password` if your Gateway uses password auth.
 - Turn delivery on:
   - `/deliver on`
   - or the Settings panel
-  - or start with `clawdbot tui --deliver`
+  - or start with `epiloop tui --deliver`
 
 ## Pickers + overlays
 - Model picker: list available models and set the session override.
@@ -122,5 +122,5 @@ Other Gateway slash commands (for example, `/context`) are forwarded to the Gate
 
 ## Troubleshooting
 - `disconnected`: ensure the Gateway is running and your `--url/--token/--password` are correct.
-- No agents in picker: check `clawdbot agents list` and your routing config.
+- No agents in picker: check `epiloop agents list` and your routing config.
 - Empty session picker: you might be in global scope or have no sessions yet.

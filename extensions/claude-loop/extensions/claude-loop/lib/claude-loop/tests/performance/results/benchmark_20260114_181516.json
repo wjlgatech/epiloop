@@ -1,0 +1,43 @@
+{
+  "timestamp": "2026-01-15T02:15:16Z",
+  "benchmarks": [
+    {
+      "name": "prd_parsing_8stories",
+      "duration_ms": 2209,
+      "story_count": 8,
+      "issue": "Excessive jq calls in validation loop"
+    },
+    {
+      "name": "monitoring_bc_overhead",
+      "duration_ms": 1517,
+      "iteration_count": 100,
+      "issue": "bc subprocess spawned per cost calculation"
+    },
+    {
+      "name": "dependency_graph_8stories",
+      "duration_ms": 192,
+      "story_count": 8,
+      "issue": "O(n² log n) topological sort"
+    },
+    {
+      "name": "dependency_graph_10stories",
+      "duration_ms": 85,
+      "story_count": 10,
+      "issue": "O(n² log n) topological sort"
+    },
+    {
+      "name": "dependency_graph_5stories",
+      "duration_ms": 86,
+      "story_count": 5,
+      "issue": "O(n² log n) topological sort"
+    },
+    {
+      "name": "disk_usage",
+      "total_kb": 28920,
+      "workers_kb": 104,
+      "logs_kb": 0,
+      "execution_log_kb": 92,
+      "issue": "No log rotation or cleanup strategy"
+    }
+  ]
+}

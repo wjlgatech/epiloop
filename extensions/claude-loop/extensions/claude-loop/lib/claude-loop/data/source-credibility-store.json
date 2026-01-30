@@ -1,0 +1,235 @@
+{
+  "domains": {
+    "arxiv.org": {
+      "score": 85,
+      "category": "academic",
+      "reason": "Preprint server for academic research, peer review not guaranteed but high quality",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "nature.com": {
+      "score": 95,
+      "category": "academic",
+      "reason": "Top-tier peer-reviewed scientific journal",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "science.org": {
+      "score": 95,
+      "category": "academic",
+      "reason": "Top-tier peer-reviewed scientific journal",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "pubmed.ncbi.nlm.nih.gov": {
+      "score": 90,
+      "category": "academic",
+      "reason": "NIH database of biomedical literature",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "ieee.org": {
+      "score": 90,
+      "category": "academic",
+      "reason": "Leading technical professional organization, peer-reviewed",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "acm.org": {
+      "score": 90,
+      "category": "academic",
+      "reason": "Association for Computing Machinery, peer-reviewed publications",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "scholar.google.com": {
+      "score": 75,
+      "category": "academic",
+      "reason": "Academic search engine, quality varies by source",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "researchgate.net": {
+      "score": 70,
+      "category": "academic",
+      "reason": "Academic social network, mix of peer-reviewed and preprints",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "nih.gov": {
+      "score": 92,
+      "category": "government",
+      "reason": "US National Institutes of Health, authoritative medical source",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "cdc.gov": {
+      "score": 90,
+      "category": "government",
+      "reason": "US Centers for Disease Control, authoritative health source",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "who.int": {
+      "score": 88,
+      "category": "government",
+      "reason": "World Health Organization, international health authority",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "nist.gov": {
+      "score": 92,
+      "category": "government",
+      "reason": "US National Institute of Standards and Technology",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "nasa.gov": {
+      "score": 92,
+      "category": "government",
+      "reason": "US space agency, authoritative for space and earth sciences",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "reuters.com": {
+      "score": 80,
+      "category": "major_news",
+      "reason": "Major international news agency, fact-based reporting",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "apnews.com": {
+      "score": 80,
+      "category": "major_news",
+      "reason": "Associated Press, fact-based news reporting",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "bbc.com": {
+      "score": 78,
+      "category": "major_news",
+      "reason": "British Broadcasting Corporation, established news organization",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "nytimes.com": {
+      "score": 75,
+      "category": "major_news",
+      "reason": "Major US newspaper, news and opinion sections differ in reliability",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "wsj.com": {
+      "score": 75,
+      "category": "major_news",
+      "reason": "Wall Street Journal, strong for business/finance news",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "economist.com": {
+      "score": 78,
+      "category": "major_news",
+      "reason": "The Economist, analysis-focused publication",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "techcrunch.com": {
+      "score": 65,
+      "category": "tech_publications",
+      "reason": "Technology news site, good for industry news",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "wired.com": {
+      "score": 65,
+      "category": "tech_publications",
+      "reason": "Technology and culture magazine",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "arstechnica.com": {
+      "score": 70,
+      "category": "tech_publications",
+      "reason": "Technical journalism with detailed analysis",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "hbr.org": {
+      "score": 75,
+      "category": "tech_publications",
+      "reason": "Harvard Business Review, business and management research",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "wikipedia.org": {
+      "score": 70,
+      "category": "reference",
+      "reason": "Crowdsourced encyclopedia, good for overviews but verify primary sources",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "britannica.com": {
+      "score": 82,
+      "category": "reference",
+      "reason": "Traditional encyclopedia with expert contributors",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "stackoverflow.com": {
+      "score": 68,
+      "category": "reference",
+      "reason": "Community Q&A for programming, quality varies by answer votes",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "developer.mozilla.org": {
+      "score": 88,
+      "category": "reference",
+      "reason": "Mozilla Developer Network, authoritative web documentation",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "docs.python.org": {
+      "score": 92,
+      "category": "reference",
+      "reason": "Official Python documentation",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "reddit.com": {
+      "score": 35,
+      "category": "social",
+      "reason": "Social platform, highly variable quality, verify claims elsewhere",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "twitter.com": {
+      "score": 30,
+      "category": "social",
+      "reason": "Social media, unverified claims common, use for primary sources only",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "x.com": {
+      "score": 30,
+      "category": "social",
+      "reason": "Social media (formerly Twitter), unverified claims common",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "medium.com": {
+      "score": 40,
+      "category": "blogs",
+      "reason": "Blogging platform, quality depends entirely on author",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "substack.com": {
+      "score": 42,
+      "category": "blogs",
+      "reason": "Newsletter platform, quality depends on author credentials",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "quora.com": {
+      "score": 38,
+      "category": "social",
+      "reason": "Q&A platform, answers vary widely in quality",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "linkedin.com": {
+      "score": 40,
+      "category": "social",
+      "reason": "Professional network, posts are opinion not fact-checked",
+      "last_updated": "2025-01-01T00:00:00Z"
+    },
+    "forbes.com": {
+      "score": 55,
+      "category": "tech_publications",
+      "reason": "Mix of staff and contributor content, quality varies",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  },
+  "corrections": [],
+  "metadata": {
+    "version": "1.0",
+    "description": "Initial credibility scores for common sources in research-loop",
+    "created": "2025-01-01T00:00:00Z",
+    "last_updated": "2025-01-01T00:00:00Z",
+    "scoring_guide": {
+      "90-100": "Highly authoritative - peer-reviewed, official sources",
+      "80-89": "Very reliable - established institutions, major outlets",
+      "70-79": "Generally reliable - quality publications, some caveats",
+      "50-69": "Mixed reliability - depends on specific content/author",
+      "30-49": "Low reliability - user-generated, unverified content",
+      "0-29": "Unreliable - known misinformation, satire, or spam"
+    }
+  }
+}

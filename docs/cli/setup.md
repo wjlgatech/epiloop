@@ -1,13 +1,13 @@
 ---
-summary: "CLI reference for `clawdbot setup` (initialize config + workspace)"
+summary: "CLI reference for `epiloop setup` (initialize config + workspace)"
 read_when:
   - You’re doing first-run setup without the full onboarding wizard
   - You want to set the default workspace path
 ---
 
-# `clawdbot setup`
+# `epiloop setup`
 
-Initialize `~/.clawdbot/clawdbot.json` and the agent workspace.
+Initialize `~/.epiloop/epiloop.json` and the agent workspace.
 
 Related:
 - Getting started: [Getting started](/start/getting-started)
@@ -16,13 +16,13 @@ Related:
 ## Examples
 
 ```bash
-clawdbot setup
-clawdbot setup --workspace ~/clawd
+epiloop setup
+epiloop setup --workspace ~/clawd
 ```
 
 To run the wizard via setup:
 
 ```bash
-clawdbot setup --wizard
+epiloop setup --wizard
 ```
 

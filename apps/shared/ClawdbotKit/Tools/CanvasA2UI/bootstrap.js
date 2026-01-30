@@ -4,7 +4,7 @@ import { ContextProvider } from "@lit/context";
 
 import { v0_8 } from "@a2ui/lit";
 import "@a2ui/lit/ui";
-import { themeContext } from "@clawdbot/a2ui-theme-context";
+import { themeContext } from "@epiloop/a2ui-theme-context";
 
 const modalStyles = css`
   dialog {
@@ -42,7 +42,7 @@ const buttonShadow = isAndroid ? "0 2px 10px rgba(6, 182, 212, 0.14)" : "0 10px 
 const statusShadow = isAndroid ? "0 2px 10px rgba(0, 0, 0, 0.18)" : "0 10px 24px rgba(0, 0, 0, 0.25)";
 const statusBlur = isAndroid ? "10px" : "14px";
 
-const clawdbotTheme = {
+const epiloopTheme = {
   components: {
     AudioPlayer: emptyClasses(),
     Button: emptyClasses(),
@@ -152,7 +152,7 @@ const clawdbotTheme = {
   },
 };
 
-class ClawdbotA2UIHost extends LitElement {
+class EpiloopA2UIHost extends LitElement {
   static properties = {
     surfaces: { state: true },
     pendingAction: { state: true },
@@ -162,7 +162,7 @@ class ClawdbotA2UIHost extends LitElement {
   #processor = v0_8.Data.createSignalA2uiMessageProcessor();
   #themeProvider = new ContextProvider(this, {
     context: themeContext,
-    initialValue: clawdbotTheme,
+    initialValue: epiloopTheme,
   });
 
   surfaces = [];
@@ -177,10 +177,10 @@ class ClawdbotA2UIHost extends LitElement {
       position: relative;
       box-sizing: border-box;
       padding:
-        var(--clawdbot-a2ui-inset-top, 0px)
-        var(--clawdbot-a2ui-inset-right, 0px)
-        var(--clawdbot-a2ui-inset-bottom, 0px)
-        var(--clawdbot-a2ui-inset-left, 0px);
+        var(--epiloop-a2ui-inset-top, 0px)
+        var(--epiloop-a2ui-inset-right, 0px)
+        var(--epiloop-a2ui-inset-bottom, 0px)
+        var(--epiloop-a2ui-inset-left, 0px);
     }
 
     #surfaces {
@@ -189,14 +189,14 @@ class ClawdbotA2UIHost extends LitElement {
       gap: 12px;
       height: 100%;
       overflow: auto;
-      padding-bottom: var(--clawdbot-a2ui-scroll-pad-bottom, 0px);
+      padding-bottom: var(--epiloop-a2ui-scroll-pad-bottom, 0px);
     }
 
     .status {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: var(--clawdbot-a2ui-status-top, 12px);
+      top: var(--epiloop-a2ui-status-top, 12px);
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -217,7 +217,7 @@ class ClawdbotA2UIHost extends LitElement {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      bottom: var(--clawdbot-a2ui-toast-bottom, 12px);
+      bottom: var(--epiloop-a2ui-toast-bottom, 12px);
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -243,7 +243,7 @@ class ClawdbotA2UIHost extends LitElement {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: var(--clawdbot-a2ui-empty-top, var(--clawdbot-a2ui-status-top, 12px));
+      top: var(--epiloop-a2ui-empty-top, var(--epiloop-a2ui-status-top, 12px));
       text-align: center;
       opacity: 0.8;
       padding: 10px 12px;
@@ -276,21 +276,21 @@ class ClawdbotA2UIHost extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    globalThis.clawdbotA2UI = {
+    globalThis.epiloopA2UI = {
       applyMessages: (messages) => this.applyMessages(messages),
       reset: () => this.reset(),
       getSurfaces: () => Array.from(this.#processor.getSurfaces().keys()),
     };
     this.addEventListener("a2uiaction", (evt) => this.#handleA2UIAction(evt));
     this.#statusListener = (evt) => this.#handleActionStatus(evt);
-    globalThis.addEventListener("clawdbot:a2ui-action-status", this.#statusListener);
+    globalThis.addEventListener("epiloop:a2ui-action-status", this.#statusListener);
     this.#syncSurfaces();
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     if (this.#statusListener) {
-      globalThis.removeEventListener("clawdbot:a2ui-action-status", this.#statusListener);
+      globalThis.removeEventListener("epiloop:a2ui-action-status", this.#statusListener);
       this.#statusListener = null;
     }
   }
@@ -393,15 +393,15 @@ class ClawdbotA2UIHost extends LitElement {
       ...(Object.keys(context).length ? { context } : {}),
     };
 
-    globalThis.__clawdbotLastA2UIAction = userAction;
+    globalThis.__epiloopLastA2UIAction = userAction;
 
     const handler =
-      globalThis.webkit?.messageHandlers?.clawdbotCanvasA2UIAction ??
-      globalThis.clawdbotCanvasA2UIAction;
+      globalThis.webkit?.messageHandlers?.epiloopCanvasA2UIAction ??
+      globalThis.epiloopCanvasA2UIAction;
     if (handler?.postMessage) {
       try {
         // WebKit message handlers support structured objects; Android's JS interface expects strings.
-        if (handler === globalThis.clawdbotCanvasA2UIAction) {
+        if (handler === globalThis.epiloopCanvasA2UIAction) {
           handler.postMessage(JSON.stringify({ userAction }));
         } else {
           handler.postMessage({ userAction });
@@ -481,4 +481,4 @@ class ClawdbotA2UIHost extends LitElement {
   }
 }
 
-customElements.define("clawdbot-a2ui-host", ClawdbotA2UIHost);
+customElements.define("epiloop-a2ui-host", EpiloopA2UIHost);

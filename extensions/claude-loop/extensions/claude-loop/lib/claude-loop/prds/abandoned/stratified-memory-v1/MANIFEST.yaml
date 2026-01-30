@@ -1,0 +1,29 @@
+id: SCALE-000
+title: Stratified Memory Architecture v1
+status: abandoned
+owner: claude-loop
+created_at: 2026-01-11T23:23:00Z
+abandoned_at: 2026-01-11T23:24:17Z
+
+description: Initial scalable self-improvement architecture with experience store and extension system. Only 1 of 15 stories completed before being superseded by v2 which addressed additional concerns around domain contextualization and human-gated promotions.
+
+tags:
+  - deprecated
+  - scalability
+  - memory
+  - architecture
+
+priority: medium
+estimated_effort: x-large
+
+story_count: 15
+completed_stories: 1
+branch_name: feature/stratified-memory
+
+abandon_reason: "Superseded by SCALE-001 (Stratified Memory v2) which addresses additional concerns: domain-contextualized aggregation, experience feedback loops, privacy-first design, human-gated promotions, conflict detection, and leading indicators."
+
+superseded_by: SCALE-001
+
+contributors:
+  - name: claude-loop
+    role: author

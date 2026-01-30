@@ -1,0 +1,108 @@
+#!/bin/bash
+#
+# Integration patch for parallel-prd-manager.sh into claude-loop.sh
+#
+# This script adds parallel PRD execution support with git worktrees
+#
+
+# Add to Configuration section (after line 100):
+# Parallel PRD Management
+PARALLEL_PRD_MANAGER="${SCRIPT_DIR}/lib/parallel-prd-manager.sh"
+PARALLEL_PRD_ENABLED=true
+FORCE_SEQUENTIAL=false  # Set to true to disable worktrees and force queuing
+
+# Add to initialization section (before main loop):
+source_parallel_prd_manager() {
+    if [ "$PARALLEL_PRD_ENABLED" = true ] && [ -f "$PARALLEL_PRD_MANAGER" ]; then
+        source "$PARALLEL_PRD_MANAGER"
+        return 0
+    fi
+    return 1
+}
+
+handle_parallel_prd_execution() {
+    local prd_file="$1"
+    local target_branch="$2"
+
+    if ! source_parallel_prd_manager; then
+        # Parallel manager not available, proceed normally
+        return 0
+    fi
+
+    local result
+    result=$(handle_parallel_execution "$prd_file" "$target_branch" "$FORCE_SEQUENTIAL")
+    local exit_code=$?
+
+    case "$result" in
+        NO_CONFLICT)
+            # No parallel execution detected, proceed normally
+            log_info "No parallel execution conflicts detected"
+            WORKTREE_PATH="NONE"
+            LOCK_FILE=$(acquire_lock "$prd_file" "$target_branch")
+            return 0
+            ;;
+
+        WORKTREE:*)
+            # Worktree created, run in worktree directory
+            WORKTREE_PATH="${result#WORKTREE:}"
+            log_success "Created worktree for parallel execution: $WORKTREE_PATH"
+            log_info "This PRD will run in isolation from other PRDs"
+
+            # Change to worktree directory
+            cd "$WORKTREE_PATH"
+
+            # Update PRD_FILE path to be relative to worktree
+            PRD_FILE="$prd_file"
+
+            LOCK_FILE=$(acquire_lock "$prd_file" "$target_branch")
+            return 0
+            ;;
+
+        QUEUED:*)
+            # PRD queued for sequential execution
+            local queue_position="${result#QUEUED:}"
+            log_warn "Parallel execution conflict detected!"
+            log_info "Another PRD is running on a different branch"
+            log_info "This PRD has been queued for execution (position: $queue_position)"
+            log_info ""
+            log_info "Options:"
+            log_info "  1. Wait for other PRD to complete (automatic)"
+            log_info "  2. Cancel this execution (Ctrl+C)"
+            log_info "  3. Run 'git worktree' manually for true parallel execution"
+            log_info ""
+            log_info "Waiting for queue to clear..."
+
+            # Wait for queue to clear
+            while [ "$(get_queue_size)" -gt 0 ]; do
+                sleep 5
+            done
+
+            # Retry execution
+            handle_parallel_prd_execution "$prd_file" "$target_branch"
+            return $?
+            ;;
+
+        *)
+            log_error "Unexpected result from parallel execution handler: $result"
+            return 1
+            ;;
+    esac
+}
+
+# Trap for cleanup
+setup_parallel_cleanup() {
+    if [ -n "${LOCK_FILE:-}" ]; then
+        trap "cleanup_on_exit '$LOCK_FILE' '${WORKTREE_PATH:-NONE}'" EXIT INT TERM
+    fi
+}
+
+# Add new CLI option
+handle_parallel_status_command() {
+    if source_parallel_prd_manager; then
+        get_parallel_execution_status
+        exit 0
+    else
+        echo "Error: Parallel PRD manager not available" >&2
+        exit 1
+    fi
+}

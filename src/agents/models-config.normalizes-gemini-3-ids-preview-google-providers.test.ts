@@ -2,13 +2,13 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { withTempHome as withTempHomeBase } from "../../test/helpers/temp-home.js";
-import type { ClawdbotConfig } from "../config/config.js";
+import type { EpiloopConfig } from "../config/config.js";
 
 async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
-  return withTempHomeBase(fn, { prefix: "clawdbot-models-" });
+  return withTempHomeBase(fn, { prefix: "epiloop-models-" });
 }
 
-const _MODELS_CONFIG: ClawdbotConfig = {
+const _MODELS_CONFIG: EpiloopConfig = {
   models: {
     providers: {
       "custom-proxy": {
@@ -46,10 +46,10 @@ describe("models-config", () => {
   it("normalizes gemini 3 ids to preview for google providers", async () => {
     await withTempHome(async () => {
       vi.resetModules();
-      const { ensureClawdbotModelsJson } = await import("./models-config.js");
-      const { resolveClawdbotAgentDir } = await import("./agent-paths.js");
+      const { ensureEpiloopModelsJson } = await import("./models-config.js");
+      const { resolveEpiloopAgentDir } = await import("./agent-paths.js");
 
-      const cfg: ClawdbotConfig = {
+      const cfg: EpiloopConfig = {
         models: {
           providers: {
             google: {
@@ -83,9 +83,9 @@ describe("models-config", () => {
         },
       };
 
-      await ensureClawdbotModelsJson(cfg);
+      await ensureEpiloopModelsJson(cfg);
 
-      const modelPath = path.join(resolveClawdbotAgentDir(), "models.json");
+      const modelPath = path.join(resolveEpiloopAgentDir(), "models.json");
       const raw = await fs.readFile(modelPath, "utf8");
       const parsed = JSON.parse(raw) as {
         providers: Record<string, { models: Array<{ id: string }> }>;

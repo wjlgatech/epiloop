@@ -1,0 +1,117 @@
+{
+  "question_id": "INTER-008",
+  "question": "What are the geopolitical implications of semiconductor supply chain concentration?",
+  "expert_sources": [
+    {
+      "title": "Chip War: The Fight for the World's Most Critical Technology",
+      "authors": ["Miller"],
+      "venue": "Scribner 2022",
+      "url": "https://www.simonandschuster.com/books/Chip-War/Chris-Miller/9781982172008",
+      "relevance": "Comprehensive semiconductor geopolitics history"
+    },
+    {
+      "title": "CHIPS and Science Act",
+      "authors": ["US Congress"],
+      "venue": "US Government 2022",
+      "url": "https://www.congress.gov/bill/117th-congress/house-bill/4346",
+      "relevance": "US policy response"
+    },
+    {
+      "title": "Taiwan's Role in the Global Semiconductor Supply Chain",
+      "authors": ["SIA"],
+      "venue": "Semiconductor Industry Association 2021",
+      "url": "https://www.semiconductors.org/",
+      "relevance": "Industry supply chain analysis"
+    },
+    {
+      "title": "China's Semiconductor Ambitions",
+      "authors": ["CSIS reports"],
+      "venue": "Center for Strategic and International Studies",
+      "url": "https://www.csis.org/",
+      "relevance": "China policy analysis"
+    },
+    {
+      "title": "Export Controls on Semiconductors",
+      "authors": ["BIS"],
+      "venue": "Bureau of Industry and Security 2022",
+      "url": "https://www.bis.doc.gov/",
+      "relevance": "US export control regulations"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "TSMC in Taiwan produces ~90% of advanced (<7nm) chips, creating critical chokepoint",
+      "importance": "critical",
+      "sources": ["Miller 2022", "SIA 2021"]
+    },
+    {
+      "finding": "Chips are essential for military systems, AI, and economic competitiveness",
+      "importance": "critical",
+      "sources": ["Miller 2022"]
+    },
+    {
+      "finding": "US CHIPS Act allocates $52B to rebuild domestic semiconductor manufacturing",
+      "importance": "critical",
+      "sources": ["CHIPS Act 2022"]
+    },
+    {
+      "finding": "US export controls aim to prevent China from developing advanced AI/military chips",
+      "importance": "critical",
+      "sources": ["BIS 2022", "CSIS"]
+    },
+    {
+      "finding": "Building a leading-edge fab takes 3-5 years and $20B+, limiting rapid reshoring",
+      "importance": "high",
+      "sources": ["Industry analyses"]
+    },
+    {
+      "finding": "Equipment for chip manufacturing is also concentrated (ASML for EUV lithography)",
+      "importance": "high",
+      "sources": ["Miller 2022"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "Market forces will naturally diversify supply chains",
+      "validity": "Partially valid, but economics favor concentration",
+      "sources": ["Economic analyses"]
+    },
+    {
+      "argument": "Taiwan conflict risk is overstated",
+      "validity": "Debatable, but risk is non-zero and consequences severe",
+      "sources": ["Various security analyses"]
+    },
+    {
+      "argument": "Export controls may accelerate Chinese self-sufficiency",
+      "validity": "Possible long-term, but near-term delays are significant",
+      "sources": ["CSIS"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.85,
+    "areas_of_uncertainty": [
+      "Timeline for supply chain diversification",
+      "Effectiveness of export controls",
+      "China's ability to catch up technologically"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "TSMC concentration in Taiwan",
+      "National security implications",
+      "US CHIPS Act or similar policy response",
+      "China's technological ambitions/US response"
+    ],
+    "should_include": [
+      "Equipment supplier concentration (ASML)",
+      "Fab construction challenges",
+      "Military applications"
+    ],
+    "bonus_points": [
+      "Export control details",
+      "Japan/Korea/Europe roles",
+      "Economic vs security tradeoffs"
+    ]
+  }
+}

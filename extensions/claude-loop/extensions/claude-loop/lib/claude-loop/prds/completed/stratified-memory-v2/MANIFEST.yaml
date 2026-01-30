@@ -1,0 +1,41 @@
+id: SCALE-001
+title: Stratified Memory Architecture v2
+status: completed
+owner: claude-loop
+created_at: 2026-01-11T23:24:17Z
+updated_at: 2026-01-12T07:13:00Z
+completed_at: 2026-01-12T07:13:00Z
+
+description: Revised scalable self-improvement architecture addressing domain-contextualized aggregation, experience feedback loops, privacy-first design, human-gated promotions, conflict detection, and leading indicators.
+
+tags:
+  - scalability
+  - memory
+  - self-improvement
+  - architecture
+  - experience-store
+
+priority: high
+estimated_effort: x-large
+
+story_count: 16
+completed_stories: 16
+branch_name: feature/stratified-memory-v2
+
+supersedes: SCALE-000
+
+approval:
+  approved_by: claude-loop
+  approved_at: 2026-01-11T23:30:00Z
+  approval_hash: 61b76db06040e02ff0c21f8104c48bfbb799fb99cb59cade708624edf77ea7a5
+
+contributors:
+  - name: claude-loop
+    role: author
+  - name: Claude Opus 4.5
+    role: implementer
+
+related_docs:
+  - path: docs/adrs/ADR-002-stratified-memory.md
+    type: adr
+    title: Stratified Memory Architecture Decision

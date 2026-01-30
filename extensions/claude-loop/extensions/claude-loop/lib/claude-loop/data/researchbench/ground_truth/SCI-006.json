@@ -1,0 +1,117 @@
+{
+  "question_id": "SCI-006",
+  "question": "How does the human gut microbiome influence health and disease?",
+  "expert_sources": [
+    {
+      "title": "Structure, function and diversity of the healthy human microbiome",
+      "authors": ["Human Microbiome Project Consortium"],
+      "venue": "Nature 2012",
+      "url": "https://doi.org/10.1038/nature11234",
+      "relevance": "Foundational microbiome characterization"
+    },
+    {
+      "title": "The gut microbiota and host health: a new clinical frontier",
+      "authors": ["Lynch and Pedersen"],
+      "venue": "Gut 2016",
+      "url": "https://doi.org/10.1136/gutjnl-2015-309990",
+      "relevance": "Comprehensive microbiome-health review"
+    },
+    {
+      "title": "The Gut-Brain Axis: Interactions Between Enteric Microbiota, Central and Enteric Nervous Systems",
+      "authors": ["Carabotti et al."],
+      "venue": "Annals of Gastroenterology 2015",
+      "url": "https://doi.org/10.20524/aog.2015.0010",
+      "relevance": "Gut-brain communication mechanisms"
+    },
+    {
+      "title": "Gut microbiota in human metabolic health and disease",
+      "authors": ["Fan and Pedersen"],
+      "venue": "Nature Reviews Microbiology 2021",
+      "url": "https://doi.org/10.1038/s41579-020-0433-9",
+      "relevance": "Metabolic disease connections"
+    },
+    {
+      "title": "Antibiotics in early life and obesity",
+      "authors": ["Cox and Blaser"],
+      "venue": "Nature Reviews Endocrinology 2015",
+      "url": "https://doi.org/10.1038/nrendo.2014.210",
+      "relevance": "Early-life microbiome disruption effects"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "The gut contains trillions of microorganisms encoding 100x more genes than human genome",
+      "importance": "critical",
+      "sources": ["HMP Consortium 2012"]
+    },
+    {
+      "finding": "Microbiome produces metabolites (SCFAs, neurotransmitters) that affect host physiology",
+      "importance": "critical",
+      "sources": ["Lynch and Pedersen 2016"]
+    },
+    {
+      "finding": "Gut-brain axis enables bidirectional communication affecting mood and cognition",
+      "importance": "critical",
+      "sources": ["Carabotti et al. 2015"]
+    },
+    {
+      "finding": "Dysbiosis is associated with obesity, IBD, diabetes, and mental health conditions",
+      "importance": "critical",
+      "sources": ["Fan and Pedersen 2021"]
+    },
+    {
+      "finding": "Early-life antibiotics disrupt microbiome development with lasting effects",
+      "importance": "high",
+      "sources": ["Cox and Blaser 2015"]
+    },
+    {
+      "finding": "Diet rapidly and significantly alters microbiome composition",
+      "importance": "high",
+      "sources": ["Dietary intervention studies"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "Many microbiome-disease associations are correlational, not causal",
+      "validity": "Valid concern, mechanistic studies ongoing",
+      "sources": ["Critical reviews"]
+    },
+    {
+      "argument": "Probiotic interventions often show limited clinical benefit",
+      "validity": "True for many commercial probiotics",
+      "sources": ["Meta-analyses of probiotic trials"]
+    },
+    {
+      "argument": "Individual variation makes general recommendations difficult",
+      "validity": "Valid, personalized approaches being developed",
+      "sources": ["Personalized nutrition studies"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.80,
+    "areas_of_uncertainty": [
+      "Causal mechanisms for many disease associations",
+      "Optimal microbiome interventions",
+      "Long-term effects of microbiome manipulation"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "Microbiome composition and diversity",
+      "Immune system interactions",
+      "Gut-brain axis",
+      "Diet and antibiotic effects"
+    ],
+    "should_include": [
+      "Short-chain fatty acids (SCFAs)",
+      "Specific disease associations",
+      "Dysbiosis concept"
+    ],
+    "bonus_points": [
+      "Fecal microbiota transplantation",
+      "Metabolite production specifics",
+      "Probiotic limitations"
+    ]
+  }
+}

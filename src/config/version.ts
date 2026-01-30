@@ -1,4 +1,4 @@
-export type ClawdbotVersion = {
+export type EpiloopVersion = {
   major: number;
   minor: number;
   patch: number;
@@ -7,7 +7,7 @@ export type ClawdbotVersion = {
 
 const VERSION_RE = /^v?(\d+)\.(\d+)\.(\d+)(?:-(\d+))?/;
 
-export function parseClawdbotVersion(raw: string | null | undefined): ClawdbotVersion | null {
+export function parseEpiloopVersion(raw: string | null | undefined): EpiloopVersion | null {
   if (!raw) return null;
   const match = raw.trim().match(VERSION_RE);
   if (!match) return null;
@@ -20,12 +20,12 @@ export function parseClawdbotVersion(raw: string | null | undefined): ClawdbotVe
   };
 }
 
-export function compareClawdbotVersions(
+export function compareEpiloopVersions(
   a: string | null | undefined,
   b: string | null | undefined,
 ): number | null {
-  const parsedA = parseClawdbotVersion(a);
-  const parsedB = parseClawdbotVersion(b);
+  const parsedA = parseEpiloopVersion(a);
+  const parsedB = parseEpiloopVersion(b);
   if (!parsedA || !parsedB) return null;
   if (parsedA.major !== parsedB.major) return parsedA.major < parsedB.major ? -1 : 1;
   if (parsedA.minor !== parsedB.minor) return parsedA.minor < parsedB.minor ? -1 : 1;

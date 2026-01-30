@@ -1,0 +1,117 @@
+{
+  "question_id": "SCI-004",
+  "question": "How do mRNA vaccines work and how did they enable rapid COVID-19 vaccine development?",
+  "expert_sources": [
+    {
+      "title": "mRNA vaccines - a new era in vaccinology",
+      "authors": ["Pardi et al."],
+      "venue": "Nature Reviews Drug Discovery 2018",
+      "url": "https://doi.org/10.1038/nrd.2017.243",
+      "relevance": "Pre-COVID mRNA vaccine technology review"
+    },
+    {
+      "title": "Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine",
+      "authors": ["Polack et al."],
+      "venue": "NEJM 2020",
+      "url": "https://doi.org/10.1056/NEJMoa2034577",
+      "relevance": "Pfizer-BioNTech phase 3 trial"
+    },
+    {
+      "title": "Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine",
+      "authors": ["Baden et al."],
+      "venue": "NEJM 2021",
+      "url": "https://doi.org/10.1056/NEJMoa2035389",
+      "relevance": "Moderna phase 3 trial"
+    },
+    {
+      "title": "Lipid nanoparticle technology for clinical translation of siRNA therapeutics",
+      "authors": ["Cullis and Hope"],
+      "venue": "Molecular Therapy 2017",
+      "url": "https://doi.org/10.1016/j.ymthe.2017.03.013",
+      "relevance": "LNP delivery technology"
+    },
+    {
+      "title": "N1-methylpseudouridine modification of mRNA",
+      "authors": ["Kariko et al."],
+      "venue": "Immunity 2005",
+      "url": "https://doi.org/10.1016/j.immuni.2005.06.008",
+      "relevance": "Key mRNA modification for immunogenicity"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "mRNA vaccines deliver genetic instructions for cells to produce antigen protein",
+      "importance": "critical",
+      "sources": ["Pardi et al. 2018"]
+    },
+    {
+      "finding": "N1-methylpseudouridine modification reduces innate immune activation and increases protein expression",
+      "importance": "critical",
+      "sources": ["Kariko et al. 2005"]
+    },
+    {
+      "finding": "Lipid nanoparticles protect mRNA and enable cellular uptake",
+      "importance": "critical",
+      "sources": ["Cullis and Hope 2017"]
+    },
+    {
+      "finding": "mRNA vaccines achieved 94-95% efficacy against symptomatic COVID-19",
+      "importance": "critical",
+      "sources": ["Polack et al. 2020", "Baden et al. 2021"]
+    },
+    {
+      "finding": "Development timeline compressed from years to months due to mRNA platform flexibility",
+      "importance": "high",
+      "sources": ["Development timeline analyses"]
+    },
+    {
+      "finding": "No genomic integration risk since mRNA doesn't enter nucleus",
+      "importance": "high",
+      "sources": ["Pardi et al. 2018"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "mRNA vaccines require cold chain storage, limiting distribution",
+      "validity": "Valid, though formulations improving",
+      "sources": ["Cold chain logistics studies"]
+    },
+    {
+      "argument": "Long-term effects of mRNA vaccines are unknown",
+      "validity": "Multi-year follow-up now available showing good safety",
+      "sources": ["Long-term follow-up studies"]
+    },
+    {
+      "argument": "Protection wanes requiring boosters",
+      "validity": "True, though consistent with other vaccines",
+      "sources": ["Durability studies"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.95,
+    "areas_of_uncertainty": [
+      "Optimal booster schedules",
+      "Duration of protection against variants",
+      "Broader mRNA vaccine applications"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "mRNA mechanism (protein expression in cells)",
+      "LNP delivery system",
+      "Modified nucleosides (pseudouridine)",
+      "Rapid development advantage"
+    ],
+    "should_include": [
+      "Specific efficacy numbers",
+      "No genomic integration",
+      "Spike protein as target"
+    ],
+    "bonus_points": [
+      "Kariko's foundational work",
+      "Comparison to traditional vaccines",
+      "Platform flexibility for variants"
+    ]
+  }
+}

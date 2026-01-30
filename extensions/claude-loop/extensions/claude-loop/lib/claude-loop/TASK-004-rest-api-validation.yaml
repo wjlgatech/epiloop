@@ -1,0 +1,104 @@
+#========================================================
+# REAL-WORLD BENCHMARK TASK 004
+# Tier: MICRO (Small Feature)
+# Source: Generic web development pattern
+#========================================================
+
+id: TASK-004
+name: "REST API Endpoint with Input Validation"
+tier: micro
+source_project: null
+difficulty: 2  # 1-5 scale
+estimated_time_human_minutes: 30
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Requirement**: Create a new REST API endpoint `/api/users` that:
+  1. Accepts POST requests with JSON body
+  2. Validates input data (email, username, age)
+  3. Returns appropriate HTTP status codes
+  4. Returns JSON error messages for invalid input
+
+  **Context**: Building a user registration API that needs proper
+  validation before data reaches the database layer.
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Endpoint accepts POST /api/users"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -r "POST.*\/api\/users" . || grep -r "@app.route.*users" .
+
+  - id: AC2
+    description: "Validates email format (regex or library)"
+    weight: 0.25
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(email.*valid|validate.*email|@.*\\.)" . -r
+
+  - id: AC3
+    description: "Validates username length (3-20 chars)"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(len.*username|username.*length)" . -r
+
+  - id: AC4
+    description: "Validates age range (18-120)"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(age.*>=|age.*>|age.*18)" . -r
+
+  - id: AC5
+    description: "Returns 400 for invalid input with error message"
+    weight: 0.15
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(400|Bad Request|return.*error)" . -r
+
+#--------------------------------------------------------
+# TEST DATA
+#--------------------------------------------------------
+test_data:
+  valid_requests:
+    - email: "user@example.com"
+      username: "johndoe"
+      age: 25
+      expected_status: 201
+
+  invalid_requests:
+    - email: "invalid-email"
+      username: "jo"
+      age: 15
+      expected_status: 400
+      expected_error: "Invalid email or username too short or age under 18"
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ POST /api/users endpoint created
+  2. ✓ Email validation implemented
+  3. ✓ Username length validation (3-20 chars)
+  4. ✓ Age range validation (18-120)
+  5. ✓ Returns 400 status with error message for invalid input
+  6. ✓ Returns 201 status for valid input
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["api", "validation", "web", "rest"]
+  estimated_impact: "medium"
+  complexity_signals:
+    - "Input validation"
+    - "HTTP status codes"
+    - "JSON request/response"

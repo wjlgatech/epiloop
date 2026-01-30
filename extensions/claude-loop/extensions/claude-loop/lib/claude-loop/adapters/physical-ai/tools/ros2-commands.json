@@ -1,0 +1,160 @@
+{
+  "name": "ros2_commands",
+  "description": "Execute common ROS2 commands for robot development",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "string",
+        "description": "The ROS2 command category",
+        "enum": ["topic", "node", "service", "action", "param", "launch", "bag", "run"]
+      },
+      "subcommand": {
+        "type": "string",
+        "description": "Subcommand (e.g., 'list', 'echo', 'pub', 'info')"
+      },
+      "target": {
+        "type": "string",
+        "description": "Target topic/node/service name"
+      },
+      "message_type": {
+        "type": "string",
+        "description": "ROS2 message type (for pub commands)"
+      },
+      "message_data": {
+        "type": "object",
+        "description": "Message data as JSON (for pub commands)"
+      },
+      "package": {
+        "type": "string",
+        "description": "ROS2 package name (for run/launch)"
+      },
+      "executable": {
+        "type": "string",
+        "description": "Executable name (for run command)"
+      },
+      "launch_file": {
+        "type": "string",
+        "description": "Launch file name (for launch command)"
+      },
+      "args": {
+        "type": "object",
+        "description": "Additional arguments as key-value pairs"
+      },
+      "timeout_seconds": {
+        "type": "integer",
+        "description": "Maximum execution time",
+        "default": 30
+      },
+      "once": {
+        "type": "boolean",
+        "description": "For echo: exit after receiving one message",
+        "default": true
+      }
+    },
+    "required": ["command"]
+  },
+  "returns": {
+    "type": "object",
+    "properties": {
+      "exit_code": {
+        "type": "integer"
+      },
+      "stdout": {
+        "type": "string"
+      },
+      "stderr": {
+        "type": "string"
+      },
+      "success": {
+        "type": "boolean"
+      },
+      "parsed_output": {
+        "type": "object",
+        "description": "Parsed output for structured commands (topic list, node list, etc.)"
+      }
+    }
+  },
+  "examples": [
+    {
+      "description": "List all active topics",
+      "input": {
+        "command": "topic",
+        "subcommand": "list"
+      }
+    },
+    {
+      "description": "Echo messages on a topic",
+      "input": {
+        "command": "topic",
+        "subcommand": "echo",
+        "target": "/cmd_vel",
+        "once": true
+      }
+    },
+    {
+      "description": "Publish a velocity command",
+      "input": {
+        "command": "topic",
+        "subcommand": "pub",
+        "target": "/cmd_vel",
+        "message_type": "geometry_msgs/msg/Twist",
+        "message_data": {
+          "linear": {"x": 0.5, "y": 0.0, "z": 0.0},
+          "angular": {"x": 0.0, "y": 0.0, "z": 0.1}
+        }
+      }
+    },
+    {
+      "description": "Get topic info",
+      "input": {
+        "command": "topic",
+        "subcommand": "info",
+        "target": "/scan"
+      }
+    },
+    {
+      "description": "List all nodes",
+      "input": {
+        "command": "node",
+        "subcommand": "list"
+      }
+    },
+    {
+      "description": "Call a service",
+      "input": {
+        "command": "service",
+        "subcommand": "call",
+        "target": "/reset_robot",
+        "message_type": "std_srvs/srv/Empty",
+        "message_data": {}
+      }
+    },
+    {
+      "description": "Run a node",
+      "input": {
+        "command": "run",
+        "package": "turtlesim",
+        "executable": "turtlesim_node"
+      }
+    },
+    {
+      "description": "Launch a launch file",
+      "input": {
+        "command": "launch",
+        "package": "nav2_bringup",
+        "launch_file": "navigation_launch.py",
+        "args": {
+          "use_sim_time": "true",
+          "map": "/path/to/map.yaml"
+        }
+      }
+    }
+  ],
+  "implementation_notes": [
+    "Requires ROS2 to be sourced in the environment",
+    "Supports both ROS2 Humble and Iron distributions",
+    "Uses YAML parsing for structured output",
+    "Handles QoS compatibility issues automatically"
+  ]
+}

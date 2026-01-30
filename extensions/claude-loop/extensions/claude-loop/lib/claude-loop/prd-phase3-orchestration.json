@@ -1,0 +1,197 @@
+{
+  "project": "claude-loop Phase 3: Orchestration & Collaboration",
+  "description": "Multi-PRD coordination, resource pooling, dependency management, and team collaboration features",
+  "success_criteria": [
+    "Multiple PRDs can execute concurrently with shared resources",
+    "Dependency graphs prevent conflicts and ensure correct execution order",
+    "Cost budgets enforce spending limits across PRDs",
+    "Team collaboration enables multiple contributors",
+    "Resource pooling optimizes token usage and API rate limits"
+  ],
+  "fileScope": [
+    "lib/orchestrator.sh",
+    "lib/resource-pool.sh",
+    "lib/dependency-graph.sh",
+    "lib/cost-budget.sh",
+    "lib/collaboration.sh",
+    "lib/prd-coordinator.sh",
+    "lib/lock-manager.sh",
+    "docs/phase3/",
+    "tests/phase3/"
+  ],
+  "userStories": [
+    {
+      "id": "US-301",
+      "title": "Multi-PRD Orchestrator Core",
+      "description": "Core orchestration engine that manages multiple PRD executions concurrently, preventing conflicts and coordinating shared resources.",
+      "acceptanceCriteria": [
+        "Orchestrator can launch and monitor multiple PRD executions simultaneously",
+        "Each PRD execution gets isolated workspace with controlled access to shared resources",
+        "Orchestrator maintains global state of all active PRDs (status, progress, resource usage)",
+        "Graceful shutdown stops all PRDs cleanly without data loss",
+        "Orchestrator CLI: start, stop, list, status, logs",
+        "Configuration file: .claude-loop/orchestrator/config.json",
+        "State tracking: .claude-loop/orchestrator/state.json",
+        "Lock files prevent race conditions on shared resources"
+      ],
+      "priority": "critical",
+      "passes": false
+    },
+    {
+      "id": "US-302",
+      "title": "Resource Pool Management",
+      "description": "Shared resource pool that optimizes token usage, API rate limits, and system resources across multiple PRDs.",
+      "acceptanceCriteria": [
+        "Token budget pool shared across PRDs with fair allocation",
+        "API rate limit management prevents 429 errors",
+        "Concurrent request limiting (e.g., max 5 Claude API calls simultaneously)",
+        "Resource reservation system for predictable allocation",
+        "Priority-based scheduling (critical > high > normal > low)",
+        "Resource usage metrics tracked per PRD",
+        "Automatic throttling when approaching limits",
+        "CLI: ./claude-loop.sh resources status/allocate/release"
+      ],
+      "priority": "critical",
+      "passes": false
+    },
+    {
+      "id": "US-303",
+      "title": "Dependency Graph Engine",
+      "description": "Dependency management system that ensures PRDs execute in the correct order based on file dependencies and explicit relationships.",
+      "acceptanceCriteria": [
+        "PRDs declare dependencies in MANIFEST.yaml (depends_on: [DOC-001, DOC-002])",
+        "Dependency graph computed from file overlaps and explicit dependencies",
+        "Circular dependency detection with clear error messages",
+        "Topological sort determines execution order",
+        "Dependent PRDs wait for dependencies to complete",
+        "Failed dependency blocks dependent PRDs with notification",
+        "Visualization: dependency graph in DOT/Graphviz format",
+        "CLI: ./claude-loop.sh deps graph/validate/resolve"
+      ],
+      "priority": "high",
+      "passes": false
+    },
+    {
+      "id": "US-304",
+      "title": "Cost Budget System",
+      "description": "Cost management system with budgets, limits, and alerts to prevent runaway spending.",
+      "acceptanceCriteria": [
+        "Global cost budget configurable in .claude-loop/budget.json",
+        "Per-PRD cost budgets with soft/hard limits",
+        "Real-time cost tracking across all active PRDs",
+        "Alerts at 50%, 75%, 90% of budget",
+        "Hard stop at 100% with graceful PRD termination",
+        "Cost projection based on current burn rate",
+        "Budget rollover (daily/weekly/monthly)",
+        "Cost breakdown by model (Claude Opus/Sonnet/Haiku)",
+        "CLI: ./claude-loop.sh budget status/set/history"
+      ],
+      "priority": "high",
+      "passes": false
+    },
+    {
+      "id": "US-305",
+      "title": "Lock Manager for File Conflicts",
+      "description": "Distributed lock system prevents multiple PRDs from modifying the same files simultaneously.",
+      "acceptanceCriteria": [
+        "Advisory file locks with timeout",
+        "Lock acquisition before any file modification",
+        "Automatic lock release on PRD completion or failure",
+        "Deadlock detection and resolution",
+        "Lock wait queue with priority",
+        "Lock status visible in orchestrator dashboard",
+        "Configurable lock timeout (default: 5 minutes)",
+        "Lock files: .claude-loop/locks/{file_path}.lock"
+      ],
+      "priority": "high",
+      "passes": false
+    },
+    {
+      "id": "US-306",
+      "title": "Team Collaboration Features",
+      "description": "Multi-user collaboration support with role-based access, shared PRD ownership, and coordination.",
+      "acceptanceCriteria": [
+        "User identity system with .claude-loop/users.json",
+        "PRD ownership and contributor tracking in MANIFEST.yaml",
+        "Role-based access control (owner, contributor, viewer)",
+        "Shared PRD queue visible to all team members",
+        "Conflict resolution when multiple users work on same PRD",
+        "Activity log showing who did what and when",
+        "Notification system for team coordination",
+        "CLI: ./claude-loop.sh team add/remove/list/permissions"
+      ],
+      "priority": "medium",
+      "passes": false
+    },
+    {
+      "id": "US-307",
+      "title": "Advanced Orchestrator Dashboard",
+      "description": "Enhanced web dashboard showing multi-PRD execution, resource usage, and team activity.",
+      "acceptanceCriteria": [
+        "Multi-PRD view showing all active/queued/completed PRDs",
+        "Resource pool visualization (tokens, API calls, locks)",
+        "Dependency graph visualization with interactive nodes",
+        "Cost tracking across all PRDs with budget indicators",
+        "Team activity timeline showing recent actions",
+        "Real-time SSE updates for all metrics",
+        "Drill-down into individual PRD details",
+        "Admin controls: pause/resume/cancel PRDs"
+      ],
+      "priority": "medium",
+      "passes": false
+    },
+    {
+      "id": "US-308",
+      "title": "PRD Coordinator Intelligence",
+      "description": "Intelligent coordinator that optimizes PRD execution order, resource allocation, and scheduling based on complexity and dependencies.",
+      "acceptanceCriteria": [
+        "Complexity scoring for PRDs (0-100 based on stories, file scope, dependencies)",
+        "Smart scheduling: simple PRDs first, complex PRDs during low-traffic times",
+        "Parallel execution when no file conflicts detected",
+        "Automatic retry on transient failures (rate limits, network errors)",
+        "Resource pre-allocation for high-priority PRDs",
+        "Predictive completion time based on historical data",
+        "Optimization suggestions (e.g., split large PRD, resolve dependencies)",
+        "Learning from past executions to improve future scheduling"
+      ],
+      "priority": "medium",
+      "passes": false
+    },
+    {
+      "id": "US-309",
+      "title": "Integration Testing & Validation",
+      "description": "Comprehensive test suite validating orchestration, resource pooling, dependencies, budgets, and collaboration.",
+      "acceptanceCriteria": [
+        "Test multi-PRD execution with different file scopes (no overlap, partial overlap, full overlap)",
+        "Test resource pool under load (approaching token limits, API rate limits)",
+        "Test dependency resolution (simple chain, complex graph, circular dependencies)",
+        "Test cost budget enforcement (soft limits, hard limits, alerts)",
+        "Test lock manager (concurrent access, deadlocks, timeouts)",
+        "Test collaboration (multi-user PRD access, permissions, conflicts)",
+        "Stress test: 10 PRDs executing concurrently",
+        "All tests pass with >85% coverage"
+      ],
+      "priority": "high",
+      "passes": false
+    },
+    {
+      "id": "US-310",
+      "title": "Phase 3 Documentation & Examples",
+      "description": "User-facing documentation, tutorials, and example workflows for orchestration and collaboration features.",
+      "acceptanceCriteria": [
+        "Getting started guide for multi-PRD workflows",
+        "Tutorial: Coordinating dependent PRDs",
+        "Tutorial: Setting up team collaboration",
+        "Tutorial: Managing cost budgets",
+        "API reference for orchestrator, resource pool, dependency graph",
+        "Example PRDs demonstrating Phase 3 features",
+        "Migration guide from Phase 2 single-PRD mode",
+        "Troubleshooting guide for common orchestration issues",
+        "Release notes with breaking changes and new features",
+        "Minimum 2,500 lines of documentation"
+      ],
+      "priority": "medium",
+      "passes": false
+    }
+  ]
+}

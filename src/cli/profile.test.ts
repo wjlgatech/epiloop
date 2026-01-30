@@ -7,42 +7,42 @@ describe("parseCliProfileArgs", () => {
   it("leaves gateway --dev for subcommands", () => {
     const res = parseCliProfileArgs([
       "node",
-      "clawdbot",
+      "epiloop",
       "gateway",
       "--dev",
       "--allow-unconfigured",
     ]);
     if (!res.ok) throw new Error(res.error);
     expect(res.profile).toBeNull();
-    expect(res.argv).toEqual(["node", "clawdbot", "gateway", "--dev", "--allow-unconfigured"]);
+    expect(res.argv).toEqual(["node", "epiloop", "gateway", "--dev", "--allow-unconfigured"]);
   });
 
   it("still accepts global --dev before subcommand", () => {
-    const res = parseCliProfileArgs(["node", "clawdbot", "--dev", "gateway"]);
+    const res = parseCliProfileArgs(["node", "epiloop", "--dev", "gateway"]);
     if (!res.ok) throw new Error(res.error);
     expect(res.profile).toBe("dev");
-    expect(res.argv).toEqual(["node", "clawdbot", "gateway"]);
+    expect(res.argv).toEqual(["node", "epiloop", "gateway"]);
   });
 
   it("parses --profile value and strips it", () => {
-    const res = parseCliProfileArgs(["node", "clawdbot", "--profile", "work", "status"]);
+    const res = parseCliProfileArgs(["node", "epiloop", "--profile", "work", "status"]);
     if (!res.ok) throw new Error(res.error);
     expect(res.profile).toBe("work");
-    expect(res.argv).toEqual(["node", "clawdbot", "status"]);
+    expect(res.argv).toEqual(["node", "epiloop", "status"]);
   });
 
   it("rejects missing profile value", () => {
-    const res = parseCliProfileArgs(["node", "clawdbot", "--profile"]);
+    const res = parseCliProfileArgs(["node", "epiloop", "--profile"]);
     expect(res.ok).toBe(false);
   });
 
   it("rejects combining --dev with --profile (dev first)", () => {
-    const res = parseCliProfileArgs(["node", "clawdbot", "--dev", "--profile", "work", "status"]);
+    const res = parseCliProfileArgs(["node", "epiloop", "--dev", "--profile", "work", "status"]);
     expect(res.ok).toBe(false);
   });
 
   it("rejects combining --dev with --profile (profile first)", () => {
-    const res = parseCliProfileArgs(["node", "clawdbot", "--profile", "work", "--dev", "status"]);
+    const res = parseCliProfileArgs(["node", "epiloop", "--profile", "work", "--dev", "status"]);
     expect(res.ok).toBe(false);
   });
 });
@@ -55,85 +55,83 @@ describe("applyCliProfileEnv", () => {
       env,
       homedir: () => "/home/peter",
     });
-    const expectedStateDir = path.join("/home/peter", ".clawdbot-dev");
-    expect(env.CLAWDBOT_PROFILE).toBe("dev");
-    expect(env.CLAWDBOT_STATE_DIR).toBe(expectedStateDir);
-    expect(env.CLAWDBOT_CONFIG_PATH).toBe(path.join(expectedStateDir, "clawdbot.json"));
-    expect(env.CLAWDBOT_GATEWAY_PORT).toBe("19001");
+    const expectedStateDir = path.join("/home/peter", ".epiloop-dev");
+    expect(env.EPILOOP_PROFILE).toBe("dev");
+    expect(env.EPILOOP_STATE_DIR).toBe(expectedStateDir);
+    expect(env.EPILOOP_CONFIG_PATH).toBe(path.join(expectedStateDir, "epiloop.json"));
+    expect(env.EPILOOP_GATEWAY_PORT).toBe("19001");
   });
 
   it("does not override explicit env values", () => {
     const env: Record<string, string | undefined> = {
-      CLAWDBOT_STATE_DIR: "/custom",
-      CLAWDBOT_GATEWAY_PORT: "19099",
+      EPILOOP_STATE_DIR: "/custom",
+      EPILOOP_GATEWAY_PORT: "19099",
     };
     applyCliProfileEnv({
       profile: "dev",
       env,
       homedir: () => "/home/peter",
     });
-    expect(env.CLAWDBOT_STATE_DIR).toBe("/custom");
-    expect(env.CLAWDBOT_GATEWAY_PORT).toBe("19099");
-    expect(env.CLAWDBOT_CONFIG_PATH).toBe(path.join("/custom", "clawdbot.json"));
+    expect(env.EPILOOP_STATE_DIR).toBe("/custom");
+    expect(env.EPILOOP_GATEWAY_PORT).toBe("19099");
+    expect(env.EPILOOP_CONFIG_PATH).toBe(path.join("/custom", "epiloop.json"));
   });
 });
 
 describe("formatCliCommand", () => {
   it("returns command unchanged when no profile is set", () => {
-    expect(formatCliCommand("clawdbot doctor --fix", {})).toBe("clawdbot doctor --fix");
+    expect(formatCliCommand("epiloop doctor --fix", {})).toBe("epiloop doctor --fix");
   });
 
   it("returns command unchanged when profile is default", () => {
-    expect(formatCliCommand("clawdbot doctor --fix", { CLAWDBOT_PROFILE: "default" })).toBe(
-      "clawdbot doctor --fix",
+    expect(formatCliCommand("epiloop doctor --fix", { EPILOOP_PROFILE: "default" })).toBe(
+      "epiloop doctor --fix",
     );
   });
 
   it("returns command unchanged when profile is Default (case-insensitive)", () => {
-    expect(formatCliCommand("clawdbot doctor --fix", { CLAWDBOT_PROFILE: "Default" })).toBe(
-      "clawdbot doctor --fix",
+    expect(formatCliCommand("epiloop doctor --fix", { EPILOOP_PROFILE: "Default" })).toBe(
+      "epiloop doctor --fix",
     );
   });
 
   it("returns command unchanged when profile is invalid", () => {
-    expect(formatCliCommand("clawdbot doctor --fix", { CLAWDBOT_PROFILE: "bad profile" })).toBe(
-      "clawdbot doctor --fix",
+    expect(formatCliCommand("epiloop doctor --fix", { EPILOOP_PROFILE: "bad profile" })).toBe(
+      "epiloop doctor --fix",
     );
   });
 
   it("returns command unchanged when --profile is already present", () => {
     expect(
-      formatCliCommand("clawdbot --profile work doctor --fix", { CLAWDBOT_PROFILE: "work" }),
-    ).toBe("clawdbot --profile work doctor --fix");
+      formatCliCommand("epiloop --profile work doctor --fix", { EPILOOP_PROFILE: "work" }),
+    ).toBe("epiloop --profile work doctor --fix");
   });
 
   it("returns command unchanged when --dev is already present", () => {
-    expect(formatCliCommand("clawdbot --dev doctor", { CLAWDBOT_PROFILE: "dev" })).toBe(
-      "clawdbot --dev doctor",
+    expect(formatCliCommand("epiloop --dev doctor", { EPILOOP_PROFILE: "dev" })).toBe(
+      "epiloop --dev doctor",
     );
   });
 
   it("inserts --profile flag when profile is set", () => {
-    expect(formatCliCommand("clawdbot doctor --fix", { CLAWDBOT_PROFILE: "work" })).toBe(
-      "clawdbot --profile work doctor --fix",
+    expect(formatCliCommand("epiloop doctor --fix", { EPILOOP_PROFILE: "work" })).toBe(
+      "epiloop --profile work doctor --fix",
     );
   });
 
   it("trims whitespace from profile", () => {
-    expect(formatCliCommand("clawdbot doctor --fix", { CLAWDBOT_PROFILE: "  jbclawd  " })).toBe(
-      "clawdbot --profile jbclawd doctor --fix",
+    expect(formatCliCommand("epiloop doctor --fix", { EPILOOP_PROFILE: "  jbclawd  " })).toBe(
+      "epiloop --profile jbclawd doctor --fix",
     );
   });
 
-  it("handles command with no args after clawdbot", () => {
-    expect(formatCliCommand("clawdbot", { CLAWDBOT_PROFILE: "test" })).toBe(
-      "clawdbot --profile test",
-    );
+  it("handles command with no args after epiloop", () => {
+    expect(formatCliCommand("epiloop", { EPILOOP_PROFILE: "test" })).toBe("epiloop --profile test");
   });
 
   it("handles pnpm wrapper", () => {
-    expect(formatCliCommand("pnpm clawdbot doctor", { CLAWDBOT_PROFILE: "work" })).toBe(
-      "pnpm clawdbot --profile work doctor",
+    expect(formatCliCommand("pnpm epiloop doctor", { EPILOOP_PROFILE: "work" })).toBe(
+      "pnpm epiloop --profile work doctor",
     );
   });
 });

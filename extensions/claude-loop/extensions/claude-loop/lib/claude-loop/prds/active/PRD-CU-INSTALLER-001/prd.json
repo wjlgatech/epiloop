@@ -1,0 +1,55 @@
+{
+  "project": "prd-cu-installer-001",
+  "title": "Software Installation Automation for Computer Use Agent",
+  "branchName": "feature/computer-use-installer",
+  "description": "Add environment scanning and software installation capabilities to computer use agent so workflows don't fail due to missing prerequisites",
+  "context": "Current computer use agent fails when Unity Hub or other prerequisites are missing. Users get poor error messages and have to install software manually. This PRD adds automatic installation via Homebrew, DMG/PKG automation, environment scanning, and better error handling. See performance report for detailed analysis of current deficiencies.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Environment Scanning Before Workflow Execution",
+      "description": "Workflow executor runs environment scan before first step, detecting OS version, required apps, system tools, and Python packages. Shows status for each requirement.",
+      "passes": false,
+      "acceptanceCriteria": [
+        "EnvironmentScanner class exists in agents/computer_use/scanner.py",
+        "Scanner detects OS version, apps, CLI tools, and Python packages",
+        "scan() method returns ScanResult with missing/present/outdated items",
+        "UnityOrchestrator calls scanner before workflow execution",
+        "Scan results include clear status indicators and actionable next steps",
+        "Test coverage >80% for scanner module"
+      ]
+    },
+    {
+      "id": "US-002",
+      "title": "Automatic Software Installation via Homebrew",
+      "description": "Install missing software automatically using Homebrew with user approval. Install Homebrew itself if missing.",
+      "passes": false,
+      "acceptanceCriteria": [
+        "HomebrewManager class exists in agents/computer_use/package_managers.py",
+        "Can detect if Homebrew is installed",
+        "Can install Homebrew if missing with user approval",
+        "Can install casks and formulae like unity-hub",
+        "Shows brew command before executing",
+        "Reports installation progress",
+        "Handles errors gracefully",
+        "Test coverage >80%"
+      ]
+    },
+    {
+      "id": "US-003",
+      "title": "Installation Module API",
+      "description": "Create SoftwareInstaller class with clean API for install/verify/uninstall operations",
+      "passes": false,
+      "acceptanceCriteria": [
+        "SoftwareInstaller class exists in agents/computer_use/installer.py",
+        "Methods: install(software, method), verify(software), uninstall(software)",
+        "Supports methods: homebrew, dmg, pkg, pip, npm",
+        "Returns InstallationResult with status and errors",
+        "Progress callbacks for UI updates",
+        "Comprehensive error types",
+        "Example usage documented in README",
+        "Test coverage >85%"
+      ]
+    }
+  ]
+}

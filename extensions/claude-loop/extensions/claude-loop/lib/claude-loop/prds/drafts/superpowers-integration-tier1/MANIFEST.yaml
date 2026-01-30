@@ -1,0 +1,68 @@
+---
+id: PRD-SP-001
+title: "Superpowers Integration - Tier 1 Critical Path"
+status: draft
+created: 2026-01-15
+author: claude-loop-analysis
+version: 1.0
+
+description: >
+  Integrate critical learnings from Superpowers project into claude-loop:
+  mandatory skill enforcement, SessionStart hooks, interactive design refinement,
+  two-stage review system, and TDD enforcement. Expected impact: setup friction
+  ↓ 80%, quality consistency ↑ 60%, wasted work ↓ 50%.
+
+tags:
+  - superpowers-integration
+  - quality-improvement
+  - workflow-enhancement
+  - user-experience
+
+priority: high
+estimated_impact: critical
+
+objectives:
+  - Reduce setup friction by 80% (zero commands to start)
+  - Increase quality consistency by 60% (mandatory workflows)
+  - Reduce wasted work by 50% (interactive design validation)
+  - Improve success rate by 35% (two-stage review, TDD enforcement)
+
+dependencies:
+  - claude-loop v3.0 (Phase 3 complete)
+  - Python 3.10+
+  - pytest for testing
+
+related_docs:
+  - docs/analysis/superpowers-comparison-upgrade-proposal.md
+  - docs/features/session-hooks.md
+  - docs/features/mandatory-skills.md
+  - docs/features/brainstorming.md
+  - docs/features/two-stage-review.md
+  - docs/features/tdd-enforcement.md
+  - docs/features/execution-modes.md
+
+success_criteria:
+  - All 8 user stories completed and tested
+  - Tests pass with > 80% coverage
+  - Documentation complete
+  - Zero regressions in existing functionality
+  - Positive user feedback on new workflows
+
+rollout_plan:
+  phase_1: "SessionStart hooks and skill enforcement (Week 1)"
+  phase_2: "Quality gates: two-stage review and TDD enforcement (Week 2)"
+  phase_3: "Interactive design refinement (Week 3, if time permits)"
+  phase_4: "Configuration and integration testing (Week 2-3)"
+
+risks:
+  - Risk: Increased complexity may confuse users
+    Mitigation: Clear documentation, gradual rollout, good defaults
+  - Risk: Mandatory workflows may feel restrictive
+    Mitigation: Configuration options, mode selection (interactive/autonomous/hybrid)
+  - Risk: Breaking changes to existing workflows
+    Mitigation: Comprehensive testing, migration guide, backward compatibility
+
+notes: >
+  This PRD implements Tier 1 (critical path) recommendations from the
+  Superpowers comparison analysis. Tier 2 and Tier 3 recommendations
+  will be addressed in follow-up PRDs based on success of Tier 1 implementation.

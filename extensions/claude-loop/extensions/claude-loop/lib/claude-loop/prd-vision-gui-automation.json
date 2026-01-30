@@ -1,0 +1,243 @@
+{
+  "project": "vision-gui-automation",
+  "branchName": "feature/vision-gui-automation",
+  "description": "Add vision-based GUI automation to claude-loop for interacting with custom UI elements in applications like Unity Editor",
+  "parallelization": {
+    "enabled": true,
+    "maxWorkers": 2
+  },
+  "userStories": [
+    {
+      "id": "GUI-001",
+      "title": "Multi-Display Screenshot Capture",
+      "description": "As a developer, I want claude-loop to capture screenshots from any display, not just the primary monitor",
+      "acceptanceCriteria": [
+        "Create screenshot.py module in agents/computer_use/",
+        "Implement get_display_list() to enumerate connected displays",
+        "Implement capture_display(display_id) using screencapture -D flag",
+        "Implement capture_window(app_name) to capture specific application window",
+        "Implement get_window_display(app_name) to find which display contains the window",
+        "Handle Retina displays with proper coordinate scaling",
+        "Save screenshots with timestamps to .claude-loop/screenshots/",
+        "Add --screenshot flag to capture before/after each action",
+        "Return screenshot as base64 for API transmission"
+      ],
+      "priority": 1,
+      "dependencies": [],
+      "fileScope": ["agents/computer_use/screenshot.py", "agents/computer_use/__init__.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": true,
+      "notes": "Implemented in commit e8deae2 - Enhanced screenshot.py with capture_window(), get_window_display(), to_base64(), save() methods, and WindowInfo dataclass"
+    },
+    {
+      "id": "GUI-002",
+      "title": "Coordinate-Based Mouse Controller",
+      "description": "As a developer, I want to click at specific screen coordinates when AppleScript fails",
+      "acceptanceCriteria": [
+        "Create mouse_controller.py module in agents/computer_use/",
+        "Implement click_at(x, y) using pyautogui or Quartz CGEventCreateMouseEvent",
+        "Support multi-display coordinate translation",
+        "Handle negative Y coordinates for displays above primary",
+        "Implement double_click_at(x, y) for double-click actions",
+        "Implement right_click_at(x, y) for context menus",
+        "Implement drag_from_to(x1, y1, x2, y2) for drag operations",
+        "Add click verification by detecting mouse position after click",
+        "Log all coordinate clicks for debugging"
+      ],
+      "priority": 2,
+      "dependencies": ["GUI-001"],
+      "fileScope": ["agents/computer_use/mouse_controller.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": true,
+      "notes": "Implemented in commit fe9dc50 - Created mouse_controller.py with CGEventCreateMouseEvent, multi-display coordinate translation, click verification, and action logging"
+    },
+    {
+      "id": "GUI-003",
+      "title": "Vision API Integration for Element Detection",
+      "description": "As a developer, I want claude-loop to use Claude Vision API to find UI elements in screenshots",
+      "acceptanceCriteria": [
+        "Create vision_detector.py module in agents/computer_use/",
+        "Implement find_element(screenshot, element_description) using Claude Vision API",
+        "Return bounding box coordinates {x, y, width, height} for detected elements",
+        "Support finding buttons, text fields, checkboxes, labels",
+        "Support finding elements by text content ('Fix All' button)",
+        "Support finding elements by icon/visual appearance",
+        "Cache API responses to reduce costs for repeated queries",
+        "Log vision API requests with token usage for cost tracking",
+        "Handle 'element not found' gracefully with helpful error message"
+      ],
+      "priority": 3,
+      "dependencies": ["GUI-001"],
+      "fileScope": ["agents/computer_use/vision_detector.py"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": true,
+      "notes": "Implemented in commit 0f8c5d3 - Created vision_detector.py with VisionDetector class, BoundingBox, DetectionResult, and convenience methods. Wraps existing vision_finder.py functionality with additional {x,y,width,height} bounding box format."
+    },
+    {
+      "id": "GUI-004",
+      "title": "Unified Click Handler with Fallback Chain",
+      "description": "As a developer, I want click operations to automatically fall back from AppleScript to vision-based clicking",
+      "acceptanceCriteria": [
+        "Create click_handler.py module in agents/computer_use/",
+        "Implement click_element(app, element_name) with fallback chain",
+        "Fallback order: 1) AppleScript, 2) Vision + Coordinate click",
+        "Take before screenshot if AppleScript fails",
+        "Use vision API to find element in screenshot",
+        "Calculate center coordinates of detected element",
+        "Click at coordinates using mouse_controller",
+        "Take after screenshot to verify click success",
+        "Return detailed result with method used and confidence",
+        "Support --vision-only flag to skip AppleScript"
+      ],
+      "priority": 4,
+      "dependencies": ["GUI-002", "GUI-003"],
+      "fileScope": ["agents/computer_use/click_handler.py"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": true,
+      "notes": "Implemented in commit 4f55d5b - Created click_handler.py with ClickHandler class, click_element() with AppleScript->Vision fallback chain, before/after screenshot capture, vision_only flag support, and detailed ClickHandlerResult with method, confidence, and fallback info"
+    },
+    {
+      "id": "GUI-005",
+      "title": "Unity Editor Panel Detection",
+      "description": "As a developer, I want to detect and interact with specific Unity Editor panels",
+      "acceptanceCriteria": [
+        "Create unity_panels.py module in agents/computer_use/",
+        "Implement is_panel_open(panel_name) using vision detection",
+        "Support detecting: Building Blocks, Project Setup Tool, Inspector, Hierarchy, Console",
+        "Implement get_panel_bounds(panel_name) to get panel location",
+        "Implement wait_for_panel(panel_name, timeout) with polling",
+        "Implement find_button_in_panel(panel_name, button_text)",
+        "Implement click_button_in_panel(panel_name, button_text)",
+        "Cache panel locations for efficiency within same session",
+        "Handle floating vs docked panel layouts"
+      ],
+      "priority": 5,
+      "dependencies": ["GUI-004"],
+      "fileScope": ["agents/computer_use/unity_panels.py"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": true,
+      "notes": "Implemented in commit 52bc5cd - Created unity_panels.py with UnityPanelDetector class, is_panel_open(), get_panel_bounds(), wait_for_panel(), find_button_in_panel(), click_button_in_panel(), panel location caching with TTL, support for Building Blocks/Project Setup Tool/Inspector/Hierarchy/Console/Project/Scene/Game panels, floating vs docked layout detection"
+    },
+    {
+      "id": "GUI-006",
+      "title": "Element State Detection",
+      "description": "As a developer, I want to read the state of UI elements (enabled, checked, text content)",
+      "acceptanceCriteria": [
+        "Add get_element_state(screenshot, element_description) to vision_detector.py",
+        "Detect button states: enabled, disabled, pressed",
+        "Detect checkbox states: checked, unchecked",
+        "Detect text field contents",
+        "Detect dropdown current selection",
+        "Return structured ElementState object",
+        "Support reading error messages and status text",
+        "Support reading progress indicators",
+        "Cache state queries within same screenshot"
+      ],
+      "priority": 6,
+      "dependencies": ["GUI-003"],
+      "fileScope": ["agents/computer_use/vision_detector.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": true,
+      "notes": "Implemented in commit - Added ElementState dataclass with ButtonState/CheckboxState/ProgressState enums, get_element_state() with vision API integration, screenshot-based caching, and convenience functions for all element types"
+    },
+    {
+      "id": "GUI-007",
+      "title": "Action Logging with Screenshots",
+      "description": "As a developer, I want a visual log of all GUI actions for debugging",
+      "acceptanceCriteria": [
+        "Create action_logger.py module in agents/computer_use/",
+        "Log each action with: timestamp, action type, target, result",
+        "Save before/after screenshots for each action",
+        "Store in .claude-loop/screenshots/{timestamp}/ directory",
+        "Generate action.json with metadata",
+        "Generate HTML report with screenshot timeline",
+        "Add --no-screenshots flag to disable for speed",
+        "Implement log rotation (keep last N sessions)",
+        "Support log export for sharing/debugging"
+      ],
+      "priority": 7,
+      "dependencies": ["GUI-001"],
+      "fileScope": ["agents/computer_use/action_logger.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": true,
+      "notes": "Implemented in commit 0ac5a1e - Created action_logger.py with ActionLogger class, before/after screenshot capture, HTML report generation with screenshot timeline, log rotation, and ZIP export"
+    },
+    {
+      "id": "GUI-008",
+      "title": "Wait-for-UI-State Utilities",
+      "description": "As a developer, I want to wait for UI elements to appear or change state",
+      "acceptanceCriteria": [
+        "Create wait_utils.py module in agents/computer_use/",
+        "Implement wait_for_element(element_description, timeout)",
+        "Implement wait_for_element_gone(element_description, timeout)",
+        "Implement wait_for_text(text, timeout) to wait for text appearance",
+        "Implement wait_for_button_enabled(button_text, timeout)",
+        "Use vision API polling with configurable interval (default 0.5s)",
+        "Return early on success, throw TimeoutError on failure",
+        "Log wait progress for debugging",
+        "Support custom predicates for complex conditions"
+      ],
+      "priority": 8,
+      "dependencies": ["GUI-003"],
+      "fileScope": ["agents/computer_use/wait_utils.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": true,
+      "notes": "Implemented in commit 9d95c3a - Created wait_utils.py with WaitHelper class, wait_for_element(), wait_for_element_gone(), wait_for_text(), wait_for_button_enabled(), wait_for_condition() with custom predicates, configurable polling interval"
+    },
+    {
+      "id": "GUI-009",
+      "title": "Unity Automation Workflow Commands",
+      "description": "As a developer, I want high-level commands for common Unity automation tasks",
+      "acceptanceCriteria": [
+        "Update unity.py with vision-based methods",
+        "Implement add_building_block(block_name) using vision click",
+        "Implement run_project_setup_fix_all() using vision click",
+        "Implement run_project_setup_apply_all() using vision click",
+        "Implement verify_panel_state(panel_name) to check for errors",
+        "Implement save_scene() with verification",
+        "Implement build_apk() with progress detection",
+        "Each method uses click_handler with automatic fallback",
+        "Return structured result with success/failure and details"
+      ],
+      "priority": 9,
+      "dependencies": ["GUI-005", "GUI-008"],
+      "fileScope": ["agents/computer_use/unity.py"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": true,
+      "notes": "Implemented in commit - Added vision-based methods: add_building_block(), run_project_setup_fix_all(), run_project_setup_apply_all(), verify_panel_state(), save_scene_vision(), build_apk_vision(). All methods use UnityPanelDetector with click_handler fallback and return VisionWorkflowResult with success/failure details"
+    },
+    {
+      "id": "GUI-010",
+      "title": "Integration Tests for Vision Automation",
+      "description": "As a developer, I want tests to verify vision-based automation works correctly",
+      "acceptanceCriteria": [
+        "Create tests/test_vision_gui.py",
+        "Add mock screenshots for testing without actual applications",
+        "Test screenshot capture on different display configurations",
+        "Test coordinate translation for multi-display",
+        "Test vision API element detection with sample screenshots",
+        "Test click handler fallback logic",
+        "Test wait utilities with simulated delays",
+        "Test action logger output format",
+        "Add CI mode that uses mock screenshots only",
+        "Document test requirements in README"
+      ],
+      "priority": 10,
+      "dependencies": ["GUI-001", "GUI-002", "GUI-003", "GUI-004"],
+      "fileScope": ["agents/computer_use/tests/test_vision_gui.py", "agents/computer_use/tests/fixtures/"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": "Ensures reliability of vision automation"
+    }
+  ]
+}

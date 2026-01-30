@@ -34,11 +34,11 @@ afterEach(() => {
 
 describe("resolveGatewayDevMode", () => {
   it("detects dev mode for src ts entrypoints", () => {
-    expect(resolveGatewayDevMode(["node", "/Users/me/clawdbot/src/cli/index.ts"])).toBe(true);
-    expect(resolveGatewayDevMode(["node", "C:\\Users\\me\\clawdbot\\src\\cli\\index.ts"])).toBe(
+    expect(resolveGatewayDevMode(["node", "/Users/me/epiloop/src/cli/index.ts"])).toBe(true);
+    expect(resolveGatewayDevMode(["node", "C:\\Users\\me\\epiloop\\src\\cli\\index.ts"])).toBe(
       true,
     );
-    expect(resolveGatewayDevMode(["node", "/Users/me/clawdbot/dist/cli/index.js"])).toBe(false);
+    expect(resolveGatewayDevMode(["node", "/Users/me/epiloop/dist/cli/index.js"])).toBe(false);
   });
 });
 
@@ -55,7 +55,7 @@ describe("buildGatewayInstallPlan", () => {
       supported: true,
     });
     mocks.renderSystemNodeWarning.mockReturnValue(undefined);
-    mocks.buildServiceEnvironment.mockReturnValue({ CLAWDBOT_PORT: "3000" });
+    mocks.buildServiceEnvironment.mockReturnValue({ EPILOOP_PORT: "3000" });
 
     const plan = await buildGatewayInstallPlan({
       env: {},
@@ -66,7 +66,7 @@ describe("buildGatewayInstallPlan", () => {
 
     expect(plan.programArguments).toEqual(["node", "gateway"]);
     expect(plan.workingDirectory).toBe("/Users/me");
-    expect(plan.environment).toEqual({ CLAWDBOT_PORT: "3000" });
+    expect(plan.environment).toEqual({ EPILOOP_PORT: "3000" });
     expect(mocks.resolvePreferredNodePath).not.toHaveBeenCalled();
   });
 
@@ -100,6 +100,6 @@ describe("buildGatewayInstallPlan", () => {
 describe("gatewayInstallErrorHint", () => {
   it("returns platform-specific hints", () => {
     expect(gatewayInstallErrorHint("win32")).toContain("Run as administrator");
-    expect(gatewayInstallErrorHint("linux")).toContain("clawdbot gateway install");
+    expect(gatewayInstallErrorHint("linux")).toContain("epiloop gateway install");
   });
 });

@@ -1,0 +1,237 @@
+{
+  "project": "user-authentication-with-delegation",
+  "branchName": "feature/user-auth-delegation-example",
+  "description": "Example PRD demonstrating bounded delegation for implementing user authentication. This shows how complex features can be broken down into parallel subtasks using delegation (max depth=2).",
+  "userStories": [
+    {
+      "id": "US-AUTH-001",
+      "title": "Implement Complete User Authentication System",
+      "description": "As a user, I want secure authentication so that my account is protected and I can access personalized features.",
+      "acceptanceCriteria": [
+        "JWT-based authentication with access and refresh tokens",
+        "Login and signup endpoints with validation",
+        "Password hashing using bcrypt (min 12 rounds)",
+        "Authentication middleware for protected routes",
+        "Token refresh mechanism",
+        "User session management",
+        "Integration tests covering auth flow",
+        "Security: no passwords in logs, rate limiting on auth endpoints",
+        "Documentation: API spec and usage examples"
+      ],
+      "priority": 1,
+      "estimatedHours": 24,
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet",
+      "delegationStrategy": {
+        "enabled": true,
+        "delegations": [
+          {
+            "description": "Implement JWT token service with generation, validation, and refresh",
+            "estimated_hours": 6,
+            "child_story_id": "US-AUTH-001-DEL-001",
+            "depth": 1,
+            "files": ["lib/auth/jwt_service.py", "lib/auth/token_utils.py"],
+            "acceptanceCriteria": [
+              "Generate access tokens (15min expiry) and refresh tokens (7day expiry)",
+              "Validate token signatures and expiration",
+              "Refresh token rotation for security",
+              "Token blacklist for logout functionality",
+              "Tests: token generation, validation, refresh, blacklist"
+            ]
+          },
+          {
+            "description": "Create login and signup routes with validation",
+            "estimated_hours": 5,
+            "child_story_id": "US-AUTH-001-DEL-002",
+            "depth": 1,
+            "files": ["routes/auth.py", "controllers/auth_controller.py", "validators/auth_validator.py"],
+            "acceptanceCriteria": [
+              "POST /auth/signup: email, password, name (min 8 chars password)",
+              "POST /auth/login: email, password",
+              "POST /auth/refresh: refresh_token",
+              "POST /auth/logout: invalidate tokens",
+              "Input validation: email format, password strength",
+              "Error handling: 400 for validation, 401 for wrong credentials",
+              "Tests: successful auth, validation failures, edge cases"
+            ]
+          },
+          {
+            "description": "Implement authentication middleware and session management",
+            "estimated_hours": 4,
+            "child_story_id": "US-AUTH-001-DEL-003",
+            "depth": 1,
+            "files": ["middleware/auth.py", "lib/auth/session_store.py"],
+            "acceptanceCriteria": [
+              "Middleware: extract and validate JWT from Authorization header",
+              "Inject user object into request context",
+              "Handle expired tokens (401) and missing tokens (401)",
+              "Session store: track active sessions per user",
+              "Support for 'require_auth' decorator on routes",
+              "Tests: middleware auth flow, session tracking"
+            ]
+          },
+          {
+            "description": "Write integration tests for complete auth flow",
+            "estimated_hours": 3,
+            "child_story_id": "US-AUTH-001-DEL-004",
+            "depth": 1,
+            "files": ["tests/integration/test_auth_flow.py"],
+            "acceptanceCriteria": [
+              "Test: signup → login → access protected route → refresh → logout",
+              "Test: wrong password → 401",
+              "Test: expired token → 401 → refresh → success",
+              "Test: blacklisted token (after logout) → 401",
+              "Test: rate limiting on auth endpoints",
+              "Coverage: >90% for auth modules"
+            ]
+          }
+        ]
+      },
+      "passes": false,
+      "notes": "This story demonstrates delegation strategy. Parent story (US-AUTH-001) delegates to 4 subordinate stories. Each subordinate runs in isolated git worktree and reports results back to parent."
+    },
+    {
+      "id": "US-AUTH-001-DEL-001",
+      "title": "[DELEGATED] JWT Token Service",
+      "description": "Implement JWT token generation, validation, refresh, and blacklist functionality.",
+      "acceptanceCriteria": [
+        "Generate access tokens (15min expiry) and refresh tokens (7day expiry)",
+        "Validate token signatures and expiration",
+        "Refresh token rotation for security",
+        "Token blacklist for logout functionality",
+        "Tests: token generation, validation, refresh, blacklist"
+      ],
+      "priority": 2,
+      "estimatedHours": 6,
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": ["lib/auth/jwt_service.py", "lib/auth/token_utils.py", "tests/test_jwt_service.py"],
+      "dependencies": [],
+      "delegationContext": {
+        "parent_story_id": "US-AUTH-001",
+        "depth": 1,
+        "can_delegate": true,
+        "max_delegations": 2,
+        "note": "This subordinate can delegate up to depth 2 if JWT implementation is complex"
+      },
+      "passes": false
+    },
+    {
+      "id": "US-AUTH-001-DEL-002",
+      "title": "[DELEGATED] Login and Signup Routes",
+      "description": "Create authentication routes with validation for signup, login, refresh, and logout.",
+      "acceptanceCriteria": [
+        "POST /auth/signup: email, password, name (min 8 chars password)",
+        "POST /auth/login: email, password",
+        "POST /auth/refresh: refresh_token",
+        "POST /auth/logout: invalidate tokens",
+        "Input validation: email format, password strength",
+        "Error handling: 400 for validation, 401 for wrong credentials",
+        "Tests: successful auth, validation failures, edge cases"
+      ],
+      "priority": 2,
+      "estimatedHours": 5,
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": ["routes/auth.py", "controllers/auth_controller.py", "validators/auth_validator.py", "tests/test_auth_routes.py"],
+      "dependencies": ["US-AUTH-001-DEL-001"],
+      "delegationContext": {
+        "parent_story_id": "US-AUTH-001",
+        "depth": 1,
+        "can_delegate": true,
+        "max_delegations": 2
+      },
+      "passes": false
+    },
+    {
+      "id": "US-AUTH-001-DEL-003",
+      "title": "[DELEGATED] Authentication Middleware",
+      "description": "Implement middleware for protecting routes and managing user sessions.",
+      "acceptanceCriteria": [
+        "Middleware: extract and validate JWT from Authorization header",
+        "Inject user object into request context",
+        "Handle expired tokens (401) and missing tokens (401)",
+        "Session store: track active sessions per user",
+        "Support for 'require_auth' decorator on routes",
+        "Tests: middleware auth flow, session tracking"
+      ],
+      "priority": 2,
+      "estimatedHours": 4,
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": ["middleware/auth.py", "lib/auth/session_store.py", "tests/test_auth_middleware.py"],
+      "dependencies": ["US-AUTH-001-DEL-001"],
+      "delegationContext": {
+        "parent_story_id": "US-AUTH-001",
+        "depth": 1,
+        "can_delegate": true,
+        "max_delegations": 2
+      },
+      "passes": false
+    },
+    {
+      "id": "US-AUTH-001-DEL-004",
+      "title": "[DELEGATED] Integration Tests",
+      "description": "Write comprehensive integration tests for the complete authentication flow.",
+      "acceptanceCriteria": [
+        "Test: signup → login → access protected route → refresh → logout",
+        "Test: wrong password → 401",
+        "Test: expired token → 401 → refresh → success",
+        "Test: blacklisted token (after logout) → 401",
+        "Test: rate limiting on auth endpoints",
+        "Coverage: >90% for auth modules"
+      ],
+      "priority": 2,
+      "estimatedHours": 3,
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku",
+      "fileScope": ["tests/integration/test_auth_flow.py"],
+      "dependencies": ["US-AUTH-001-DEL-001", "US-AUTH-001-DEL-002", "US-AUTH-001-DEL-003"],
+      "delegationContext": {
+        "parent_story_id": "US-AUTH-001",
+        "depth": 1,
+        "can_delegate": false,
+        "note": "Testing stories typically should not delegate"
+      },
+      "passes": false
+    }
+  ],
+  "delegationConfig": {
+    "enabled": true,
+    "max_depth": 2,
+    "max_context_per_agent": 100000,
+    "max_delegations_per_story": 10,
+    "allow_parallel_execution": true,
+    "notes": [
+      "This example demonstrates US-AUTH-001 delegating to 4 subordinate stories",
+      "Each subordinate (DEL-001 through DEL-004) can further delegate up to depth 2",
+      "Subordinates run in isolated git worktrees with DELEGATION_DEPTH=1",
+      "Results are summarized and injected back into parent context",
+      "Cost attribution: All subordinate costs aggregate to US-AUTH-001"
+    ]
+  },
+  "executionNotes": {
+    "workflow": [
+      "1. claude-loop starts with US-AUTH-001 (depth 0)",
+      "2. US-AUTH-001 analyzes requirements and decides to delegate",
+      "3. LLM generates response with [delegate:...] syntax",
+      "4. delegation-parser.sh extracts 4 delegations",
+      "5. delegation-tracker.sh validates depth and cycles",
+      "6. delegation.sh creates worktrees for each child",
+      "7. worker.sh executes each child with DELEGATION_DEPTH=1",
+      "8. Results summarized and injected to parent",
+      "9. US-AUTH-001 integrates all subordinate work",
+      "10. Final commit includes all changes from parent + children"
+    ],
+    "expectedDelegationLog": [
+      {"event": "started", "parent": "US-AUTH-001", "child": "US-AUTH-001-DEL-001", "depth": 1},
+      {"event": "completed", "parent": "US-AUTH-001", "child": "US-AUTH-001-DEL-001", "duration_ms": 180000},
+      {"event": "started", "parent": "US-AUTH-001", "child": "US-AUTH-001-DEL-002", "depth": 1},
+      {"event": "completed", "parent": "US-AUTH-001", "child": "US-AUTH-001-DEL-002", "duration_ms": 150000},
+      {"event": "started", "parent": "US-AUTH-001", "child": "US-AUTH-001-DEL-003", "depth": 1},
+      {"event": "completed", "parent": "US-AUTH-001", "child": "US-AUTH-001-DEL-003", "duration_ms": 120000},
+      {"event": "started", "parent": "US-AUTH-001", "child": "US-AUTH-001-DEL-004", "depth": 1},
+      {"event": "completed", "parent": "US-AUTH-001", "child": "US-AUTH-001-DEL-004", "duration_ms": 90000}
+    ]
+  }
+}

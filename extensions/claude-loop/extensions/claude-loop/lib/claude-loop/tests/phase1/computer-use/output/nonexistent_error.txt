@@ -1,0 +1,2 @@
+[0;31m[WORKSPACE][0m Workspace folder does not exist: /nonexistent/path/to/workspace (resolved: /nonexistent/path/to/workspace)
+[0;31m[WORKSPACE][0m Validation failed for 1 folder(s)

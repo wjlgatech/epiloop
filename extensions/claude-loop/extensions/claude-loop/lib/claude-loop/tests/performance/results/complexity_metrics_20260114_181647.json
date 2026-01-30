@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-01-15T02:16:53Z",
+  "metrics": {
+    "lines_of_code": {
+      "shell": 12604,
+      "python": 36422,
+      "total": 49026
+    },
+    "cyclomatic_complexity": {
+      "shell_decision_points": 2134
+    },
+    "functions": {
+      "shell_count": 532,
+      "python_count": 1168,
+      "avg_shell_size": 23,
+      "avg_python_size": 31
+    }
+  },
+  "thresholds": {
+    "max_function_size": 100,
+    "max_file_size": 1000,
+    "max_cyclomatic_complexity_per_function": 10
+  },
+  "validation": {
+    "violations_count": 9,
+    "violations": [
+  "claude-loop.sh: 2890 > 1000",
+  "lib/calibration-tracker.py: 1005 > 1000",
+  "lib/capability-inventory.py: 1034 > 1000",
+  "lib/conflict-detector.py: 1171 > 1000",
+  "lib/experience-store.py: 1422 > 1000",
+  "lib/gap-generalizer.py: 1004 > 1000",
+  "lib/improvement-prd-generator.py: 1518 > 1000",
+  "lib/prd-manager.py: 1662 > 1000",
+  "lib/promotion-evaluator.py: 1048 > 1000"
+]
+  }
+}

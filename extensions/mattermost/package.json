@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/mattermost",
+  "name": "@epiloop/mattermost",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot Mattermost channel plugin",
-  "clawdbot": {
+  "description": "Epiloop Mattermost channel plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ],
@@ -17,7 +17,7 @@
       "order": 65
     },
     "install": {
-      "npmSpec": "@clawdbot/mattermost",
+      "npmSpec": "@epiloop/mattermost",
       "localPath": "extensions/mattermost",
       "defaultChoice": "npm"
     }

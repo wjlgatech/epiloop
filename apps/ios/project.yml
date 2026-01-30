@@ -1,6 +1,6 @@
-name: Clawdbot
+name: Epiloop
 options:
-  bundleIdPrefix: com.clawdbot
+  bundleIdPrefix: com.epiloop
   deploymentTarget:
     iOS: "18.0"
   xcodeVersion: "16.0"
@@ -10,33 +10,33 @@ settings:
     SWIFT_VERSION: "6.0"
 
 packages:
-  ClawdbotKit:
-    path: ../shared/ClawdbotKit
+  EpiloopKit:
+    path: ../shared/EpiloopKit
   Swabble:
     path: ../../Swabble
 
 schemes:
-  Clawdbot:
+  Epiloop:
     shared: true
     build:
       targets:
-        Clawdbot: all
+        Epiloop: all
     test:
       targets:
-        - ClawdbotTests
+        - EpiloopTests
 
 targets:
-  Clawdbot:
+  Epiloop:
     type: application
     platform: iOS
     sources:
       - path: Sources
     dependencies:
-      - package: ClawdbotKit
-      - package: ClawdbotKit
-        product: ClawdbotChatUI
-      - package: ClawdbotKit
-        product: ClawdbotProtocol
+      - package: EpiloopKit
+      - package: EpiloopKit
+        product: EpiloopChatUI
+      - package: EpiloopKit
+        product: EpiloopProtocol
       - package: Swabble
         product: SwabbleKit
       - sdk: AppIntents.framework
@@ -71,15 +71,15 @@ targets:
         CODE_SIGN_IDENTITY: "Apple Development"
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: Y5PE65HELJ
-        PRODUCT_BUNDLE_IDENTIFIER: com.clawdbot.ios
-        PROVISIONING_PROFILE_SPECIFIER: "com.clawdbot.ios Development"
+        PRODUCT_BUNDLE_IDENTIFIER: com.epiloop.ios
+        PROVISIONING_PROFILE_SPECIFIER: "com.epiloop.ios Development"
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
         ENABLE_APPINTENTS_METADATA: NO
     info:
       path: Sources/Info.plist
       properties:
-        CFBundleDisplayName: Clawdbot
+        CFBundleDisplayName: Epiloop
         CFBundleIconName: AppIcon
         CFBundleShortVersionString: "2026.1.24"
         CFBundleVersion: "20260124"
@@ -88,16 +88,16 @@ targets:
           UIApplicationSupportsMultipleScenes: false
         UIBackgroundModes:
           - audio
-        NSLocalNetworkUsageDescription: Clawdbot discovers and connects to your Clawdbot gateway on the local network.
+        NSLocalNetworkUsageDescription: Epiloop discovers and connects to your Epiloop gateway on the local network.
         NSAppTransportSecurity:
           NSAllowsArbitraryLoadsInWebContent: true
         NSBonjourServices:
-          - _clawdbot-gw._tcp
-        NSCameraUsageDescription: Clawdbot can capture photos or short video clips when requested via the gateway.
-        NSLocationWhenInUseUsageDescription: Clawdbot uses your location when you allow location sharing.
-        NSLocationAlwaysAndWhenInUseUsageDescription: Clawdbot can share your location in the background when you enable Always.
-        NSMicrophoneUsageDescription: Clawdbot needs microphone access for voice wake.
-        NSSpeechRecognitionUsageDescription: Clawdbot uses on-device speech recognition for voice wake.
+          - _epiloop-gw._tcp
+        NSCameraUsageDescription: Epiloop can capture photos or short video clips when requested via the gateway.
+        NSLocationWhenInUseUsageDescription: Epiloop uses your location when you allow location sharing.
+        NSLocationAlwaysAndWhenInUseUsageDescription: Epiloop can share your location in the background when you enable Always.
+        NSMicrophoneUsageDescription: Epiloop needs microphone access for voice wake.
+        NSSpeechRecognitionUsageDescription: Epiloop uses on-device speech recognition for voice wake.
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationPortraitUpsideDown
@@ -109,26 +109,26 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
 
-  ClawdbotTests:
+  EpiloopTests:
     type: bundle.unit-test
     platform: iOS
     sources:
       - path: Tests
     dependencies:
-      - target: Clawdbot
+      - target: Epiloop
       - package: Swabble
         product: SwabbleKit
       - sdk: AppIntents.framework
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.clawdbot.ios.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.epiloop.ios.tests
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Clawdbot.app/Clawdbot"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Epiloop.app/Epiloop"
         BUNDLE_LOADER: "$(TEST_HOST)"
     info:
       path: Tests/Info.plist
       properties:
-        CFBundleDisplayName: ClawdbotTests
+        CFBundleDisplayName: EpiloopTests
         CFBundleShortVersionString: "2026.1.24"
         CFBundleVersion: "20260124"

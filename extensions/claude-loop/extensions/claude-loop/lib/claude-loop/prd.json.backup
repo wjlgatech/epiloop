@@ -1,0 +1,70 @@
+{
+  "project": "checkpoint-robustness",
+  "branchName": "feature/checkpoint-robustness",
+  "description": "Improve checkpoint robustness with more frequent saves, validation on load, and better crash recovery. Ensure no progress is lost even on hard crashes.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Increase checkpoint frequency",
+      "description": "As a user, I want checkpoints saved after every iteration so that I lose minimal progress on crashes",
+      "acceptanceCriteria": [
+        "Save checkpoint after every iteration (not just every story)",
+        "Write to temp file first, then atomic rename to prevent corruption",
+        "Include: current story, iteration count, timestamp, PRD state",
+        "Keep last 3 checkpoints for rollback",
+        "Test by killing process mid-iteration and verifying recovery"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented per-iteration checkpoint saves with atomic write (temp file + rename), automatic cleanup (keep last 3), and comprehensive test suite (7 tests passing). All acceptance criteria met.",
+      "fileScope": [
+        "lib/session-state.py",
+        "lib/worker.sh"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-002",
+      "title": "Add checkpoint validation on load",
+      "description": "As the system, I want to validate checkpoints before loading so that corrupted checkpoints don't cause further issues",
+      "acceptanceCriteria": [
+        "Add validate_checkpoint() function to lib/session-state.py",
+        "Check JSON schema, required fields, file integrity",
+        "Fall back to previous checkpoint if current is corrupted",
+        "Log validation errors with details",
+        "Test by corrupting checkpoint file and verifying fallback"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Checkpoint validation already implemented in lib/session-state.sh with comprehensive validation, fallback mechanism, and error logging. All acceptance criteria verified with tests.",
+      "fileScope": [
+        "lib/session-state.py",
+        "lib/execution-logger.sh"
+      ],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    },
+    {
+      "id": "US-003",
+      "title": "Improve crash recovery messaging",
+      "description": "As a user, I want clear messages when resuming from crash so that I understand what happened and what's being recovered",
+      "acceptanceCriteria": [
+        "Detect if last session ended abnormally (no clean shutdown marker)",
+        "Display recovery message with: time since crash, progress recovered, stories to retry",
+        "Ask user to confirm recovery or start fresh",
+        "Log recovery metrics (iterations recovered, time lost)",
+        "Test crash recovery flow end-to-end"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "claude-loop.sh",
+        "lib/session-state.py"
+      ],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    }
+  ]
+}

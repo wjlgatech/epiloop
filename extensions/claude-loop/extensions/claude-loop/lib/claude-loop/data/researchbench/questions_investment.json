@@ -1,0 +1,1503 @@
+[
+  {
+    "id": "INV-001",
+    "domain": "Investment",
+    "question": "How do quantitative value investing strategies differ from traditional value investing, and what are their respective performance characteristics?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What metrics define traditional value investing?",
+      "How do quant value strategies systematize stock selection?",
+      "What is the value factor and its historical performance?",
+      "Why has value underperformed growth in recent decades?"
+    ],
+    "evaluation_criteria": "Must compare approaches, discuss factor investing, explain value premium",
+    "tags": ["value-investing", "quantitative", "factor-investing", "performance"]
+  },
+  {
+    "id": "INV-002",
+    "domain": "Investment",
+    "question": "What are the key mechanisms through which cryptocurrency prices are determined, and how do they differ from traditional asset pricing?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What drives supply and demand in crypto markets?",
+      "How do tokenomics affect cryptocurrency valuation?",
+      "What role do sentiment and speculation play?",
+      "How do institutional flows impact crypto prices?"
+    ],
+    "evaluation_criteria": "Must discuss multiple pricing factors with specific examples",
+    "tags": ["cryptocurrency", "valuation", "tokenomics", "market-dynamics"]
+  },
+  {
+    "id": "INV-003",
+    "domain": "Investment",
+    "question": "How do options Greeks help manage risk in derivatives portfolios?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What does delta measure and how is it hedged?",
+      "How does gamma affect delta hedging costs?",
+      "What is theta decay and its implications for options strategies?",
+      "How does vega exposure affect portfolio risk?"
+    ],
+    "evaluation_criteria": "Must explain each Greek with practical hedging examples",
+    "tags": ["options", "Greeks", "hedging", "risk-management"]
+  },
+  {
+    "id": "INV-004",
+    "domain": "Investment",
+    "question": "What are the primary drivers of bond yields and how do they interact?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do inflation expectations affect bond yields?",
+      "What is the term premium and why does it vary?",
+      "How do central bank policies influence the yield curve?",
+      "What role does credit risk play in corporate bond yields?"
+    ],
+    "evaluation_criteria": "Must explain yield components and their interactions",
+    "tags": ["bonds", "yields", "interest-rates", "fixed-income"]
+  },
+  {
+    "id": "INV-005",
+    "domain": "Investment",
+    "question": "How do momentum strategies generate returns and what are their risks?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the empirical evidence for momentum effects?",
+      "What behavioral and risk-based explanations exist?",
+      "How do momentum crashes occur?",
+      "How should momentum strategies be implemented?"
+    ],
+    "evaluation_criteria": "Must cover empirical evidence, explanations, and implementation",
+    "tags": ["momentum", "factor-investing", "behavioral", "risk"]
+  },
+  {
+    "id": "INV-006",
+    "domain": "Investment",
+    "question": "What are the key considerations for constructing a diversified portfolio across asset classes?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do correlations between assets affect diversification?",
+      "What is the efficient frontier and how is it constructed?",
+      "How should rebalancing be performed?",
+      "What are the limitations of mean-variance optimization?"
+    ],
+    "evaluation_criteria": "Must explain portfolio theory and practical implementation",
+    "tags": ["portfolio-construction", "diversification", "asset-allocation", "MPT"]
+  },
+  {
+    "id": "INV-007",
+    "domain": "Investment",
+    "question": "How do DeFi lending protocols work and what are the associated risks?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do overcollateralized lending protocols function?",
+      "What determines interest rates in DeFi lending?",
+      "What are liquidation risks and cascades?",
+      "How have DeFi lending protocols failed historically?"
+    ],
+    "evaluation_criteria": "Must explain mechanics, rate determination, and specific risk events",
+    "tags": ["DeFi", "lending", "cryptocurrency", "smart-contracts"]
+  },
+  {
+    "id": "INV-008",
+    "domain": "Investment",
+    "question": "What are the main approaches for valuing early-stage technology companies?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "Why is DCF analysis challenging for early-stage companies?",
+      "How do comparable company analyses work?",
+      "What is the venture capital method of valuation?",
+      "How do different growth assumptions affect valuations?"
+    ],
+    "evaluation_criteria": "Must explain multiple valuation methods with limitations",
+    "tags": ["valuation", "startups", "venture-capital", "technology"]
+  },
+  {
+    "id": "INV-009",
+    "domain": "Investment",
+    "question": "How do central bank interest rate decisions transmit through financial markets?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the channels of monetary policy transmission?",
+      "How do rate changes affect equity valuations?",
+      "What is the relationship between rates and currency values?",
+      "How do markets anticipate and price in rate decisions?"
+    ],
+    "evaluation_criteria": "Must explain transmission mechanisms with empirical evidence",
+    "tags": ["monetary-policy", "interest-rates", "transmission", "central-banks"]
+  },
+  {
+    "id": "INV-010",
+    "domain": "Investment",
+    "question": "What are the key risks and strategies in volatility trading?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How is implied volatility different from realized volatility?",
+      "What is the volatility risk premium?",
+      "How do VIX futures and options work?",
+      "What are the risks of short volatility strategies?"
+    ],
+    "evaluation_criteria": "Must explain volatility concepts and trading mechanics",
+    "tags": ["volatility", "VIX", "options", "risk-premium"]
+  },
+  {
+    "id": "INV-011",
+    "domain": "Investment",
+    "question": "How do ESG factors affect investment returns and portfolio construction?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What empirical evidence links ESG scores to performance?",
+      "How do ESG exclusions affect portfolio diversification?",
+      "What are the challenges in measuring ESG factors?",
+      "How do different ESG approaches compare?"
+    ],
+    "evaluation_criteria": "Must discuss evidence, measurement challenges, and approaches",
+    "tags": ["ESG", "sustainable-investing", "factor-analysis", "performance"]
+  },
+  {
+    "id": "INV-012",
+    "domain": "Investment",
+    "question": "What are the mechanics and risks of leveraged ETFs?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do leveraged ETFs achieve their target exposure?",
+      "What is volatility decay and how does it affect returns?",
+      "Why do leveraged ETFs diverge from their benchmark over time?",
+      "When are leveraged ETFs appropriate to use?"
+    ],
+    "evaluation_criteria": "Must explain mechanics, path dependency, and appropriate use cases",
+    "tags": ["ETFs", "leverage", "volatility-decay", "derivatives"]
+  },
+  {
+    "id": "INV-013",
+    "domain": "Investment",
+    "question": "How do merger arbitrage strategies work and what are their risk characteristics?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the typical merger arbitrage trade structure?",
+      "What factors determine merger arbitrage spreads?",
+      "What are the risks of deal breaks?",
+      "How do regulatory risks affect merger arbitrage?"
+    ],
+    "evaluation_criteria": "Must explain strategy mechanics and risk factors",
+    "tags": ["merger-arbitrage", "event-driven", "M&A", "risk"]
+  },
+  {
+    "id": "INV-014",
+    "domain": "Investment",
+    "question": "What are the key considerations for currency hedging in international portfolios?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "When does currency exposure add vs detract from returns?",
+      "What are the costs of currency hedging?",
+      "How do forward contracts hedge currency risk?",
+      "What is the strategic vs tactical approach to currency hedging?"
+    ],
+    "evaluation_criteria": "Must explain hedging mechanics and decision framework",
+    "tags": ["currency", "hedging", "international", "FX"]
+  },
+  {
+    "id": "INV-015",
+    "domain": "Investment",
+    "question": "How do credit default swaps work and what role did they play in the 2008 crisis?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the mechanics of a CDS contract?",
+      "How are CDS spreads determined?",
+      "What role did CDS play in the mortgage crisis?",
+      "How has CDS regulation changed since 2008?"
+    ],
+    "evaluation_criteria": "Must explain mechanics and historical context with specifics",
+    "tags": ["CDS", "credit", "derivatives", "financial-crisis"]
+  },
+  {
+    "id": "INV-016",
+    "domain": "Investment",
+    "question": "What are the approaches for measuring and managing portfolio tail risk?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How is Value at Risk calculated and what are its limitations?",
+      "What is Expected Shortfall and why is it preferred?",
+      "How do tail risk hedging strategies work?",
+      "What role do stress tests play in risk management?"
+    ],
+    "evaluation_criteria": "Must explain risk measures and hedging approaches",
+    "tags": ["tail-risk", "VaR", "risk-management", "hedging"]
+  },
+  {
+    "id": "INV-017",
+    "domain": "Investment",
+    "question": "How do real estate investment trusts (REITs) work and what drives their returns?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the REIT structure and tax treatment?",
+      "What factors drive REIT valuations?",
+      "How do different property types perform?",
+      "What is the relationship between REITs and interest rates?"
+    ],
+    "evaluation_criteria": "Must explain structure, valuation drivers, and rate sensitivity",
+    "tags": ["REITs", "real-estate", "income", "interest-rates"]
+  },
+  {
+    "id": "INV-018",
+    "domain": "Investment",
+    "question": "What are the key characteristics and risks of high-yield bonds?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How are high-yield bonds rated and why?",
+      "What determines high-yield spreads over treasuries?",
+      "How do default rates vary with economic conditions?",
+      "What is the recovery rate for defaulted bonds?"
+    ],
+    "evaluation_criteria": "Must explain credit analysis and spread drivers",
+    "tags": ["high-yield", "bonds", "credit", "fixed-income"]
+  },
+  {
+    "id": "INV-019",
+    "domain": "Investment",
+    "question": "How do market makers profit and what risks do they face?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the bid-ask spread and how does it compensate market makers?",
+      "What is adverse selection risk for market makers?",
+      "How do high-frequency market makers differ from traditional ones?",
+      "What inventory risk do market makers face?"
+    ],
+    "evaluation_criteria": "Must explain market making economics and risk management",
+    "tags": ["market-making", "liquidity", "bid-ask", "HFT"]
+  },
+  {
+    "id": "INV-020",
+    "domain": "Investment",
+    "question": "What are the mechanics and applications of total return swaps?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does a total return swap structure work?",
+      "What are the advantages over direct ownership?",
+      "How did total return swaps feature in Archegos collapse?",
+      "What counterparty risks exist in TRS?",
+      "How are total return swaps regulated?"
+    ],
+    "evaluation_criteria": "Must explain mechanics, use cases, and risks with examples",
+    "tags": ["swaps", "derivatives", "leverage", "counterparty-risk"]
+  },
+  {
+    "id": "INV-021",
+    "domain": "Investment",
+    "question": "How do smart beta strategies attempt to improve on market-cap weighting?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the criticisms of market-cap weighted indices?",
+      "How do fundamental weighting schemes work?",
+      "What is risk parity allocation?",
+      "How have smart beta strategies performed historically?"
+    ],
+    "evaluation_criteria": "Must compare weighting schemes and discuss performance",
+    "tags": ["smart-beta", "factor-investing", "indexing", "allocation"]
+  },
+  {
+    "id": "INV-022",
+    "domain": "Investment",
+    "question": "What are the key considerations for investing in commodities?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do futures-based commodity investments work?",
+      "What is contango and backwardation?",
+      "How do commodities provide inflation protection?",
+      "What are the roll yield dynamics in commodity futures?"
+    ],
+    "evaluation_criteria": "Must explain futures mechanics and return components",
+    "tags": ["commodities", "futures", "contango", "inflation"]
+  },
+  {
+    "id": "INV-023",
+    "domain": "Investment",
+    "question": "How do algorithmic trading strategies impact market quality?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How has algorithmic trading changed market microstructure?",
+      "What evidence exists on HFT and market quality?",
+      "How do flash crashes occur?",
+      "What regulations govern algorithmic trading?"
+    ],
+    "evaluation_criteria": "Must discuss evidence on market quality and specific events",
+    "tags": ["algorithmic-trading", "HFT", "market-microstructure", "regulation"]
+  },
+  {
+    "id": "INV-024",
+    "domain": "Investment",
+    "question": "What are the approaches for analyzing and trading interest rate futures?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How are Treasury futures priced and delivered?",
+      "What is the cheapest-to-deliver bond?",
+      "How do traders express views on the yield curve with futures?",
+      "What is basis trading in Treasury futures?"
+    ],
+    "evaluation_criteria": "Must explain pricing, delivery, and trading strategies",
+    "tags": ["Treasury-futures", "fixed-income", "basis-trading", "yield-curve"]
+  },
+  {
+    "id": "INV-025",
+    "domain": "Investment",
+    "question": "How do private equity returns compare to public market investments?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How are private equity returns measured?",
+      "What is the PME approach to benchmarking?",
+      "What biases affect private equity performance data?",
+      "How do fees affect net returns to investors?"
+    ],
+    "evaluation_criteria": "Must explain return measurement, benchmarking, and fee impact",
+    "tags": ["private-equity", "performance", "fees", "benchmarking"]
+  },
+  {
+    "id": "INV-026",
+    "domain": "Investment",
+    "question": "What are the key factors driving emerging market equity returns?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do currency movements affect EM returns?",
+      "What role does commodity exposure play?",
+      "How do governance and political risks factor in?",
+      "What is the relationship between EM and developed market returns?"
+    ],
+    "evaluation_criteria": "Must explain multiple return drivers with evidence",
+    "tags": ["emerging-markets", "equity", "currency", "political-risk"]
+  },
+  {
+    "id": "INV-027",
+    "domain": "Investment",
+    "question": "How do stablecoins maintain their peg and what are the risks?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do fiat-backed stablecoins maintain reserves?",
+      "How do algorithmic stablecoins attempt to maintain peg?",
+      "What caused the Terra/Luna collapse?",
+      "What regulatory concerns exist for stablecoins?"
+    ],
+    "evaluation_criteria": "Must explain different mechanisms and specific failures",
+    "tags": ["stablecoins", "cryptocurrency", "peg", "Terra"]
+  },
+  {
+    "id": "INV-028",
+    "domain": "Investment",
+    "question": "What are the key considerations for retirement portfolio construction?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "How should asset allocation change with age?",
+      "What is sequence of returns risk?",
+      "How should withdrawal rates be determined?",
+      "What role do annuities play in retirement planning?"
+    ],
+    "evaluation_criteria": "Must explain lifecycle investing and withdrawal strategies",
+    "tags": ["retirement", "lifecycle", "withdrawal", "asset-allocation"]
+  },
+  {
+    "id": "INV-029",
+    "domain": "Investment",
+    "question": "How do covered call strategies work and when are they appropriate?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What is the payoff structure of a covered call?",
+      "How do covered calls generate income?",
+      "What are the opportunity costs of covered calls?",
+      "When do covered call strategies underperform?"
+    ],
+    "evaluation_criteria": "Must explain mechanics and appropriate use cases",
+    "tags": ["options", "covered-call", "income", "strategies"]
+  },
+  {
+    "id": "INV-030",
+    "domain": "Investment",
+    "question": "What are the mechanics and risks of securities lending?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does the securities lending process work?",
+      "What determines securities lending fees?",
+      "What counterparty risks exist in securities lending?",
+      "How does securities lending enable short selling?"
+    ],
+    "evaluation_criteria": "Must explain mechanics, fee drivers, and risks",
+    "tags": ["securities-lending", "short-selling", "counterparty", "fees"]
+  },
+  {
+    "id": "INV-031",
+    "domain": "Investment",
+    "question": "How do convertible bonds combine features of debt and equity?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the key terms in a convertible bond?",
+      "How is conversion value determined?",
+      "What is convertible arbitrage?",
+      "When do issuers prefer convertible financing?"
+    ],
+    "evaluation_criteria": "Must explain bond structure and arbitrage strategy",
+    "tags": ["convertible-bonds", "arbitrage", "hybrid", "fixed-income"]
+  },
+  {
+    "id": "INV-032",
+    "domain": "Investment",
+    "question": "What are the approaches for factor attribution in portfolio performance?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does Fama-French factor analysis work?",
+      "What additional factors have been identified?",
+      "How do you distinguish skill from factor exposure?",
+      "What are the challenges in factor attribution?"
+    ],
+    "evaluation_criteria": "Must explain factor models and attribution methodology",
+    "tags": ["factor-attribution", "Fama-French", "performance", "analysis"]
+  },
+  {
+    "id": "INV-033",
+    "domain": "Investment",
+    "question": "How do central bank digital currencies differ from cryptocurrencies?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the design choices for CBDCs?",
+      "How do CBDCs differ from existing digital money?",
+      "What privacy concerns exist with CBDCs?",
+      "How might CBDCs affect monetary policy transmission?"
+    ],
+    "evaluation_criteria": "Must explain design choices and implications",
+    "tags": ["CBDC", "digital-currency", "monetary-policy", "cryptocurrency"]
+  },
+  {
+    "id": "INV-034",
+    "domain": "Investment",
+    "question": "What are the key metrics for analyzing bank stocks?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do net interest margins drive bank profitability?",
+      "What capital ratios are important for banks?",
+      "How do credit loss provisions affect earnings?",
+      "What is the significance of price-to-book for banks?"
+    ],
+    "evaluation_criteria": "Must explain bank-specific metrics and their interpretation",
+    "tags": ["banks", "financial-analysis", "capital-ratios", "NIM"]
+  },
+  {
+    "id": "INV-035",
+    "domain": "Investment",
+    "question": "How do infrastructure investments generate returns?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the return characteristics of infrastructure assets?",
+      "How do regulated vs unregulated infrastructure differ?",
+      "What role does inflation linkage play in infrastructure returns?",
+      "How do investors access infrastructure exposure?"
+    ],
+    "evaluation_criteria": "Must explain return drivers and investment vehicles",
+    "tags": ["infrastructure", "alternative-investments", "income", "inflation"]
+  },
+  {
+    "id": "INV-036",
+    "domain": "Investment",
+    "question": "What are the key considerations for investing in initial public offerings?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the IPO underpricing phenomenon?",
+      "How does IPO allocation work?",
+      "What is the long-term performance of IPOs?",
+      "How do SPAC IPOs differ from traditional IPOs?"
+    ],
+    "evaluation_criteria": "Must explain pricing, allocation, and performance patterns",
+    "tags": ["IPO", "equity", "underpricing", "SPAC"]
+  },
+  {
+    "id": "INV-037",
+    "domain": "Investment",
+    "question": "How do options implied volatility surfaces convey market information?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the volatility smile and why does it exist?",
+      "How does the term structure of volatility vary?",
+      "What do skew levels indicate about market sentiment?",
+      "How do traders use volatility surface information?"
+    ],
+    "evaluation_criteria": "Must explain surface dynamics and trading implications",
+    "tags": ["options", "implied-volatility", "skew", "term-structure"]
+  },
+  {
+    "id": "INV-038",
+    "domain": "Investment",
+    "question": "What are the approaches for tactical asset allocation?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does tactical allocation differ from strategic?",
+      "What signals are used for tactical decisions?",
+      "What is the evidence on tactical allocation effectiveness?",
+      "How should tactical tilts be sized?"
+    ],
+    "evaluation_criteria": "Must explain signals, evidence, and implementation",
+    "tags": ["tactical-allocation", "market-timing", "signals", "asset-allocation"]
+  },
+  {
+    "id": "INV-039",
+    "domain": "Investment",
+    "question": "How do distressed debt investing strategies work?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What defines distressed debt?",
+      "How do investors analyze distressed situations?",
+      "What is the fulcrum security?",
+      "How do bankruptcy processes affect distressed debt returns?"
+    ],
+    "evaluation_criteria": "Must explain analysis, legal process, and strategies",
+    "tags": ["distressed-debt", "bankruptcy", "credit", "restructuring"]
+  },
+  {
+    "id": "INV-040",
+    "domain": "Investment",
+    "question": "What are the key considerations for systematic trend following strategies?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do trend following systems generate signals?",
+      "What is the crisis alpha of trend following?",
+      "How do different lookback periods affect performance?",
+      "What are the capacity constraints in trend following?"
+    ],
+    "evaluation_criteria": "Must explain signal generation and performance characteristics",
+    "tags": ["trend-following", "CTA", "systematic", "managed-futures"]
+  },
+  {
+    "id": "INV-041",
+    "domain": "Investment",
+    "question": "How do dividend growth investing strategies work?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What criteria define dividend growth stocks?",
+      "How does dividend growth relate to total return?",
+      "What are the tax implications of dividend income?",
+      "How do dividend aristocrats perform historically?"
+    ],
+    "evaluation_criteria": "Must explain strategy, performance, and tax considerations",
+    "tags": ["dividends", "income", "equity", "tax"]
+  },
+  {
+    "id": "INV-042",
+    "domain": "Investment",
+    "question": "What are the mechanics of repo markets and their role in financial stability?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do repo transactions work?",
+      "What determines repo rates?",
+      "How did repo stress manifest in September 2019?",
+      "What role does the Fed play in repo markets?"
+    ],
+    "evaluation_criteria": "Must explain mechanics and recent market events",
+    "tags": ["repo", "money-markets", "liquidity", "Fed"]
+  },
+  {
+    "id": "INV-043",
+    "domain": "Investment",
+    "question": "How do environmental risks affect corporate bond valuations?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are transition risks for bond issuers?",
+      "How are physical climate risks priced in bonds?",
+      "What is the green bond premium?",
+      "How do credit rating agencies incorporate climate risk?"
+    ],
+    "evaluation_criteria": "Must explain climate-related risks and pricing",
+    "tags": ["climate-risk", "bonds", "ESG", "credit"]
+  },
+  {
+    "id": "INV-044",
+    "domain": "Investment",
+    "question": "What are the approaches for pairs trading and statistical arbitrage?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How are cointegrated pairs identified?",
+      "What statistical methods detect mean reversion?",
+      "How are positions sized in stat arb?",
+      "What caused stat arb strategies to fail in August 2007?"
+    ],
+    "evaluation_criteria": "Must explain methodology and historical context",
+    "tags": ["pairs-trading", "statistical-arbitrage", "mean-reversion", "quantitative"]
+  },
+  {
+    "id": "INV-045",
+    "domain": "Investment",
+    "question": "How do structured products combine derivatives with fixed income?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are common structured product designs?",
+      "How are structured products priced?",
+      "What are the embedded costs in structured products?",
+      "What risks do structured product investors face?"
+    ],
+    "evaluation_criteria": "Must explain designs, pricing, and risk disclosure",
+    "tags": ["structured-products", "derivatives", "fixed-income", "risk"]
+  },
+  {
+    "id": "INV-046",
+    "domain": "Investment",
+    "question": "What are the considerations for investing in municipal bonds?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the tax treatment of municipal bonds?",
+      "How are general obligation vs revenue bonds different?",
+      "What is taxable equivalent yield?",
+      "What default risks exist in municipal bonds?"
+    ],
+    "evaluation_criteria": "Must explain tax treatment, types, and credit analysis",
+    "tags": ["municipal-bonds", "tax-exempt", "fixed-income", "credit"]
+  },
+  {
+    "id": "INV-047",
+    "domain": "Investment",
+    "question": "How do activist investors create value in target companies?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What tactics do activist investors use?",
+      "What is the evidence on activist returns?",
+      "How do companies defend against activists?",
+      "What regulatory disclosures are required for activists?"
+    ],
+    "evaluation_criteria": "Must explain tactics, evidence, and regulatory framework",
+    "tags": ["activist-investing", "corporate-governance", "equity", "returns"]
+  },
+  {
+    "id": "INV-048",
+    "domain": "Investment",
+    "question": "What are the key metrics for analyzing insurance company stocks?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does the combined ratio measure underwriting profitability?",
+      "What is float and why is it valuable?",
+      "How do reserve releases affect earnings?",
+      "What book value metrics are important for insurers?"
+    ],
+    "evaluation_criteria": "Must explain insurance-specific metrics and interpretation",
+    "tags": ["insurance", "financial-analysis", "combined-ratio", "float"]
+  },
+  {
+    "id": "INV-049",
+    "domain": "Investment",
+    "question": "How do carry trades work in currency markets?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the carry trade strategy?",
+      "What is the forward rate puzzle?",
+      "How do carry trades perform in different market regimes?",
+      "What are the crash risks in carry trades?"
+    ],
+    "evaluation_criteria": "Must explain strategy, performance, and risks",
+    "tags": ["carry-trade", "currency", "FX", "interest-rate-differential"]
+  },
+  {
+    "id": "INV-050",
+    "domain": "Investment",
+    "question": "What are the approaches for managing concentration risk in portfolios?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How is concentration risk measured?",
+      "What strategies exist for diversifying concentrated positions?",
+      "How do collars and prepaid forwards work?",
+      "What are the tax implications of diversification strategies?"
+    ],
+    "evaluation_criteria": "Must explain risk measurement and diversification tools",
+    "tags": ["concentration-risk", "diversification", "hedging", "tax"]
+  },
+  {
+    "id": "INV-051",
+    "domain": "Investment",
+    "question": "How do target date funds approach retirement investing?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What is the glide path in target date funds?",
+      "How do to vs through approaches differ?",
+      "What fees do target date funds charge?",
+      "How do target date fund allocations compare across providers?"
+    ],
+    "evaluation_criteria": "Must explain design, variations, and costs",
+    "tags": ["target-date-funds", "retirement", "glide-path", "401k"]
+  },
+  {
+    "id": "INV-052",
+    "domain": "Investment",
+    "question": "What are the considerations for investing in preferred stocks?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the features of preferred stock?",
+      "How do preferreds differ from bonds?",
+      "What is qualified dividend treatment for preferreds?",
+      "What call risk exists in preferred stocks?"
+    ],
+    "evaluation_criteria": "Must explain features, tax treatment, and risks",
+    "tags": ["preferred-stock", "income", "hybrid", "dividends"]
+  },
+  {
+    "id": "INV-053",
+    "domain": "Investment",
+    "question": "How do special situations investing strategies identify opportunities?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What events create special situations?",
+      "How are spin-offs analyzed?",
+      "What is rights offering arbitrage?",
+      "How do investors analyze complex corporate actions?"
+    ],
+    "evaluation_criteria": "Must explain event types and analysis approaches",
+    "tags": ["special-situations", "event-driven", "spin-offs", "corporate-actions"]
+  },
+  {
+    "id": "INV-054",
+    "domain": "Investment",
+    "question": "What are the considerations for using margin in investment portfolios?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does margin interest affect returns?",
+      "What are Reg T margin requirements?",
+      "How do margin calls work?",
+      "What are the risks of leveraged investing?"
+    ],
+    "evaluation_criteria": "Must explain mechanics, regulations, and risks",
+    "tags": ["margin", "leverage", "regulation", "risk"]
+  },
+  {
+    "id": "INV-055",
+    "domain": "Investment",
+    "question": "How do automated market makers in DeFi determine prices?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does the constant product formula work?",
+      "What is impermanent loss for liquidity providers?",
+      "How do concentrated liquidity AMMs differ?",
+      "What MEV issues affect AMM traders?"
+    ],
+    "evaluation_criteria": "Must explain pricing, LP economics, and risks",
+    "tags": ["AMM", "DeFi", "liquidity", "impermanent-loss"]
+  },
+  {
+    "id": "INV-056",
+    "domain": "Investment",
+    "question": "What are the key considerations for investing in floating rate loans?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the features of leveraged loans?",
+      "How does floating rate exposure benefit in rising rate environments?",
+      "What credit risks exist in leveraged loans?",
+      "How do CLOs affect the loan market?"
+    ],
+    "evaluation_criteria": "Must explain loan features and rate sensitivity",
+    "tags": ["leveraged-loans", "floating-rate", "CLO", "credit"]
+  },
+  {
+    "id": "INV-057",
+    "domain": "Investment",
+    "question": "How do sovereign wealth funds approach portfolio management?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the different types of sovereign wealth funds?",
+      "How do SWF investment horizons differ from other investors?",
+      "What governance structures exist for SWFs?",
+      "How do SWFs allocate across asset classes?"
+    ],
+    "evaluation_criteria": "Must explain types, governance, and allocation",
+    "tags": ["sovereign-wealth-funds", "institutional", "asset-allocation", "governance"]
+  },
+  {
+    "id": "INV-058",
+    "domain": "Investment",
+    "question": "What are the approaches for analyzing technology company valuations?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What multiples are appropriate for tech companies?",
+      "How do SaaS metrics affect valuation?",
+      "What is the role of growth in tech valuations?",
+      "How do stock-based compensation adjustments work?"
+    ],
+    "evaluation_criteria": "Must explain metrics and valuation approaches",
+    "tags": ["technology", "valuation", "SaaS", "growth"]
+  },
+  {
+    "id": "INV-059",
+    "domain": "Investment",
+    "question": "How do investors use put options for portfolio protection?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What is protective put strategy?",
+      "How do put spreads reduce hedging costs?",
+      "What is the cost of portfolio insurance?",
+      "When are puts most expensive to buy?"
+    ],
+    "evaluation_criteria": "Must explain strategies and cost considerations",
+    "tags": ["options", "hedging", "puts", "portfolio-protection"]
+  },
+  {
+    "id": "INV-060",
+    "domain": "Investment",
+    "question": "What are the considerations for investing in frontier markets?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What distinguishes frontier from emerging markets?",
+      "What are the liquidity challenges in frontier markets?",
+      "How do political and governance risks affect frontier investing?",
+      "What diversification benefits do frontier markets offer?"
+    ],
+    "evaluation_criteria": "Must explain characteristics, risks, and benefits",
+    "tags": ["frontier-markets", "emerging-markets", "liquidity", "diversification"]
+  },
+  {
+    "id": "INV-061",
+    "domain": "Investment",
+    "question": "How do earnings quality indicators help identify accounting risks?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are common earnings quality red flags?",
+      "How do accruals relate to earnings quality?",
+      "What is the Beneish M-score?",
+      "How do cash flow and earnings divergences signal risk?"
+    ],
+    "evaluation_criteria": "Must explain quality metrics and accounting analysis",
+    "tags": ["earnings-quality", "accounting", "accruals", "analysis"]
+  },
+  {
+    "id": "INV-062",
+    "domain": "Investment",
+    "question": "What are the key factors affecting gold prices?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do real interest rates affect gold prices?",
+      "What is gold's relationship with the dollar?",
+      "How do central bank reserves affect gold demand?",
+      "What role does gold play as a safe haven?"
+    ],
+    "evaluation_criteria": "Must explain price drivers and portfolio role",
+    "tags": ["gold", "commodities", "safe-haven", "inflation"]
+  },
+  {
+    "id": "INV-063",
+    "domain": "Investment",
+    "question": "How do venture capital fund economics work?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the 2/20 fee structure?",
+      "How does the J-curve affect VC fund returns?",
+      "What is the power law distribution in VC returns?",
+      "How do follow-on investments affect fund economics?"
+    ],
+    "evaluation_criteria": "Must explain fees, return patterns, and portfolio construction",
+    "tags": ["venture-capital", "fees", "returns", "power-law"]
+  },
+  {
+    "id": "INV-064",
+    "domain": "Investment",
+    "question": "What are the considerations for direct indexing strategies?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does direct indexing differ from ETF investing?",
+      "What tax loss harvesting benefits exist?",
+      "How can direct indexing be customized?",
+      "What are the costs and minimums for direct indexing?"
+    ],
+    "evaluation_criteria": "Must explain mechanics, tax benefits, and costs",
+    "tags": ["direct-indexing", "tax-loss-harvesting", "customization", "SMA"]
+  },
+  {
+    "id": "INV-065",
+    "domain": "Investment",
+    "question": "How do synthetic ETFs differ from physical ETFs?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is swap-based replication in ETFs?",
+      "What counterparty risks exist in synthetic ETFs?",
+      "How do tracking errors compare between synthetic and physical?",
+      "What regulatory requirements exist for synthetic ETFs?"
+    ],
+    "evaluation_criteria": "Must explain replication methods and risks",
+    "tags": ["ETFs", "synthetic", "swaps", "counterparty-risk"]
+  },
+  {
+    "id": "INV-066",
+    "domain": "Investment",
+    "question": "What are the approaches for analyzing pharmaceutical company pipelines?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do clinical trial phases affect drug valuations?",
+      "What is the probability of success at each phase?",
+      "How are pipeline assets valued using rNPV?",
+      "What patent cliff risks affect pharma valuations?"
+    ],
+    "evaluation_criteria": "Must explain clinical process and valuation methods",
+    "tags": ["pharmaceutical", "biotech", "valuation", "pipeline"]
+  },
+  {
+    "id": "INV-067",
+    "domain": "Investment",
+    "question": "How do interest rate swaps work and what are their applications?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the structure of a plain vanilla interest rate swap?",
+      "How are swap rates determined?",
+      "What are the applications of interest rate swaps?",
+      "How is swap counterparty risk managed?"
+    ],
+    "evaluation_criteria": "Must explain mechanics and applications",
+    "tags": ["swaps", "interest-rates", "hedging", "derivatives"]
+  },
+  {
+    "id": "INV-068",
+    "domain": "Investment",
+    "question": "What are the considerations for investing in art and collectibles?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the return characteristics of art investments?",
+      "How are art and collectibles valued?",
+      "What liquidity and transaction costs exist?",
+      "How do fractional art ownership platforms work?"
+    ],
+    "evaluation_criteria": "Must explain returns, valuation, and practical considerations",
+    "tags": ["art", "collectibles", "alternative-investments", "fractional"]
+  },
+  {
+    "id": "INV-069",
+    "domain": "Investment",
+    "question": "How do credit ratings affect bond pricing and portfolio construction?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do rating agencies assign credit ratings?",
+      "What is the relationship between ratings and spreads?",
+      "How do rating downgrades affect bond prices?",
+      "What are the limitations of credit ratings?"
+    ],
+    "evaluation_criteria": "Must explain rating methodology and market impact",
+    "tags": ["credit-ratings", "bonds", "spreads", "fixed-income"]
+  },
+  {
+    "id": "INV-070",
+    "domain": "Investment",
+    "question": "What are the key considerations for investing in timberland?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the return components of timberland investing?",
+      "How does biological growth contribute to returns?",
+      "What is the highest and best use optionality?",
+      "How do TIMOs and timber REITs differ?"
+    ],
+    "evaluation_criteria": "Must explain return drivers and investment vehicles",
+    "tags": ["timberland", "alternative-investments", "real-assets", "natural-resources"]
+  },
+  {
+    "id": "INV-071",
+    "domain": "Investment",
+    "question": "How do investors analyze and trade credit spreads?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What factors drive credit spread changes?",
+      "How do credit spreads relate to default probabilities?",
+      "What is spread duration?",
+      "How do investors express views on credit spreads?"
+    ],
+    "evaluation_criteria": "Must explain spread drivers and trading approaches",
+    "tags": ["credit-spreads", "bonds", "analysis", "trading"]
+  },
+  {
+    "id": "INV-072",
+    "domain": "Investment",
+    "question": "What are the considerations for factor-based bond investing?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What factors have been identified in fixed income?",
+      "How is value defined in bond markets?",
+      "What is the carry factor in fixed income?",
+      "How does momentum apply to bonds?"
+    ],
+    "evaluation_criteria": "Must explain fixed income factors and evidence",
+    "tags": ["factors", "fixed-income", "quantitative", "bonds"]
+  },
+  {
+    "id": "INV-073",
+    "domain": "Investment",
+    "question": "How do pension funds manage their liability-driven investing?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is liability-driven investing?",
+      "How do pension funds hedge interest rate risk?",
+      "What is the role of LDI in the UK pension crisis?",
+      "How do funded status changes affect pension strategy?"
+    ],
+    "evaluation_criteria": "Must explain LDI approach and recent events",
+    "tags": ["LDI", "pension", "liability-hedging", "interest-rates"]
+  },
+  {
+    "id": "INV-074",
+    "domain": "Investment",
+    "question": "What are the approaches for building low-volatility portfolios?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the low volatility anomaly?",
+      "How do minimum variance portfolios work?",
+      "What are the sector exposures of low-vol strategies?",
+      "How have low-vol strategies performed in different regimes?"
+    ],
+    "evaluation_criteria": "Must explain anomaly, construction, and performance",
+    "tags": ["low-volatility", "anomaly", "factor", "risk"]
+  },
+  {
+    "id": "INV-075",
+    "domain": "Investment",
+    "question": "How do NFTs work and what determines their value?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the technical structure of an NFT?",
+      "What factors drive NFT valuations?",
+      "What are the liquidity challenges in NFT markets?",
+      "What legal ownership rights do NFTs confer?"
+    ],
+    "evaluation_criteria": "Must explain technical and economic aspects",
+    "tags": ["NFT", "cryptocurrency", "digital-assets", "valuation"]
+  },
+  {
+    "id": "INV-076",
+    "domain": "Investment",
+    "question": "What are the considerations for cross-asset correlation in portfolio construction?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do correlations change in market stress?",
+      "What drives stock-bond correlation?",
+      "How should correlation uncertainty be handled?",
+      "What are regime-dependent correlation models?"
+    ],
+    "evaluation_criteria": "Must explain correlation dynamics and modeling",
+    "tags": ["correlation", "portfolio", "regime", "diversification"]
+  },
+  {
+    "id": "INV-077",
+    "domain": "Investment",
+    "question": "How do index reconstitutions create trading opportunities?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What causes stocks to be added or removed from indices?",
+      "What price effects occur around index changes?",
+      "How do traders front-run index reconstitutions?",
+      "What is the evidence on index inclusion effects?"
+    ],
+    "evaluation_criteria": "Must explain mechanics and trading strategies",
+    "tags": ["index", "reconstitution", "trading", "passive"]
+  },
+  {
+    "id": "INV-078",
+    "domain": "Investment",
+    "question": "What are the considerations for investing in catastrophe bonds?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do catastrophe bonds work?",
+      "What determines cat bond yields?",
+      "How are cat bond risks modeled?",
+      "What is the correlation with financial markets?"
+    ],
+    "evaluation_criteria": "Must explain structure, pricing, and diversification",
+    "tags": ["catastrophe-bonds", "insurance-linked", "alternative", "risk"]
+  },
+  {
+    "id": "INV-079",
+    "domain": "Investment",
+    "question": "How do quality factor strategies select stocks?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How is quality defined in factor investing?",
+      "What metrics capture profitability and stability?",
+      "How does quality relate to other factors?",
+      "What is the evidence on quality factor performance?"
+    ],
+    "evaluation_criteria": "Must explain quality metrics and evidence",
+    "tags": ["quality-factor", "factor-investing", "profitability", "equity"]
+  },
+  {
+    "id": "INV-080",
+    "domain": "Investment",
+    "question": "What are the approaches for analyzing utility company stocks?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does rate regulation affect utility profits?",
+      "What is the rate base and why does it matter?",
+      "How do renewable energy transitions affect utilities?",
+      "What dividend considerations apply to utilities?"
+    ],
+    "evaluation_criteria": "Must explain regulatory model and valuation",
+    "tags": ["utilities", "regulated", "dividends", "analysis"]
+  },
+  {
+    "id": "INV-081",
+    "domain": "Investment",
+    "question": "How do variance swaps work and what are their applications?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the payoff structure of a variance swap?",
+      "How are variance swaps priced?",
+      "What is the relationship to options implied volatility?",
+      "What are the risks of short variance positions?"
+    ],
+    "evaluation_criteria": "Must explain mechanics, pricing, and risks",
+    "tags": ["variance-swaps", "volatility", "derivatives", "trading"]
+  },
+  {
+    "id": "INV-082",
+    "domain": "Investment",
+    "question": "What are the considerations for tax-efficient investing?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "How do long-term vs short-term capital gains differ?",
+      "What is asset location optimization?",
+      "How does tax loss harvesting work?",
+      "What are the wash sale rules?"
+    ],
+    "evaluation_criteria": "Must explain tax strategies and rules",
+    "tags": ["tax", "tax-efficiency", "asset-location", "capital-gains"]
+  },
+  {
+    "id": "INV-083",
+    "domain": "Investment",
+    "question": "How do inverse ETFs achieve their exposure?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How are inverse ETFs constructed?",
+      "What is daily reset and its effects?",
+      "How do inverse ETFs behave in volatile markets?",
+      "What are appropriate use cases for inverse ETFs?"
+    ],
+    "evaluation_criteria": "Must explain mechanics and limitations",
+    "tags": ["inverse-ETFs", "derivatives", "hedging", "daily-reset"]
+  },
+  {
+    "id": "INV-084",
+    "domain": "Investment",
+    "question": "What are the considerations for investing in secondary private equity?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the secondary PE market?",
+      "What discounts and premiums exist in secondaries?",
+      "What due diligence is required for secondary purchases?",
+      "How do GP-led secondaries work?"
+    ],
+    "evaluation_criteria": "Must explain market, pricing, and transaction types",
+    "tags": ["private-equity", "secondary", "alternative-investments", "GP-led"]
+  },
+  {
+    "id": "INV-085",
+    "domain": "Investment",
+    "question": "How do investors analyze cyclical vs defensive stocks?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What characteristics define cyclical stocks?",
+      "How do defensive stocks perform in recessions?",
+      "What is the role of beta in cyclicality?",
+      "How should sector allocation vary with the business cycle?"
+    ],
+    "evaluation_criteria": "Must explain characteristics and portfolio implications",
+    "tags": ["cyclical", "defensive", "sector", "business-cycle"]
+  },
+  {
+    "id": "INV-086",
+    "domain": "Investment",
+    "question": "What are the mechanics of short selling and its risks?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does the short selling process work?",
+      "What costs are involved in short selling?",
+      "What is a short squeeze?",
+      "How did the GameStop short squeeze unfold?"
+    ],
+    "evaluation_criteria": "Must explain mechanics, costs, and specific events",
+    "tags": ["short-selling", "GameStop", "squeeze", "risk"]
+  },
+  {
+    "id": "INV-087",
+    "domain": "Investment",
+    "question": "How do investors use technical analysis in trading decisions?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What are common technical indicators?",
+      "What is the evidence on technical analysis effectiveness?",
+      "How do support and resistance levels work?",
+      "What role does volume play in technical analysis?"
+    ],
+    "evaluation_criteria": "Must explain methods and discuss evidence",
+    "tags": ["technical-analysis", "trading", "indicators", "charting"]
+  },
+  {
+    "id": "INV-088",
+    "domain": "Investment",
+    "question": "What are the considerations for investing in litigation finance?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does litigation finance work?",
+      "What are the return characteristics of litigation investments?",
+      "What risks do litigation funders face?",
+      "How do regulatory considerations affect litigation finance?"
+    ],
+    "evaluation_criteria": "Must explain structure, returns, and risks",
+    "tags": ["litigation-finance", "alternative-investments", "legal", "returns"]
+  },
+  {
+    "id": "INV-089",
+    "domain": "Investment",
+    "question": "How do options market makers manage their inventory?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do market makers delta hedge options positions?",
+      "What is the gamma exposure of market makers?",
+      "How do dealer hedging flows affect stock prices?",
+      "What is the impact of expiration on market dynamics?"
+    ],
+    "evaluation_criteria": "Must explain hedging mechanics and market impact",
+    "tags": ["options", "market-making", "delta-hedging", "gamma"]
+  },
+  {
+    "id": "INV-090",
+    "domain": "Investment",
+    "question": "What are the considerations for factor investing during inflation?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do different equity factors perform during inflation?",
+      "What sectors are inflation beneficiaries?",
+      "How do real assets protect against inflation?",
+      "What is the relationship between inflation and value stocks?"
+    ],
+    "evaluation_criteria": "Must explain factor-inflation relationships with evidence",
+    "tags": ["inflation", "factors", "equity", "real-assets"]
+  },
+  {
+    "id": "INV-091",
+    "domain": "Investment",
+    "question": "How do robo-advisors construct and manage portfolios?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What is the typical robo-advisor investment process?",
+      "How do robo-advisors determine asset allocation?",
+      "What rebalancing approaches do robo-advisors use?",
+      "How do robo-advisor fees compare to traditional advisors?"
+    ],
+    "evaluation_criteria": "Must explain process, allocation, and costs",
+    "tags": ["robo-advisor", "fintech", "portfolio", "fees"]
+  },
+  {
+    "id": "INV-092",
+    "domain": "Investment",
+    "question": "What are the considerations for investing in carbon credits?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do carbon credit markets work?",
+      "What is the difference between compliance and voluntary markets?",
+      "What determines carbon credit prices?",
+      "What risks exist in carbon credit investing?"
+    ],
+    "evaluation_criteria": "Must explain market types, pricing, and risks",
+    "tags": ["carbon-credits", "ESG", "commodities", "climate"]
+  },
+  {
+    "id": "INV-093",
+    "domain": "Investment",
+    "question": "How do size factor strategies work?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the small-cap premium?",
+      "Has the size effect diminished over time?",
+      "How do small-cap stocks behave in different market regimes?",
+      "What are the liquidity considerations for small-cap investing?"
+    ],
+    "evaluation_criteria": "Must explain premium, evidence, and practical considerations",
+    "tags": ["size-factor", "small-cap", "factor-investing", "premium"]
+  },
+  {
+    "id": "INV-094",
+    "domain": "Investment",
+    "question": "What are the approaches for managing interest rate risk in portfolios?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is duration and how does it measure rate sensitivity?",
+      "How do convexity effects work?",
+      "What are strategies for managing duration?",
+      "How do floating rate instruments reduce rate risk?"
+    ],
+    "evaluation_criteria": "Must explain duration, convexity, and management strategies",
+    "tags": ["interest-rate-risk", "duration", "fixed-income", "hedging"]
+  },
+  {
+    "id": "INV-095",
+    "domain": "Investment",
+    "question": "How do life settlements work as an investment?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is a life settlement transaction?",
+      "How are life settlements valued?",
+      "What risks do life settlement investors face?",
+      "What regulatory considerations apply to life settlements?"
+    ],
+    "evaluation_criteria": "Must explain transaction, valuation, and risks",
+    "tags": ["life-settlements", "insurance", "alternative-investments", "mortality"]
+  },
+  {
+    "id": "INV-096",
+    "domain": "Investment",
+    "question": "What are the considerations for commodity trading advisors (CTAs)?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What strategies do CTAs typically employ?",
+      "How do CTA returns correlate with traditional assets?",
+      "What is the role of CTAs in portfolio diversification?",
+      "How are CTA fees structured?"
+    ],
+    "evaluation_criteria": "Must explain strategies, correlations, and role",
+    "tags": ["CTA", "managed-futures", "trend-following", "diversification"]
+  },
+  {
+    "id": "INV-097",
+    "domain": "Investment",
+    "question": "How do investors analyze REIT subtypes and their characteristics?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do different property types perform?",
+      "What are the characteristics of specialty REITs?",
+      "How do mortgage REITs differ from equity REITs?",
+      "What metrics are important for different REIT types?"
+    ],
+    "evaluation_criteria": "Must explain subtypes and relevant metrics",
+    "tags": ["REITs", "real-estate", "property-types", "analysis"]
+  },
+  {
+    "id": "INV-098",
+    "domain": "Investment",
+    "question": "What are the considerations for dynamic asset allocation?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does dynamic allocation differ from static?",
+      "What signals drive dynamic allocation changes?",
+      "What is the evidence on dynamic allocation value?",
+      "How should transaction costs affect rebalancing decisions?"
+    ],
+    "evaluation_criteria": "Must explain approaches, signals, and evidence",
+    "tags": ["dynamic-allocation", "asset-allocation", "rebalancing", "signals"]
+  },
+  {
+    "id": "INV-099",
+    "domain": "Investment",
+    "question": "How do investors use sentiment indicators in equity markets?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What sentiment indicators are commonly used?",
+      "How do options-based sentiment measures work?",
+      "What is the relationship between sentiment and returns?",
+      "How do sentiment extremes signal turning points?"
+    ],
+    "evaluation_criteria": "Must explain indicators and predictive value",
+    "tags": ["sentiment", "indicators", "contrarian", "equity"]
+  },
+  {
+    "id": "INV-100",
+    "domain": "Investment",
+    "question": "What are the approaches for building inflation-protected portfolios?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do TIPS protect against inflation?",
+      "What role do commodities play in inflation protection?",
+      "How do equities perform during inflation?",
+      "What is the appropriate allocation to real assets?"
+    ],
+    "evaluation_criteria": "Must explain multiple asset approaches and allocations",
+    "tags": ["inflation", "TIPS", "real-assets", "portfolio"]
+  }
+]

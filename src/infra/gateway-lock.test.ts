@@ -10,14 +10,14 @@ import { acquireGatewayLock, GatewayLockError } from "./gateway-lock.js";
 import { resolveConfigPath, resolveStateDir } from "../config/paths.js";
 
 async function makeEnv() {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "clawdbot-gateway-lock-"));
-  const configPath = path.join(dir, "clawdbot.json");
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "epiloop-gateway-lock-"));
+  const configPath = path.join(dir, "epiloop.json");
   await fs.writeFile(configPath, "{}", "utf8");
   return {
     env: {
       ...process.env,
-      CLAWDBOT_STATE_DIR: dir,
-      CLAWDBOT_CONFIG_PATH: configPath,
+      EPILOOP_STATE_DIR: dir,
+      EPILOOP_CONFIG_PATH: configPath,
     },
     cleanup: async () => {
       await fs.rm(dir, { recursive: true, force: true });

@@ -5,11 +5,11 @@
  * These commands are processed before built-in commands and before agent invocation.
  */
 
-import type { ClawdbotConfig } from "../config/config.js";
-import type { ClawdbotPluginCommandDefinition, PluginCommandContext } from "./types.js";
+import type { EpiloopConfig } from "../config/config.js";
+import type { EpiloopPluginCommandDefinition, PluginCommandContext } from "./types.js";
 import { logVerbose } from "../globals.js";
 
-type RegisteredPluginCommand = ClawdbotPluginCommandDefinition & {
+type RegisteredPluginCommand = EpiloopPluginCommandDefinition & {
   pluginId: string;
 };
 
@@ -100,7 +100,7 @@ export type CommandRegistrationResult = {
  */
 export function registerPluginCommand(
   pluginId: string,
-  command: ClawdbotPluginCommandDefinition,
+  command: EpiloopPluginCommandDefinition,
 ): CommandRegistrationResult {
   // Prevent registration while commands are being processed
   if (registryLocked) {
@@ -217,7 +217,7 @@ export async function executePluginCommand(params: {
   channel: string;
   isAuthorizedSender: boolean;
   commandBody: string;
-  config: ClawdbotConfig;
+  config: EpiloopConfig;
 }): Promise<{ text: string }> {
   const { command, args, senderId, channel, isAuthorizedSender, commandBody, config } = params;
 

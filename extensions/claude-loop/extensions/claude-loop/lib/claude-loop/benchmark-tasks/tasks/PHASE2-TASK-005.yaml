@@ -1,0 +1,26 @@
+task_id: PHASE2-TASK-005
+title: Add Config File Merger (Simple)
+description: |
+  Implement utility to merge YAML configuration files with override support.
+  Support deep merging of nested dictionaries.
+  Preserve comments from base config where possible.
+
+acceptance_criteria:
+  - "merge_configs() function for YAML files"
+  - "Deep merge of nested dictionaries"
+  - "Override values from second config take precedence"
+  - "Comments preserved from base config"
+  - "Unit tests with various merge scenarios"
+
+context:
+  background: "Simple data structure manipulation to test YAML handling."
+  constraints:
+    - "Use PyYAML library"
+    - "Handle missing keys gracefully"
+    - "Support list concatenation option"
+
+complexity: simple
+estimated_hours: 2
+fileScope:
+  - "lib/config_merger.py"
+  - "tests/test_config_merger.py"

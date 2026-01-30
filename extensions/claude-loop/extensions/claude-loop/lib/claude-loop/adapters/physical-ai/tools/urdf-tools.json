@@ -1,0 +1,162 @@
+{
+  "name": "urdf_tools",
+  "description": "Tools for working with URDF robot descriptions",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "string",
+        "description": "The URDF tool command",
+        "enum": ["validate", "convert", "visualize", "generate_xacro", "check_collisions"]
+      },
+      "urdf_path": {
+        "type": "string",
+        "description": "Path to URDF file"
+      },
+      "output_path": {
+        "type": "string",
+        "description": "Output path for converted/generated files"
+      },
+      "convert_to": {
+        "type": "string",
+        "description": "Target format for conversion",
+        "enum": ["sdf", "usd", "mjcf", "xacro"]
+      },
+      "xacro_args": {
+        "type": "object",
+        "description": "Arguments for xacro processing"
+      },
+      "mesh_resolution": {
+        "type": "string",
+        "description": "Mesh resolution for collision generation",
+        "enum": ["low", "medium", "high"],
+        "default": "medium"
+      },
+      "fix_issues": {
+        "type": "boolean",
+        "description": "Attempt to fix common issues automatically",
+        "default": false
+      },
+      "verbose": {
+        "type": "boolean",
+        "description": "Enable verbose output",
+        "default": false
+      }
+    },
+    "required": ["command", "urdf_path"]
+  },
+  "returns": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "validation_result": {
+        "type": "object",
+        "description": "Validation results (for validate command)",
+        "properties": {
+          "valid": {"type": "boolean"},
+          "errors": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "warnings": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "link_count": {"type": "integer"},
+          "joint_count": {"type": "integer"},
+          "root_link": {"type": "string"}
+        }
+      },
+      "output_file": {
+        "type": "string",
+        "description": "Path to generated output file"
+      },
+      "collision_report": {
+        "type": "object",
+        "description": "Collision analysis results",
+        "properties": {
+          "self_collision_pairs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "link_a": {"type": "string"},
+                "link_b": {"type": "string"},
+                "min_distance": {"type": "number"}
+              }
+            }
+          }
+        }
+      },
+      "messages": {
+        "type": "array",
+        "items": {"type": "string"}
+      }
+    }
+  },
+  "examples": [
+    {
+      "description": "Validate a URDF file",
+      "input": {
+        "command": "validate",
+        "urdf_path": "/path/to/robot.urdf",
+        "verbose": true
+      }
+    },
+    {
+      "description": "Convert URDF to USD for Isaac Sim",
+      "input": {
+        "command": "convert",
+        "urdf_path": "/path/to/robot.urdf",
+        "convert_to": "usd",
+        "output_path": "/path/to/robot.usd"
+      }
+    },
+    {
+      "description": "Process xacro to URDF",
+      "input": {
+        "command": "convert",
+        "urdf_path": "/path/to/robot.xacro",
+        "convert_to": "urdf",
+        "output_path": "/path/to/robot.urdf",
+        "xacro_args": {
+          "robot_name": "my_robot",
+          "use_gpu": "true"
+        }
+      }
+    },
+    {
+      "description": "Check for self-collisions",
+      "input": {
+        "command": "check_collisions",
+        "urdf_path": "/path/to/robot.urdf",
+        "mesh_resolution": "high"
+      }
+    },
+    {
+      "description": "Convert URDF to SDF for Gazebo",
+      "input": {
+        "command": "convert",
+        "urdf_path": "/path/to/robot.urdf",
+        "convert_to": "sdf",
+        "output_path": "/path/to/robot.sdf"
+      }
+    }
+  ],
+  "implementation_notes": [
+    "Uses check_urdf from urdfdom for validation",
+    "Uses xacro for xacro->URDF conversion",
+    "Uses Isaac Sim URDF importer for URDF->USD",
+    "Uses gz sdf for URDF->SDF conversion",
+    "Collision checking uses FCL library"
+  ],
+  "supported_conversions": [
+    {"from": "urdf", "to": "sdf", "tool": "gz sdf"},
+    {"from": "urdf", "to": "usd", "tool": "Isaac Sim URDF Importer"},
+    {"from": "urdf", "to": "mjcf", "tool": "mujoco-py"},
+    {"from": "xacro", "to": "urdf", "tool": "xacro"},
+    {"from": "urdf", "to": "xacro", "tool": "urdf_to_xacro (custom)"}
+  ]
+}

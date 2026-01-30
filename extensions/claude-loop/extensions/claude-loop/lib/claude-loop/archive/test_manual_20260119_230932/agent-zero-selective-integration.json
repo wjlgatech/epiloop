@@ -1,0 +1,309 @@
+{
+  "project": "agent-zero-selective-integration",
+  "branchName": "feature/agent-zero-integration-option-b",
+  "description": "Selective Integration of Agent-Zero patterns and libraries into Claude-Loop (Option B from ANALYSIS.md). 2-3 month implementation adding hooks system, learnings JSON, task decomposition, structured output, MCP integration, multi-provider LLM, and bounded delegation with max depth=2.",
+  "context": {
+    "background": "After comprehensive analysis (ANALYSIS.md) and benchmark validation, proceeding with selective integration of high-value agent-zero capabilities into claude-loop. Benchmark showed baseline CLI outperforms both systems, but real-world dogfooding shows claude-loop excels on complex, multi-file tasks. Integration adds proven patterns and libraries while preserving claude-loop's autonomous paradigm.",
+    "references": [
+      "/Users/jialiang.wu/Documents/Projects/benchmark-tasks/ANALYSIS.md",
+      "/Users/jialiang.wu/Documents/Projects/benchmark-tasks/IMPLEMENTATION_COMPLETE.md",
+      "/Users/jialiang.wu/Documents/Projects/agent-zero",
+      "/Users/jialiang.wu/Documents/Projects/claude-loop"
+    ],
+    "constraints": [
+      "Preserve claude-loop's autonomous execution model (no interactive sessions)",
+      "Maintain file-based state management (no in-memory regression)",
+      "Feature flags for all new capabilities (rollback safety)",
+      "No unbounded agent depth (MAX_DEPTH=2 hard limit)",
+      "Vendor libraries as dependencies (mcp, litellm) - no code copying",
+      "Comprehensive testing for each phase",
+      "Documentation updates alongside implementation"
+    ]
+  },
+  "userStories": [
+    {
+      "id": "US-001",
+      "phase": "Tier 1: Pattern Extraction",
+      "title": "Implement Hook System",
+      "description": "Add lifecycle hook system similar to agent-zero's 24 extension points. Allow users to inject custom bash scripts at key execution points: pre-iteration, post-iteration, pre-commit, post-commit, on-error, on-complete.",
+      "acceptanceCriteria": [
+        "Directory structure: .claude-loop/hooks/{pre,post}_iteration/{01-99}-*.sh",
+        "Hooks execute in alphanumeric order",
+        "Hook scripts receive context via environment variables: STORY_ID, ITERATION, WORKSPACE, BRANCH",
+        "Non-zero exit from hook aborts execution with clear error message",
+        "Hook execution logged to JSONL with timing",
+        "README.md documents hook system with examples",
+        "Example hooks provided: pre_iteration/10-check-dependencies.sh, post_iteration/90-notify-slack.sh"
+      ],
+      "priority": 1,
+      "estimatedHours": 12,
+      "dependencies": [],
+      "technicalNotes": "Similar to git hooks. Load hooks from .claude-loop/hooks/, sort by name, execute with proper error handling. Preserve existing behavior if no hooks present.",
+      "passes": false
+    },
+    {
+      "id": "US-002",
+      "phase": "Tier 1: Pattern Extraction",
+      "title": "Implement Learnings JSON Storage",
+      "description": "Create lightweight JSON-based storage for iteration learnings alongside existing ChromaDB experience store. Start with simple JSON, migrate to FAISS only if >1000 patterns accumulated.",
+      "acceptanceCriteria": [
+        "File: .claude-loop/learnings.json with structure: [{id, timestamp, story_id, success, lesson, tags, helpful_count}]",
+        "Append learnings after each iteration (don't replace file)",
+        "Query learnings by tags for context retrieval",
+        "Include top 3 relevant learnings in prompt context",
+        "CLI command: ./claude-loop.sh --list-learnings [--tag TAG]",
+        "CLI command: ./claude-loop.sh --rate-learning ID [--helpful|--unhelpful]",
+        "JSON schema validation on write",
+        "Documentation in README.md with examples"
+      ],
+      "priority": 2,
+      "estimatedHours": 10,
+      "dependencies": ["US-001"],
+      "technicalNotes": "Complement ChromaDB, not replace. JSON for simplicity (80% value, 5% complexity). Add FAISS migration path if needed later.",
+      "passes": false
+    },
+    {
+      "id": "US-003",
+      "phase": "Tier 1: Pattern Extraction",
+      "title": "Implement Automatic Task Decomposition",
+      "description": "Detect oversized stories (>500 LOC estimate, >3 files, or complexity score >7) and automatically suggest decomposition into smaller substories. Use LLM to propose breakdown.",
+      "acceptanceCriteria": [
+        "Complexity detection logic estimates LOC, file count, and complexity score before implementation",
+        "If story exceeds thresholds, prompt LLM to suggest 2-4 substories",
+        "Present decomposition to user for approval (interactive) or auto-approve with --auto-decompose flag",
+        "Update PRD JSON with new substories maintaining dependencies",
+        "Original story marked as 'decomposed' with references to substories",
+        "Substories inherit tags and context from parent",
+        "Log decomposition decision and reasoning",
+        "Test with known complex stories from benchmark"
+      ],
+      "priority": 3,
+      "estimatedHours": 16,
+      "dependencies": ["US-002"],
+      "technicalNotes": "Use existing complexity detection logic. Add decomposition prompt to prompt.md. Handle PRD JSON updates carefully (atomic writes).",
+      "passes": false
+    },
+    {
+      "id": "US-004",
+      "phase": "Tier 1: Pattern Extraction",
+      "title": "Implement Structured Output (JSON Sigils)",
+      "description": "Replace text-based sigil detection (<implement>, <commit>, etc.) with structured JSON output from Claude. Improves reliability and enables richer metadata.",
+      "acceptanceCriteria": [
+        "Modify prompt.md to request JSON output: {action: 'implement|commit|skip', files: [...], reasoning: '...', metadata: {...}}",
+        "Update response parser to handle both legacy (sigils) and new (JSON) formats",
+        "JSON schema validation for action responses",
+        "Extract richer metadata: confidence score, estimated_changes, related_files",
+        "Use metadata for better decision making (e.g., skip low-confidence suggestions)",
+        "Backward compatible: fall back to sigil detection if JSON parsing fails",
+        "All existing tests pass with new parser",
+        "Performance: JSON parsing adds <100ms overhead"
+      ],
+      "priority": 4,
+      "estimatedHours": 14,
+      "dependencies": ["US-003"],
+      "technicalNotes": "Major parser change. Test extensively. Keep sigil fallback for robustness. Consider feature flag: JSON_OUTPUT_ENABLED.",
+      "passes": false
+    },
+    {
+      "id": "US-005",
+      "phase": "Tier 2: Library Integration",
+      "title": "Integrate MCP (Model Context Protocol)",
+      "description": "Add MCP support to enable community tool ecosystem. Vendor mcp library and create bridge to claude-loop skills system. Allow dynamic tool loading from MCP servers.",
+      "acceptanceCriteria": [
+        "Add mcp==1.13.1 to dependencies",
+        "Configuration: .claude-loop/mcp-config.json lists MCP server endpoints",
+        "MCP tools discoverable: ./claude-loop.sh --list-mcp-tools",
+        "MCP tools callable from prompts via skill syntax: [use-mcp:database/query]",
+        "Bridge layer translates MCP tool calls to skill invocations",
+        "Tool responses integrated into context",
+        "Error handling: graceful fallback if MCP server unavailable",
+        "Example MCP integrations: filesystem, database, web-search",
+        "Documentation: MCP_INTEGRATION.md with setup guide",
+        "Security: validate MCP tool schemas before execution"
+      ],
+      "priority": 5,
+      "estimatedHours": 20,
+      "dependencies": ["US-004"],
+      "technicalNotes": "MCP provides standard protocol for tool integration. Focus on read-only tools first (filesystem, database queries). Write operations require careful sandboxing.",
+      "passes": false
+    },
+    {
+      "id": "US-006",
+      "phase": "Tier 2: Library Integration",
+      "title": "Integrate Multi-Provider LLM (LiteLLM)",
+      "description": "Add LiteLLM library for multi-provider support (OpenAI, Anthropic, Gemini, DeepSeek, etc.). Enable cost optimization by routing to cheapest provider for task complexity.",
+      "acceptanceCriteria": [
+        "Add litellm to dependencies",
+        "Configuration: lib/llm_providers.yaml defines providers with costs and capabilities",
+        "Provider selection logic: choose based on task complexity and cost",
+        "Fallback chain: if primary fails, try secondary providers",
+        "Cost tracking: log provider used and actual cost per iteration",
+        "Cost comparison report: ./claude-loop.sh --cost-report shows savings vs single-provider",
+        "Override provider per story: PRD can specify preferred_provider",
+        "Environment variables: OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.",
+        "Smart routing: simple tasks → Haiku/GPT-4o-mini, complex → Opus/O1",
+        "Estimated 30-50% cost reduction on diverse workloads"
+      ],
+      "priority": 6,
+      "estimatedHours": 18,
+      "dependencies": ["US-005"],
+      "technicalNotes": "LiteLLM abstracts provider differences. Preserve existing Claude Code CLI integration as baseline. Add provider selection logic before LLM calls.",
+      "passes": false
+    },
+    {
+      "id": "US-007",
+      "phase": "Tier 2: Library Integration",
+      "title": "Implement Bounded Delegation (Max Depth=2)",
+      "description": "Add hierarchical task delegation for complex stories. Agent can delegate subtasks to subordinate agents (max depth=2). Inspired by agent-zero's hierarchy but bounded to prevent runaway context.",
+      "acceptanceCriteria": [
+        "Delegation syntax in prompts: [delegate:subtask_description]",
+        "MAX_DELEGATION_DEPTH=2 enforced (configurable in config)",
+        "Context budget: MAX_CONTEXT_PER_AGENT=100k tokens",
+        "Cycle detection: prevent agent A → B → A loops",
+        "Subordinate agent results integrated into parent context",
+        "Delegation logged with hierarchy visualization",
+        "Performance: delegated subtasks can run in parallel (git worktrees)",
+        "Cost tracking: attribute costs to parent story",
+        "Feature flag: ENABLE_DELEGATION (default: false initially)",
+        "Clear error messages if depth/context limits exceeded",
+        "Example: Story 'Add Auth' delegates to ['Implement JWT', 'Add Login UI', 'Update Tests']"
+      ],
+      "priority": 7,
+      "estimatedHours": 24,
+      "dependencies": ["US-006"],
+      "technicalNotes": "Most complex feature. Start with sequential delegation, add parallelization later. Strict limits critical to prevent exponential growth. Consider this experimental initially.",
+      "passes": false
+    },
+    {
+      "id": "US-008",
+      "phase": "Integration & Testing",
+      "title": "Comprehensive Integration Testing",
+      "description": "Create integration test suite covering all new features. Test combinations, edge cases, failure modes, and rollback scenarios.",
+      "acceptanceCriteria": [
+        "Test suite: tests/integration/tier1_patterns_test.sh",
+        "Test suite: tests/integration/tier2_libraries_test.sh",
+        "Test hooks: valid hooks, invalid hooks, hook failures",
+        "Test learnings: write, query, rate, large datasets",
+        "Test decomposition: oversized stories, auto-approve, user rejection",
+        "Test structured output: JSON parsing, fallback to sigils, malformed responses",
+        "Test MCP: available servers, unavailable servers, tool errors",
+        "Test multi-provider: routing logic, fallbacks, cost tracking",
+        "Test delegation: depth limits, context limits, cycles, parallel execution",
+        "Test rollback: disable feature flags, revert to baseline behavior",
+        "All tests automated and runnable via: make test-integration",
+        "CI/CD integration: tests run on every PR"
+      ],
+      "priority": 8,
+      "estimatedHours": 20,
+      "dependencies": ["US-007"],
+      "technicalNotes": "Critical for stability. Use bats-core for bash testing. Mock external dependencies (MCP servers, LLM providers) where possible.",
+      "passes": false
+    },
+    {
+      "id": "US-009",
+      "phase": "Documentation & Training",
+      "title": "Update Documentation and Create Migration Guide",
+      "description": "Comprehensive documentation updates covering all new features. Create migration guide for users upgrading from vanilla claude-loop.",
+      "acceptanceCriteria": [
+        "README.md: updated with new features overview",
+        "HOOKS.md: hook system documentation with examples",
+        "LEARNINGS.md: learnings JSON format and usage",
+        "MCP_INTEGRATION.md: MCP setup and configuration",
+        "MULTI_PROVIDER.md: provider configuration and cost optimization",
+        "DELEGATION.md: bounded delegation usage and best practices",
+        "MIGRATION_GUIDE.md: step-by-step upgrade from vanilla claude-loop",
+        "TROUBLESHOOTING.md: common issues and solutions",
+        "Architecture diagram: updated to show new components",
+        "Changelog: detailed release notes with breaking changes",
+        "Example PRDs: demonstrating new features in real scenarios"
+      ],
+      "priority": 9,
+      "estimatedHours": 12,
+      "dependencies": ["US-008"],
+      "technicalNotes": "Documentation is critical for adoption. Include diagrams, examples, and troubleshooting tips. Keep ARCHITECTURE.md up to date.",
+      "passes": false
+    },
+    {
+      "id": "US-010",
+      "phase": "Validation & Rollout",
+      "title": "Run Tier 2 Benchmark Validation",
+      "description": "Execute comprehensive benchmark with 30 tasks to validate improvements. Compare vanilla claude-loop vs integrated version. Measure success rate, cost, time, and quality improvements.",
+      "acceptanceCriteria": [
+        "Benchmark suite: 30 tasks (15 micro, 10 meso, 5 regression)",
+        "Subjects: vanilla claude-loop vs integrated version (with all features enabled)",
+        "Metrics: success rate, quality score, cost, time, autonomy",
+        "N=5 runs per task for statistical significance",
+        "Results: benchmark_report_tier2.json with detailed analysis",
+        "Validation: >30% improvement in success rate OR >40% cost reduction OR >50% faster",
+        "Ablation study: test each feature individually to isolate value",
+        "Failure analysis: categorize and understand all failures",
+        "Cost-benefit calculation: ROI analysis",
+        "Decision: proceed to rollout if validation criteria met"
+      ],
+      "priority": 10,
+      "estimatedHours": 16,
+      "dependencies": ["US-009"],
+      "technicalNotes": "Use existing benchmark infrastructure from benchmark-tasks. Create 27 new tasks (have 3 already). Automated execution and analysis.",
+      "passes": false
+    }
+  ],
+  "technicalContext": {
+    "existingArchitecture": "Claude-loop is bash-based autonomous coding harness with PRD execution, quality gates, parallel git worktrees, domain-aware RAG, skills system, and self-improvement.",
+    "integrationApproach": "Selective integration preserving autonomous paradigm. Add hooks for extensibility, JSON for pragmatic storage, MCP for tools, LiteLLM for cost optimization, bounded delegation for complex tasks.",
+    "safeguards": [
+      "Feature flags: ENABLE_HOOKS, ENABLE_LEARNINGS_JSON, ENABLE_DECOMPOSITION, ENABLE_STRUCTURED_OUTPUT, ENABLE_MCP, ENABLE_MULTI_PROVIDER, ENABLE_DELEGATION",
+      "Backward compatibility: all features disabled by default initially",
+      "Rollback strategy: feature flags + git revert",
+      "Testing: unit tests + integration tests + benchmark validation",
+      "Monitoring: log all new feature usage with performance metrics"
+    ],
+    "codeLocations": {
+      "mainScript": "/Users/jialiang.wu/Documents/Projects/claude-loop/claude-loop.sh",
+      "libDirectory": "/Users/jialiang.wu/Documents/Projects/claude-loop/lib/",
+      "prompts": "/Users/jialiang.wu/Documents/Projects/claude-loop/prompt.md",
+      "agentZeroReference": "/Users/jialiang.wu/Documents/Projects/agent-zero"
+    }
+  },
+  "successCriteria": {
+    "tier1": [
+      "All 4 pattern extraction features (US-001 to US-004) implemented and tested",
+      "Hooks system working with example hooks",
+      "Learnings JSON storing and retrieving patterns",
+      "Task decomposition handling oversized stories",
+      "Structured output parser handling JSON responses"
+    ],
+    "tier2": [
+      "MCP integration functional with at least 3 example tools",
+      "Multi-provider LLM routing to cheapest appropriate provider",
+      "Bounded delegation working with MAX_DEPTH=2 enforcement",
+      "Cost tracking showing 30-50% reduction on diverse workloads",
+      "Delegation handling complex stories with subtask breakdown"
+    ],
+    "overall": [
+      "All 10 user stories implemented and passing acceptance criteria",
+      "Integration tests passing (>95% coverage)",
+      "Documentation complete and clear",
+      "Tier 2 benchmark validation showing >30% improvement OR >40% cost reduction",
+      "No regression in existing claude-loop functionality",
+      "Feature flags allowing safe rollback",
+      "Team sign-off on quality and maintainability"
+    ]
+  },
+  "timeline": {
+    "phase1_tier1": "4 weeks (US-001 to US-004)",
+    "phase2_tier2_mcp": "3 weeks (US-005)",
+    "phase3_tier2_litellm": "3 weeks (US-006)",
+    "phase4_tier2_delegation": "2 weeks (US-007)",
+    "phase5_testing": "2 weeks (US-008)",
+    "phase6_docs": "1 week (US-009)",
+    "phase7_validation": "1 week (US-010)",
+    "totalDuration": "16 weeks (4 months)",
+    "contingency": "+2 weeks buffer = 18 weeks total"
+  },
+  "estimatedCost": {
+    "development": "250-300 hours engineering time",
+    "benchmark_validation": "$50-150 in API calls",
+    "testing": "50 hours QA time",
+    "documentation": "30 hours technical writing"
+  }
+}

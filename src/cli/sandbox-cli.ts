@@ -15,30 +15,30 @@ type CommandOptions = Record<string, unknown>;
 
 const SANDBOX_EXAMPLES = {
   main: [
-    ["clawdbot sandbox list", "List all sandbox containers."],
-    ["clawdbot sandbox list --browser", "List only browser containers."],
-    ["clawdbot sandbox recreate --all", "Recreate all containers."],
-    ["clawdbot sandbox recreate --session main", "Recreate a specific session."],
-    ["clawdbot sandbox recreate --agent mybot", "Recreate agent containers."],
-    ["clawdbot sandbox explain", "Explain effective sandbox config."],
+    ["epiloop sandbox list", "List all sandbox containers."],
+    ["epiloop sandbox list --browser", "List only browser containers."],
+    ["epiloop sandbox recreate --all", "Recreate all containers."],
+    ["epiloop sandbox recreate --session main", "Recreate a specific session."],
+    ["epiloop sandbox recreate --agent mybot", "Recreate agent containers."],
+    ["epiloop sandbox explain", "Explain effective sandbox config."],
   ],
   list: [
-    ["clawdbot sandbox list", "List all sandbox containers."],
-    ["clawdbot sandbox list --browser", "List only browser containers."],
-    ["clawdbot sandbox list --json", "JSON output."],
+    ["epiloop sandbox list", "List all sandbox containers."],
+    ["epiloop sandbox list --browser", "List only browser containers."],
+    ["epiloop sandbox list --json", "JSON output."],
   ],
   recreate: [
-    ["clawdbot sandbox recreate --all", "Recreate all containers."],
-    ["clawdbot sandbox recreate --session main", "Recreate a specific session."],
-    ["clawdbot sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
-    ["clawdbot sandbox recreate --browser --all", "Recreate only browser containers."],
-    ["clawdbot sandbox recreate --all --force", "Skip confirmation."],
+    ["epiloop sandbox recreate --all", "Recreate all containers."],
+    ["epiloop sandbox recreate --session main", "Recreate a specific session."],
+    ["epiloop sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
+    ["epiloop sandbox recreate --browser --all", "Recreate only browser containers."],
+    ["epiloop sandbox recreate --all --force", "Skip confirmation."],
   ],
   explain: [
-    ["clawdbot sandbox explain", "Show effective sandbox config."],
-    ["clawdbot sandbox explain --session agent:main:main", "Explain a specific session."],
-    ["clawdbot sandbox explain --agent work", "Explain an agent sandbox."],
-    ["clawdbot sandbox explain --json", "JSON output."],
+    ["epiloop sandbox explain", "Show effective sandbox config."],
+    ["epiloop sandbox explain --session agent:main:main", "Explain a specific session."],
+    ["epiloop sandbox explain --agent work", "Explain an agent sandbox."],
+    ["epiloop sandbox explain --json", "JSON output."],
   ],
 } as const;
 

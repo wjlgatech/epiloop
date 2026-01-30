@@ -1,0 +1,12 @@
+{
+  "name": "add-tests",
+  "description": "Add test coverage for existing code",
+  "steps": [
+    {"id": 1, "action": "Read target code to understand functionality", "type": "read"},
+    {"id": 2, "action": "Identify test cases and edge cases", "type": "plan"},
+    {"id": 3, "action": "Create test file structure", "type": "write"},
+    {"id": 4, "action": "Write test cases", "type": "write"},
+    {"id": 5, "action": "Run tests and verify coverage", "type": "bash"}
+  ],
+  "estimated_complexity": "simple"
+}

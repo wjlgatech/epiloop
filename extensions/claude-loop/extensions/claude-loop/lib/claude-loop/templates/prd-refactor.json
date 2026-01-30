@@ -1,0 +1,65 @@
+{
+  "$schema": "../schemas/prd.schema.json",
+  "$comment": "Template for refactoring PRDs. Replace {{VAR}} placeholders with actual values.",
+  "project": "{{PROJECT_NAME}}",
+  "branchName": "refactor/{{PRD_ID_LOWER}}",
+  "description": "{{DESCRIPTION}}",
+  "userStories": [
+    {
+      "id": "{{PRD_ID}}-001",
+      "title": "Analysis and Planning",
+      "description": "Analyze current implementation and plan the refactoring approach",
+      "acceptanceCriteria": [
+        "Document the current code structure and its issues",
+        "Define the target architecture and design",
+        "Identify all files and modules affected by refactoring",
+        "Create a migration plan with incremental steps"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "{{PRD_ID}}-002",
+      "title": "Ensure Test Coverage",
+      "description": "Add or verify test coverage before refactoring to catch regressions",
+      "acceptanceCriteria": [
+        "Review existing test coverage for affected code",
+        "Add tests for any uncovered critical paths",
+        "Document expected behavior that tests verify",
+        "All current tests pass before refactoring begins"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "{{PRD_ID}}-003",
+      "title": "Implement Refactoring",
+      "description": "Execute the refactoring plan with incremental changes",
+      "acceptanceCriteria": [
+        "Refactor code following the planned approach",
+        "Maintain backward compatibility where required",
+        "Keep commits small and atomic for easy review",
+        "Run tests after each significant change"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "{{PRD_ID}}-004",
+      "title": "Verification and Cleanup",
+      "description": "Verify the refactoring meets goals and clean up",
+      "acceptanceCriteria": [
+        "All tests pass after refactoring",
+        "Code quality metrics improved or maintained",
+        "Remove any deprecated code or temporary scaffolding",
+        "Update documentation to reflect new structure"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

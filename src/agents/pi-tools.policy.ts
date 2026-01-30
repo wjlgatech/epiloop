@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "../config/config.js";
+import type { EpiloopConfig } from "../config/config.js";
 import { getChannelDock } from "../channels/dock.js";
 import { resolveChannelGroupToolsPolicy } from "../config/group-policy.js";
 import { resolveAgentConfig, resolveAgentIdFromSessionKey } from "./agent-scope.js";
@@ -73,7 +73,7 @@ const DEFAULT_SUBAGENT_TOOL_DENY = [
   "memory_get",
 ];
 
-export function resolveSubagentToolPolicy(cfg?: ClawdbotConfig): SandboxToolPolicy {
+export function resolveSubagentToolPolicy(cfg?: EpiloopConfig): SandboxToolPolicy {
   const configured = cfg?.tools?.subagents?.tools;
   const deny = [
     ...DEFAULT_SUBAGENT_TOOL_DENY,
@@ -165,7 +165,7 @@ function resolveProviderToolPolicy(params: {
 }
 
 export function resolveEffectiveToolPolicy(params: {
-  config?: ClawdbotConfig;
+  config?: EpiloopConfig;
   sessionKey?: string;
   modelProvider?: string;
   modelId?: string;
@@ -199,7 +199,7 @@ export function resolveEffectiveToolPolicy(params: {
 }
 
 export function resolveGroupToolPolicy(params: {
-  config?: ClawdbotConfig;
+  config?: EpiloopConfig;
   sessionKey?: string;
   spawnedBy?: string | null;
   messageProvider?: string;

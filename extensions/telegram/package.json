@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/telegram",
+  "name": "@epiloop/telegram",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot Telegram channel plugin",
-  "clawdbot": {
+  "description": "Epiloop Telegram channel plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ]

@@ -1,0 +1,117 @@
+{
+  "question_id": "AIML-001",
+  "question": "What are the key architectural differences between transformer-based and state-space models for sequence modeling, and what are the trade-offs in terms of computational complexity and performance?",
+  "expert_sources": [
+    {
+      "title": "Attention Is All You Need",
+      "authors": ["Vaswani et al."],
+      "venue": "NeurIPS 2017",
+      "url": "https://arxiv.org/abs/1706.03762",
+      "relevance": "Foundational transformer architecture paper"
+    },
+    {
+      "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+      "authors": ["Gu and Dao"],
+      "venue": "arXiv 2023",
+      "url": "https://arxiv.org/abs/2312.00752",
+      "relevance": "State-of-the-art state-space model"
+    },
+    {
+      "title": "Efficiently Modeling Long Sequences with Structured State Spaces",
+      "authors": ["Gu et al."],
+      "venue": "ICLR 2022",
+      "url": "https://arxiv.org/abs/2111.00396",
+      "relevance": "S4 model introducing efficient SSM computation"
+    },
+    {
+      "title": "Hungry Hungry Hippos: Towards Language Modeling with State Space Models",
+      "authors": ["Fu et al."],
+      "venue": "ICLR 2023",
+      "url": "https://arxiv.org/abs/2212.14052",
+      "relevance": "Comparing SSMs to transformers on language tasks"
+    },
+    {
+      "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+      "authors": ["Dao et al."],
+      "venue": "NeurIPS 2022",
+      "url": "https://arxiv.org/abs/2205.14135",
+      "relevance": "Optimized transformer attention implementation"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "Transformers use self-attention with O(n^2) complexity in sequence length",
+      "importance": "critical",
+      "sources": ["Vaswani et al. 2017"]
+    },
+    {
+      "finding": "State-space models achieve O(n) complexity through recurrent formulation",
+      "importance": "critical",
+      "sources": ["Gu et al. 2022", "Gu and Dao 2023"]
+    },
+    {
+      "finding": "Transformers excel at in-context learning and retrieval tasks",
+      "importance": "high",
+      "sources": ["Fu et al. 2023"]
+    },
+    {
+      "finding": "SSMs are more efficient for very long sequences (>8K tokens)",
+      "importance": "high",
+      "sources": ["Gu and Dao 2023"]
+    },
+    {
+      "finding": "Mamba introduces selective state spaces that match transformer quality",
+      "importance": "high",
+      "sources": ["Gu and Dao 2023"]
+    },
+    {
+      "finding": "Attention can be approximated with O(n) sparse patterns but loses some capability",
+      "importance": "medium",
+      "sources": ["Various sparse attention papers"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "FlashAttention and other optimizations significantly reduce practical transformer costs",
+      "validity": "Partially valid - reduces wall-clock time but not asymptotic complexity",
+      "sources": ["Dao et al. 2022"]
+    },
+    {
+      "argument": "SSMs may struggle with tasks requiring precise copying or retrieval",
+      "validity": "Valid for earlier SSMs, Mamba addresses this with selectivity",
+      "sources": ["Fu et al. 2023"]
+    },
+    {
+      "argument": "Hybrid architectures combining attention and SSM may be optimal",
+      "validity": "Emerging evidence supports this for some tasks",
+      "sources": ["Recent hybrid model papers"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.85,
+    "areas_of_uncertainty": [
+      "Optimal hybrid architectures not yet established",
+      "Scaling laws for SSMs less studied than transformers",
+      "Performance on reasoning tasks still being evaluated"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "O(n^2) vs O(n) complexity comparison",
+      "Attention mechanism explanation",
+      "SSM/Mamba mechanism explanation",
+      "Memory requirements discussion"
+    ],
+    "should_include": [
+      "Specific models (S4, Mamba, H3)",
+      "Task-specific performance differences",
+      "Implementation considerations"
+    ],
+    "bonus_points": [
+      "Discussion of hybrid approaches",
+      "Hardware efficiency considerations",
+      "Scaling behavior comparison"
+    ]
+  }
+}

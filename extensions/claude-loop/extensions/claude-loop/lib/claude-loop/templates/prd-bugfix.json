@@ -1,0 +1,65 @@
+{
+  "$schema": "../schemas/prd.schema.json",
+  "$comment": "Template for bug fix PRDs. Replace {{VAR}} placeholders with actual values.",
+  "project": "{{PROJECT_NAME}}",
+  "branchName": "fix/{{PRD_ID_LOWER}}",
+  "description": "{{DESCRIPTION}}",
+  "userStories": [
+    {
+      "id": "{{PRD_ID}}-001",
+      "title": "Bug Investigation and Root Cause Analysis",
+      "description": "Investigate the bug to identify the root cause and affected areas",
+      "acceptanceCriteria": [
+        "Reproduce the bug reliably",
+        "Identify the root cause of the issue",
+        "Document the bug reproduction steps",
+        "Identify all code areas affected by the bug"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "{{PRD_ID}}-002",
+      "title": "Implement Bug Fix",
+      "description": "Implement the fix for the identified bug",
+      "acceptanceCriteria": [
+        "Fix the root cause of the bug",
+        "Ensure the fix doesn't introduce new issues",
+        "Handle any related edge cases discovered",
+        "Verify the fix resolves the original issue"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "{{PRD_ID}}-003",
+      "title": "Add Regression Tests",
+      "description": "Add tests to prevent regression of this bug",
+      "acceptanceCriteria": [
+        "Add unit test that would have caught this bug",
+        "Add integration test if applicable",
+        "Tests fail without the fix, pass with the fix",
+        "All existing tests still pass"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "{{PRD_ID}}-004",
+      "title": "Verification and Documentation",
+      "description": "Verify the fix and document the resolution",
+      "acceptanceCriteria": [
+        "Verify bug is fixed in all affected scenarios",
+        "Document the fix in relevant places",
+        "Update changelog if applicable",
+        "Close related issue/ticket with resolution notes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

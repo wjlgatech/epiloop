@@ -5,8 +5,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { UpdateCheckResult } from "./update-check.js";
 
-vi.mock("./clawdbot-root.js", () => ({
-  resolveClawdbotPackageRoot: vi.fn(),
+vi.mock("./epiloop-root.js", () => ({
+  resolveEpiloopPackageRoot: vi.fn(),
 }));
 
 vi.mock("./update-check.js", async () => {
@@ -30,8 +30,8 @@ describe("update-startup", () => {
   beforeEach(async () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-01-17T10:00:00Z"));
-    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "clawdbot-update-check-"));
-    process.env.CLAWDBOT_STATE_DIR = tempDir;
+    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "epiloop-update-check-"));
+    process.env.EPILOOP_STATE_DIR = tempDir;
     delete process.env.VITEST;
     process.env.NODE_ENV = "test";
   });
@@ -43,13 +43,13 @@ describe("update-startup", () => {
   });
 
   it("logs update hint for npm installs when newer tag exists", async () => {
-    const { resolveClawdbotPackageRoot } = await import("./clawdbot-root.js");
+    const { resolveEpiloopPackageRoot } = await import("./epiloop-root.js");
     const { checkUpdateStatus, resolveNpmChannelTag } = await import("./update-check.js");
     const { runGatewayUpdateCheck } = await import("./update-startup.js");
 
-    vi.mocked(resolveClawdbotPackageRoot).mockResolvedValue("/opt/clawdbot");
+    vi.mocked(resolveEpiloopPackageRoot).mockResolvedValue("/opt/epiloop");
     vi.mocked(checkUpdateStatus).mockResolvedValue({
-      root: "/opt/clawdbot",
+      root: "/opt/epiloop",
       installKind: "package",
       packageManager: "npm",
     } satisfies UpdateCheckResult);
@@ -77,13 +77,13 @@ describe("update-startup", () => {
   });
 
   it("uses latest when beta tag is older than release", async () => {
-    const { resolveClawdbotPackageRoot } = await import("./clawdbot-root.js");
+    const { resolveEpiloopPackageRoot } = await import("./epiloop-root.js");
     const { checkUpdateStatus, resolveNpmChannelTag } = await import("./update-check.js");
     const { runGatewayUpdateCheck } = await import("./update-startup.js");
 
-    vi.mocked(resolveClawdbotPackageRoot).mockResolvedValue("/opt/clawdbot");
+    vi.mocked(resolveEpiloopPackageRoot).mockResolvedValue("/opt/epiloop");
     vi.mocked(checkUpdateStatus).mockResolvedValue({
-      root: "/opt/clawdbot",
+      root: "/opt/epiloop",
       installKind: "package",
       packageManager: "npm",
     } satisfies UpdateCheckResult);

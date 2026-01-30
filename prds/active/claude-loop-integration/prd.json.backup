@@ -1,0 +1,391 @@
+{
+  "project": "claude-loop-integration",
+  "branchName": "feature/claude-loop-integration",
+  "description": "Integrate claude-loop autonomous coding agent as a skill/extension in clawdbot, enabling users to request feature implementations via conversational channels (WhatsApp, Telegram, etc.) that execute autonomously with quality gates and progress reporting",
+  "domain": "integration:typescript:ai-agent",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Create claude-loop extension package structure",
+      "description": "As a developer, I want a properly structured TypeScript extension package for claude-loop so that it integrates cleanly with clawdbot's plugin architecture",
+      "acceptanceCriteria": [
+        "Directory created: extensions/claude-loop/ with standard extension structure",
+        "package.json with correct dependencies (clawdbot plugin-sdk, necessary libs)",
+        "TypeScript configuration (tsconfig.json) properly extends clawdbot's base config",
+        "Export structure matches clawdbot plugin SDK patterns",
+        "README.md documents the extension purpose and architecture"
+      ],
+      "priority": 1,
+      "passes": false,
+      "estimatedComplexity": "simple",
+      "fileScope": [
+        "extensions/claude-loop/package.json",
+        "extensions/claude-loop/tsconfig.json",
+        "extensions/claude-loop/README.md",
+        "extensions/claude-loop/src/index.ts"
+      ]
+    },
+    {
+      "id": "US-002",
+      "title": "Add claude-loop codebase as git submodule",
+      "description": "As a developer, I want claude-loop's codebase available as a submodule so that we can execute it independently while maintaining version control",
+      "acceptanceCriteria": [
+        "Git submodule added at extensions/claude-loop/lib/claude-loop pointing to claude-loop repository",
+        ".gitmodules file correctly configured",
+        "Submodule initialized and checked out to latest stable commit",
+        "Documentation on updating the submodule"
+      ],
+      "priority": 2,
+      "passes": false,
+      "estimatedComplexity": "simple",
+      "dependencies": ["US-001"]
+    },
+    {
+      "id": "US-003",
+      "title": "Implement PRD generator from natural language",
+      "description": "As a user, I want to describe a feature in natural language and have it automatically converted to a claude-loop PRD format so that I can request autonomous implementations conversationally",
+      "acceptanceCriteria": [
+        "prd-generator.ts exports function convertMessageToPRD(message: string, context?: CodebaseContext): Promise<PRDFormat>",
+        "Uses Claude API to analyze feature description and generate structured PRD",
+        "Generates user stories with acceptance criteria",
+        "Assigns priorities and complexity estimates",
+        "Optional codebase analysis to determine file scopes",
+        "Handles edge cases (vague descriptions, missing context)",
+        "Unit tests with >80% coverage",
+        "Example PRDs in tests/fixtures/"
+      ],
+      "priority": 3,
+      "passes": false,
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "extensions/claude-loop/src/prd-generator.ts",
+        "extensions/claude-loop/src/types.ts",
+        "extensions/claude-loop/src/prd-generator.test.ts"
+      ],
+      "dependencies": ["US-001"]
+    },
+    {
+      "id": "US-004",
+      "title": "Build loop executor with progress streaming",
+      "description": "As a developer, I want a TypeScript wrapper that executes claude-loop.sh and streams progress events so that users can monitor autonomous implementation in real-time",
+      "acceptanceCriteria": [
+        "loop-executor.ts exports class LoopExecutor with start(), stop(), getStatus() methods",
+        "Spawns claude-loop.sh process with proper environment setup",
+        "Streams stdout/stderr with structured parsing",
+        "Emits events: 'iteration-start', 'story-complete', 'error', 'complete'",
+        "Handles process lifecycle (cleanup, kill signals, checkpoints)",
+        "Supports resume from checkpoint",
+        "Timeout handling and max iteration limits",
+        "Captures all logs to structured JSONL format",
+        "Unit tests with mock process execution"
+      ],
+      "priority": 4,
+      "passes": false,
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "extensions/claude-loop/src/loop-executor.ts",
+        "extensions/claude-loop/src/process-manager.ts",
+        "extensions/claude-loop/src/loop-executor.test.ts"
+      ],
+      "dependencies": ["US-002"]
+    },
+    {
+      "id": "US-005",
+      "title": "Create progress reporter for messaging channels",
+      "description": "As a user, I want real-time progress updates delivered to my messaging channel (WhatsApp, Telegram, etc.) so that I know what the autonomous agent is working on",
+      "acceptanceCriteria": [
+        "progress-reporter.ts exports class ProgressReporter",
+        "Subscribes to LoopExecutor events",
+        "Formats progress messages for human readability",
+        "Includes story titles, acceptance criteria status, estimated completion",
+        "Supports different verbosity levels (minimal, normal, detailed)",
+        "Batches rapid updates to avoid spam",
+        "Sends final summary with PR links, test results, file changes",
+        "Handles errors gracefully with actionable messages",
+        "Unit tests for message formatting"
+      ],
+      "priority": 5,
+      "passes": false,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "extensions/claude-loop/src/progress-reporter.ts",
+        "extensions/claude-loop/src/formatters.ts",
+        "extensions/claude-loop/src/progress-reporter.test.ts"
+      ],
+      "dependencies": ["US-004"]
+    },
+    {
+      "id": "US-006",
+      "title": "Implement clawdbot skill integration",
+      "description": "As a clawdbot user, I want a skill called 'autonomous-coding' that I can invoke to request feature implementations so that I can use claude-loop through my existing chat interface",
+      "acceptanceCriteria": [
+        "Skill definition in skills/autonomous-coding/ following clawdbot skill format",
+        "tools.md documents the autonomous-coding skill API",
+        "Skill accepts feature description as input",
+        "Returns immediate acknowledgment with PRD preview",
+        "Executes claude-loop in background",
+        "Streams progress updates to user's channel",
+        "Sends completion notification with results",
+        "Supports commands: start, status, stop, resume",
+        "Integration tests with mock clawdbot environment"
+      ],
+      "priority": 6,
+      "passes": false,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "skills/autonomous-coding/README.md",
+        "skills/autonomous-coding/tools.md",
+        "extensions/claude-loop/src/skill-handler.ts",
+        "extensions/claude-loop/src/skill-handler.test.ts"
+      ],
+      "dependencies": ["US-003", "US-004", "US-005"]
+    },
+    {
+      "id": "US-007",
+      "title": "Add session and workspace management",
+      "description": "As a system, I want proper session isolation and workspace management so that multiple users can run autonomous coding tasks without conflicts",
+      "acceptanceCriteria": [
+        "Each autonomous coding session gets isolated workspace directory",
+        "Workspace includes: cloned repo, PRD, progress logs, artifacts",
+        "Session ID tracking tied to clawdbot's session system",
+        "Cleanup policy for completed/abandoned sessions",
+        "Concurrent execution support (max 3 per user configurable)",
+        "Workspace creation uses git worktree for isolation",
+        "Resource limits enforced (disk space, execution time)",
+        "Database/state storage for session metadata"
+      ],
+      "priority": 7,
+      "passes": false,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "extensions/claude-loop/src/workspace-manager.ts",
+        "extensions/claude-loop/src/session-store.ts",
+        "extensions/claude-loop/src/workspace-manager.test.ts"
+      ],
+      "dependencies": ["US-004"]
+    },
+    {
+      "id": "US-008",
+      "title": "Implement experience store integration",
+      "description": "As a system, I want to connect to claude-loop's experience store so that learned patterns from past implementations improve future autonomous coding quality",
+      "acceptanceCriteria": [
+        "Experience store initialized in clawdbot's data directory (~/.clawdbot/claude-loop/experience-store/)",
+        "Domain detection using clawdbot's codebase analysis",
+        "Experiences recorded after successful implementations",
+        "Experiences retrieved and injected into PRD context",
+        "Feedback tracking mechanism (thumbs up/down on results)",
+        "Statistics exposed via status command",
+        "Per-user experience stores for privacy",
+        "Export/import functionality for team sharing"
+      ],
+      "priority": 8,
+      "passes": false,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "extensions/claude-loop/src/experience-bridge.ts",
+        "extensions/claude-loop/src/domain-detector.ts",
+        "extensions/claude-loop/src/experience-bridge.test.ts"
+      ],
+      "dependencies": ["US-002", "US-007"]
+    },
+    {
+      "id": "US-009",
+      "title": "Add quality gates and validation",
+      "description": "As a user, I want automatic quality checks before completion so that autonomous implementations meet code quality standards",
+      "acceptanceCriteria": [
+        "Integrates with clawdbot's existing linting/testing infrastructure",
+        "Runs TypeScript type checking via clawdbot's tsconfig",
+        "Executes project tests (npm test, pnpm test)",
+        "Checks for security vulnerabilities",
+        "Validates code style with oxlint/oxfmt",
+        "Generates coverage reports",
+        "Blocks completion if quality gates fail",
+        "Provides actionable feedback on failures",
+        "Configurable quality thresholds"
+      ],
+      "priority": 9,
+      "passes": false,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "extensions/claude-loop/src/quality-gates.ts",
+        "extensions/claude-loop/src/validators/",
+        "extensions/claude-loop/src/quality-gates.test.ts"
+      ],
+      "dependencies": ["US-004"]
+    },
+    {
+      "id": "US-010",
+      "title": "Build Canvas visualization for progress",
+      "description": "As a user on iOS/macOS, I want to see autonomous coding progress in clawdbot's Canvas interface so that I can monitor implementation visually",
+      "acceptanceCriteria": [
+        "Canvas component: AutonomousCodingProgress.tsx",
+        "Shows story grid with completion status",
+        "Real-time updates via WebSocket",
+        "Displays current iteration, acceptance criteria progress",
+        "Interactive controls: pause, resume, abort",
+        "Shows logs stream in expandable panel",
+        "File diff viewer for recent changes",
+        "Responsive design for mobile and desktop",
+        "Integration with clawdbot's Canvas host"
+      ],
+      "priority": 10,
+      "passes": false,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "extensions/claude-loop/src/canvas/AutonomousCodingProgress.tsx",
+        "extensions/claude-loop/src/canvas/styles.css",
+        "extensions/claude-loop/src/canvas-bridge.ts"
+      ],
+      "dependencies": ["US-005"]
+    },
+    {
+      "id": "US-011",
+      "title": "Implement parallel execution coordinator",
+      "description": "As a system, I want to coordinate multiple parallel autonomous coding tasks so that system resources are utilized efficiently without conflicts",
+      "acceptanceCriteria": [
+        "Parallel coordinator manages queue of pending tasks",
+        "Enforces max concurrent executions (default: 3, configurable)",
+        "Load balancing across available CPU cores",
+        "Git worktree isolation for each parallel task",
+        "Resource monitoring (CPU, memory, disk I/O)",
+        "Graceful degradation if resources constrained",
+        "Priority queue support (high/normal/low priority)",
+        "Metrics collection per task and aggregate",
+        "Status API showing all active/queued tasks"
+      ],
+      "priority": 11,
+      "passes": false,
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "extensions/claude-loop/src/parallel-coordinator.ts",
+        "extensions/claude-loop/src/resource-monitor.ts",
+        "extensions/claude-loop/src/parallel-coordinator.test.ts"
+      ],
+      "dependencies": ["US-004", "US-007"]
+    },
+    {
+      "id": "US-012",
+      "title": "Add comprehensive logging and metrics",
+      "description": "As a developer, I want detailed logging of all autonomous coding operations so that failures can be diagnosed and the system can self-improve",
+      "acceptanceCriteria": [
+        "Structured logging to JSONL format in ~/.clawdbot/logs/claude-loop/",
+        "Log levels: debug, info, warn, error with filtering",
+        "Captures: PRD generation, story execution, quality gates, errors, decisions",
+        "Metrics collection: duration, token usage, success rate, failure reasons",
+        "Failure taxonomy (PRD quality, code errors, timeout, resource, API)",
+        "Automatic failure pattern detection",
+        "Daily/weekly metrics reports",
+        "Prometheus metrics endpoint (optional)",
+        "Log rotation and archival policy"
+      ],
+      "priority": 12,
+      "passes": false,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "extensions/claude-loop/src/logging.ts",
+        "extensions/claude-loop/src/metrics-collector.ts",
+        "extensions/claude-loop/src/failure-analyzer.ts",
+        "extensions/claude-loop/src/logging.test.ts"
+      ],
+      "dependencies": ["US-004"]
+    },
+    {
+      "id": "US-013",
+      "title": "Build self-improvement feedback loop",
+      "description": "As a system, I want to learn from failures and user feedback so that autonomous coding quality improves over time",
+      "acceptanceCriteria": [
+        "Failure logs automatically analyzed for patterns",
+        "User feedback mechanism (rate implementation 1-5 stars)",
+        "Failed attempts stored with context for learning",
+        "Generates improvement proposals from failure patterns",
+        "Improvement proposals queued for human review",
+        "Approved improvements applied to PRD generation and execution",
+        "A/B testing framework for improvement validation",
+        "Calibration tracking (success rate over time)",
+        "Monthly self-improvement reports"
+      ],
+      "priority": 13,
+      "passes": false,
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "extensions/claude-loop/src/improvement-engine.ts",
+        "extensions/claude-loop/src/feedback-collector.ts",
+        "extensions/claude-loop/src/pattern-analyzer.ts",
+        "extensions/claude-loop/src/improvement-engine.test.ts"
+      ],
+      "dependencies": ["US-008", "US-012"]
+    },
+    {
+      "id": "US-014",
+      "title": "Create comprehensive documentation",
+      "description": "As a user, I want clear documentation on how to use autonomous coding features so that I can leverage them effectively",
+      "acceptanceCriteria": [
+        "User guide: docs/tools/autonomous-coding.md with examples",
+        "Architecture documentation in extensions/claude-loop/docs/ARCHITECTURE.md",
+        "API reference for all exported functions",
+        "Configuration guide with all available options",
+        "Troubleshooting guide for common issues",
+        "Example PRDs for various feature types",
+        "Video walkthrough or GIF demonstrations",
+        "Integration guide for developers extending the system",
+        "Migration guide from standalone claude-loop"
+      ],
+      "priority": 14,
+      "passes": false,
+      "estimatedComplexity": "simple",
+      "fileScope": [
+        "docs/tools/autonomous-coding.md",
+        "extensions/claude-loop/docs/ARCHITECTURE.md",
+        "extensions/claude-loop/docs/API.md",
+        "extensions/claude-loop/docs/TROUBLESHOOTING.md",
+        "extensions/claude-loop/README.md"
+      ],
+      "dependencies": ["US-006"]
+    },
+    {
+      "id": "US-015",
+      "title": "Add end-to-end integration tests",
+      "description": "As a developer, I want comprehensive integration tests so that the autonomous coding feature works reliably in production",
+      "acceptanceCriteria": [
+        "E2E test suite in extensions/claude-loop/test/e2e/",
+        "Test: Simple feature request → PRD → implementation → completion",
+        "Test: Complex feature with multiple stories",
+        "Test: Quality gate failures and recovery",
+        "Test: Concurrent execution of multiple tasks",
+        "Test: Resume from checkpoint after interruption",
+        "Test: Experience store learning and retrieval",
+        "Test: Integration with all major clawdbot channels",
+        "Mock Claude API responses for deterministic testing",
+        "CI integration with test coverage reporting"
+      ],
+      "priority": 15,
+      "passes": false,
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "extensions/claude-loop/test/e2e/",
+        "extensions/claude-loop/test/fixtures/",
+        "extensions/claude-loop/test/mocks/"
+      ],
+      "dependencies": ["US-006", "US-009", "US-011"]
+    }
+  ],
+  "qualityGates": {
+    "requireTests": true,
+    "requireTypecheck": true,
+    "requireLint": true,
+    "minCoverage": 75,
+    "securityScan": true
+  },
+  "metadata": {
+    "createdAt": "2026-01-28T08:30:00Z",
+    "author": "Claude Sonnet 4.5",
+    "estimatedDuration": "4-6 weeks",
+    "parallelizable": true,
+    "maxParallelStories": 5
+  }
+}

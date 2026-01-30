@@ -1,0 +1,305 @@
+# Physical AI Research Adapter
+# Configuration for SCWM and related physical AI research
+
+name: physical-ai
+version: "1.0.0"
+description: |
+  Specialized adapter for Physical AI research including world models,
+  robotics simulation, and uncertainty quantification. Designed for
+  integration with Cosmos-Predict2 and Isaac Lab.
+
+domain:
+  # Primary research areas
+  research_areas:
+    - world_models
+    - uncertainty_quantification
+    - model_based_rl
+    - robotics_simulation
+    - video_prediction
+    - embodied_ai
+
+  # arXiv categories to search
+  arxiv_categories:
+    - cs.RO  # Robotics
+    - cs.LG  # Machine Learning
+    - cs.AI  # Artificial Intelligence
+    - cs.CV  # Computer Vision
+    - stat.ML  # Machine Learning (Statistics)
+
+  # Top venues for physical AI research
+  top_venues:
+    conferences:
+      - ICRA        # IEEE Int'l Conf on Robotics and Automation
+      - CoRL        # Conference on Robot Learning
+      - RSS         # Robotics: Science and Systems
+      - IROS        # IEEE/RSJ Int'l Conf on Intelligent Robots and Systems
+      - NeurIPS     # Neural Information Processing Systems
+      - ICML        # Int'l Conf on Machine Learning
+      - ICLR        # Int'l Conf on Learning Representations
+      - CVPR        # Computer Vision and Pattern Recognition
+    journals:
+      - IJRR        # International Journal of Robotics Research
+      - T-RO        # IEEE Transactions on Robotics
+      - RA-L        # IEEE Robotics and Automation Letters
+      - JMLR        # Journal of Machine Learning Research
+    workshops:
+      - "NeurIPS Robot Learning Workshop"
+      - "ICML RL4RealLife Workshop"
+      - "CoRL Workshop on Simulation"
+
+  # Key research groups and labs
+  key_labs:
+    - NVIDIA Research (Isaac Lab, Cosmos)
+    - DeepMind (Genie, DreamerV3)
+    - Google Brain (RT-1, RT-2)
+    - Berkeley AI Research (BAIR)
+    - Stanford Vision Lab (Dex-Net, ManiSkill)
+    - CMU Robotics Institute
+    - MIT CSAIL
+    - ETH Zurich ASL
+
+  # Important GitHub organizations
+  github_orgs:
+    - NVIDIA-Omniverse
+    - NVlabs
+    - google-deepmind
+    - facebookresearch
+    - openai
+    - dexterousgr
+    - rail-berkeley
+
+# Search configuration
+search:
+  # Primary search providers
+  providers:
+    - arxiv
+    - semantic_scholar
+    - github
+    - papers_with_code
+
+  # Search keywords for physical AI
+  keywords:
+    world_models:
+      - "world model"
+      - "dynamics model"
+      - "predictive model"
+      - "latent dynamics"
+      - "model-based reinforcement learning"
+      - "model predictive control"
+
+    uncertainty:
+      - "epistemic uncertainty"
+      - "aleatoric uncertainty"
+      - "uncertainty quantification"
+      - "Bayesian neural network"
+      - "deep ensemble"
+      - "Monte Carlo dropout"
+      - "calibration"
+
+    robotics:
+      - "robot learning"
+      - "manipulation"
+      - "locomotion"
+      - "sim-to-real"
+      - "domain adaptation"
+      - "imitation learning"
+
+    video_prediction:
+      - "video prediction"
+      - "future frame prediction"
+      - "action-conditioned generation"
+      - "video diffusion"
+      - "video transformer"
+
+  # Source credibility overrides
+  credibility_overrides:
+    "arxiv.org": 85
+    "openreview.net": 82
+    "github.com/NVIDIA": 90
+    "github.com/google-deepmind": 90
+    "proceedings.mlr.press": 88
+    "ieeexplore.ieee.org": 85
+
+# Quality gates specific to physical AI research
+quality_gates:
+  # Reproducibility requirements
+  reproducibility:
+    enabled: true
+    check_code_availability: true
+    check_data_availability: true
+    prefer_open_source: true
+    weight: 0.25
+
+  # Benchmark validity
+  benchmark_validity:
+    enabled: true
+    known_benchmarks:
+      manipulation:
+        - Meta-World
+        - ManiSkill
+        - RLBench
+        - FrankaKitchen
+      locomotion:
+        - DMControl
+        - MuJoCo
+        - Isaac Gym
+      video_prediction:
+        - Kinetics
+        - RoboNet
+        - Something-Something
+      driving:
+        - CARLA
+        - nuScenes
+        - Waymo Open
+    weight: 0.20
+
+  # Recency weighting (physical AI moves fast)
+  recency:
+    enabled: true
+    decay_half_life_months: 18
+    min_recency_score: 0.3
+    weight: 0.15
+
+  # Citation analysis
+  citations:
+    enabled: true
+    normalize_by_age: true
+    min_citations_for_validation: 5
+    weight: 0.15
+
+  # Simulation validity
+  simulation_validity:
+    enabled: true
+    check_physics_engine: true
+    known_simulators:
+      - Isaac Sim
+      - MuJoCo
+      - PyBullet
+      - Genesis
+      - Gazebo
+    weight: 0.10
+
+  # Real-world validation
+  real_world_validation:
+    enabled: true
+    prefer_sim_to_real: true
+    weight: 0.15
+
+# Agent configuration for physical AI research
+agents:
+  # Mandatory agents
+  required:
+    - lead-researcher
+    - academic-scanner
+    - technical-diver
+
+  # Optional specialists
+  optional:
+    - benchmark-analyst
+    - fact-checker
+    - devils-advocate
+
+  # Agent-specific prompts
+  prompts:
+    academic-scanner: |
+      Focus on physical AI and robotics papers. Prioritize:
+      - World models with uncertainty quantification
+      - Model-based RL for manipulation/locomotion
+      - Sim-to-real transfer methods
+      - Video prediction for planning
+      Search arXiv categories: cs.RO, cs.LG, cs.AI, cs.CV
+
+    technical-diver: |
+      Analyze technical implementations in:
+      - PyTorch/JAX codebases
+      - NVIDIA ecosystem (Isaac Lab, Cosmos, Omniverse)
+      - Physics simulators (MuJoCo, PyBullet, Isaac Sim)
+      Focus on differentiable components and GPU acceleration.
+
+    benchmark-analyst: |
+      Track SOTA on physical AI benchmarks:
+      - DMControl (locomotion)
+      - Meta-World (manipulation)
+      - RoboNet (video prediction)
+      - Isaac Gym benchmarks
+      Note: Sim results vs real-world validation are different.
+
+# Integration configuration
+integrations:
+  cosmos_predict2:
+    enabled: true
+    repo_path: "physical_ai_playground/cosmos-predict2"
+    key_files:
+      - "cosmos_predict2/models/video2world_action_model.py"
+      - "cosmos_predict2/pipelines/video2world_action.py"
+      - "cosmos_predict2/conditioner.py"
+    capabilities:
+      - action_conditioning
+      - video_generation
+      - latent_space_access
+
+  isaac_lab:
+    enabled: true
+    documentation_url: "https://isaac-sim.github.io/IsaacLab/"
+    key_concepts:
+      - environments
+      - sensors
+      - actuators
+      - rl_training
+
+  scwm_module:
+    enabled: true
+    repo_path: "scwm"
+    modules:
+      - core.world_model
+      - core.uncertainty
+      - core.calibration
+
+# Output configuration
+output:
+  directory: "research-outputs/scwm"
+  formats:
+    - markdown
+    - json
+
+  templates:
+    literature_review: "templates/research/literature-review-template.md"
+    technical_analysis: "templates/research/technical-analysis-template.md"
+    integration_analysis: "templates/research/integration-analysis-template.md"
+    final_report: "templates/research/final-report-template.md"
+
+  naming_convention: "{story_id}-{title_slug}.md"
+
+# Checkpoint configuration
+checkpoints:
+  # Require human approval for critical decisions
+  require_approval:
+    - architecture_decisions
+    - integration_recommendations
+    - publication_strategy
+
+  # Auto-approve routine research tasks
+  auto_approve:
+    - literature_search
+    - code_analysis
+    - benchmark_collection
+
+  # Confidence thresholds
+  thresholds:
+    low_confidence: 60
+    require_review: 70
+    auto_proceed: 85
+
+# Safety and ethics
+safety:
+  # No investment recommendations (pure research)
+  investment_mode: false
+
+  # Respect code licenses
+  license_compliance: true
+
+  # Cite all sources
+  require_citations: true
+
+  # Flag potential dual-use concerns
+  dual_use_awareness: true

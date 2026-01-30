@@ -1,0 +1,68 @@
+{
+  "project": "error-diagnostics",
+  "branchName": "feature/better-error-diagnostics",
+  "description": "Enhance error diagnostics and logging. Currently errors show as 'error: null' or generic messages. Capture stderr, stdout, exit codes with context and provide actionable suggestions for common errors.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Capture full stderr and stdout on errors",
+      "description": "As a developer, I want full error output captured so that I can debug failures effectively",
+      "acceptanceCriteria": [
+        "Capture complete stderr output on command failures",
+        "Capture stdout context around errors",
+        "Include exit code with meaning (e.g., 127 = command not found)",
+        "Store in .claude-loop/logs/error.log with timestamps",
+        "Test by triggering intentional error and verifying log"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "Modify lib/execution-logger.sh error classification",
+      "fileScope": [
+        "lib/execution-logger.sh",
+        "lib/worker.sh"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-002",
+      "title": "Add actionable suggestions for common errors",
+      "description": "As a developer, I want helpful suggestions when common errors occur so that I can fix issues quickly",
+      "acceptanceCriteria": [
+        "Detect common error patterns (file not found, permission denied, command not found, etc.)",
+        "Provide specific fix suggestions for each pattern",
+        "Include relevant file paths and line numbers when available",
+        "Format suggestions as clear action items",
+        "Test with 5 common error scenarios"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "Extend error classification in lib/execution-logger.sh lines 91-150",
+      "fileScope": [
+        "lib/execution-logger.sh"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-003",
+      "title": "Improve error messages in main loop",
+      "description": "As a user, I want clear error messages from claude-loop so that I understand what went wrong",
+      "acceptanceCriteria": [
+        "Replace generic error messages with specific details",
+        "Include context about what operation was being performed",
+        "Show relevant configuration that might have caused the error",
+        "Provide next steps or suggestions",
+        "Test by reviewing error output from main loop"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Modify error handling in claude-loop.sh lines 4410-4540",
+      "fileScope": [
+        "claude-loop.sh"
+      ],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    }
+  ]
+}

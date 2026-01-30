@@ -1,13 +1,13 @@
 ---
 summary: "Voice Call plugin: outbound + inbound calls via Twilio/Telnyx/Plivo (plugin install + config + CLI)"
 read_when:
-  - You want to place an outbound voice call from Clawdbot
+  - You want to place an outbound voice call from Epiloop
   - You are configuring or developing the voice-call plugin
 ---
 
 # Voice Call (plugin)
 
-Voice calls for Clawdbot via a plugin. Supports outbound notifications and
+Voice calls for Epiloop via a plugin. Supports outbound notifications and
 multi-turn conversations with inbound policies.
 
 Current providers:
@@ -20,7 +20,7 @@ Quick mental model:
 - Install plugin
 - Restart Gateway
 - Configure under `plugins.entries.voice-call.config`
-- Use `clawdbot voicecall ...` or the `voice_call` tool
+- Use `epiloop voicecall ...` or the `voice_call` tool
 
 ## Where it runs (local vs remote)
 
@@ -33,7 +33,7 @@ If you use a remote Gateway, install/configure the plugin on the **machine runni
 ### Option A: install from npm (recommended)
 
 ```bash
-clawdbot plugins install @clawdbot/voice-call
+epiloop plugins install @epiloop/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -41,7 +41,7 @@ Restart the Gateway afterwards.
 ### Option B: install from a local folder (dev, no copying)
 
 ```bash
-clawdbot plugins install ./extensions/voice-call
+epiloop plugins install ./extensions/voice-call
 cd ./extensions/voice-call && pnpm install
 ```
 
@@ -124,13 +124,13 @@ Auto-responses use the agent system. Tune with:
 ## CLI
 
 ```bash
-clawdbot voicecall call --to "+15555550123" --message "Hello from Clawdbot"
-clawdbot voicecall continue --call-id <id> --message "Any questions?"
-clawdbot voicecall speak --call-id <id> --message "One moment"
-clawdbot voicecall end --call-id <id>
-clawdbot voicecall status --call-id <id>
-clawdbot voicecall tail
-clawdbot voicecall expose --mode funnel
+epiloop voicecall call --to "+15555550123" --message "Hello from Epiloop"
+epiloop voicecall continue --call-id <id> --message "Any questions?"
+epiloop voicecall speak --call-id <id> --message "One moment"
+epiloop voicecall end --call-id <id>
+epiloop voicecall status --call-id <id>
+epiloop voicecall tail
+epiloop voicecall expose --mode funnel
 ```
 
 ## Agent tool

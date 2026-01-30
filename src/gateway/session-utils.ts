@@ -5,7 +5,7 @@ import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent
 import { lookupContextTokens } from "../agents/context.js";
 import { DEFAULT_CONTEXT_TOKENS, DEFAULT_MODEL, DEFAULT_PROVIDER } from "../agents/defaults.js";
 import { resolveConfiguredModelRef } from "../agents/model-selection.js";
-import { type ClawdbotConfig, loadConfig } from "../config/config.js";
+import { type EpiloopConfig, loadConfig } from "../config/config.js";
 import { resolveStateDir } from "../config/paths.js";
 import {
   buildGroupDisplayName,
@@ -85,7 +85,7 @@ function isWorkspaceRelativePath(value: string): boolean {
 }
 
 function resolveIdentityAvatarUrl(
-  cfg: ClawdbotConfig,
+  cfg: EpiloopConfig,
   agentId: string,
   avatar: string | undefined,
 ): string | undefined {
@@ -211,7 +211,7 @@ function listExistingAgentIdsFromDisk(): string[] {
   }
 }
 
-function listConfiguredAgentIds(cfg: ClawdbotConfig): string[] {
+function listConfiguredAgentIds(cfg: EpiloopConfig): string[] {
   const agents = cfg.agents?.list ?? [];
   if (agents.length > 0) {
     const ids = new Set<string>();
@@ -239,7 +239,7 @@ function listConfiguredAgentIds(cfg: ClawdbotConfig): string[] {
   return sorted;
 }
 
-export function listAgentsForGateway(cfg: ClawdbotConfig): {
+export function listAgentsForGateway(cfg: EpiloopConfig): {
   defaultId: string;
   mainKey: string;
   scope: SessionScope;
@@ -301,14 +301,11 @@ function canonicalizeSessionKeyForAgent(agentId: string, key: string): string {
   return `agent:${normalizeAgentId(agentId)}:${key}`;
 }
 
-function resolveDefaultStoreAgentId(cfg: ClawdbotConfig): string {
+function resolveDefaultStoreAgentId(cfg: EpiloopConfig): string {
   return normalizeAgentId(resolveDefaultAgentId(cfg));
 }
 
-export function resolveSessionStoreKey(params: {
-  cfg: ClawdbotConfig;
-  sessionKey: string;
-}): string {
+export function resolveSessionStoreKey(params: { cfg: EpiloopConfig; sessionKey: string }): string {
   const raw = params.sessionKey.trim();
   if (!raw) return raw;
   if (raw === "global" || raw === "unknown") return raw;
@@ -333,7 +330,7 @@ export function resolveSessionStoreKey(params: {
   return canonicalizeSessionKeyForAgent(agentId, raw);
 }
 
-function resolveSessionStoreAgentId(cfg: ClawdbotConfig, canonicalKey: string): string {
+function resolveSessionStoreAgentId(cfg: EpiloopConfig, canonicalKey: string): string {
   if (canonicalKey === "global" || canonicalKey === "unknown") {
     return resolveDefaultStoreAgentId(cfg);
   }
@@ -350,7 +347,7 @@ function canonicalizeSpawnedByForAgent(agentId: string, spawnedBy?: string): str
   return `agent:${normalizeAgentId(agentId)}:${raw}`;
 }
 
-export function resolveGatewaySessionStoreTarget(params: { cfg: ClawdbotConfig; key: string }): {
+export function resolveGatewaySessionStoreTarget(params: { cfg: EpiloopConfig; key: string }): {
   agentId: string;
   storePath: string;
   canonicalKey: string;
@@ -381,7 +378,7 @@ export function resolveGatewaySessionStoreTarget(params: { cfg: ClawdbotConfig; 
   };
 }
 
-export function loadCombinedSessionStoreForGateway(cfg: ClawdbotConfig): {
+export function loadCombinedSessionStoreForGateway(cfg: EpiloopConfig): {
   storePath: string;
   store: Record<string, SessionEntry>;
 } {
@@ -423,7 +420,7 @@ export function loadCombinedSessionStoreForGateway(cfg: ClawdbotConfig): {
   return { storePath, store: combined };
 }
 
-export function getSessionDefaults(cfg: ClawdbotConfig): GatewaySessionsDefaults {
+export function getSessionDefaults(cfg: EpiloopConfig): GatewaySessionsDefaults {
   const resolved = resolveConfiguredModelRef({
     cfg,
     defaultProvider: DEFAULT_PROVIDER,
@@ -441,7 +438,7 @@ export function getSessionDefaults(cfg: ClawdbotConfig): GatewaySessionsDefaults
 }
 
 export function resolveSessionModelRef(
-  cfg: ClawdbotConfig,
+  cfg: EpiloopConfig,
   entry?: SessionEntry,
 ): { provider: string; model: string } {
   const resolved = resolveConfiguredModelRef({
@@ -460,7 +457,7 @@ export function resolveSessionModelRef(
 }
 
 export function listSessionsFromStore(params: {
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   storePath: string;
   store: Record<string, SessionEntry>;
   opts: import("./protocol/index.js").SessionsListParams;

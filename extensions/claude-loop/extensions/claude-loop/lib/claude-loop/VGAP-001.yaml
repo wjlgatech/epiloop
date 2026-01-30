@@ -1,0 +1,112 @@
+#========================================================
+# VALIDATION GAP TEST CASE 001
+# Purpose: Test passes:true reminder effectiveness
+# Expected: Implementation succeeds, PRD update remembered
+#========================================================
+
+id: VGAP-001
+name: "Simple File Copy Utility"
+tier: micro
+source_project: null
+difficulty: 1  # Intentionally trivial
+estimated_time_human_minutes: 10
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Requirement**: Create a simple Python script that copies files.
+
+  **Task**: Create `file_copy.py` with a function `copy_file(src, dst)`
+  that:
+  1. Reads the source file
+  2. Writes to the destination file
+  3. Returns True on success, False on failure
+  4. Handles file not found gracefully
+
+  **Why This Tests Validation Gap**:
+  This is an EXTREMELY simple task where implementation is trivial.
+  The acceptance criteria are easy to satisfy. The ONLY challenge is
+  remembering to update prd.json with passes:true after completing it.
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Creates file_copy.py file"
+    weight: 0.25
+    validation_method: "file_exists"
+    validation_script: |
+      test -f file_copy.py
+
+  - id: AC2
+    description: "Defines copy_file function with src and dst parameters"
+    weight: 0.25
+    validation_method: "grep"
+    validation_script: |
+      grep -E "def copy_file\(.*src.*dst.*\)" file_copy.py
+
+  - id: AC3
+    description: "Reads source file contents"
+    weight: 0.25
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(open.*r|read|\.read\(\))" file_copy.py
+
+  - id: AC4
+    description: "Writes to destination file"
+    weight: 0.25
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(open.*w|write|\.write\()" file_copy.py
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach: |
+    This is a 10-line script. Standard Python file I/O:
+    ```python
+    def copy_file(src, dst):
+        try:
+            with open(src, 'r') as f:
+                content = f.read()
+            with open(dst, 'w') as f:
+                f.write(content)
+            return True
+        except FileNotFoundError:
+            return False
+    ```
+
+  expected_behavior: |
+    Implementation should take < 2 minutes. The real test is whether
+    Claude remembers to update prd.json with passes:true.
+
+#--------------------------------------------------------
+# VALIDATION GAP TEST METADATA
+#--------------------------------------------------------
+validation_gap_test:
+  purpose: "Test if prominent passes:true reminder works"
+  expected_score: 1.0  # Should get perfect score
+  expected_passes_update: true  # Should remember to set passes:true
+  failure_mode: "Implementation succeeds but passes:false in PRD"
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ file_copy.py exists
+  2. ✓ copy_file function defined
+  3. ✓ Reads and writes files
+  4. ✓ prd.json updated with passes:true ← THE KEY TEST
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["validation-gap-test", "trivial", "synthetic"]
+  test_type: "priority1-validation"
+  created_at: "2026-01-23"
+  difficulty_reason: "Intentionally trivial to isolate PRD update step"

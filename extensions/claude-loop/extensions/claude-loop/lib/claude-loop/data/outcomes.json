@@ -1,0 +1,21 @@
+{
+  "outcomes": [
+    {
+      "prediction_id": "PRED-0001",
+      "actual_return": 22.22222222222222,
+      "max_drawdown": 0.0,
+      "days_held": 0,
+      "exit_reason": "target_hit",
+      "lessons_learned": "Good entry timing on support",
+      "recorded_at": "2026-01-18T07:23:21.702927",
+      "asset": "BTC",
+      "asset_type": "crypto",
+      "confidence": 70,
+      "sources": [
+        "Technical Analysis",
+        "On-chain Metrics"
+      ]
+    }
+  ],
+  "last_updated": "2026-01-18T07:23:21.703253"
+}

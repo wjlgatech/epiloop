@@ -1,0 +1,117 @@
+{
+  "question_id": "SCI-016",
+  "question": "How do CAR-T cell therapies work for cancer treatment?",
+  "expert_sources": [
+    {
+      "title": "Chimeric Antigen Receptor T Cells for Sustained Remissions in Leukemia",
+      "authors": ["Maude et al."],
+      "venue": "NEJM 2014",
+      "url": "https://doi.org/10.1056/NEJMoa1407222",
+      "relevance": "Landmark pediatric ALL CAR-T trial"
+    },
+    {
+      "title": "Chimeric antigen receptor-modified T cells in chronic lymphoid leukemia",
+      "authors": ["Porter et al."],
+      "venue": "NEJM 2011",
+      "url": "https://doi.org/10.1056/NEJMoa1103849",
+      "relevance": "Early CAR-T clinical success"
+    },
+    {
+      "title": "CD19 CAR-T cells of defined CD4+:CD8+ composition in adult B cell ALL patients",
+      "authors": ["Turtle et al."],
+      "venue": "Journal of Clinical Investigation 2016",
+      "url": "https://doi.org/10.1172/JCI85309",
+      "relevance": "CAR-T manufacturing optimization"
+    },
+    {
+      "title": "Cytokine Release Syndrome",
+      "authors": ["Lee et al."],
+      "venue": "Blood 2014",
+      "url": "https://doi.org/10.1182/blood-2014-05-552729",
+      "relevance": "CRS management guidelines"
+    },
+    {
+      "title": "FDA Approves Second CAR-T Product",
+      "authors": ["FDA"],
+      "venue": "FDA 2017",
+      "url": "https://www.fda.gov/",
+      "relevance": "Regulatory approvals"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "CAR-T cells are engineered to express chimeric receptors targeting tumor antigens",
+      "importance": "critical",
+      "sources": ["Porter et al. 2011"]
+    },
+    {
+      "finding": "Patient's T cells are collected, modified ex vivo, expanded, and reinfused",
+      "importance": "critical",
+      "sources": ["Turtle et al. 2016"]
+    },
+    {
+      "finding": "CD19-targeting CAR-T achieves 70-90% complete remission in B-cell ALL",
+      "importance": "critical",
+      "sources": ["Maude et al. 2014"]
+    },
+    {
+      "finding": "Cytokine release syndrome (CRS) is a serious but manageable toxicity",
+      "importance": "critical",
+      "sources": ["Lee et al. 2014"]
+    },
+    {
+      "finding": "Neurotoxicity (ICANS) occurs in significant portion of patients",
+      "importance": "high",
+      "sources": ["Clinical trial data"]
+    },
+    {
+      "finding": "Multiple CAR-T products approved for lymphoma, leukemia, and myeloma",
+      "importance": "high",
+      "sources": ["FDA approvals"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "CAR-T is extremely expensive ($400K+ per treatment)",
+      "validity": "Valid, limiting access",
+      "sources": ["Cost analyses"]
+    },
+    {
+      "argument": "Solid tumors remain largely resistant to CAR-T",
+      "validity": "True, tumor microenvironment challenges",
+      "sources": ["Solid tumor CAR-T trials"]
+    },
+    {
+      "argument": "Relapse can occur through antigen loss",
+      "validity": "Valid, driving multi-target CAR development",
+      "sources": ["Relapse mechanism studies"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.90,
+    "areas_of_uncertainty": [
+      "Long-term durability of responses",
+      "Optimal approaches for solid tumors",
+      "Cost reduction strategies"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "CAR structure (antigen-binding + signaling domains)",
+      "Ex vivo T cell modification process",
+      "CD19 as common target",
+      "CRS as major toxicity"
+    ],
+    "should_include": [
+      "Specific approved products (Kymriah, Yescarta)",
+      "Blood cancer efficacy rates",
+      "Neurotoxicity (ICANS)"
+    ],
+    "bonus_points": [
+      "Costimulatory domain evolution (CD28 vs 4-1BB)",
+      "Solid tumor challenges",
+      "Manufacturing challenges"
+    ]
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "title": "Quest 3 Agent 1: Complete TextRenderer.kt",
+  "description": "Complete the TextRenderer.kt.wip file to create production-ready TextRenderer component for AR text label rendering. Follow ArrowRenderer.kt and BoundingBoxRenderer.kt patterns. Enable text labels to display step instructions in 3D world space with billboard effect.",
+  "context": {
+    "technology": "Meta Spatial SDK v0.9.2 + Android/Kotlin",
+    "project_path": "spatial_quest3_client/DataCenterAR",
+    "phase": "Phase 3 - AR Overlay System (Quest 3 deployment day)",
+    "dependencies": [
+      "ArrowRenderer.kt (7.5K) - completed reference implementation",
+      "BoundingBoxRenderer.kt (8.5K) - completed reference implementation",
+      "OverlayRenderer.kt (10K) - base class",
+      "TextRenderer.kt.wip (21K) - incomplete file to finish"
+    ],
+    "time_constraint": "30-45 minutes (Quest 3 device waiting)",
+    "testing_approach": "Reality-Grounded TDD - deploy to device first, test actual behavior"
+  },
+  "objectives": [
+    "Complete TextRenderer.kt from .wip file",
+    "Ensure compilation with zero errors",
+    "Follow OverlayRenderer base class pattern",
+    "Implement billboard effect (text always faces camera)",
+    "Support background panel for readability",
+    "Font size scaling with distance"
+  ],
+  "acceptanceCriteria": [
+    "TextRenderer.kt compiles without errors",
+    "Follows ArrowRenderer.kt pattern (extends OverlayRenderer)",
+    "createTextLabel(text, position, fontSize) method implemented",
+    "updateTextLabel(id, text) for dynamic content",
+    "removeTextLabel(id) cleanup method",
+    "Billboard effect (text faces camera)",
+    "Background panel for contrast",
+    "Font size scales: 0.02 at 1m, 0.04 at 2m",
+    "No unit test required (Reality-Grounded TDD on device)",
+    "Rename TextRenderer.kt.wip to TextRenderer.kt"
+  ],
+  "stories": [
+    {
+      "id": "TEXT-001",
+      "title": "Complete TextRenderer.kt implementation",
+      "description": "Finish TextRenderer.kt.wip by implementing remaining methods, fixing any compilation errors, and ensuring it follows the established OverlayRenderer pattern. Use TextMesh or sprite-based text rendering from Meta Spatial SDK. Ensure billboard effect so text always faces camera. Add background panel for readability.",
+      "acceptanceCriteria": [
+        "TextRenderer.kt file created (from .wip)",
+        "Extends OverlayRenderer base class",
+        "All methods implemented (create, update, remove)",
+        "Billboard effect implemented",
+        "Background panel added",
+        "Distance-based font scaling",
+        "Zero compilation errors",
+        "Follows Kotlin coding standards"
+      ],
+      "estimatedEffort": "30-45 minutes"
+    }
+  ],
+  "technicalNotes": {
+    "reference_implementation": "ArrowRenderer.kt - follow this pattern exactly",
+    "base_class": "OverlayRenderer.kt - must extend this",
+    "meta_sdk_apis": [
+      "Entity.create() for text entity",
+      "Transform component for position",
+      "Visible component for show/hide",
+      "Material for background panel"
+    ],
+    "billboard_algorithm": "Quaternion.lookRotation(camera.position - text.position)",
+    "font_scaling": "fontSize = baseSize * distance",
+    "file_location": "app/src/main/java/com/accenture/datacenter/ar/TextRenderer.kt"
+  },
+  "outOfScope": [
+    "Unit tests (Reality-Grounded TDD on device instead)",
+    "Complex text formatting (bold, italic)",
+    "Multi-line text wrapping",
+    "Text animations",
+    "Custom fonts"
+  ],
+  "successMetrics": {
+    "compilation": "Zero errors",
+    "code_quality": "Follows ArrowRenderer pattern",
+    "time": "<45 minutes",
+    "deployment_ready": "APK can be built with this code"
+  },
+  "failure_monitoring": {
+    "track_for_self_improvement": [
+      "Compilation errors encountered",
+      "Meta SDK API misunderstandings",
+      "Pattern deviations from reference implementation",
+      "Time overruns (>45 min)",
+      "Missing OverlayRenderer methods"
+    ],
+    "success_indicators": [
+      "Completed in <45 minutes",
+      "Zero compilation errors on first try",
+      "Code matches ArrowRenderer pattern",
+      "No missing methods from base class"
+    ]
+  }
+}

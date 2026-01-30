@@ -1,0 +1,309 @@
+{
+  "project": "phase2-tier2-library-integration",
+  "branchName": "feature/tier2-library-integration",
+  "description": "Phase 2 of Option B: Integrate proven libraries (MCP, LiteLLM) and add bounded delegation. Building on Phase 1 foundation, add MCP for tool ecosystem, multi-provider LLM for cost optimization, and bounded hierarchical delegation (max depth=2) for complex tasks. 8 weeks, 3 major features plus testing/docs.",
+  "context": {
+    "background": "Phase 1 completed: hooks system, learnings JSON, task decomposition, structured output. Phase 2 adds external library integrations and advanced delegation. Focus: cost reduction (30-50% via multi-provider), extensibility (MCP ecosystem), complex task handling (bounded delegation).",
+    "phase1Artifacts": [
+      ".claude-loop/hooks/ - lifecycle extension system",
+      ".claude-loop/learnings.json - lightweight pattern storage",
+      "complexity_check() and decompose_story() functions",
+      "parse_json_response() for structured output"
+    ],
+    "references": [
+      "/Users/jialiang.wu/Documents/Projects/benchmark-tasks/ANALYSIS.md",
+      "/Users/jialiang.wu/Documents/Projects/agent-zero",
+      "https://github.com/modelcontextprotocol/python-sdk",
+      "https://github.com/BerriAI/litellm"
+    ],
+    "constraints": [
+      "Vendor libraries as dependencies (pip install, not code copying)",
+      "Feature flags for all new capabilities (ENABLE_MCP, ENABLE_MULTI_PROVIDER, ENABLE_DELEGATION)",
+      "MAX_DELEGATION_DEPTH=2 hard limit (prevent runaway context)",
+      "MAX_CONTEXT_PER_AGENT=100k tokens",
+      "Cycle detection mandatory (prevent A→B→A loops)",
+      "All features disabled by default for safety",
+      "Backward compatible with Phase 1",
+      "Comprehensive testing for integration points"
+    ]
+  },
+  "userStories": [
+    {
+      "id": "US-005",
+      "title": "Integrate MCP (Model Context Protocol)",
+      "description": "Add MCP support to enable community tool ecosystem. Vendor mcp library and create bridge to claude-loop skills system. Allow dynamic tool loading from MCP servers for database, filesystem, API, and cloud service access.",
+      "acceptanceCriteria": [
+        "Add mcp==1.13.1 to requirements.txt and install via pip",
+        "Configuration file: .claude-loop/mcp-config.json lists MCP server endpoints: [{name, endpoint, auth_type, enabled, tools_whitelist}]",
+        "MCP client initialization: connect to configured servers on startup",
+        "MCP tools discoverable: ./claude-loop.sh --list-mcp-tools shows available tools from all servers",
+        "MCP tools callable from prompts via skill syntax: [use-mcp:server/tool_name:params]",
+        "Bridge layer: mcp_bridge() function translates MCP tool calls to/from Claude format",
+        "Tool responses integrated into context with proper formatting",
+        "Error handling: graceful fallback if MCP server unavailable, log warning, continue without tool",
+        "Security: validate MCP tool schemas before execution, enforce tools_whitelist",
+        "Example MCP integrations configured: filesystem (read-only), sqlite (read-only), web-search",
+        "Feature flag: ENABLE_MCP=false by default, enable with --enable-mcp",
+        "Documentation: docs/features/mcp-integration.md with setup guide, server configuration, security model",
+        "Integration test: tests/mcp_test.sh validates tool discovery, invocation, error handling"
+      ],
+      "priority": 5,
+      "estimatedHours": 20,
+      "dependencies": [],
+      "technicalNotes": {
+        "implementation": "Install mcp library, create .claude-loop/mcp-config.json, implement mcp_init(), mcp_list_tools(), mcp_call_tool() functions. Add [use-mcp:...] parser in prompt processing. Bridge MCP JSON-RPC to claude-loop context.",
+        "security": "Start with read-only tools only (filesystem read, database SELECT). Write operations require explicit user approval or separate whitelist. Validate all tool schemas.",
+        "servers": "Configure example servers: @modelcontextprotocol/server-filesystem (readonly), @modelcontextprotocol/server-sqlite (readonly). Document how to add custom servers.",
+        "reference": "See agent-zero's MCP integration in python/helpers/mcp_client.py. MCP spec: https://spec.modelcontextprotocol.io/"
+      },
+      "passes": false
+    },
+    {
+      "id": "US-006",
+      "title": "Integrate Multi-Provider LLM (LiteLLM)",
+      "description": "Add LiteLLM library for multi-provider support. Enable cost optimization by routing to cheapest appropriate provider based on task complexity. Support OpenAI, Anthropic, Google, DeepSeek, and 100+ providers via unified interface.",
+      "acceptanceCriteria": [
+        "Add litellm to requirements.txt and install via pip",
+        "Configuration: lib/llm_providers.yaml defines providers: [{name, model, cost_per_1k_input, cost_per_1k_output, capabilities: [vision, tools, json_mode], enabled}]",
+        "Provider selection logic: select_provider(complexity, requires_vision, requires_tools) chooses cheapest capable provider",
+        "Fallback chain: if primary provider fails (rate limit, error), try secondary providers in order",
+        "Cost tracking: log actual provider used and cost per iteration to .claude-loop/logs/provider_usage.jsonl",
+        "Cost comparison report: ./claude-loop.sh --cost-report shows savings vs single-provider baseline",
+        "Override per story: PRD can specify preferred_provider or required_capabilities",
+        "Environment variables: OPENAI_API_KEY, ANTHROPIC_API_KEY, GOOGLE_API_KEY, etc.",
+        "Smart routing: simple stories (complexity<3) → Haiku/GPT-4o-mini, complex (complexity>=3) → Sonnet/O1",
+        "Preserve Claude Code CLI as default fallback provider",
+        "Feature flag: ENABLE_MULTI_PROVIDER=false by default, enable with --enable-multi-provider",
+        "Performance: provider selection adds <50ms overhead per iteration",
+        "Documentation: docs/features/multi-provider-llm.md with provider config, cost optimization strategies",
+        "Integration test: tests/multi_provider_test.sh validates routing, fallbacks, cost tracking"
+      ],
+      "priority": 6,
+      "estimatedHours": 18,
+      "dependencies": ["US-005"],
+      "technicalNotes": {
+        "implementation": "Install litellm, create lib/llm_providers.yaml, implement select_provider(), call_llm_provider() functions. Wrap existing LLM calls with provider selection logic. Log usage to provider_usage.jsonl.",
+        "routing": "Complexity thresholds: <3=cheap (Haiku, GPT-4o-mini), 3-5=medium (Sonnet, GPT-4o), >5=powerful (Opus, O1). Vision required → filter to vision-capable. Tools required → filter to tool-capable.",
+        "costTracking": "Track: {timestamp, story_id, iteration, provider, model, input_tokens, output_tokens, cost_usd, complexity}. Aggregate in cost report.",
+        "reference": "LiteLLM docs: https://docs.litellm.ai/. Agent-zero uses litellm in models.py. Estimated 30-50% cost reduction on diverse workloads."
+      },
+      "passes": false
+    },
+    {
+      "id": "US-007",
+      "title": "Implement Bounded Delegation (Max Depth=2)",
+      "description": "Add hierarchical task delegation for complex stories. Agent can delegate subtasks to subordinate agents (max depth=2). Inspired by agent-zero's hierarchy but strictly bounded to prevent context explosion. Enables handling multi-faceted features by breaking into parallel subtasks.",
+      "acceptanceCriteria": [
+        "Delegation syntax in prompts: [delegate:subtask_description:estimated_hours]",
+        "MAX_DELEGATION_DEPTH=2 enforced (configurable in config, hard maximum=3)",
+        "Context budget: MAX_CONTEXT_PER_AGENT=100k tokens enforced",
+        "Cycle detection: prevent agent A → B → A loops, abort with error if cycle detected",
+        "Subordinate agent execution: create child worktree, execute subtask, return results to parent",
+        "Parent context injection: subordinate results summarized and injected into parent context",
+        "Delegation logged: .claude-loop/logs/delegation.jsonl with hierarchy visualization: {timestamp, parent_story, child_story, depth, parent_id, child_id}",
+        "Performance: delegated subtasks can run in parallel (git worktrees)",
+        "Cost tracking: attribute child costs to parent story in cost report",
+        "Feature flag: ENABLE_DELEGATION=false by default (experimental), enable with --enable-delegation",
+        "Clear error messages if depth limit exceeded: 'Delegation depth limit (2) reached. Cannot delegate further.'",
+        "Clear error messages if context limit exceeded: 'Agent context budget (100k tokens) exceeded. Simplify subtask.'",
+        "Example: Story 'Add Authentication' delegates to ['Implement JWT', 'Add Login UI', 'Update Tests'] - 3 parallel subtasks",
+        "Documentation: docs/features/bounded-delegation.md with examples, limits, best practices",
+        "Integration test: tests/delegation_test.sh validates depth limits, cycle detection, parallel execution, cost attribution"
+      ],
+      "priority": 7,
+      "estimatedHours": 24,
+      "dependencies": ["US-006"],
+      "technicalNotes": {
+        "implementation": "Parse [delegate:...] from LLM response. Create child worktree, set DELEGATION_DEPTH=$((parent_depth+1)), execute child story, capture result, inject into parent. Track delegation tree in memory and logs.",
+        "limits": "CRITICAL: Enforce MAX_DELEGATION_DEPTH and MAX_CONTEXT_PER_AGENT strictly. Calculate context size before delegation, abort if would exceed. Depth checked at delegation time.",
+        "parallel": "Use git worktrees for parallel execution. Each subordinate gets isolated workspace. Results merged back to parent after completion.",
+        "reference": "Agent-zero's call_subordinate tool in python/tools/call_subordinate.py. But we bound depth=2 (agent-zero is unbounded).",
+        "risks": "Context explosion, runaway delegation, unclear failure attribution. Mitigate with strict limits, comprehensive logging, clear error messages."
+      },
+      "passes": false
+    },
+    {
+      "id": "US-008",
+      "title": "Comprehensive Integration Testing (Phase 2)",
+      "description": "Create integration test suite for Phase 2 features. Test MCP, multi-provider, delegation individually and in combination. Cover happy paths, error cases, edge cases, and rollback scenarios.",
+      "acceptanceCriteria": [
+        "Test suite: tests/phase2_integration_test.sh covering all Phase 2 features",
+        "MCP tests: tool discovery, invocation, unavailable server, invalid tool, schema validation, whitelist enforcement",
+        "Multi-provider tests: routing logic (complexity-based), fallback chain, cost tracking, provider failures, rate limits",
+        "Delegation tests: depth limit enforcement (depth 0→1→2, abort at 3), context limit enforcement, cycle detection (A→B→A), parallel execution, cost attribution",
+        "Combined tests: MCP + multi-provider, delegation + multi-provider, all features enabled",
+        "Performance tests: overhead of each feature (<5% total), MCP call latency, provider selection speed",
+        "Rollback tests: disable feature flags individually and collectively, verify clean fallback to Phase 1",
+        "Error injection tests: simulate MCP server crash, provider API failure, delegation context overflow",
+        "All tests automated via: make test-phase2",
+        "CI/CD integration: tests run on every PR",
+        "Test coverage report: >90% coverage for new functions",
+        "Documentation: tests/README.md explains test organization and how to run"
+      ],
+      "priority": 8,
+      "estimatedHours": 20,
+      "dependencies": ["US-007"],
+      "technicalNotes": {
+        "implementation": "Use bats-core for bash testing. Mock external dependencies: MCP servers (mock JSON-RPC responses), LLM providers (mock API responses). Test in isolated environment.",
+        "mocking": "Create mock MCP server for testing. Mock litellm responses with fixed costs. Mock git worktree operations for delegation tests.",
+        "coverage": "Critical paths must be tested: delegation depth enforcement, context limit checks, cycle detection, MCP schema validation, provider fallbacks."
+      },
+      "passes": false
+    },
+    {
+      "id": "US-009",
+      "title": "Update Documentation and Migration Guide (Phase 2)",
+      "description": "Comprehensive documentation for Phase 2 features. Update existing docs, create feature-specific guides, write migration guide from Phase 1 to Phase 2.",
+      "acceptanceCriteria": [
+        "README.md: updated overview section with Phase 2 features",
+        "docs/features/mcp-integration.md: MCP setup, server config, tool usage, security model, troubleshooting (2000+ lines)",
+        "docs/features/multi-provider-llm.md: provider config, routing strategies, cost optimization, fallback chains (1500+ lines)",
+        "docs/features/bounded-delegation.md: delegation syntax, limits, best practices, examples, failure modes (2000+ lines)",
+        "docs/MIGRATION_PHASE1_TO_PHASE2.md: step-by-step upgrade guide, breaking changes (if any), feature flag reference",
+        "docs/TROUBLESHOOTING.md: updated with Phase 2 common issues and solutions",
+        "docs/architecture/ARCHITECTURE.md: updated diagram showing MCP, multi-provider, delegation components",
+        "docs/CHANGELOG.md: Phase 2 release notes with features, improvements, breaking changes",
+        "Example configurations: .claude-loop/mcp-config.example.json, lib/llm_providers.example.yaml",
+        "Example PRDs: prds/examples/mcp-usage-example.json, prds/examples/delegation-example.json",
+        "Video/GIF demos: show MCP tool usage, multi-provider routing, delegation in action"
+      ],
+      "priority": 9,
+      "estimatedHours": 16,
+      "dependencies": ["US-008"],
+      "technicalNotes": {
+        "documentation": "Clear, concise, example-driven. Every feature needs: overview, setup, usage, examples, troubleshooting. Assume user has Phase 1 knowledge.",
+        "migration": "Critical: explain how to enable Phase 2 features incrementally. Start with one feature, validate, then add more. Provide rollback steps.",
+        "examples": "Real-world examples: 'Use MCP filesystem to analyze codebase', 'Route simple tasks to Haiku for cost savings', 'Delegate complex feature to 3 subtasks'."
+      },
+      "passes": false
+    },
+    {
+      "id": "US-010",
+      "title": "Phase 2 Feature Validation and Benchmarking",
+      "description": "Validate Phase 2 improvements with real-world usage and benchmark. Test on diverse tasks, measure cost reduction, evaluate delegation effectiveness. Compare Phase 1 vs Phase 2 performance.",
+      "acceptanceCriteria": [
+        "Validation tasks: 10 real tasks from production backlog (5 simple, 3 medium, 2 complex)",
+        "Metrics collected: success rate, cost (USD), time (seconds), quality score (human eval), delegation usage",
+        "Phase 1 baseline: run same tasks with only Phase 1 features enabled",
+        "Phase 2 with MCP: enable MCP, measure improvement",
+        "Phase 2 with multi-provider: enable multi-provider, measure cost reduction",
+        "Phase 2 with delegation: enable delegation for complex tasks, measure success rate improvement",
+        "Cost analysis: compare total cost Phase 1 vs Phase 2, validate 30-50% reduction claim",
+        "Delegation analysis: measure tasks that benefited from delegation, avg subtasks per delegation, depth distribution",
+        "Report: docs/PHASE2_VALIDATION_REPORT.md with metrics, analysis, recommendations",
+        "Decision criteria: Phase 2 achieves >30% improvement (success OR cost OR time) → production ready",
+        "If validation fails: identify weak points, create US-011+ for fixes"
+      ],
+      "priority": 10,
+      "estimatedHours": 16,
+      "dependencies": ["US-009"],
+      "technicalNotes": {
+        "benchmarking": "Use same benchmark infrastructure from benchmark-tasks. Run with feature flags: Phase1 (baseline), Phase2-MCP, Phase2-Multi, Phase2-Delegation, Phase2-All.",
+        "analysis": "Statistical significance: N=3 runs per task. T-test for cost reduction. Chi-square for success rate improvement.",
+        "validation": "Real tasks from claude-loop backlog. Mix of simple (refactoring), medium (features), complex (architectural changes). Human evaluation for quality."
+      },
+      "passes": false
+    }
+  ],
+  "technicalContext": {
+    "phase1Foundation": {
+      "hooks": "Lifecycle extension system in place",
+      "learnings": "JSON-based pattern storage working",
+      "decomposition": "Automatic task breakdown functional",
+      "structuredOutput": "JSON parser replacing sigils"
+    },
+    "newDependencies": {
+      "mcp": "pip install mcp==1.13.1",
+      "litellm": "pip install litellm",
+      "jq": "Already available (used in Phase 1)",
+      "bats": "brew install bats-core (for testing)"
+    },
+    "modificationPoints": [
+      "claude-loop.sh: Add mcp_init(), mcp_call_tool(), select_provider(), call_llm_provider(), delegate_subtask() functions",
+      ".claude-loop/mcp-config.json: New file for MCP server configuration",
+      "lib/llm_providers.yaml: New file for provider configuration",
+      ".claude-loop/logs/: Add provider_usage.jsonl, delegation.jsonl",
+      "prompt.md: Add delegation syntax documentation"
+    ],
+    "integrationPoints": {
+      "mcp_skills": "MCP tools accessible via [use-mcp:...] syntax in prompts",
+      "provider_selection": "Called before every LLM invocation, selects cheapest capable provider",
+      "delegation": "Triggered by [delegate:...] in LLM response, creates child execution"
+    }
+  },
+  "successCriteria": {
+    "functional": [
+      "All 6 user stories (US-005 to US-010) implemented with AC met",
+      "MCP tools accessible and working with 3+ example servers",
+      "Multi-provider routing achieving 30-50% cost reduction",
+      "Bounded delegation handling complex tasks with depth<=2",
+      "All integration tests passing (>95% coverage)",
+      "Documentation complete and clear"
+    ],
+    "validation": [
+      "Phase 2 validation report showing >30% improvement",
+      "Real-world tasks successfully using MCP, multi-provider, delegation",
+      "No regressions from Phase 1",
+      "Feature flags enabling safe rollback",
+      "Team feedback positive on new capabilities"
+    ],
+    "adoption": [
+      "Clear migration path from Phase 1 to Phase 2",
+      "Example configurations and PRDs provided",
+      "Troubleshooting guide comprehensive",
+      "Video demos showing feature usage"
+    ]
+  },
+  "timeline": {
+    "week5-7": "US-005 (MCP Integration) - 20 hours",
+    "week8-10": "US-006 (Multi-Provider LLM) - 18 hours",
+    "week11-12": "US-007 (Bounded Delegation) - 24 hours",
+    "week13": "US-008 (Integration Testing) - 20 hours",
+    "week14": "US-009 (Documentation) - 16 hours",
+    "week15": "US-010 (Validation) - 16 hours",
+    "totalHours": 114,
+    "totalWeeks": 11,
+    "bufferWeeks": 1,
+    "grandTotal": "12 weeks (3 months)"
+  },
+  "rolloutPlan": {
+    "phase": "Tier 2 Library Integration",
+    "prerequisite": "Phase 1 complete and validated",
+    "incrementalRollout": [
+      "Week 5-7: Enable MCP (low risk, high value)",
+      "Week 8-10: Enable multi-provider (medium risk, high cost savings)",
+      "Week 11-12: Enable delegation (high risk, enable for complex tasks only)",
+      "Week 13-15: Testing, docs, validation"
+    ],
+    "decisionPoint": "After US-010 validation, evaluate if Phase 2 delivered expected value (>30% improvement). If yes, promote to production. If no, rollback or iterate.",
+    "rollback": "All features behind flags. Can disable individually: --disable-mcp, --disable-multi-provider, --disable-delegation. Git revert to Phase 1 branch if needed."
+  },
+  "risks": {
+    "high": [
+      {
+        "risk": "Delegation complexity explosion",
+        "mitigation": "Strict MAX_DEPTH=2, MAX_CONTEXT=100k, cycle detection, comprehensive testing"
+      },
+      {
+        "risk": "MCP security vulnerabilities",
+        "mitigation": "Whitelist-only tools, read-only operations first, schema validation, sandboxing"
+      }
+    ],
+    "medium": [
+      {
+        "risk": "Multi-provider API inconsistencies",
+        "mitigation": "LiteLLM abstracts differences, comprehensive fallback chain, extensive testing"
+      },
+      {
+        "risk": "Cost tracking inaccuracies",
+        "mitigation": "Log all provider usage, validate costs against provider APIs, manual audits"
+      }
+    ],
+    "low": [
+      {
+        "risk": "Integration test coverage gaps",
+        "mitigation": "Aim for >90% coverage, manual testing supplement, gradual rollout"
+      }
+    ]
+  }
+}

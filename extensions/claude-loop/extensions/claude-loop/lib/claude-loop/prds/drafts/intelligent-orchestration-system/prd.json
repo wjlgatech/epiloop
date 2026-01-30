@@ -1,0 +1,380 @@
+{
+  "project": "intelligent-orchestration-system",
+  "branchName": "feature/intelligent-orchestration",
+  "description": "Build central intelligent orchestrator with situation diagnosis, automatic routing, accountability, transparency, and benchmark validation. Make orchestration INVISIBLE to users - system auto-detects and routes to right agents/skills/workflows with human-in-the-loop for essential decisions only.",
+  "userStories": [
+    {
+      "id": "US-ORG-001",
+      "title": "Fix Skills Catalog Consistency (Critical Bug)",
+      "description": "As a developer, I need skills-overview.md to only reference implemented skills so that Claude doesn't try to invoke non-existent skills",
+      "acceptanceCriteria": [
+        "Audit lib/skills-overview.md for referenced skills without SKILL.md files",
+        "Remove references to unimplemented skills: test-driven-development, systematic-debugging, verification-before-completion, writing-plans, executing-plans, subagent-driven-development, requesting-code-review, receiving-code-review, using-git-worktrees, finishing-a-development-branch, writing-skills",
+        "Update skills-overview.md to only list 9 implemented skills",
+        "Add TODO section documenting skills to be implemented",
+        "Verify skill-enforcer.sh doesn't reference removed skills",
+        "Test: Claude can load skills-overview.md without errors",
+        "Document: Update in release notes as bug fix"
+      ],
+      "priority": 1,
+      "estimatedComplexity": "simple",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "lib/skills-overview.md",
+        "lib/skill-enforcer.sh",
+        "tests/test_skills_catalog.sh"
+      ]
+    },
+    {
+      "id": "US-ORG-002",
+      "title": "Situation Diagnosis Engine",
+      "description": "As the orchestrator, I need to analyze user requests to understand complexity, domain, operation type, risks, and required capabilities so that I can route to the right components",
+      "acceptanceCriteria": [
+        "Create lib/orchestrator/diagnosis.py with SituationDiagnosis class",
+        "Implement complexity scoring (1-10): word count, keywords, project context",
+        "Implement domain detection: frontend, backend, security, infrastructure, testing, documentation",
+        "Implement operation type classification: creation, modification, debugging, analysis, planning",
+        "Implement risk assessment: security (HIGH/MEDIUM/LOW), breaking_changes, data_loss",
+        "Implement capabilities_needed extraction: list of required skills/agents/workflows",
+        "Return diagnosis as structured JSON with confidence scores",
+        "Tests: 20 test cases covering all complexity levels and domains",
+        "Performance: <100ms diagnosis time for typical requests",
+        "Documentation: docs/architecture/situation-diagnosis.md with examples"
+      ],
+      "priority": 2,
+      "dependencies": ["US-ORG-001"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "lib/orchestrator/__init__.py",
+        "lib/orchestrator/diagnosis.py",
+        "tests/orchestrator/test_diagnosis.py",
+        "docs/architecture/situation-diagnosis.md"
+      ]
+    },
+    {
+      "id": "US-ORG-003",
+      "title": "Decision Engine with Routing Rules",
+      "description": "As the orchestrator, I need a decision engine that routes requests to the right agents/skills/workflows based on diagnosis and rules so that execution is automatic and intelligent",
+      "acceptanceCriteria": [
+        "Create lib/orchestrator/decision_engine.py with DecisionEngine class",
+        "Load routing rules from config/orchestrator-rules.yaml",
+        "Implement skill routing: test-driven-development (creation/modification), brainstorming (complexity >= 5), systematic-debugging (debugging)",
+        "Implement agent routing: security-auditor (security domain OR HIGH risk), code-reviewer (after implementation)",
+        "Implement workflow routing: two-stage-review (always if enabled), tdd-enforcement (if test-driven-development mandatory)",
+        "Support rule priority: mandatory > risk-based > domain-based > sequential",
+        "Return routing decisions with rationale and confidence",
+        "Tests: 30 test cases covering all rule combinations",
+        "Performance: <50ms decision time for typical requests",
+        "Documentation: docs/architecture/decision-engine.md with rule format"
+      ],
+      "priority": 3,
+      "dependencies": ["US-ORG-002"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "lib/orchestrator/decision_engine.py",
+        "config/orchestrator-rules.yaml",
+        "tests/orchestrator/test_decision_engine.py",
+        "docs/architecture/decision-engine.md"
+      ]
+    },
+    {
+      "id": "US-ORG-004",
+      "title": "Accountability Layer with Decision Logging",
+      "description": "As a developer, I need all orchestrator decisions logged with rationale and outcomes so that I can understand why certain agents/skills were chosen and learn from patterns",
+      "acceptanceCriteria": [
+        "Create lib/orchestrator/accountability.py with AccountabilityLogger class",
+        "Log format: timestamp, request_id, user_request, diagnosis, decisions (with rationale/confidence), outcome (success/failure/issues)",
+        "Store logs in .claude-loop/orchestrator-decisions.jsonl (JSON Lines format)",
+        "Implement outcome tracking: link decisions to results (success/failure, time_taken, issues_found)",
+        "Implement learning algorithm: track decision → outcome correlations, update confidence scores",
+        "Implement query interface: get decisions by request_id, time range, success/failure",
+        "Tests: Log 10 decisions, query them, verify format and completeness",
+        "Performance: Logging overhead <10ms per decision",
+        "Documentation: docs/architecture/accountability.md with log format and query examples"
+      ],
+      "priority": 4,
+      "dependencies": ["US-ORG-003"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "lib/orchestrator/accountability.py",
+        ".claude-loop/orchestrator-decisions.jsonl",
+        "tests/orchestrator/test_accountability.py",
+        "docs/architecture/accountability.md"
+      ]
+    },
+    {
+      "id": "US-ORG-005",
+      "title": "Transparency Layer with Explanations",
+      "description": "As a user, I need the orchestrator to explain its decisions (on demand or for essential decisions) so that I understand why certain agents/skills were chosen and can override if needed",
+      "acceptanceCriteria": [
+        "Create lib/orchestrator/transparency.py with TransparencyLayer class",
+        "Implement 4 transparency levels: Silent (no notification), Brief (1-line notification), Detailed (full rationale + alternatives + confidence), Full Audit (complete decision log)",
+        "Level 0 (Silent): Obvious decisions like selecting code-reviewer for code review",
+        "Level 1 (Brief): Automatic significant decisions like 'Using brainstorming skill (complexity: 7/10)'",
+        "Level 2 (Detailed): Essential decisions requiring approval (destructive ops, production, architecture) - show rationale, alternatives, confidence, ask confirmation",
+        "Level 3 (Full Audit): On demand via --explain flag - show complete decision log with all rules evaluated",
+        "Implement --explain flag support in claude-loop.sh",
+        "Tests: Generate explanations at all 4 levels, verify format and completeness",
+        "Documentation: docs/features/orchestrator-transparency.md with examples"
+      ],
+      "priority": 5,
+      "dependencies": ["US-ORG-004"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "lib/orchestrator/transparency.py",
+        "claude-loop.sh",
+        "tests/orchestrator/test_transparency.py",
+        "docs/features/orchestrator-transparency.md"
+      ]
+    },
+    {
+      "id": "US-ORG-006",
+      "title": "Human-in-the-Loop Rules and Approval Gates",
+      "description": "As a user, I need the orchestrator to ask for approval only on essential decisions (destructive ops, production, architecture) while automating routine decisions so that I have control without friction",
+      "acceptanceCriteria": [
+        "Create lib/orchestrator/human_in_loop.py with ApprovalGate class",
+        "Define essential decisions: destructive operations (git force push, rm -rf, data deletion), production deployments, architectural decisions with multiple valid approaches, budget/cost thresholds exceeded",
+        "Define routine decisions (automatic): agent selection, skill invocation, code quality decisions, test execution, file operations (read/write/edit)",
+        "Implement approval gate: detect essential decision → show Detailed transparency (Level 2) → ask for user confirmation [Y/n/explain]",
+        "Support 'explain' option: show Full Audit (Level 3) before asking again",
+        "Log user overrides: track when user says 'no' to recommendations",
+        "Learning from overrides: update confidence scores when user consistently overrides certain decisions",
+        "Tests: 15 test cases for essential vs routine decision classification",
+        "Documentation: docs/features/human-in-the-loop.md with decision classification rules"
+      ],
+      "priority": 6,
+      "dependencies": ["US-ORG-005"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "lib/orchestrator/human_in_loop.py",
+        "tests/orchestrator/test_human_in_loop.py",
+        "docs/features/human-in-the-loop.md"
+      ]
+    },
+    {
+      "id": "US-ORG-007",
+      "title": "Integration Quality Benchmarks",
+      "description": "As a developer, I need integration quality benchmarks to validate that there are no conflicts, all skills are covered, routing is accurate, and decisions are fast",
+      "acceptanceCriteria": [
+        "Create tests/benchmarks/integration_quality.py with IntegrationQualityBenchmark class",
+        "Benchmark 1: No-Conflict Test - scan all skills/agents/workflows, verify no duplicate capabilities (target: 0 conflicts)",
+        "Benchmark 2: Coverage Test - verify every skill in skills-overview.md has SKILL.md implementation (target: 100% coverage)",
+        "Benchmark 3: Routing Accuracy Test - 100 test requests with known correct routing, measure accuracy (target: 95%+)",
+        "Benchmark 4: Decision Latency Test - measure orchestrator decision time for typical requests (target: <100ms)",
+        "Generate benchmark report: JSON format with pass/fail for each test + metrics",
+        "CLI: ./tests/benchmarks/integration_quality.py --report benchmarks/integration-quality-report.json",
+        "Tests: Run benchmarks, verify report format",
+        "Documentation: docs/benchmarks/integration-quality.md with baseline metrics"
+      ],
+      "priority": 7,
+      "dependencies": ["US-ORG-006"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "tests/benchmarks/__init__.py",
+        "tests/benchmarks/integration_quality.py",
+        "tests/benchmarks/test_cases/routing_accuracy.yaml",
+        "docs/benchmarks/integration-quality.md"
+      ]
+    },
+    {
+      "id": "US-ORG-008",
+      "title": "User Experience Benchmarks",
+      "description": "As a developer, I need user experience benchmarks to validate claims like 'setup friction -80%' and measure learning curve and invisible orchestration",
+      "acceptanceCriteria": [
+        "Create tests/benchmarks/user_experience.py with UserExperienceBenchmark class",
+        "Benchmark 1: Setup Friction Test - count steps from git clone to first successful execution (baseline: 5-10, target: 1)",
+        "Benchmark 2: Learning Curve Test - simulate new user completing first task, measure time and errors (baseline: 30 min + errors, target: 5 min + no errors)",
+        "Benchmark 3: Invisible Orchestration Test - simulate user completing task without knowing agent/skill names, measure user actions required (target: minimal)",
+        "Generate before/after comparison: baseline metrics vs. post-orchestrator metrics",
+        "Statistical validation: calculate % improvement with confidence intervals",
+        "CLI: ./tests/benchmarks/user_experience.py --baseline baseline.json --report ux-report.json",
+        "Tests: Run benchmarks, verify statistical significance of improvements",
+        "Documentation: docs/benchmarks/user-experience.md with methodology"
+      ],
+      "priority": 8,
+      "dependencies": ["US-ORG-007"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "tests/benchmarks/user_experience.py",
+        "tests/benchmarks/baselines/ux-baseline.json",
+        "docs/benchmarks/user-experience.md"
+      ]
+    },
+    {
+      "id": "US-ORG-009",
+      "title": "Quality Consistency Benchmarks",
+      "description": "As a developer, I need quality consistency benchmarks to validate that TDD is enforced 100%, brainstorming is triggered correctly, and scope creep is prevented",
+      "acceptanceCriteria": [
+        "Create tests/benchmarks/quality_consistency.py with QualityConsistencyBenchmark class",
+        "Benchmark 1: TDD Enforcement Test - 20 test cases of new feature implementation without failing test, verify blocked 100% (target: 100%)",
+        "Benchmark 2: Brainstorming Trigger Test - 20 test cases with complexity >= 5, verify brainstorming triggered 100% (target: 100%)",
+        "Benchmark 3: Scope Creep Prevention Test - 20 test cases with over-engineering, verify caught by spec compliance review (target: 95%+)",
+        "Benchmark 4: Two-Stage Review Test - verify Stage 1 runs before Stage 2, Stage 2 only if Stage 1 passes (target: 100%)",
+        "Generate enforcement report: percentage of cases where quality rules were enforced",
+        "CLI: ./tests/benchmarks/quality_consistency.py --report quality-report.json",
+        "Tests: Run benchmarks, verify enforcement rates",
+        "Documentation: docs/benchmarks/quality-consistency.md with test cases"
+      ],
+      "priority": 9,
+      "dependencies": ["US-ORG-008"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "tests/benchmarks/quality_consistency.py",
+        "tests/benchmarks/test_cases/tdd_enforcement.yaml",
+        "tests/benchmarks/test_cases/brainstorming_trigger.yaml",
+        "tests/benchmarks/test_cases/scope_creep.yaml",
+        "docs/benchmarks/quality-consistency.md"
+      ]
+    },
+    {
+      "id": "US-ORG-010",
+      "title": "Difficult Task Benchmarks",
+      "description": "As a developer, I need difficult task benchmarks to test the orchestrator on HARD problems (ambiguous requirements, security-critical, multi-domain, large refactoring, emergency debugging)",
+      "acceptanceCriteria": [
+        "Create tests/benchmarks/difficult_tasks.py with DifficultTaskBenchmark class",
+        "Benchmark 1: Ambiguous Requirements - vague request, verify system asks clarifying questions within 3 questions",
+        "Benchmark 2: Security-Critical Task - authentication implementation, verify security-auditor invoked 100%",
+        "Benchmark 3: Multi-Domain Task - full-stack feature, verify correct agents selected for each domain (>90% accuracy)",
+        "Benchmark 4: Large Refactoring - 50+ files, verify efficient orchestration with progress tracking (completion time competitive with manual)",
+        "Benchmark 5: Emergency Debugging - production issue, verify systematic-debugging skill + root cause found within 30 minutes",
+        "Each benchmark has pass/fail criteria + time metrics",
+        "CLI: ./tests/benchmarks/difficult_tasks.py --report difficult-tasks-report.json",
+        "Tests: Run benchmarks, verify pass criteria met",
+        "Documentation: docs/benchmarks/difficult-tasks.md with test scenarios"
+      ],
+      "priority": 10,
+      "dependencies": ["US-ORG-009"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "tests/benchmarks/difficult_tasks.py",
+        "tests/benchmarks/test_cases/ambiguous_requirements.yaml",
+        "tests/benchmarks/test_cases/security_critical.yaml",
+        "tests/benchmarks/test_cases/multi_domain.yaml",
+        "tests/benchmarks/test_cases/large_refactoring.yaml",
+        "tests/benchmarks/test_cases/emergency_debug.yaml",
+        "docs/benchmarks/difficult-tasks.md"
+      ]
+    },
+    {
+      "id": "US-ORG-011",
+      "title": "Continuous Monitoring and Regression Detection",
+      "description": "As a developer, I need continuous monitoring to run benchmarks on every release, track metrics over time, and catch regressions early",
+      "acceptanceCriteria": [
+        "Create tests/benchmarks/continuous_monitor.py with ContinuousMonitor class",
+        "Run all benchmarks (integration quality, UX, quality consistency, difficult tasks) on every release",
+        "Store results in .claude-loop/benchmark-history/ with timestamp",
+        "Generate trend report: metrics over time (last 10 releases)",
+        "Regression detection: flag metrics that drop by >10% compared to previous release",
+        "CI/CD integration: GitHub Actions workflow to run benchmarks on release branches",
+        "Slack/email notifications on regressions",
+        "Dashboard: HTML dashboard showing benchmark trends",
+        "CLI: ./tests/benchmarks/continuous_monitor.py --run-all --report dashboard.html",
+        "Documentation: docs/benchmarks/continuous-monitoring.md with CI/CD setup"
+      ],
+      "priority": 11,
+      "dependencies": ["US-ORG-010"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "tests/benchmarks/continuous_monitor.py",
+        ".github/workflows/benchmark-tests.yml",
+        ".claude-loop/benchmark-history/",
+        "tests/benchmarks/templates/dashboard.html",
+        "docs/benchmarks/continuous-monitoring.md"
+      ]
+    },
+    {
+      "id": "US-ORG-012",
+      "title": "Orchestrator Integration with claude-loop.sh",
+      "description": "As a user, I need the orchestrator integrated into claude-loop.sh so that situation diagnosis, decision-making, accountability, and transparency work automatically on every request",
+      "acceptanceCriteria": [
+        "Integrate orchestrator into claude-loop.sh main loop (after PRD loading, before story execution)",
+        "Call diagnosis engine on user request: python3 lib/orchestrator/diagnosis.py --request \"$user_request\" --prd \"$PRD_FILE\"",
+        "Call decision engine with diagnosis: python3 lib/orchestrator/decision_engine.py --diagnosis diagnosis.json",
+        "Execute routing decisions: invoke skills/agents/workflows in priority order",
+        "Log decisions with accountability layer",
+        "Show transparency based on decision level (Silent/Brief/Detailed/Full Audit)",
+        "Apply human-in-the-loop gates for essential decisions",
+        "Support --explain flag: show Full Audit for any request",
+        "Backward compatibility: existing PRDs work without changes",
+        "Tests: Integration test with 10 test requests, verify orchestrator called correctly",
+        "Documentation: Update docs/architecture/claude-loop-orchestration.md with integration details"
+      ],
+      "priority": 12,
+      "dependencies": ["US-ORG-006"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "claude-loop.sh",
+        "tests/integration/test_orchestrator_integration.sh",
+        "docs/architecture/claude-loop-orchestration.md"
+      ]
+    },
+    {
+      "id": "US-ORG-013",
+      "title": "Orchestrator Configuration and Tuning",
+      "description": "As a developer, I need orchestrator configuration options to tune decision thresholds, transparency levels, and human-in-the-loop rules so that behavior can be customized",
+      "acceptanceCriteria": [
+        "Create config/orchestrator.yaml with configuration options",
+        "Configurable: complexity_threshold_for_brainstorming (default: 5), security_risk_threshold (default: HIGH), decision_latency_target_ms (default: 100)",
+        "Configurable: transparency_default_level (default: Brief), transparency_essential_decisions (default: Detailed)",
+        "Configurable: human_in_loop_essential_decisions (list of decision types requiring approval)",
+        "Configurable: learning_enabled (default: true), confidence_update_rate (default: 0.1)",
+        "Configurable: benchmark_enabled (default: false), benchmark_frequency (default: on_release)",
+        "Load config on orchestrator initialization",
+        "CLI overrides: --complexity-threshold, --transparency-level, --no-learning, --run-benchmarks",
+        "Tests: Verify config loading and CLI overrides",
+        "Documentation: docs/configuration/orchestrator.md with all options explained"
+      ],
+      "priority": 13,
+      "dependencies": ["US-ORG-012"],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "config/orchestrator.yaml",
+        "lib/orchestrator/config.py",
+        "tests/orchestrator/test_config.py",
+        "docs/configuration/orchestrator.md"
+      ]
+    },
+    {
+      "id": "US-ORG-014",
+      "title": "Documentation and Migration Guide",
+      "description": "As a user, I need comprehensive documentation and migration guide to understand the orchestrator, how it works, and how to migrate from manual agent/skill invocation to automatic orchestration",
+      "acceptanceCriteria": [
+        "Create docs/ORCHESTRATOR-GUIDE.md: Overview, architecture, how it works, configuration, troubleshooting",
+        "Create docs/MIGRATION-ORCHESTRATOR.md: Before/after comparison, migration steps, FAQ",
+        "Update README.md: Add Orchestrator section with key benefits and links",
+        "Create docs/examples/orchestrator-examples.md: 10 examples showing automatic routing for different request types",
+        "Create docs/architecture/orchestrator-architecture.md: Technical deep dive with diagrams",
+        "Create docs/troubleshooting/orchestrator.md: Common issues and solutions",
+        "Record demo video: Show orchestrator in action (3-5 minutes)",
+        "Update main documentation index to link to all orchestrator docs",
+        "All documentation reviewed for accuracy and completeness"
+      ],
+      "priority": 14,
+      "dependencies": ["US-ORG-013"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "docs/ORCHESTRATOR-GUIDE.md",
+        "docs/MIGRATION-ORCHESTRATOR.md",
+        "docs/examples/orchestrator-examples.md",
+        "docs/architecture/orchestrator-architecture.md",
+        "docs/troubleshooting/orchestrator.md",
+        "README.md"
+      ]
+    }
+  ],
+  "complexity": 9,
+  "estimatedDuration": "7 weeks"
+}

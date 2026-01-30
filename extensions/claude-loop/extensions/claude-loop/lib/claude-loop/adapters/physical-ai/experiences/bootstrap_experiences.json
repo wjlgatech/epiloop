@@ -1,0 +1,137 @@
+[
+  {
+    "id": "exp-phy-001",
+    "domain": "isaac_sim",
+    "problem_signature": "USD prim not found at path even though it should exist",
+    "solution_approach": "Check for timing issues - prim may not be created yet. Use stage.GetPrimAtPath(path).IsValid() to verify. Also check composition arcs (references, payloads) are loaded. Consider using Sdf.Path for path validation.",
+    "tags": ["usd", "prim", "stage", "composition"],
+    "success_count": 15,
+    "helpful_rate": 0.85
+  },
+  {
+    "id": "exp-phy-002",
+    "domain": "isaac_sim",
+    "problem_signature": "Physics simulation is unstable or exploding",
+    "solution_approach": "1. Check timestep is not too large (try 1/120 or smaller). 2. Verify mass and inertia values are reasonable. 3. Check for overlapping collision geometry. 4. Enable solver position and velocity iterations. 5. Use PhysX Visual Debugger to inspect.",
+    "tags": ["physics", "physx", "simulation", "stability"],
+    "success_count": 22,
+    "helpful_rate": 0.91
+  },
+  {
+    "id": "exp-phy-003",
+    "domain": "ros2",
+    "problem_signature": "ROS2 topic subscriber not receiving messages",
+    "solution_approach": "1. Check QoS compatibility with ros2 topic info -v. 2. Verify topic name spelling. 3. Check namespace remapping. 4. Try BEST_EFFORT reliability for sensors. 5. Ensure publisher is actually publishing (ros2 topic hz).",
+    "tags": ["topic", "subscriber", "qos", "communication"],
+    "success_count": 18,
+    "helpful_rate": 0.88
+  },
+  {
+    "id": "exp-phy-004",
+    "domain": "ros2",
+    "problem_signature": "TF transform lookup fails with timeout",
+    "solution_approach": "1. Check if transform is being published (ros2 run tf2_tools view_frames). 2. Verify frame_id names match exactly. 3. Check timestamp synchronization. 4. Use tf2_buffer.can_transform() before lookup. 5. Increase timeout for simulation time.",
+    "tags": ["tf2", "transform", "coordinate_frame", "lookup"],
+    "success_count": 14,
+    "helpful_rate": 0.82
+  },
+  {
+    "id": "exp-phy-005",
+    "domain": "isaac_sim",
+    "problem_signature": "URDF import fails or produces incorrect results",
+    "solution_approach": "1. Validate URDF first with check_urdf. 2. Check mesh file paths are resolvable. 3. Set merge_fixed_joints based on needs. 4. Check inertial properties are positive definite. 5. Use URDF importer config for scale and axis adjustments.",
+    "tags": ["urdf", "import", "mesh", "inertia"],
+    "success_count": 12,
+    "helpful_rate": 0.79
+  },
+  {
+    "id": "exp-phy-006",
+    "domain": "unity_xr",
+    "problem_signature": "XR tracking lost or drifting",
+    "solution_approach": "1. Check tracking origin mode (Floor vs Device). 2. Verify room-scale setup is complete. 3. Check for reflective surfaces causing tracking issues. 4. Monitor InputDevice.TryGetFeatureValue for tracking state. 5. Implement fallback for tracking loss.",
+    "tags": ["xr", "tracking", "vr", "headset"],
+    "success_count": 10,
+    "helpful_rate": 0.75
+  },
+  {
+    "id": "exp-phy-007",
+    "domain": "unity_xr",
+    "problem_signature": "OpenXR plugin initialization fails",
+    "solution_approach": "1. Check XR Plugin Management is configured. 2. Verify OpenXR loader is selected for platform. 3. Check runtime is installed (SteamVR, Oculus, etc). 4. Enable interaction profiles for target devices. 5. Check Player Settings for XR requirements.",
+    "tags": ["openxr", "plugin", "initialization", "xr"],
+    "success_count": 8,
+    "helpful_rate": 0.72
+  },
+  {
+    "id": "exp-phy-008",
+    "domain": "robotics",
+    "problem_signature": "Robot inverse kinematics solution not found",
+    "solution_approach": "1. Check if target pose is within workspace. 2. Verify joint limits are correctly specified. 3. Try multiple initial configurations. 4. Check for singularities near target. 5. Use numerical IK with proper tolerance settings.",
+    "tags": ["ik", "kinematics", "motion_planning", "workspace"],
+    "success_count": 11,
+    "helpful_rate": 0.78
+  },
+  {
+    "id": "exp-phy-009",
+    "domain": "nvidia_omniverse",
+    "problem_signature": "Extension fails to load or crashes",
+    "solution_approach": "1. Check extension.toml for correct dependencies. 2. Verify Python version compatibility. 3. Check for missing native library dependencies. 4. Review Kit log for detailed error. 5. Try extension reload after fixing issues.",
+    "tags": ["extension", "omniverse", "kit", "dependencies"],
+    "success_count": 9,
+    "helpful_rate": 0.74
+  },
+  {
+    "id": "exp-phy-010",
+    "domain": "isaac_sim",
+    "problem_signature": "Camera sensor returns black or corrupted images",
+    "solution_approach": "1. Ensure simulation is stepped after camera creation. 2. Check render product path is correct. 3. Verify camera has proper near/far clip planes. 4. Check if scene has lighting. 5. Use synchronous rendering for debugging.",
+    "tags": ["camera", "sensor", "rendering", "image"],
+    "success_count": 13,
+    "helpful_rate": 0.83
+  },
+  {
+    "id": "exp-phy-011",
+    "domain": "ros2",
+    "problem_signature": "Service call times out",
+    "solution_approach": "1. Check service is advertised (ros2 service list). 2. Verify service type matches. 3. Check server node is running. 4. Increase client timeout. 5. Check for blocking operations in service callback.",
+    "tags": ["service", "timeout", "client", "server"],
+    "success_count": 7,
+    "helpful_rate": 0.70
+  },
+  {
+    "id": "exp-phy-012",
+    "domain": "isaac_sim",
+    "problem_signature": "Lidar returns empty point cloud",
+    "solution_approach": "1. Check lidar is enabled and sensor is stepped. 2. Verify range settings (min_range, max_range). 3. Check if scene has collidable geometry in range. 4. Verify RTX lidar extension is loaded. 5. Check horizontal/vertical FOV covers scene.",
+    "tags": ["lidar", "sensor", "pointcloud", "rtx"],
+    "success_count": 8,
+    "helpful_rate": 0.76
+  },
+  {
+    "id": "exp-phy-013",
+    "domain": "robotics",
+    "problem_signature": "Gripper fails to grasp objects",
+    "solution_approach": "1. Check friction coefficients on gripper and object. 2. Verify collision geometry is properly configured. 3. Adjust grip force and closing speed. 4. Check contact sensors are working. 5. Consider object mass vs gripper force.",
+    "tags": ["gripper", "grasping", "manipulation", "contact"],
+    "success_count": 6,
+    "helpful_rate": 0.68
+  },
+  {
+    "id": "exp-phy-014",
+    "domain": "nvidia_omniverse",
+    "problem_signature": "USD stage has composition errors",
+    "solution_approach": "1. Check all referenced assets exist at paths. 2. Verify layer offsets and scales. 3. Check for circular references. 4. Use USD Composer to inspect composition arcs. 5. Validate layer stack with omni.usd.resolve_paths.",
+    "tags": ["usd", "composition", "layer", "reference"],
+    "success_count": 10,
+    "helpful_rate": 0.77
+  },
+  {
+    "id": "exp-phy-015",
+    "domain": "unity_xr",
+    "problem_signature": "Controller input not detected",
+    "solution_approach": "1. Verify Input System package is installed. 2. Check XR Interaction Toolkit action maps. 3. Confirm controller is paired/connected. 4. Check interaction profiles in OpenXR settings. 5. Debug with InputDevice.TryGetFeatureValue.",
+    "tags": ["input", "controller", "xr", "interaction"],
+    "success_count": 9,
+    "helpful_rate": 0.73
+  }
+]

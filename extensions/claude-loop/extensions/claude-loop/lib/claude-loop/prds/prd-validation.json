@@ -1,0 +1,69 @@
+{
+  "project": "prd-validation",
+  "branchName": "feature/prd-format-validation",
+  "description": "Add PRD format validation before execution starts. Validate required fields, acceptanceCriteria format, and catch common mistakes early to prevent cryptic jq errors during execution.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Validate PRD structure before execution",
+      "description": "As a user, I want PRD validation to run before execution starts so that I catch format errors early",
+      "acceptanceCriteria": [
+        "Validation runs before first iteration",
+        "Checks for required fields: project, userStories, id, title, priority",
+        "Verifies acceptanceCriteria is array of strings (not objects)",
+        "Validates all story IDs are unique",
+        "Ensures priority values are numbers",
+        "Test with valid and invalid PRDs"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/prd-parser.sh",
+        "lib/prd-manager.py"
+      ],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    },
+    {
+      "id": "US-002",
+      "title": "Provide clear error messages for invalid PRDs",
+      "description": "As a user, I want clear error messages when my PRD is invalid so that I know exactly what to fix",
+      "acceptanceCriteria": [
+        "Each validation error shows specific field and issue",
+        "Provides example of correct format",
+        "Indicates line number if possible",
+        "Uses user-friendly language (not jq syntax errors)",
+        "Test with intentionally malformed PRDs"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/prd-parser.sh"
+      ],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    },
+    {
+      "id": "US-003",
+      "title": "Catch acceptanceCriteria object mistake",
+      "description": "As a user, I want the validator to catch when I accidentally use objects for acceptanceCriteria instead of strings",
+      "acceptanceCriteria": [
+        "Detect when acceptanceCriteria contains objects",
+        "Show clear error: 'acceptanceCriteria must be array of strings, not objects'",
+        "Suggest correct format with example",
+        "Test with PRD that has acceptanceCriteria as objects",
+        "Verify clear error message is shown"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "This was the bug that caused 9/10 failures in original benchmark",
+      "fileScope": [
+        "lib/prd-parser.sh"
+      ],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    }
+  ]
+}

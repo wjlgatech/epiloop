@@ -6,7 +6,7 @@ import {
   GroupPolicySchema,
   MarkdownConfigSchema,
   requireOpenAllowFrom,
-} from "clawdbot/plugin-sdk";
+} from "epiloop/plugin-sdk";
 
 const MattermostAccountSchemaBase = z
   .object({

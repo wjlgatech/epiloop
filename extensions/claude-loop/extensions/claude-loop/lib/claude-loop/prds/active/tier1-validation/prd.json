@@ -1,0 +1,347 @@
+{
+  "project": "tier1-validation",
+  "branchName": "benchmark/tier1-validation",
+  "description": "Tier 1 Quick Validation: Execute 3 real-world benchmark tasks to validate agent-zero vs claude-loop integration ROI",
+  "context": {
+    "background": "After comprehensive analysis of agent-zero and claude-loop architectures, we have 3 competing integration strategies: (A) Pattern Extraction, (B) Selective Integration, (C) Full Integration. Before committing to any approach, we need empirical data from real tasks.",
+    "objectives": [
+      "Execute 3 real tasks from actual TODOs/FIXMEs in both codebases",
+      "Compare baseline (Claude Code), agent-zero, and claude-loop performance",
+      "Collect metrics: success rate, cost, time, acceptance criteria scores",
+      "Provide evidence-based recommendation on integration approach"
+    ],
+    "success_criteria": [
+      "9 successful benchmark executions (3 tasks × 3 subjects)",
+      "Comprehensive metrics collected for all runs",
+      "Statistical analysis with clear recommendation",
+      "Total cost < $50 in API calls"
+    ],
+    "constraints": [
+      "Timeline: 1-2 weeks maximum",
+      "Must use existing benchmark infrastructure in benchmark-tasks/",
+      "No modifications to agent-zero or claude-loop core code (yet)",
+      "Results must be reproducible"
+    ]
+  },
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Implement Baseline Execution Adapter",
+      "description": "As a benchmark operator, I want to execute tasks using raw Claude Code CLI, so that I can establish a baseline for comparison",
+      "acceptanceCriteria": [
+        "baseline execution adapter implemented in benchmark_runner.py",
+        "Can execute all 3 tasks (TASK-001, TASK-002, TASK-003)",
+        "Captures success/failure, token usage, and time metrics",
+        "Validates acceptance criteria automatically",
+        "Handles errors gracefully with clear error messages"
+      ],
+      "priority": 1,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "benchmark-tasks/benchmark_runner.py"
+      ],
+      "technicalNotes": "Claude Code CLI invocation via subprocess. Parse stdout for task completion. Extract metrics from execution logs.",
+      "dependencies": [],
+      "passes": true,
+      "notes": "Implemented BaselineAdapter class in benchmark_runner.py with full metrics capture (success/failure, tokens, time), acceptance criteria validation, and error handling. Created 3 test tasks (TASK-001: token optimization, TASK-002: health check API, TASK-003: job locking). Comprehensive README documentation included. All acceptance criteria met."
+    },
+    {
+      "id": "US-002",
+      "title": "Implement Claude-Loop Execution Adapter",
+      "description": "As a benchmark operator, I want to execute tasks using claude-loop quick mode, so that I can measure claude-loop's performance on real tasks",
+      "acceptanceCriteria": [
+        "claude-loop execution adapter implemented in benchmark_runner.py",
+        "Uses claude-loop quick mode for task execution",
+        "Converts task YAML to natural language prompt",
+        "Captures metrics from claude-loop output",
+        "Validates acceptance criteria using task validation scripts"
+      ],
+      "priority": 1,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "benchmark-tasks/benchmark_runner.py",
+        "claude-loop/lib/quick-task-mode.sh"
+      ],
+      "technicalNotes": "Invoke ./claude-loop.sh quick <description>. Parse execution logs in .claude-loop/quick-tasks/. Extract tokens/cost from monitoring output.",
+      "dependencies": [],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Implement Agent-Zero Execution Adapter",
+      "description": "As a benchmark operator, I want to execute tasks using agent-zero framework, so that I can measure agent-zero's performance and compare with alternatives",
+      "acceptanceCriteria": [
+        "agent-zero execution adapter implemented in benchmark_runner.py",
+        "Handles agent-zero's interactive mode with auto-responses",
+        "Captures metrics from agent-zero logs",
+        "Validates acceptance criteria",
+        "Documents agent-zero setup requirements"
+      ],
+      "priority": 2,
+      "estimatedComplexity": "complex",
+      "fileScope": [
+        "benchmark-tasks/benchmark_runner.py",
+        "agent-zero/initialize.py"
+      ],
+      "technicalNotes": "Agent-zero is interactive. Need to mock user responses or use API mode. May require agent-zero configuration for autonomous execution. Consider using programmatic API instead of CLI.",
+      "dependencies": [],
+      "passes": false,
+      "notes": "Agent-zero integration may be deferred if too complex. Can proceed with baseline + claude-loop comparison only."
+    },
+    {
+      "id": "US-004",
+      "title": "Create Acceptance Criteria Validation Scripts",
+      "description": "As a benchmark operator, I want automated validation of acceptance criteria for each task, so that scoring is objective and reproducible",
+      "acceptanceCriteria": [
+        "Validation scripts created for all 3 tasks",
+        "TASK-001: Validates vision byte removal, token reduction",
+        "TASK-002: Validates API health check functionality, timeout",
+        "TASK-003: Validates no duplicate job executions",
+        "Scripts output clear pass/fail with scores 0.0-1.0",
+        "Scripts can run independently for testing"
+      ],
+      "priority": 1,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "benchmark-tasks/validation/task_001_validator.py",
+        "benchmark-tasks/validation/task_002_validator.py",
+        "benchmark-tasks/validation/task_003_validator.py"
+      ],
+      "technicalNotes": "Each validator reads task output, checks acceptance criteria, returns score. Use pytest for test execution where applicable.",
+      "dependencies": [],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Execute Tier 1 Benchmark Suite",
+      "description": "As a benchmark operator, I want to run all 9 benchmark executions, so that I can collect empirical performance data",
+      "acceptanceCriteria": [
+        "All 9 runs executed (3 tasks × 3 subjects)",
+        "Results saved to benchmark-results/ directory",
+        "Individual JSON files created for each run",
+        "Aggregate report generated (benchmark_report.json)",
+        "Execution logs captured for debugging",
+        "Total API cost < $50"
+      ],
+      "priority": 3,
+      "estimatedComplexity": "simple",
+      "fileScope": [
+        "benchmark-tasks/benchmark_runner.py"
+      ],
+      "technicalNotes": "Run: python3 benchmark_runner.py --real-execution. Monitor for errors. Collect timing and cost metrics.",
+      "dependencies": ["US-001", "US-002", "US-004"],
+      "passes": false,
+      "notes": "US-003 (agent-zero) can be skipped if integration is too complex. Minimum viable: baseline + claude-loop."
+    },
+    {
+      "id": "US-006",
+      "title": "Implement Statistical Analysis",
+      "description": "As a decision maker, I want statistical analysis of benchmark results, so that I can confidently choose an integration strategy",
+      "acceptanceCriteria": [
+        "Statistical analysis script created (analyze_results.py)",
+        "Calculates success rates with confidence intervals",
+        "Compares subjects with t-tests (p-values)",
+        "Effect size calculations (Cohen's d)",
+        "Generates comparison tables and charts",
+        "Clear interpretation of statistical significance"
+      ],
+      "priority": 2,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "benchmark-tasks/analyze_results.py"
+      ],
+      "technicalNotes": "Use scipy.stats for t-tests. Calculate effect sizes. Generate markdown report with tables. Interpret: p<0.05 = significant, d>0.5 = medium effect.",
+      "dependencies": ["US-005"],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Perform Failure Analysis",
+      "description": "As a decision maker, I want to understand why tasks failed, so that I can identify improvement opportunities",
+      "acceptanceCriteria": [
+        "Failure classification taxonomy defined",
+        "All failures categorized (context overflow, tool misuse, etc.)",
+        "Patterns identified across subjects",
+        "Recommendations for each failure category",
+        "Failure analysis report generated"
+      ],
+      "priority": 2,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "benchmark-tasks/analyze_results.py"
+      ],
+      "technicalNotes": "Categorize failures: context_overflow, requirement_misunderstanding, incorrect_code, tool_misuse, timeout, etc. Extract error messages from logs.",
+      "dependencies": ["US-005"],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Generate Decision Recommendation Report",
+      "description": "As a decision maker, I want a clear recommendation on integration strategy, so that I can confidently proceed with the best approach",
+      "acceptanceCriteria": [
+        "Comprehensive report generated (DECISION_REPORT.md)",
+        "Includes benchmark results summary (success, cost, time)",
+        "Statistical significance analysis with interpretation",
+        "Failure mode analysis with patterns",
+        "Clear recommendation: Option A, B, C, or stay current",
+        "Decision threshold logic explained (>20% improvement, etc.)",
+        "Next steps outlined if proceeding"
+      ],
+      "priority": 3,
+      "estimatedComplexity": "simple",
+      "fileScope": [
+        "benchmark-tasks/DECISION_REPORT.md"
+      ],
+      "technicalNotes": "Synthesize all data. Apply decision framework from ANALYSIS.md. Recommend: >20% improvement → Option B, 10-20% → judgment call, <10% → stay current.",
+      "dependencies": ["US-005", "US-006", "US-007"],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Document Benchmark Execution Process",
+      "description": "As a future benchmark operator, I want clear documentation of the benchmark execution process, so that I can reproduce results or run future benchmarks",
+      "acceptanceCriteria": [
+        "EXECUTION_GUIDE.md created with step-by-step instructions",
+        "Prerequisites documented (API keys, setup)",
+        "Troubleshooting section for common issues",
+        "Instructions for re-running benchmark",
+        "Instructions for adding new tasks",
+        "Example outputs and interpretation guide"
+      ],
+      "priority": 2,
+      "estimatedComplexity": "simple",
+      "fileScope": [
+        "benchmark-tasks/EXECUTION_GUIDE.md"
+      ],
+      "technicalNotes": "Document: prerequisites, execution steps, result interpretation, troubleshooting, extending benchmark.",
+      "dependencies": ["US-005"],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Create Presentation Slides for Stakeholders",
+      "description": "As a project lead, I want presentation slides summarizing the benchmark results, so that I can communicate findings to stakeholders",
+      "acceptanceCriteria": [
+        "Presentation deck created (SLIDES.md or PDF)",
+        "Executive summary (1-2 slides)",
+        "Benchmark methodology (2-3 slides)",
+        "Results comparison (charts/tables, 2-3 slides)",
+        "Recommendation (1-2 slides)",
+        "Q&A preparation notes",
+        "Total: 8-12 slides maximum (concise)"
+      ],
+      "priority": 3,
+      "estimatedComplexity": "simple",
+      "fileScope": [
+        "benchmark-tasks/PRESENTATION.md"
+      ],
+      "technicalNotes": "Create markdown slides (marp or similar). Focus on visuals: comparison charts, success rate bars, cost comparison. Keep text minimal.",
+      "dependencies": ["US-008"],
+      "passes": false,
+      "notes": "Optional: Can be deferred if stakeholder presentation not needed immediately."
+    }
+  ],
+  "technicalSpecs": {
+    "architecture": {
+      "overview": "Benchmark runner orchestrates execution across 3 subjects (baseline, agent-zero, claude-loop), collects metrics, and generates analysis reports",
+      "components": [
+        "benchmark_runner.py: Main orchestrator",
+        "validation/*.py: Task-specific validators",
+        "analyze_results.py: Statistical analysis",
+        "Task adapters: baseline_adapter, agent_zero_adapter, claude_loop_adapter"
+      ]
+    },
+    "dataFlow": "Task YAML → Adapter → Execution → Metrics → Validation → Results JSON → Analysis → Report",
+    "integrationPoints": [
+      "Claude Code CLI (baseline)",
+      "claude-loop quick mode (claude-loop adapter)",
+      "agent-zero API or CLI (agent-zero adapter)"
+    ],
+    "metrics": {
+      "collected": [
+        "success (boolean)",
+        "wall_clock_seconds (float)",
+        "total_tokens (int)",
+        "estimated_cost_usd (float)",
+        "criteria_scores (dict: AC_ID → 0.0-1.0)",
+        "error_message (string, if failed)"
+      ],
+      "derived": [
+        "overall_score: weighted average of criteria_scores",
+        "success_rate: successes / total_runs",
+        "avg_cost: mean cost across runs",
+        "avg_time: mean time across runs"
+      ]
+    }
+  },
+  "qualityGates": {
+    "testing": {
+      "unit": "pytest tests/ for validation scripts",
+      "integration": "Manual test run with mock execution",
+      "e2e": "Full benchmark run with 1 task to verify end-to-end flow"
+    },
+    "validation": {
+      "dataIntegrity": "All JSON results parseable and valid schema",
+      "reproducibility": "Same task run twice should produce similar metrics (±10%)",
+      "costControl": "Total benchmark cost < $50 budget"
+    }
+  },
+  "risks": [
+    {
+      "risk": "Agent-zero integration too complex",
+      "mitigation": "Make US-003 optional; proceed with baseline + claude-loop only",
+      "likelihood": "medium",
+      "impact": "low"
+    },
+    {
+      "risk": "Task execution failures prevent data collection",
+      "mitigation": "Capture partial results; re-run failed tasks; lower success expectations",
+      "likelihood": "medium",
+      "impact": "medium"
+    },
+    {
+      "risk": "API cost exceeds budget",
+      "mitigation": "Monitor costs per run; stop if approaching $40; use cheaper models if needed",
+      "likelihood": "low",
+      "impact": "low"
+    },
+    {
+      "risk": "Results inconclusive (no clear winner)",
+      "mitigation": "Acceptable outcome; 'no clear difference' is still valuable data",
+      "likelihood": "medium",
+      "impact": "low"
+    }
+  ],
+  "timeline": {
+    "phase1": {
+      "duration": "Week 1",
+      "stories": ["US-001", "US-002", "US-003", "US-004"],
+      "goal": "All adapters and validators implemented"
+    },
+    "phase2": {
+      "duration": "Week 2 (Days 1-3)",
+      "stories": ["US-005"],
+      "goal": "Benchmark executed, results collected"
+    },
+    "phase3": {
+      "duration": "Week 2 (Days 4-5)",
+      "stories": ["US-006", "US-007", "US-008", "US-009", "US-010"],
+      "goal": "Analysis complete, decision report delivered"
+    }
+  },
+  "deliverables": [
+    "benchmark_runner.py with real execution adapters",
+    "validation/task_*_validator.py (3 validators)",
+    "analyze_results.py (statistical analysis)",
+    "benchmark-results/ (9 JSON files + aggregate report)",
+    "DECISION_REPORT.md (recommendation)",
+    "EXECUTION_GUIDE.md (documentation)",
+    "PRESENTATION.md (optional slides)"
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "project": "claude-loop-v2-parallelization",
+  "branchName": "feature/parallel-execution",
+  "description": "Add parallel execution and cost optimization to claude-loop",
+  "userStories": [
+    {
+      "id": "US-P01",
+      "title": "Extend PRD schema for parallelization",
+      "description": "As a user, I want to specify story dependencies and file scopes so the system can identify parallelization opportunities",
+      "acceptanceCriteria": [
+        "Add 'dependencies' array field to story schema",
+        "Add 'fileScope' array field to story schema",
+        "Add 'estimatedComplexity' field (simple/medium/complex)",
+        "Add 'suggestedModel' field (haiku/sonnet/opus)",
+        "Add top-level 'parallelization' config object",
+        "Update PRD validation to check for circular dependencies",
+        "Backward compatible with existing PRDs (new fields optional)"
+      ],
+      "priority": 1,
+      "dependencies": [],
+      "fileScope": ["lib/prd-parser.sh"],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-P02",
+      "title": "Build dependency graph and execution plan",
+      "description": "As a user, I want claude-loop to automatically identify which stories can run in parallel based on dependencies",
+      "acceptanceCriteria": [
+        "Create lib/dependency-graph.py with graph builder",
+        "Implement topological sort for execution ordering",
+        "Group independent stories into parallel batches",
+        "Detect and report circular dependencies",
+        "Output execution plan showing parallel groups",
+        "Add --show-plan flag to display plan without executing"
+      ],
+      "priority": 2,
+      "dependencies": ["US-P01"],
+      "fileScope": ["lib/dependency-graph.py", "claude-loop.sh"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-P03",
+      "title": "Implement model selector",
+      "description": "As a user, I want claude-loop to automatically select the cheapest appropriate model for each story",
+      "acceptanceCriteria": [
+        "Create lib/model-selector.py with complexity analyzer",
+        "Implement heuristics based on file count, criteria count, keywords",
+        "Support manual override via suggestedModel field",
+        "Add --model-strategy flag (auto/always-opus/always-haiku)",
+        "Log model selection reasoning in verbose mode",
+        "Track model usage and cost savings in metrics"
+      ],
+      "priority": 3,
+      "dependencies": ["US-P01"],
+      "fileScope": ["lib/model-selector.py", "claude-loop.sh"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-P04",
+      "title": "Create worker process isolation",
+      "description": "As a developer, I want each story to execute in an isolated process so parallel execution is safe",
+      "acceptanceCriteria": [
+        "Create lib/worker.sh for single-story execution",
+        "Isolate working directory per worker",
+        "Pass model selection to Claude invocation",
+        "Capture stdout/stderr to worker-specific log files",
+        "Return structured result (success/failure, files changed, tokens used)",
+        "Handle worker timeouts gracefully"
+      ],
+      "priority": 4,
+      "dependencies": ["US-P02", "US-P03"],
+      "fileScope": ["lib/worker.sh"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-P05",
+      "title": "Implement parallel group executor",
+      "description": "As a user, I want independent stories to execute simultaneously to reduce total runtime",
+      "acceptanceCriteria": [
+        "Create lib/parallel.sh with execute_parallel_group function",
+        "Launch workers as background processes",
+        "Wait for all workers in group to complete",
+        "Collect and aggregate results from all workers",
+        "Support --max-workers flag to limit parallelism",
+        "Display parallel execution progress in terminal"
+      ],
+      "priority": 5,
+      "dependencies": ["US-P04"],
+      "fileScope": ["lib/parallel.sh", "claude-loop.sh"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-P06",
+      "title": "Implement merge controller",
+      "description": "As a user, I want parallel workers' git changes to be safely merged without conflicts",
+      "acceptanceCriteria": [
+        "Create lib/merge-controller.py with file locking",
+        "Implement rebase strategy for sequential merging",
+        "Detect file conflicts before parallel execution",
+        "Fall back to sequential for conflicting stories",
+        "Create worker branches for isolation",
+        "Clean up worker branches after successful merge"
+      ],
+      "priority": 6,
+      "dependencies": ["US-P05"],
+      "fileScope": ["lib/merge-controller.py"],
+      "estimatedComplexity": "high",
+      "suggestedModel": "opus",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-P07",
+      "title": "Add file caching layer",
+      "description": "As a user, I want unchanged files to be cached so they don't consume tokens on re-read",
+      "acceptanceCriteria": [
+        "Create lib/context-cache.py with file cache",
+        "Cache file contents with mtime-based invalidation",
+        "Track file hashes for change detection",
+        "Provide get_changed_files() for incremental context",
+        "Add --no-cache flag to disable caching",
+        "Report cache hit rate in metrics"
+      ],
+      "priority": 7,
+      "dependencies": ["US-P04"],
+      "fileScope": ["lib/context-cache.py", "claude-loop.sh"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-P08",
+      "title": "Implement prompt compression",
+      "description": "As a user, I want prompts to include only relevant context to reduce token usage",
+      "acceptanceCriteria": [
+        "Create lib/prompt-compressor.py",
+        "Filter files to story.fileScope only",
+        "Summarize previous iterations instead of full history",
+        "Reference unchanged files by hash (not content)",
+        "Estimate token count before/after compression",
+        "Add --full-context flag to disable compression"
+      ],
+      "priority": 8,
+      "dependencies": ["US-P07"],
+      "fileScope": ["lib/prompt-compressor.py", "prompt.md"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-P09",
+      "title": "Add parallel execution metrics",
+      "description": "As a user, I want to see how much time and money parallelization saved",
+      "acceptanceCriteria": [
+        "Track parallel vs sequential estimated time",
+        "Track model tier usage (haiku/sonnet/opus counts)",
+        "Calculate cost savings vs all-opus baseline",
+        "Report cache hit rate and token savings",
+        "Add parallelization stats to HTML report",
+        "Add /api/parallel-stats endpoint to dashboard"
+      ],
+      "priority": 9,
+      "dependencies": ["US-P05", "US-P08"],
+      "fileScope": ["lib/monitoring.sh", "dashboard/app.py", "lib/report-generator.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

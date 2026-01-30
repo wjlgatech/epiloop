@@ -99,7 +99,7 @@ export async function appendAssistantMessageToSessionTranscript(params: {
     role: "assistant",
     content: [{ type: "text", text: mirrorText }],
     api: "openai-responses",
-    provider: "clawdbot",
+    provider: "epiloop",
     model: "delivery-mirror",
     usage: {
       input: 0,

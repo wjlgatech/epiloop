@@ -81,36 +81,36 @@ vi.mock("./progress.js", () => ({
 
 describe("daemon-cli coverage", () => {
   const originalEnv = {
-    CLAWDBOT_STATE_DIR: process.env.CLAWDBOT_STATE_DIR,
-    CLAWDBOT_CONFIG_PATH: process.env.CLAWDBOT_CONFIG_PATH,
-    CLAWDBOT_GATEWAY_PORT: process.env.CLAWDBOT_GATEWAY_PORT,
-    CLAWDBOT_PROFILE: process.env.CLAWDBOT_PROFILE,
+    EPILOOP_STATE_DIR: process.env.EPILOOP_STATE_DIR,
+    EPILOOP_CONFIG_PATH: process.env.EPILOOP_CONFIG_PATH,
+    EPILOOP_GATEWAY_PORT: process.env.EPILOOP_GATEWAY_PORT,
+    EPILOOP_PROFILE: process.env.EPILOOP_PROFILE,
   };
 
   beforeEach(() => {
-    process.env.CLAWDBOT_STATE_DIR = "/tmp/clawdbot-cli-state";
-    process.env.CLAWDBOT_CONFIG_PATH = "/tmp/clawdbot-cli-state/clawdbot.json";
-    delete process.env.CLAWDBOT_GATEWAY_PORT;
-    delete process.env.CLAWDBOT_PROFILE;
+    process.env.EPILOOP_STATE_DIR = "/tmp/epiloop-cli-state";
+    process.env.EPILOOP_CONFIG_PATH = "/tmp/epiloop-cli-state/epiloop.json";
+    delete process.env.EPILOOP_GATEWAY_PORT;
+    delete process.env.EPILOOP_PROFILE;
     serviceReadCommand.mockResolvedValue(null);
   });
 
   afterEach(() => {
-    if (originalEnv.CLAWDBOT_STATE_DIR !== undefined)
-      process.env.CLAWDBOT_STATE_DIR = originalEnv.CLAWDBOT_STATE_DIR;
-    else delete process.env.CLAWDBOT_STATE_DIR;
+    if (originalEnv.EPILOOP_STATE_DIR !== undefined)
+      process.env.EPILOOP_STATE_DIR = originalEnv.EPILOOP_STATE_DIR;
+    else delete process.env.EPILOOP_STATE_DIR;
 
-    if (originalEnv.CLAWDBOT_CONFIG_PATH !== undefined)
-      process.env.CLAWDBOT_CONFIG_PATH = originalEnv.CLAWDBOT_CONFIG_PATH;
-    else delete process.env.CLAWDBOT_CONFIG_PATH;
+    if (originalEnv.EPILOOP_CONFIG_PATH !== undefined)
+      process.env.EPILOOP_CONFIG_PATH = originalEnv.EPILOOP_CONFIG_PATH;
+    else delete process.env.EPILOOP_CONFIG_PATH;
 
-    if (originalEnv.CLAWDBOT_GATEWAY_PORT !== undefined)
-      process.env.CLAWDBOT_GATEWAY_PORT = originalEnv.CLAWDBOT_GATEWAY_PORT;
-    else delete process.env.CLAWDBOT_GATEWAY_PORT;
+    if (originalEnv.EPILOOP_GATEWAY_PORT !== undefined)
+      process.env.EPILOOP_GATEWAY_PORT = originalEnv.EPILOOP_GATEWAY_PORT;
+    else delete process.env.EPILOOP_GATEWAY_PORT;
 
-    if (originalEnv.CLAWDBOT_PROFILE !== undefined)
-      process.env.CLAWDBOT_PROFILE = originalEnv.CLAWDBOT_PROFILE;
-    else delete process.env.CLAWDBOT_PROFILE;
+    if (originalEnv.EPILOOP_PROFILE !== undefined)
+      process.env.EPILOOP_PROFILE = originalEnv.EPILOOP_PROFILE;
+    else delete process.env.EPILOOP_PROFILE;
   });
 
   it("probes gateway status by default", async () => {
@@ -140,12 +140,12 @@ describe("daemon-cli coverage", () => {
     serviceReadCommand.mockResolvedValueOnce({
       programArguments: ["/bin/node", "cli", "gateway", "--port", "19001"],
       environment: {
-        CLAWDBOT_PROFILE: "dev",
-        CLAWDBOT_STATE_DIR: "/tmp/clawdbot-daemon-state",
-        CLAWDBOT_CONFIG_PATH: "/tmp/clawdbot-daemon-state/clawdbot.json",
-        CLAWDBOT_GATEWAY_PORT: "19001",
+        EPILOOP_PROFILE: "dev",
+        EPILOOP_STATE_DIR: "/tmp/epiloop-daemon-state",
+        EPILOOP_CONFIG_PATH: "/tmp/epiloop-daemon-state/epiloop.json",
+        EPILOOP_GATEWAY_PORT: "19001",
       },
-      sourcePath: "/tmp/com.clawdbot.gateway.plist",
+      sourcePath: "/tmp/com.epiloop.gateway.plist",
     });
 
     const { registerDaemonCli } = await import("./daemon-cli.js");

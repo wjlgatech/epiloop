@@ -1,0 +1,17 @@
+id: INT-001
+title: "Claude-Loop Integration into Epiloop"
+status: active
+priority: high
+created: 2026-01-28T08:30:00Z
+author: Claude Sonnet 4.5
+approvedBy: user
+approvedAt: 2026-01-28T08:35:00Z
+executionMode: parallel
+maxWorkers: 5
+tags:
+  - integration
+  - typescript
+  - ai-agent
+  - autonomous-coding
+complexity: high
+estimatedHours: 120

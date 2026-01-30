@@ -1,0 +1,26 @@
+task_id: PHASE2-TASK-002
+title: Create JSON Logger Utility (Simple)
+description: |
+  Implement a simple JSON logger that writes log entries to a .jsonl file.
+  Each entry should include timestamp, level, message, and optional metadata.
+  Support log rotation based on file size.
+
+acceptance_criteria:
+  - "JSONLogger class implemented with log(), error(), info() methods"
+  - "Logs written to .jsonl format (one JSON object per line)"
+  - "Each entry includes timestamp, level, message, metadata fields"
+  - "File rotation when file exceeds 10MB"
+  - "Unit tests verify logging and rotation"
+
+context:
+  background: "Simple utility creation to test basic class implementation."
+  constraints:
+    - "Use Python standard library only"
+    - "JSONL format (newline-delimited JSON)"
+    - "Thread-safe file writes"
+
+complexity: simple
+estimated_hours: 2
+fileScope:
+  - "lib/json_logger.py"
+  - "tests/test_json_logger.py"

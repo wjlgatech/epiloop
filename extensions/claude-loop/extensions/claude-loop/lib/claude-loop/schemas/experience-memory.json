@@ -1,0 +1,343 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://claude-loop.dev/schemas/experience-memory.json",
+  "title": "Experience Memory Schema",
+  "description": "Schema for Contextual Experience Replay (CER) storage in research-loop",
+  "type": "object",
+  "required": ["version", "experiences"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Schema version",
+      "pattern": "^\\d+\\.\\d+$",
+      "examples": ["1.0"]
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "ISO 8601 timestamp of last update",
+      "format": "date-time"
+    },
+    "experiences": {
+      "type": "array",
+      "description": "Array of stored research experiences",
+      "items": {
+        "$ref": "#/definitions/Experience"
+      }
+    }
+  },
+  "definitions": {
+    "Experience": {
+      "type": "object",
+      "description": "A single research experience record",
+      "required": ["id", "query", "domain", "timestamp"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique experience identifier",
+          "pattern": "^EXP-\\d{8}_\\d{6}-[a-f0-9]{8}$",
+          "examples": ["EXP-20260118_143052-a1b2c3d4"]
+        },
+        "query": {
+          "type": "string",
+          "description": "Original research query",
+          "minLength": 1,
+          "maxLength": 2000,
+          "examples": ["What are the latest advances in transformer architectures?"]
+        },
+        "domain": {
+          "type": "string",
+          "description": "Research domain for context-aware retrieval",
+          "enum": ["ai-ml", "investment", "general", "technical", "academic"],
+          "default": "general"
+        },
+        "sub_questions": {
+          "type": "array",
+          "description": "How the query was decomposed into sub-questions",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            ["What are attention mechanisms?", "What improvements exist over vanilla transformers?"]
+          ]
+        },
+        "findings": {
+          "type": "array",
+          "description": "Research findings with source information",
+          "items": {
+            "$ref": "#/definitions/Finding"
+          }
+        },
+        "synthesis": {
+          "type": "string",
+          "description": "Final synthesized answer/summary",
+          "maxLength": 10000
+        },
+        "confidence": {
+          "type": "integer",
+          "description": "Confidence score for the research (0-100)",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 50
+        },
+        "outcome": {
+          "type": ["string", "null"],
+          "description": "Actual outcome for learning (optional feedback)",
+          "examples": ["User found answer helpful", "Required additional research"]
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO 8601 timestamp when experience was created",
+          "format": "date-time"
+        },
+        "compressed_pattern": {
+          "type": "string",
+          "description": "Compressed learnings from this experience",
+          "examples": ["Domain: ai-ml | Sources: arxiv, github (avg relevance: 0.85) | 5 sub-questions"]
+        },
+        "embedding": {
+          "type": ["array", "null"],
+          "description": "Vector embedding for similarity search (384 dimensions for MiniLM)",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 384,
+          "maxItems": 384
+        },
+        "retrieval_count": {
+          "type": "integer",
+          "description": "Number of times this experience was retrieved",
+          "minimum": 0,
+          "default": 0
+        },
+        "helpful_count": {
+          "type": "integer",
+          "description": "Number of times this experience was marked helpful",
+          "minimum": 0,
+          "default": 0
+        }
+      }
+    },
+    "Finding": {
+      "type": "object",
+      "description": "A single research finding from an agent",
+      "required": ["content"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Finding identifier",
+          "pattern": "^F-\\d{3}$",
+          "examples": ["F-001"]
+        },
+        "content": {
+          "type": "string",
+          "description": "The finding content/text",
+          "minLength": 1
+        },
+        "source_url": {
+          "type": ["string", "null"],
+          "description": "URL of the source",
+          "format": "uri",
+          "examples": ["https://arxiv.org/abs/2301.00000"]
+        },
+        "source_title": {
+          "type": ["string", "null"],
+          "description": "Title of the source document"
+        },
+        "agent": {
+          "type": "string",
+          "description": "Agent that produced this finding",
+          "enum": ["academic-scanner", "technical-diver", "market-analyst", "lead-researcher", "unknown"],
+          "default": "unknown"
+        },
+        "sub_question_id": {
+          "type": ["string", "null"],
+          "description": "ID of the sub-question this finding addresses",
+          "pattern": "^SQ-\\d{3}$"
+        },
+        "timestamp": {
+          "type": ["string", "null"],
+          "description": "ISO 8601 timestamp of the finding",
+          "format": "date-time"
+        },
+        "relevance_score": {
+          "type": "number",
+          "description": "Relevance score (0.0-1.0)",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.5
+        }
+      }
+    },
+    "CompressedPattern": {
+      "type": "object",
+      "description": "Compressed pattern extracted from an experience",
+      "properties": {
+        "experience_id": {
+          "type": "string",
+          "description": "ID of the source experience"
+        },
+        "domain": {
+          "type": "string",
+          "description": "Research domain"
+        },
+        "search_pattern": {
+          "$ref": "#/definitions/SearchStrategyPattern"
+        },
+        "decomposition_pattern": {
+          "$ref": "#/definitions/DecompositionPattern"
+        },
+        "source_patterns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SourceQualityPattern"
+          }
+        },
+        "synthesis_pattern": {
+          "$ref": "#/definitions/SynthesisPattern"
+        },
+        "key_learnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "compressed_text": {
+          "type": "string",
+          "description": "Human-readable compressed representation"
+        }
+      }
+    },
+    "SearchStrategyPattern": {
+      "type": "object",
+      "description": "Pattern describing successful search strategies",
+      "properties": {
+        "type": {
+          "const": "search_strategy"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "source_types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["arxiv", "github", "stackoverflow", "docs", "news", "wiki", "academic", "corporate", "web"]
+          }
+        },
+        "search_terms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "success_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "avg_relevance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "DecompositionPattern": {
+      "type": "object",
+      "description": "Pattern for question decomposition",
+      "properties": {
+        "type": {
+          "const": "decomposition"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "original_type": {
+          "type": "string",
+          "enum": ["technical", "academic", "market", "comparison", "definition", "evaluation", "general"]
+        },
+        "sub_question_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "num_sub_questions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "effectiveness_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "SourceQualityPattern": {
+      "type": "object",
+      "description": "Pattern for source quality assessment",
+      "properties": {
+        "type": {
+          "const": "source_quality"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "source_domain": {
+          "type": "string",
+          "description": "Domain of the source (e.g., arxiv.org)"
+        },
+        "avg_relevance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "frequency": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "typical_content_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SynthesisPattern": {
+      "type": "object",
+      "description": "Pattern for synthesis approach",
+      "properties": {
+        "type": {
+          "const": "synthesis"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "num_sources": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "confidence_achieved": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "gap_types_found": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["coverage", "conflict", "depth", "recency", "perspective"]
+          }
+        },
+        "conflict_resolution_used": {
+          "type": "boolean"
+        },
+        "synthesis_length": {
+          "type": "integer",
+          "description": "Approximate token count"
+        }
+      }
+    }
+  }
+}

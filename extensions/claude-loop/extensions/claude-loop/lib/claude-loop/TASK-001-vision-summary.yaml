@@ -1,0 +1,199 @@
+#========================================================
+# REAL-WORLD BENCHMARK TASK 001
+# Tier: MICRO (Simple Fix)
+# Source: Agent-Zero codebase
+#========================================================
+
+id: TASK-001
+name: "Vision Summary Optimization in History Compression"
+tier: micro
+source_project: agent-zero
+difficulty: 2  # 1-5 scale (1=trivial, 5=expert)
+estimated_time_human_minutes: 20
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Current Issue** (agent-zero/python/helpers/history.py:218):
+  FIXME comment states: "vision bytes are sent to utility LLM, send summary instead"
+
+  **Problem**: When summarizing conversation topics that contain vision/image data,
+  the current implementation sends raw vision bytes to the utility LLM model.
+  This is:
+  1. Inefficient (large payload)
+  2. Expensive (many tokens consumed)
+  3. Unnecessary (utility model doesn't need raw image bytes)
+
+  **Expected Behavior**: Extract text summary from vision messages before
+  sending to utility model for topic summarization.
+
+#--------------------------------------------------------
+# CONTEXT
+#--------------------------------------------------------
+context:
+  file: "agent-zero/python/helpers/history.py"
+  class: "Topic"
+  method: "summarize_messages"
+  lines: 217-226
+
+  related_files:
+    - "agent-zero/python/helpers/files.py"  # Message class
+    - "agent-zero/agent.py"  # call_utility_model usage
+
+  background: |
+    Agent-zero uses hierarchical history compression:
+    Messages → Topics → Bulks
+
+    When compressing messages into a topic summary, the `summarize_messages`
+    method calls the utility LLM. However, if messages contain vision data
+    (images), the current code sends all message content including vision
+    bytes, which bloats the context unnecessarily.
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Vision bytes are not sent to utility model"
+    weight: 0.40
+    validation_method: "code_inspection"
+    validation_script: |
+      grep -n "vision" agent-zero/python/helpers/history.py
+      # Should show handling of vision data before LLM call
+
+  - id: AC2
+    description: "Text summary extracted from vision messages"
+    weight: 0.30
+    validation_method: "unit_test"
+    validation_script: |
+      python -m pytest agent-zero/tests/test_history_vision.py -v
+
+  - id: AC3
+    description: "Existing tests still pass"
+    weight: 0.20
+    validation_method: "regression_test"
+    validation_script: |
+      cd agent-zero && python -m pytest tests/ -v
+
+  - id: AC4
+    description: "Token usage reduced for vision-heavy conversations"
+    weight: 0.10
+    validation_method: "performance_test"
+    validation_script: |
+      # Measure token count before/after for test case with vision
+      python benchmark-tasks/measure_tokens.py TASK-001
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach: |
+    1. In `Topic.summarize_messages()`, detect which messages contain vision data
+    2. For vision messages, extract text summary (e.g., "Image: {description}")
+    3. Create modified message list with summaries instead of raw bytes
+    4. Send modified list to utility model
+
+  example_code: |
+    # Pseudo-code approach
+    msg_txt = []
+    for m in messages:
+        if m.has_vision_data():
+            # Extract text summary, not raw bytes
+            msg_txt.append(f"[Image: {m.get_vision_summary()}]")
+        else:
+            msg_txt.append(m.output_text())
+
+  edge_cases:
+    - "Messages with multiple vision attachments"
+    - "Mixed text and vision in same message"
+    - "Vision data without text description"
+
+#--------------------------------------------------------
+# TEST DATA
+#--------------------------------------------------------
+test_data:
+  input_scenario: |
+    Conversation with 3 messages:
+    1. User: "Here's a screenshot" + [vision_bytes: 50KB]
+    2. Agent: "I see a login form"
+    3. User: "Fix the button alignment"
+
+  expected_behavior: |
+    When summarizing these 3 messages into a topic:
+    - Vision bytes (50KB) should NOT be sent to utility model
+    - Text summary like "[Image: screenshot]" should be sent instead
+    - Resulting topic summary should still be coherent
+
+  success_metrics:
+    - "Token count < 500 (vs >5000 with raw vision bytes)"
+    - "Summary quality unchanged (human evaluation)"
+    - "No errors or exceptions"
+
+#--------------------------------------------------------
+# VALIDATION CHECKLIST
+#--------------------------------------------------------
+validation_checklist:
+  code_quality:
+    - "No hardcoded assumptions about vision format"
+    - "Error handling for missing/corrupted vision data"
+    - "Backwards compatible with non-vision messages"
+    - "Clear comments explaining the optimization"
+
+  testing:
+    - "Unit test for vision message handling"
+    - "Integration test with actual image data"
+    - "Regression test for existing functionality"
+
+  documentation:
+    - "Update FIXME comment to describe solution"
+    - "Add docstring explaining vision handling"
+
+#--------------------------------------------------------
+# BASELINE SOLUTION (Ground Truth)
+#--------------------------------------------------------
+ground_truth_approach: |
+  The correct solution involves:
+  1. Checking message type before extracting text
+  2. For vision messages, use a text placeholder or extract alt text
+  3. Preserve all other message handling logic
+  4. Token savings should be 90-95% for vision-heavy conversations
+
+#--------------------------------------------------------
+# FAILURE MODES TO AVOID
+#--------------------------------------------------------
+common_mistakes:
+  - mistake: "Removing vision data entirely from history"
+    why_wrong: "Vision context is still needed, just not for utility LLM calls"
+
+  - mistake: "Adding complex vision-to-text conversion"
+    why_wrong: "Over-engineering; simple placeholder is sufficient"
+
+  - mistake: "Breaking non-vision message handling"
+    why_wrong: "Must maintain backwards compatibility"
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ No vision bytes sent to utility model (verifiable in logs)
+  2. ✓ Token usage reduced by >80% for vision messages
+  3. ✓ All existing tests pass
+  4. ✓ New test added for vision message handling
+  5. ✓ Code is clean, documented, and maintainable
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["performance", "optimization", "vision", "memory"]
+  related_issues: []
+  created_by: "benchmark-task-generator"
+  created_at: "2026-01-19"
+  estimated_impact: "medium"  # Cost savings for vision-heavy usage
+  complexity_signals:
+    - "Single file modification"
+    - "Clear problem statement"
+    - "Existing FIXME provides direction"
+    - "Minimal dependencies"

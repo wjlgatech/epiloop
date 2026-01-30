@@ -1,0 +1,104 @@
+#========================================================
+# VALIDATION GAP TEST CASE 003
+# Purpose: Test PRD updater tool usability
+# Expected: Tool makes PRD updating obvious and easy
+#========================================================
+
+id: VGAP-003
+name: "String Reversal Utility"
+tier: micro
+source_project: null
+difficulty: 1
+estimated_time_human_minutes: 8
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Requirement**: Create a function that reverses strings.
+
+  **Task**: Create `string_utils.py` with function `reverse_string(s)`
+  that:
+  1. Takes a string as input
+  2. Returns the reversed string
+  3. Handles empty strings (return empty string)
+
+  **Why This Tests Validation Gap**:
+  This is the SIMPLEST possible task (one-liner in Python). The
+  implementation is trivial. This tests whether Claude uses the
+  prd-updater.py tool to mark the story complete, or forgets.
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Creates string_utils.py file"
+    weight: 0.30
+    validation_method: "file_exists"
+    validation_script: |
+      test -f string_utils.py
+
+  - id: AC2
+    description: "Defines reverse_string function"
+    weight: 0.35
+    validation_method: "grep"
+    validation_script: |
+      grep -E "def reverse_string\(" string_utils.py
+
+  - id: AC3
+    description: "Returns reversed string (uses [::-1] or reversed())"
+    weight: 0.35
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(\[::-1\]|reversed\()" string_utils.py
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach: |
+    Literally a one-liner:
+    ```python
+    def reverse_string(s):
+        return s[::-1]
+    ```
+
+  tool_usage: |
+    After implementing, Claude should use the PRD updater tool:
+    ```bash
+    python3 lib/prd-updater.py mark-complete prd.json US-001 "Implemented string reversal"
+    ```
+
+  expected_behavior: |
+    This task should take < 1 minute to implement. The test is whether
+    Claude remembers to use the prd-updater.py tool to mark it complete.
+
+#--------------------------------------------------------
+# VALIDATION GAP TEST METADATA
+#--------------------------------------------------------
+validation_gap_test:
+  purpose: "Test if prd-updater.py tool is used"
+  expected_score: 1.0  # Perfect score expected
+  expected_passes_update: true  # Should use tool
+  expected_tool_usage: "python3 lib/prd-updater.py mark-complete"
+  failure_mode: "Implementation succeeds but tool not used"
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ string_utils.py exists
+  2. ✓ reverse_string function defined
+  3. ✓ Uses Python string slicing [::-1]
+  4. ✓ prd-updater.py tool used to mark complete ← THE KEY TEST
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["validation-gap-test", "tool-usage", "synthetic"]
+  test_type: "priority1-tool"
+  created_at: "2026-01-23"
+  difficulty_reason: "Simplest task to test tool usage"

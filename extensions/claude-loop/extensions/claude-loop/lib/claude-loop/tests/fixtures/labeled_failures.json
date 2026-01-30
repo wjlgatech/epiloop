@@ -1,0 +1,553 @@
+{
+  "description": "Manually labeled test cases for failure classification validation",
+  "version": "1.0",
+  "created": "2026-01-11",
+  "test_cases": [
+    {
+      "id": "TC-001",
+      "ground_truth": "SUCCESS",
+      "log_entry": {
+        "story_id": "TEST-001",
+        "story_title": "Test Success Case",
+        "timestamp_start": "2026-01-11T10:00:00Z",
+        "timestamp_end": "2026-01-11T10:00:05Z",
+        "duration_ms": 5000,
+        "status": "success",
+        "exit_code": 0,
+        "error_type": "",
+        "error_message": "",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "Write", "status": "completed"}
+        ],
+        "tools_used": ["Write"],
+        "file_types": ["py"],
+        "context": {}
+      }
+    },
+    {
+      "id": "TC-002",
+      "ground_truth": "SUCCESS",
+      "log_entry": {
+        "story_id": "TEST-002",
+        "story_title": "Another Success",
+        "timestamp_start": "2026-01-11T10:05:00Z",
+        "timestamp_end": "2026-01-11T10:05:03Z",
+        "duration_ms": 3000,
+        "status": "success",
+        "exit_code": 0,
+        "error_type": "",
+        "error_message": "",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "Edit", "status": "completed"}
+        ],
+        "tools_used": ["Edit", "Bash"],
+        "file_types": ["js"],
+        "context": {}
+      }
+    },
+    {
+      "id": "TC-003",
+      "ground_truth": "TRANSIENT_ERROR",
+      "log_entry": {
+        "story_id": "TEST-003",
+        "story_title": "Network Timeout",
+        "timestamp_start": "2026-01-11T10:10:00Z",
+        "timestamp_end": "2026-01-11T10:10:35Z",
+        "duration_ms": 35000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "timeout",
+        "error_message": "Request timed out after 30 seconds",
+        "retry_count": 2,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "Bash", "status": "timeout", "error": "timeout"}
+        ],
+        "tools_used": ["Bash"],
+        "file_types": [],
+        "context": {"command": "curl"}
+      }
+    },
+    {
+      "id": "TC-004",
+      "ground_truth": "TRANSIENT_ERROR",
+      "log_entry": {
+        "story_id": "TEST-004",
+        "story_title": "Connection Refused",
+        "timestamp_start": "2026-01-11T10:15:00Z",
+        "timestamp_end": "2026-01-11T10:15:02Z",
+        "duration_ms": 2000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "network",
+        "error_message": "Connection refused on port 8080",
+        "retry_count": 1,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "Bash", "status": "error"}
+        ],
+        "tools_used": ["Bash"],
+        "file_types": [],
+        "context": {"network": "api_call"}
+      }
+    },
+    {
+      "id": "TC-005",
+      "ground_truth": "TRANSIENT_ERROR",
+      "log_entry": {
+        "story_id": "TEST-005",
+        "story_title": "Rate Limit Hit",
+        "timestamp_start": "2026-01-11T10:20:00Z",
+        "timestamp_end": "2026-01-11T10:20:01Z",
+        "duration_ms": 1000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "network",
+        "error_message": "Rate limit exceeded. Please retry after 60 seconds",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "WebSearch", "status": "error"}
+        ],
+        "tools_used": ["WebSearch"],
+        "file_types": [],
+        "context": {"api": "search"}
+      }
+    },
+    {
+      "id": "TC-006",
+      "ground_truth": "TRANSIENT_ERROR",
+      "log_entry": {
+        "story_id": "TEST-006",
+        "story_title": "Service Unavailable",
+        "timestamp_start": "2026-01-11T10:25:00Z",
+        "timestamp_end": "2026-01-11T10:25:02Z",
+        "duration_ms": 2000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "network",
+        "error_message": "503 Service Temporarily Unavailable",
+        "retry_count": 2,
+        "fallback_count": 1,
+        "attempted_actions": [
+          {"tool": "Bash", "status": "error"}
+        ],
+        "tools_used": ["Bash"],
+        "file_types": [],
+        "context": {"http_response": "503"}
+      }
+    },
+    {
+      "id": "TC-007",
+      "ground_truth": "CAPABILITY_GAP",
+      "log_entry": {
+        "story_id": "TEST-007",
+        "story_title": "UI Element Not Found",
+        "timestamp_start": "2026-01-11T10:30:00Z",
+        "timestamp_end": "2026-01-11T10:30:01Z",
+        "duration_ms": 1000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "not_found",
+        "error_message": "Cannot find button element with text 'Submit' on page",
+        "retry_count": 3,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "computer-use", "status": "error", "action": "click_button"}
+        ],
+        "tools_used": ["computer-use"],
+        "file_types": [],
+        "context": {"ui": "browser", "element": "button"}
+      }
+    },
+    {
+      "id": "TC-008",
+      "ground_truth": "CAPABILITY_GAP",
+      "log_entry": {
+        "story_id": "TEST-008",
+        "story_title": "Screenshot Failed",
+        "timestamp_start": "2026-01-11T10:35:00Z",
+        "timestamp_end": "2026-01-11T10:35:00Z",
+        "duration_ms": 500,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "not_found",
+        "error_message": "Screenshot capture not available in current environment",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "computer-use", "status": "error", "action": "screenshot"}
+        ],
+        "tools_used": ["computer-use"],
+        "file_types": [],
+        "context": {"visual": "screenshot"}
+      }
+    },
+    {
+      "id": "TC-009",
+      "ground_truth": "CAPABILITY_GAP",
+      "log_entry": {
+        "story_id": "TEST-009",
+        "story_title": "Permission Denied",
+        "timestamp_start": "2026-01-11T10:40:00Z",
+        "timestamp_end": "2026-01-11T10:40:00Z",
+        "duration_ms": 200,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "permission",
+        "error_message": "Permission denied: cannot access /etc/system/config.txt",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "Read", "status": "error"}
+        ],
+        "tools_used": ["Read"],
+        "file_types": ["txt"],
+        "context": {"file": "/etc/system/config.txt"}
+      }
+    },
+    {
+      "id": "TC-010",
+      "ground_truth": "CAPABILITY_GAP",
+      "log_entry": {
+        "story_id": "TEST-010",
+        "story_title": "Tool Not Available",
+        "timestamp_start": "2026-01-11T10:45:00Z",
+        "timestamp_end": "2026-01-11T10:45:00Z",
+        "duration_ms": 100,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "not_found",
+        "error_message": "Unknown tool: ImageEditor. Available tools: Read, Write, Edit, Bash",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "ImageEditor", "status": "error"}
+        ],
+        "tools_used": [],
+        "file_types": [],
+        "context": {"tool_request": "ImageEditor"}
+      }
+    },
+    {
+      "id": "TC-011",
+      "ground_truth": "CAPABILITY_GAP",
+      "log_entry": {
+        "story_id": "TEST-011",
+        "story_title": "Repeated UI Failure",
+        "timestamp_start": "2026-01-11T10:50:00Z",
+        "timestamp_end": "2026-01-11T10:50:01Z",
+        "duration_ms": 1000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "not_found",
+        "error_message": "UI element not visible for interaction",
+        "retry_count": 4,
+        "fallback_count": 1,
+        "attempted_actions": [
+          {"tool": "computer-use", "status": "error"}
+        ],
+        "tools_used": ["computer-use"],
+        "file_types": [],
+        "context": {"ui": "dialog", "repeated": true}
+      }
+    },
+    {
+      "id": "TC-012",
+      "ground_truth": "CAPABILITY_GAP",
+      "log_entry": {
+        "story_id": "TEST-012",
+        "story_title": "Unsupported Format",
+        "timestamp_start": "2026-01-11T10:55:00Z",
+        "timestamp_end": "2026-01-11T10:55:00Z",
+        "duration_ms": 300,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "parse",
+        "error_message": "Unsupported file format: .xlsb (Excel Binary Format)",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "Read", "status": "error"}
+        ],
+        "tools_used": ["Read"],
+        "file_types": ["xlsb"],
+        "context": {"file_format": "xlsb"}
+      }
+    },
+    {
+      "id": "TC-013",
+      "ground_truth": "TASK_FAILURE",
+      "log_entry": {
+        "story_id": "TEST-013",
+        "story_title": "Contradictory Requirements",
+        "timestamp_start": "2026-01-11T11:00:00Z",
+        "timestamp_end": "2026-01-11T11:00:02Z",
+        "duration_ms": 2000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "validation",
+        "error_message": "Contradictory requirements: file must be both read-only and writable",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "Write", "status": "error"}
+        ],
+        "tools_used": ["Write"],
+        "file_types": [],
+        "context": {"validation": "contradictory"}
+      }
+    },
+    {
+      "id": "TC-014",
+      "ground_truth": "TASK_FAILURE",
+      "log_entry": {
+        "story_id": "TEST-014",
+        "story_title": "Impossible Requirement",
+        "timestamp_start": "2026-01-11T11:05:00Z",
+        "timestamp_end": "2026-01-11T11:05:01Z",
+        "duration_ms": 1000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "validation",
+        "error_message": "Task requires predicting future data which is impossible without time travel",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [],
+        "tools_used": [],
+        "file_types": [],
+        "context": {"impossible": true}
+      }
+    },
+    {
+      "id": "TC-015",
+      "ground_truth": "TASK_FAILURE",
+      "log_entry": {
+        "story_id": "TEST-015",
+        "story_title": "Circular Dependency",
+        "timestamp_start": "2026-01-11T11:10:00Z",
+        "timestamp_end": "2026-01-11T11:10:03Z",
+        "duration_ms": 3000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "validation",
+        "error_message": "Circular dependency detected: A depends on B, B depends on C, C depends on A",
+        "retry_count": 1,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "Edit", "status": "error"}
+        ],
+        "tools_used": ["Edit"],
+        "file_types": ["py"],
+        "context": {"circular_dependency": true}
+      }
+    },
+    {
+      "id": "TC-016",
+      "ground_truth": "TASK_FAILURE",
+      "log_entry": {
+        "story_id": "TEST-016",
+        "story_title": "Ambiguous Spec",
+        "timestamp_start": "2026-01-11T11:15:00Z",
+        "timestamp_end": "2026-01-11T11:15:02Z",
+        "duration_ms": 2000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "validation",
+        "error_message": "Ambiguous requirement: 'sort items' without specifying order or criteria",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [],
+        "tools_used": [],
+        "file_types": [],
+        "context": {"ambiguous": true}
+      }
+    },
+    {
+      "id": "TC-017",
+      "ground_truth": "CAPABILITY_GAP",
+      "log_entry": {
+        "story_id": "TEST-017",
+        "story_title": "Parse Error After Multiple Failures",
+        "timestamp_start": "2026-01-11T11:20:00Z",
+        "timestamp_end": "2026-01-11T11:20:01Z",
+        "duration_ms": 1000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "parse",
+        "error_message": "Cannot parse YAML with custom anchors",
+        "retry_count": 3,
+        "fallback_count": 1,
+        "attempted_actions": [
+          {"tool": "Read", "status": "error"}
+        ],
+        "tools_used": ["Read"],
+        "file_types": ["yaml"],
+        "context": {"parsing": "yaml", "repeated_failures": 5}
+      }
+    },
+    {
+      "id": "TC-018",
+      "ground_truth": "TRANSIENT_ERROR",
+      "log_entry": {
+        "story_id": "TEST-018",
+        "story_title": "DNS Failure",
+        "timestamp_start": "2026-01-11T11:25:00Z",
+        "timestamp_end": "2026-01-11T11:25:05Z",
+        "duration_ms": 5000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "network",
+        "error_message": "DNS lookup failed for api.example.com",
+        "retry_count": 1,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "Bash", "status": "error"}
+        ],
+        "tools_used": ["Bash"],
+        "file_types": [],
+        "context": {"dns": "lookup_failed"}
+      }
+    },
+    {
+      "id": "TC-019",
+      "ground_truth": "CAPABILITY_GAP",
+      "log_entry": {
+        "story_id": "TEST-019",
+        "story_title": "Missing MCP Server",
+        "timestamp_start": "2026-01-11T11:30:00Z",
+        "timestamp_end": "2026-01-11T11:30:00Z",
+        "duration_ms": 100,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "not_found",
+        "error_message": "MCP server 'database-tools' not found. Available servers: filesystem, browser",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "mcp__database-tools__query", "status": "error"}
+        ],
+        "tools_used": [],
+        "file_types": [],
+        "context": {"mcp_server": "database-tools"}
+      }
+    },
+    {
+      "id": "TC-020",
+      "ground_truth": "CAPABILITY_GAP",
+      "log_entry": {
+        "story_id": "TEST-020",
+        "story_title": "Cannot Click Element",
+        "timestamp_start": "2026-01-11T11:35:00Z",
+        "timestamp_end": "2026-01-11T11:35:01Z",
+        "duration_ms": 1000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "not_found",
+        "error_message": "Cannot click element: button is not clickable at coordinates (100, 200)",
+        "retry_count": 2,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "computer-use", "status": "error", "action": "click"}
+        ],
+        "tools_used": ["computer-use"],
+        "file_types": [],
+        "context": {"ui": "button", "click": "failed"}
+      }
+    },
+    {
+      "id": "TC-021",
+      "ground_truth": "TRANSIENT_ERROR",
+      "log_entry": {
+        "story_id": "TEST-021",
+        "story_title": "Throttling Error",
+        "timestamp_start": "2026-01-11T11:40:00Z",
+        "timestamp_end": "2026-01-11T11:40:01Z",
+        "duration_ms": 1000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "network",
+        "error_message": "API throttling in effect. Please slow down your requests",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "WebSearch", "status": "error"}
+        ],
+        "tools_used": ["WebSearch"],
+        "file_types": [],
+        "context": {"throttling": true}
+      }
+    },
+    {
+      "id": "TC-022",
+      "ground_truth": "TASK_FAILURE",
+      "log_entry": {
+        "story_id": "TEST-022",
+        "story_title": "Incompatible Constraints",
+        "timestamp_start": "2026-01-11T11:45:00Z",
+        "timestamp_end": "2026-01-11T11:45:01Z",
+        "duration_ms": 1000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "validation",
+        "error_message": "Incompatible constraints: must support Python 2.7 and use async/await syntax",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [],
+        "tools_used": [],
+        "file_types": [],
+        "context": {"incompatible": true}
+      }
+    },
+    {
+      "id": "TC-023",
+      "ground_truth": "CAPABILITY_GAP",
+      "log_entry": {
+        "story_id": "TEST-023",
+        "story_title": "Automation Not Responding",
+        "timestamp_start": "2026-01-11T11:50:00Z",
+        "timestamp_end": "2026-01-11T11:50:02Z",
+        "duration_ms": 2000,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "not_found",
+        "error_message": "UI automation not responding for Unity Editor controls",
+        "retry_count": 3,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "computer-use", "status": "error"}
+        ],
+        "tools_used": ["computer-use"],
+        "file_types": [],
+        "context": {"ui": "unity_editor", "automation_failed": true}
+      }
+    },
+    {
+      "id": "TC-024",
+      "ground_truth": "CAPABILITY_GAP",
+      "log_entry": {
+        "story_id": "TEST-024",
+        "story_title": "Missing Handler",
+        "timestamp_start": "2026-01-11T11:55:00Z",
+        "timestamp_end": "2026-01-11T11:55:00Z",
+        "duration_ms": 200,
+        "status": "failure",
+        "exit_code": 1,
+        "error_type": "not_found",
+        "error_message": "No handler registered for .proto files",
+        "retry_count": 0,
+        "fallback_count": 0,
+        "attempted_actions": [
+          {"tool": "Read", "status": "error"}
+        ],
+        "tools_used": ["Read"],
+        "file_types": ["proto"],
+        "context": {"missing_handler": "proto"}
+      }
+    }
+  ]
+}

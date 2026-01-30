@@ -1,0 +1,279 @@
+{
+  "project": "multi-llm-support",
+  "branchName": "feature/multi-llm",
+  "description": "Extend claude-loop to support multiple LLM providers (GPT-4o, Gemini 2.0, DeepSeek) as reviewers, specialized workers, and full replacement options with VLM capabilities for Physical AI and code analysis",
+  "userStories": [
+    {
+      "id": "LLM-001",
+      "title": "Provider Configuration System",
+      "description": "Create unified configuration system for managing multiple LLM provider credentials and settings",
+      "acceptanceCriteria": [
+        "Create lib/llm-config.py with ProviderConfig dataclass",
+        "Support API keys via environment variables (OPENAI_API_KEY, GOOGLE_API_KEY, DEEPSEEK_API_KEY)",
+        "Support API keys via config file (~/.claude-loop/providers.yaml)",
+        "Add provider-specific settings: model name, base URL, timeout, max tokens",
+        "Add cost tracking fields: input_cost_per_1k, output_cost_per_1k",
+        "CLI command: llm-config list, llm-config test <provider>",
+        "Validate API keys on startup with lightweight test call",
+        "Include unit tests for config loading and validation"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented as lib/llm_config.py (ef88228)"
+    },
+    {
+      "id": "LLM-002",
+      "title": "Provider Abstraction Layer",
+      "description": "Create unified interface for calling different LLM providers",
+      "acceptanceCriteria": [
+        "Create lib/llm-provider.py with abstract LLMProvider base class",
+        "Define common interface: complete(messages, model, temperature, max_tokens)",
+        "Define common interface: complete_with_vision(messages, images, model)",
+        "Handle provider-specific message formats internally",
+        "Return standardized response: {content, model, usage: {input_tokens, output_tokens, cost}}",
+        "Add retry logic with exponential backoff for rate limits",
+        "Add timeout handling with configurable limits",
+        "Include comprehensive unit tests"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Implemented as lib/llm_provider.py (ab41144)"
+    },
+    {
+      "id": "LLM-003",
+      "title": "OpenAI GPT-4o Provider",
+      "description": "Implement OpenAI provider supporting GPT-4o and GPT-4o-mini",
+      "acceptanceCriteria": [
+        "Create lib/providers/openai_provider.py implementing LLMProvider",
+        "Support models: gpt-4o, gpt-4o-mini, o3-mini",
+        "Implement vision support for GPT-4o (base64 and URL images)",
+        "Handle OpenAI-specific error codes and messages",
+        "Support streaming responses (optional)",
+        "Track token usage and cost accurately",
+        "CLI test: llm-provider test openai --prompt 'Hello'",
+        "Include integration tests with mock API"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Implemented as lib/providers/openai_provider.py (2b496f6)"
+    },
+    {
+      "id": "LLM-004",
+      "title": "Google Gemini 2.0 Provider",
+      "description": "Implement Google provider supporting Gemini 2.0 Flash and Pro",
+      "acceptanceCriteria": [
+        "Create lib/providers/gemini_provider.py implementing LLMProvider",
+        "Support models: gemini-2.0-flash, gemini-2.0-pro, gemini-2.0-flash-thinking",
+        "Implement vision support (images and video frames)",
+        "Handle Google-specific safety settings and filters",
+        "Support grounding with Google Search (optional)",
+        "Track token usage and cost accurately",
+        "CLI test: llm-provider test gemini --prompt 'Hello'",
+        "Include integration tests with mock API"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Implemented as lib/providers/gemini_provider.py (ad5336e)"
+    },
+    {
+      "id": "LLM-005",
+      "title": "DeepSeek Provider",
+      "description": "Implement DeepSeek provider supporting V3 and R1 models",
+      "acceptanceCriteria": [
+        "Create lib/providers/deepseek_provider.py implementing LLMProvider",
+        "Support models: deepseek-chat (V3), deepseek-reasoner (R1)",
+        "Handle DeepSeek-specific reasoning chain output for R1",
+        "Parse and expose chain-of-thought steps when available",
+        "Track token usage and cost accurately (very low cost)",
+        "CLI test: llm-provider test deepseek --prompt 'Hello'",
+        "Include integration tests with mock API"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "Implemented as lib/providers/deepseek_provider.py"
+    },
+    {
+      "id": "LLM-006",
+      "title": "Multi-LLM Review Panel",
+      "description": "Create review panel that gets multiple LLM perspectives on implemented code",
+      "acceptanceCriteria": [
+        "Create lib/review-panel.py with ReviewPanel class",
+        "Accept code diff and story context as input",
+        "Query configured reviewers in parallel (async)",
+        "Each reviewer provides: score (1-10), issues[], suggestions[]",
+        "Aggregate results into ReviewResult with consensus score",
+        "Support configurable reviewer list via --reviewers flag",
+        "Timeout handling: continue if some reviewers fail",
+        "CLI command: review-panel review --diff <file> --context <story>",
+        "Include unit tests for aggregation logic"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "LLM-007",
+      "title": "Review Integration with claude-loop.sh",
+      "description": "Integrate multi-LLM review panel into the main claude-loop workflow",
+      "acceptanceCriteria": [
+        "Add --enable-review flag to claude-loop.sh (default: false)",
+        "Add --reviewers flag to specify which providers (default: all configured)",
+        "Add --review-threshold flag for minimum consensus score (default: 7)",
+        "After each story completion, run review panel on the diff",
+        "If review score < threshold, feed issues back to Claude for fixes",
+        "Maximum 2 review-fix cycles per story to avoid loops",
+        "Log review results to execution log",
+        "Display review summary in progress dashboard"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "LLM-008",
+      "title": "Vision Analysis Module",
+      "description": "Create VLM-powered image analysis for Physical AI and code diagrams",
+      "acceptanceCriteria": [
+        "Create lib/vision-analyzer.py with VisionAnalyzer class",
+        "Support image inputs: file path, base64, URL",
+        "Support video frame extraction (1 fps sampling)",
+        "Analysis modes: 'describe', 'detect_objects', 'analyze_diagram', 'safety_check'",
+        "Use Gemini 2.0 Flash as default (best vision + low cost)",
+        "Fallback to GPT-4o if Gemini unavailable",
+        "Return structured results with bounding boxes when applicable",
+        "CLI command: vision-analyzer analyze <image> --mode <mode>",
+        "Include tests with sample images"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "LLM-009",
+      "title": "Reasoning Task Router",
+      "description": "Route complex reasoning tasks to specialized models (o3, DeepSeek-R1)",
+      "acceptanceCriteria": [
+        "Create lib/reasoning-router.py with ReasoningRouter class",
+        "Detect reasoning-heavy tasks: math, logic, planning, debugging",
+        "Route to DeepSeek-R1 for cost-effective reasoning",
+        "Route to o3-mini for highest quality reasoning (if configured)",
+        "Expose chain-of-thought steps in response",
+        "Integrate with agent selection (prefer reasoning specialists)",
+        "CLI command: reasoning-router analyze <task> --show-cot",
+        "Include tests for task classification"
+      ],
+      "priority": 9,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "LLM-010",
+      "title": "Cost Tracking Dashboard",
+      "description": "Track and display costs across all LLM providers",
+      "acceptanceCriteria": [
+        "Create lib/cost-tracker.py with CostTracker class",
+        "Track per-request: provider, model, input_tokens, output_tokens, cost",
+        "Store in SQLite database (~/.claude-loop/costs.db)",
+        "Aggregate by: day, week, month, provider, model, project",
+        "Set budget alerts: warn at 80%, stop at 100% of limit",
+        "CLI command: cost-tracker report --period week --by provider",
+        "CLI command: cost-tracker set-budget <amount> --period month",
+        "Include charts in terminal (ASCII) or export to JSON"
+      ],
+      "priority": 10,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "LLM-011",
+      "title": "Provider Health Monitor",
+      "description": "Monitor provider availability and performance",
+      "acceptanceCriteria": [
+        "Create lib/provider-health.py with HealthMonitor class",
+        "Track per-provider: latency, success_rate, last_error",
+        "Periodic health checks (configurable interval, default 5 min)",
+        "Automatic failover when provider unhealthy (3+ consecutive failures)",
+        "Recovery detection and automatic restoration",
+        "CLI command: provider-health status",
+        "CLI command: provider-health history <provider>",
+        "Include alert integration (optional webhook)"
+      ],
+      "priority": 11,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "LLM-012",
+      "title": "Lightweight Agent Runtime",
+      "description": "Create minimal agent runtime for non-Claude providers",
+      "acceptanceCriteria": [
+        "Create lib/agent-runtime.py with AgentRuntime class",
+        "Implement tool definitions: read_file, write_file, run_bash, git_command",
+        "Support OpenAI function calling format",
+        "Support Gemini function calling format",
+        "Execute tools safely with sandboxing (same as Claude Code)",
+        "Maximum iterations per task (default: 20)",
+        "Return execution trace for debugging",
+        "CLI command: agent-runtime run --provider <provider> --task <task>"
+      ],
+      "priority": 12,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "LLM-013",
+      "title": "Full Provider Replacement Mode",
+      "description": "Enable running entire claude-loop with non-Claude provider",
+      "acceptanceCriteria": [
+        "Add --provider flag to claude-loop.sh (default: claude)",
+        "When provider != claude, use agent-runtime instead of claude CLI",
+        "Map story implementation to agent-runtime task execution",
+        "Maintain same PRD format and progress tracking",
+        "Support providers: openai, gemini, deepseek",
+        "Log which provider executed each story",
+        "Display provider in progress dashboard",
+        "Add warning that non-Claude providers have reduced capabilities"
+      ],
+      "priority": 13,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "LLM-014",
+      "title": "Provider Benchmarking Tool",
+      "description": "Benchmark different providers on the same tasks",
+      "acceptanceCriteria": [
+        "Create lib/provider-benchmark.py with Benchmarker class",
+        "Run same prompt across all configured providers",
+        "Measure: latency, token usage, cost, output quality (human rating)",
+        "Store results in benchmark database",
+        "Compare providers on: speed, cost, quality trade-offs",
+        "CLI command: provider-benchmark run <prompt> --providers all",
+        "CLI command: provider-benchmark report --task-type <type>",
+        "Export results to CSV/JSON for analysis"
+      ],
+      "priority": 14,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "LLM-015",
+      "title": "Comprehensive Multi-LLM Tests",
+      "description": "Create test suite for all multi-LLM components",
+      "acceptanceCriteria": [
+        "Create tests/test_llm_config.py for configuration",
+        "Create tests/test_llm_providers.py for each provider",
+        "Create tests/test_review_panel.py for review aggregation",
+        "Create tests/test_vision_analyzer.py for VLM features",
+        "Create tests/test_cost_tracker.py for cost tracking",
+        "Create tests/test_agent_runtime.py for tool execution",
+        "Integration test: full review workflow",
+        "Integration test: full replacement mode workflow",
+        "All tests pass with pytest, mock external APIs"
+      ],
+      "priority": 15,
+      "passes": true,
+      "notes": ""
+    }
+  ]
+}

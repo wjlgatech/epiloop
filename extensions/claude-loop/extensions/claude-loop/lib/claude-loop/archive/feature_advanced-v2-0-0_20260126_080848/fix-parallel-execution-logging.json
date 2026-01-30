@@ -1,0 +1,180 @@
+{
+  "project": "fix-parallel-execution-logging",
+  "branchName": "fix/parallel-execution-logging",
+  "description": "Fix coordinator bugs preventing parallel execution, add comprehensive failure logging, and implement learning system to track deficiencies and improve reliability",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Fix Coordinator Unbound Variable Bug",
+      "description": "As a developer, I want the prd-coordinator.sh line 378 'unbound variable: target' bug fixed so that parallel PRD execution doesn't crash",
+      "acceptanceCriteria": [
+        "Fix line 378 in lib/prd-coordinator.sh - ensure target_list variable is always defined before use",
+        "Add proper variable initialization in deregister_prd function",
+        "Add defensive checks for all jq operations that reference variables",
+        "Add unit test that triggers the deregister_prd code path",
+        "Verify parallel mode launches all PRDs without errors",
+        "Add error handling for missing required variables",
+        "Test with 3 PRDs running simultaneously",
+        "Document fix in comments",
+        "No breaking changes to coordinator API"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/prd-coordinator.sh"
+      ],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    },
+    {
+      "id": "US-002",
+      "title": "Comprehensive Process Failure Logging",
+      "description": "As an operator, I want all worker process failures logged with stack traces and context so that I can debug why PRDs silently died",
+      "acceptanceCriteria": [
+        "Create lib/failure_logger.py with FailureLogger class",
+        "Log failures to .claude-loop/failures.jsonl with timestamp, PRD ID, error type, stack trace",
+        "Capture exit codes and signal information when processes die",
+        "Add trap handlers in worker processes to catch SIGTERM, SIGKILL, SIGINT",
+        "Log last 100 lines of stdout/stderr before death",
+        "Include system resource info (memory, CPU) at failure time",
+        "Add failure categorization: bug, resource_exhaustion, timeout, api_error, unknown",
+        "Create failure_report command: ./claude-loop.sh --failures",
+        "Add unit tests for failure logging",
+        "Integration test: kill a worker and verify failure is logged",
+        "Document in docs/troubleshooting/failure-logging.md"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/failure_logger.py",
+        "lib/prd-coordinator.sh",
+        "claude-loop.sh",
+        "tests/test_failure_logger.py",
+        "docs/troubleshooting/failure-logging.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-003",
+      "title": "Worker Health Monitoring",
+      "description": "As a system administrator, I want workers to report health status every 30 seconds so that I can detect hung processes before they silently fail",
+      "acceptanceCriteria": [
+        "Add heartbeat mechanism: workers write to .claude-loop/workers/<id>/heartbeat.json every 30s",
+        "Heartbeat includes: timestamp, current_story, iteration, memory_usage, api_calls_made",
+        "Coordinator checks heartbeats every 60s and marks workers as 'hung' if >2min without update",
+        "Add --health command to show worker health status",
+        "Auto-restart hung workers with checkpoint recovery",
+        "Add worker timeout configuration (default: 2 hours per story)",
+        "Log health events to .claude-loop/health.jsonl",
+        "Unit tests for heartbeat writing and checking",
+        "Integration test: simulate hung worker and verify detection",
+        "Document in docs/features/health-monitoring.md"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/prd-coordinator.sh",
+        "lib/worker.sh",
+        "lib/health_monitor.py",
+        "tests/test_health_monitor.py",
+        "docs/features/health-monitoring.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-004",
+      "title": "Deficiency Learning System",
+      "description": "As claude-loop, I want to automatically learn from failures and deficiencies so that I can avoid repeating mistakes and improve reliability over time",
+      "acceptanceCriteria": [
+        "Create lib/deficiency_tracker.py with DeficiencyTracker class",
+        "Track deficiencies in .claude-loop/deficiencies.jsonl with: type, description, context, frequency, last_seen",
+        "Deficiency types: coordinator_bug, silent_failure, resource_issue, api_failure, logic_error",
+        "Auto-detect patterns: same error 3+ times = recurring deficiency",
+        "Generate improvement suggestions based on deficiency patterns",
+        "Add --deficiencies command to show tracked issues and suggestions",
+        "Auto-create GitHub issues for recurring deficiencies (if gh CLI available)",
+        "Include deficiency context in experience store for future retrievals",
+        "Add remediation tracking: mark deficiency as 'fixed' with commit hash",
+        "Unit tests for deficiency tracking and pattern detection",
+        "Integration test: trigger same failure 3 times, verify pattern detected",
+        "Document in docs/architecture/deficiency-learning.md"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/deficiency_tracker.py",
+        "lib/failure_logger.py",
+        "claude-loop.sh",
+        "tests/test_deficiency_tracker.py",
+        "docs/architecture/deficiency-learning.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-005",
+      "title": "Parallel Execution Retry Logic",
+      "description": "As a user, I want failed PRD workers to automatically retry with exponential backoff so that transient failures don't stop execution",
+      "acceptanceCriteria": [
+        "Add retry configuration in config.yaml: max_retries (default: 3), backoff_multiplier (default: 2)",
+        "Retry workers that fail due to: api_errors, timeouts, resource_exhaustion",
+        "Do NOT retry: logic_errors, test_failures (requires human intervention)",
+        "Exponential backoff: 1min, 2min, 4min between retries",
+        "Preserve checkpoint state across retries (resume from last story)",
+        "Add retry counter to coordinator registry",
+        "Log retry attempts to .claude-loop/retries.jsonl",
+        "Notify user after max retries exceeded",
+        "Add --no-retry flag to disable retry logic",
+        "Unit tests for retry decision logic",
+        "Integration test: simulate API failure, verify retry with backoff",
+        "Document in docs/features/retry-logic.md"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/prd-coordinator.sh",
+        "lib/retry_handler.py",
+        "config.yaml",
+        "tests/test_retry_handler.py",
+        "docs/features/retry-logic.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-006",
+      "title": "Integration Tests and Documentation",
+      "description": "As a maintainer, I want comprehensive integration tests and documentation so that parallel execution is reliable and debuggable",
+      "acceptanceCriteria": [
+        "Create tests/integration/test_parallel_execution.py",
+        "Test: Launch 3 PRDs, verify all complete successfully",
+        "Test: Kill one worker, verify coordinator detects and logs failure",
+        "Test: Simulate API failure, verify retry logic works",
+        "Test: Verify heartbeat monitoring detects hung worker",
+        "Test: Verify deficiency tracking learns from repeated failures",
+        "All integration tests pass with 100% success rate",
+        "Create troubleshooting guide: docs/troubleshooting/parallel-execution.md",
+        "Document common failure scenarios and resolutions",
+        "Add debugging checklist for failures",
+        "Performance benchmarks: 3 PRDs should complete in <2x single PRD time"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "tests/integration/test_parallel_execution.py",
+        "docs/troubleshooting/parallel-execution.md",
+        "docs/features/parallel-execution-improvements.md"
+      ],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    }
+  ]
+}

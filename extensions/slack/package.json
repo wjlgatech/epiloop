@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/slack",
+  "name": "@epiloop/slack",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot Slack channel plugin",
-  "clawdbot": {
+  "description": "Epiloop Slack channel plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ]

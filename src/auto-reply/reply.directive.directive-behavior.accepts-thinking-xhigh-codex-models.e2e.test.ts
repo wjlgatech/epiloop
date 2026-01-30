@@ -39,10 +39,10 @@ async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
     },
     {
       env: {
-        CLAWDBOT_AGENT_DIR: (home) => path.join(home, ".clawdbot", "agent"),
-        PI_CODING_AGENT_DIR: (home) => path.join(home, ".clawdbot", "agent"),
+        EPILOOP_AGENT_DIR: (home) => path.join(home, ".epiloop", "agent"),
+        PI_CODING_AGENT_DIR: (home) => path.join(home, ".epiloop", "agent"),
       },
-      prefix: "clawdbot-reply-",
+      prefix: "epiloop-reply-",
     },
   );
 }

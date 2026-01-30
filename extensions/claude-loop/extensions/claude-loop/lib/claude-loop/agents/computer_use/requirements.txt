@@ -1,0 +1,15 @@
+# Computer Use Module Dependencies
+# Install with: pip install -r requirements.txt
+
+# Browser automation via Playwright
+playwright>=1.40.0
+
+# Screen capture and input simulation (fallback)
+pyautogui>=0.9.54
+
+# Image processing for screenshots
+pillow>=10.0.0
+
+# Optional: Vision API for UI element detection
+# Uncomment if using Claude vision for fallback element detection
+# anthropic>=0.18.0

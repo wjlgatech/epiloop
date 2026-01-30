@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Loop - Progress Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>🔄 Claude Loop Dashboard</h1>
+                    <div class="connection-status" id="connection-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Connecting...</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
+                        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="settings-btn" aria-label="Settings">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Live Execution View -->
+            <section class="section execution-section">
+                <div class="section-header">
+                    <h2>Live Execution</h2>
+                    <div class="control-buttons">
+                        <button class="btn btn-warning" id="pause-btn" disabled>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="6" y="4" width="4" height="16"></rect>
+                                <rect x="14" y="4" width="4" height="16"></rect>
+                            </svg>
+                            Pause
+                        </button>
+                        <button class="btn btn-danger" id="stop-btn" disabled>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            </svg>
+                            Stop
+                        </button>
+                    </div>
+                </div>
+                <div class="execution-status" id="execution-status">
+                    <div class="status-card">
+                        <div class="status-label">Current Story</div>
+                        <div class="status-value" id="current-story">-</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-label">Progress</div>
+                        <div class="status-value" id="progress-percent">0%</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-label">Elapsed Time</div>
+                        <div class="status-value" id="elapsed-time">0s</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-label">Running Cost</div>
+                        <div class="status-value" id="running-cost">$0.00</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Story Grid -->
+            <section class="section stories-section">
+                <div class="section-header">
+                    <h2>Story Status</h2>
+                    <div class="story-legend">
+                        <span class="legend-item"><span class="legend-dot status-complete"></span> Complete</span>
+                        <span class="legend-item"><span class="legend-dot status-in-progress"></span> In Progress</span>
+                        <span class="legend-item"><span class="legend-dot status-pending"></span> Pending</span>
+                    </div>
+                </div>
+                <div class="story-grid" id="story-grid">
+                    <div class="loading">Loading stories...</div>
+                </div>
+            </section>
+
+            <!-- Tabs Section -->
+            <section class="section tabs-section">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="logs">Logs</button>
+                    <button class="tab-btn" data-tab="cost">Cost Tracker</button>
+                    <button class="tab-btn" data-tab="files">File Changes</button>
+                    <button class="tab-btn" data-tab="history">History</button>
+                </div>
+
+                <!-- Logs Tab -->
+                <div class="tab-content active" id="logs-tab">
+                    <div class="logs-header">
+                        <h3>Real-time Logs</h3>
+                        <div class="logs-controls">
+                            <button class="btn btn-sm" id="clear-logs">Clear</button>
+                            <button class="btn btn-sm" id="auto-scroll-toggle">Auto-scroll: ON</button>
+                        </div>
+                    </div>
+                    <div class="logs-viewer" id="logs-viewer">
+                        <div class="log-entry log-info">
+                            <span class="log-timestamp">[00:00:00]</span>
+                            <span class="log-message">Dashboard connected. Waiting for execution data...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cost Tracker Tab -->
+                <div class="tab-content" id="cost-tab">
+                    <div class="cost-header">
+                        <h3>Cost Tracker</h3>
+                        <div class="budget-alert" id="budget-alert" style="display: none;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                <line x1="12" y1="9" x2="12" y2="13"></line>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                            <span id="budget-alert-text">Budget warning</span>
+                        </div>
+                    </div>
+                    <div class="cost-breakdown">
+                        <div class="cost-card">
+                            <div class="cost-label">Total Cost</div>
+                            <div class="cost-value" id="total-cost">$0.00</div>
+                        </div>
+                        <div class="cost-card">
+                            <div class="cost-label">Input Tokens</div>
+                            <div class="cost-value" id="input-tokens">0</div>
+                        </div>
+                        <div class="cost-card">
+                            <div class="cost-label">Output Tokens</div>
+                            <div class="cost-value" id="output-tokens">0</div>
+                        </div>
+                        <div class="cost-card">
+                            <div class="cost-label">Budget Remaining</div>
+                            <div class="cost-value" id="budget-remaining">-</div>
+                        </div>
+                    </div>
+                    <div class="cost-chart">
+                        <h4>Cost by Story</h4>
+                        <div id="cost-by-story"></div>
+                    </div>
+                </div>
+
+                <!-- File Changes Tab -->
+                <div class="tab-content" id="files-tab">
+                    <div class="files-header">
+                        <h3>File Changes</h3>
+                        <div class="file-stats">
+                            <span id="files-modified-count">0 files modified</span>
+                        </div>
+                    </div>
+                    <div class="files-list" id="files-list">
+                        <div class="empty-state">No file changes yet</div>
+                    </div>
+                </div>
+
+                <!-- History Tab -->
+                <div class="tab-content" id="history-tab">
+                    <div class="history-header">
+                        <h3>Execution History</h3>
+                        <button class="btn btn-sm" id="refresh-history">Refresh</button>
+                    </div>
+                    <div class="history-list" id="history-list">
+                        <div class="loading">Loading history...</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Settings Panel -->
+        <div class="settings-panel" id="settings-panel">
+            <div class="settings-header">
+                <h3>Settings</h3>
+                <button class="icon-btn" id="close-settings">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="settings-content">
+                <div class="setting-group">
+                    <label for="refresh-rate">Refresh Rate (seconds)</label>
+                    <input type="number" id="refresh-rate" min="1" max="60" value="2">
+                    <small>How often to update data (1-60 seconds)</small>
+                </div>
+                <div class="setting-group">
+                    <label for="budget-limit">Budget Limit ($)</label>
+                    <input type="number" id="budget-limit" min="0" step="0.01" value="10.00">
+                    <small>Alert when cost exceeds this amount</small>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="notifications-enabled" checked>
+                        Enable Browser Notifications
+                    </label>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="sound-enabled">
+                        Play Sound on Completion
+                    </label>
+                </div>
+                <button class="btn btn-primary" id="save-settings">Save Settings</button>
+            </div>
+        </div>
+
+        <!-- Overlay -->
+        <div class="overlay" id="overlay"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

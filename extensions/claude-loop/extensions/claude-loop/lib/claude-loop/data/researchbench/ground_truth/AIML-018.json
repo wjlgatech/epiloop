@@ -1,0 +1,117 @@
+{
+  "question_id": "AIML-018",
+  "question": "How do neural network interpretability techniques help understand model behavior?",
+  "expert_sources": [
+    {
+      "title": "A Mathematical Framework for Transformer Circuits",
+      "authors": ["Elhage et al."],
+      "venue": "Anthropic 2021",
+      "url": "https://transformer-circuits.pub/2021/framework/index.html",
+      "relevance": "Mechanistic interpretability foundations"
+    },
+    {
+      "title": "Scaling Monosemanticity: Extracting Interpretable Features from Claude 3 Sonnet",
+      "authors": ["Templeton et al."],
+      "venue": "Anthropic 2024",
+      "url": "https://www.anthropic.com/research/mapping-mind-language-model",
+      "relevance": "Large-scale feature extraction from production models"
+    },
+    {
+      "title": "Attention is not Explanation",
+      "authors": ["Jain and Wallace"],
+      "venue": "NAACL 2019",
+      "url": "https://arxiv.org/abs/1902.10186",
+      "relevance": "Limitations of attention as explanation"
+    },
+    {
+      "title": "Toward a Unified Framework for Interpreting Machine-Learning Models",
+      "authors": ["Molnar et al."],
+      "venue": "Nature Machine Intelligence 2020",
+      "url": "https://christophm.github.io/interpretable-ml-book/",
+      "relevance": "Comprehensive interpretability framework"
+    },
+    {
+      "title": "Softmax Linear Units",
+      "authors": ["Elhage et al."],
+      "venue": "Anthropic 2022",
+      "url": "https://transformer-circuits.pub/2022/solu/index.html",
+      "relevance": "Architectures designed for interpretability"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "Mechanistic interpretability seeks to understand models as computational graphs",
+      "importance": "critical",
+      "sources": ["Elhage et al. 2021"]
+    },
+    {
+      "finding": "Attention weights alone are not reliable indicators of feature importance",
+      "importance": "critical",
+      "sources": ["Jain and Wallace 2019"]
+    },
+    {
+      "finding": "Sparse autoencoders can extract interpretable features from neural activations",
+      "importance": "high",
+      "sources": ["Templeton et al. 2024"]
+    },
+    {
+      "finding": "Superposition - models encoding multiple features in single neurons - complicates interpretation",
+      "importance": "high",
+      "sources": ["Elhage et al. 2022"]
+    },
+    {
+      "finding": "Probing classifiers can identify what information is encoded but not how it's used",
+      "importance": "medium",
+      "sources": ["Probing literature"]
+    },
+    {
+      "finding": "Interpretability can inform safety by revealing concerning internal representations",
+      "importance": "high",
+      "sources": ["Anthropic research"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "Interpretability findings may not generalize across models",
+      "validity": "Valid concern, cross-model validation needed",
+      "sources": ["Various replication studies"]
+    },
+    {
+      "argument": "Human-interpretable explanations may be post-hoc rationalizations",
+      "validity": "Partially valid for some methods",
+      "sources": ["Jain and Wallace 2019"]
+    },
+    {
+      "argument": "Complete interpretability may be impossible for large models",
+      "validity": "Open question, partial progress is still valuable",
+      "sources": ["Philosophical discussions"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.75,
+    "areas_of_uncertainty": [
+      "Completeness of mechanistic explanations",
+      "Scaling interpretability to largest models",
+      "Relationship between interpretability and alignment"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "Mechanistic interpretability concept",
+      "Limitations of attention visualization",
+      "At least one concrete technique (probing, SAE, etc.)",
+      "Connection to model understanding"
+    ],
+    "should_include": [
+      "Superposition and polysemanticity",
+      "Feature extraction methods",
+      "Safety applications"
+    ],
+    "bonus_points": [
+      "Specific circuit analysis examples",
+      "Comparison of interpretability approaches",
+      "Recent sparse autoencoder work"
+    ]
+  }
+}

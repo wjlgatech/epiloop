@@ -1,0 +1,136 @@
+#========================================================
+# VALIDATION GAP TEST CASE 004
+# Purpose: Test validation gap under cognitive load
+# Expected: Multiple steps increase forgetting risk
+#========================================================
+
+id: VGAP-004
+name: "Configuration File Parser"
+tier: micro
+source_project: null
+difficulty: 2
+estimated_time_human_minutes: 20
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Requirement**: Parse INI-style configuration files.
+
+  **Task**: Create `config_parser.py` with function `parse_config(filepath)`
+  that:
+  1. Reads an INI file (key=value format)
+  2. Returns a dictionary of key-value pairs
+  3. Strips whitespace from keys and values
+  4. Ignores lines starting with # (comments)
+  5. Handles missing files gracefully (return empty dict)
+
+  **Why This Tests Validation Gap**:
+  This has slightly more complexity (5 requirements vs 3-4 in other tests).
+  More implementation steps = higher cognitive load = higher chance of
+  forgetting to update PRD. Tests if Priority 1 fixes work under load.
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Creates config_parser.py file"
+    weight: 0.15
+    validation_method: "file_exists"
+    validation_script: |
+      test -f config_parser.py
+
+  - id: AC2
+    description: "Defines parse_config function with filepath parameter"
+    weight: 0.15
+    validation_method: "grep"
+    validation_script: |
+      grep -E "def parse_config\(.*filepath.*\)" config_parser.py
+
+  - id: AC3
+    description: "Opens and reads file"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(open\(.*r|readlines|read\(\))" config_parser.py
+
+  - id: AC4
+    description: "Splits on = to parse key-value pairs"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(split.*=|\.split\('='\))" config_parser.py
+
+  - id: AC5
+    description: "Strips whitespace (uses .strip())"
+    weight: 0.15
+    validation_method: "grep"
+    validation_script: |
+      grep -E "\.strip\(\)" config_parser.py
+
+  - id: AC6
+    description: "Ignores comment lines (checks for #)"
+    weight: 0.15
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(startswith.*#|if.*#)" config_parser.py
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach: |
+    Standard INI parsing logic:
+    ```python
+    def parse_config(filepath):
+        config = {}
+        try:
+            with open(filepath, 'r') as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith('#'):
+                        continue
+                    if '=' in line:
+                        key, value = line.split('=', 1)
+                        config[key.strip()] = value.strip()
+        except FileNotFoundError:
+            pass
+        return config
+    ```
+
+  expected_behavior: |
+    Implementation takes ~15-20 minutes. More steps = more cognitive
+    load. Tests whether Priority 1 fixes (prominent reminder, tool,
+    auto-pass) still work when there's more to think about.
+
+#--------------------------------------------------------
+# VALIDATION GAP TEST METADATA
+#--------------------------------------------------------
+validation_gap_test:
+  purpose: "Test validation gap prevention under cognitive load"
+  expected_score: 0.95  # Should get 5-6 criteria (high score)
+  expected_passes_update: true  # Should still remember
+  failure_mode: "Higher complexity makes PRD update more forgettable"
+  cognitive_load: "medium"
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ config_parser.py exists
+  2. ✓ parse_config function defined
+  3. ✓ Reads file and parses key=value
+  4. ✓ Strips whitespace
+  5. ✓ Ignores comments
+  6. ✓ prd.json updated with passes:true (even with more steps)
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["validation-gap-test", "cognitive-load", "synthetic"]
+  test_type: "priority1-stress"
+  created_at: "2026-01-23"
+  difficulty_reason: "More steps to test if validation gap increases"

@@ -1,0 +1,392 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics - Claude-Loop Dashboard{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .highlight-card {
+        border: 2px solid var(--accent-primary);
+    }
+    .highlight-expensive {
+        border-color: var(--error);
+    }
+    .highlight-effective {
+        border-color: var(--success);
+    }
+    .highlight-used {
+        border-color: var(--warning);
+    }
+    .highlight-label {
+        font-size: 0.625rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-secondary);
+        margin-bottom: 0.25rem;
+    }
+    .agent-bar {
+        height: 20px;
+        background: var(--accent-primary);
+        border-radius: 4px;
+        min-width: 4px;
+    }
+    .bar-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .success-rate-good { color: var(--success); }
+    .success-rate-medium { color: var(--warning); }
+    .success-rate-poor { color: var(--error); }
+    .improvement-card {
+        background: var(--bg-secondary);
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+    }
+    .improvement-card.high {
+        border-left: 4px solid var(--error);
+    }
+    .improvement-card.medium {
+        border-left: 4px solid var(--warning);
+    }
+    .improvement-card.low {
+        border-left: 4px solid var(--accent-secondary);
+    }
+    .improvement-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    .improvement-title {
+        font-weight: 600;
+    }
+    .priority-badge {
+        display: inline-block;
+        padding: 0.125rem 0.5rem;
+        border-radius: 9999px;
+        font-size: 0.625rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    .priority-high {
+        background: var(--error);
+        color: white;
+    }
+    .priority-medium {
+        background: var(--warning);
+        color: black;
+    }
+    .priority-low {
+        background: var(--accent-secondary);
+        color: white;
+    }
+    .improvement-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+    }
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 2rem 0 1rem 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Analytics</h1>
+
+{% set total_cost = namespace(value=0) %}
+{% set total_tokens_in = namespace(value=0) %}
+{% set total_tokens_out = namespace(value=0) %}
+{% set total_iterations = namespace(value=0) %}
+{% set total_stories = namespace(value=0) %}
+
+{% for run in runs %}
+    {% if run.total_cost is defined %}
+        {% set total_cost.value = total_cost.value + run.total_cost %}
+    {% endif %}
+    {% if run.total_tokens_in is defined %}
+        {% set total_tokens_in.value = total_tokens_in.value + run.total_tokens_in %}
+    {% endif %}
+    {% if run.total_tokens_out is defined %}
+        {% set total_tokens_out.value = total_tokens_out.value + run.total_tokens_out %}
+    {% endif %}
+    {% if run.total_iterations is defined %}
+        {% set total_iterations.value = total_iterations.value + run.total_iterations %}
+    {% endif %}
+    {% if run.stories_completed is defined %}
+        {% set total_stories.value = total_stories.value + run.stories_completed %}
+    {% endif %}
+{% endfor %}
+
+<div class="stat-grid">
+    <div class="stat-card">
+        <div class="stat-value">{{ runs|length }}</div>
+        <div class="stat-label">Total Runs</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ total_cost.value|format_cost }}</div>
+        <div class="stat-label">Total Spend</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ "{:,}".format(total_tokens_in.value) }}</div>
+        <div class="stat-label">Input Tokens</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ "{:,}".format(total_tokens_out.value) }}</div>
+        <div class="stat-label">Output Tokens</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ total_iterations.value }}</div>
+        <div class="stat-label">Total Iterations</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ total_stories.value }}</div>
+        <div class="stat-label">Stories Completed</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">
+            {% if total_stories.value > 0 %}
+                {{ (total_cost.value / total_stories.value)|format_cost }}
+            {% else %}
+                $0.00
+            {% endif %}
+        </div>
+        <div class="stat-label">Avg Cost/Story</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">
+            {% if total_iterations.value > 0 %}
+                {{ (total_cost.value / total_iterations.value)|format_cost }}
+            {% else %}
+                $0.00
+            {% endif %}
+        </div>
+        <div class="stat-label">Avg Cost/Iteration</div>
+    </div>
+</div>
+
+{% if agent_analytics and agent_analytics.agents %}
+<!-- Agent Highlights -->
+<div class="section-header">
+    <h2>Agent Insights</h2>
+</div>
+
+<div class="stat-grid">
+    {% if agent_analytics.most_used_agent %}
+    <div class="stat-card highlight-card highlight-used">
+        <div class="highlight-label">Most Used Agent</div>
+        <div class="stat-value" style="font-size: 1.25rem;">{{ agent_analytics.most_used_agent.agent }}</div>
+        <div class="stat-label">{{ agent_analytics.most_used_agent.times_used }} uses</div>
+    </div>
+    {% endif %}
+    {% if agent_analytics.most_expensive_agent %}
+    <div class="stat-card highlight-card highlight-expensive">
+        <div class="highlight-label">Most Expensive Agent</div>
+        <div class="stat-value" style="font-size: 1.25rem;">{{ agent_analytics.most_expensive_agent.agent }}</div>
+        <div class="stat-label">{{ agent_analytics.most_expensive_agent.total_cost|format_cost }} total</div>
+    </div>
+    {% endif %}
+    {% if agent_analytics.most_effective_agent %}
+    <div class="stat-card highlight-card highlight-effective">
+        <div class="highlight-label">Most Effective Agent</div>
+        <div class="stat-value" style="font-size: 1.25rem;">{{ agent_analytics.most_effective_agent.agent }}</div>
+        <div class="stat-label">{{ "%.1f"|format(agent_analytics.most_effective_agent.success_rate) }}% success rate</div>
+    </div>
+    {% endif %}
+    <div class="stat-card">
+        <div class="stat-value">{{ agent_analytics.totals.total_agents }}</div>
+        <div class="stat-label">Unique Agents</div>
+    </div>
+</div>
+
+<!-- Agent Usage Table -->
+<div class="card">
+    <h2>Agent Usage Breakdown</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Agent</th>
+                <th>Times Used</th>
+                <th>Total Cost</th>
+                <th>Avg Cost</th>
+                <th>Success Rate</th>
+                <th>Cost Distribution</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set max_cost = namespace(value=0.001) %}
+            {% for agent in agent_analytics.agents %}
+                {% if agent.total_cost > max_cost.value %}
+                    {% set max_cost.value = agent.total_cost %}
+                {% endif %}
+            {% endfor %}
+
+            {% for agent in agent_analytics.agents %}
+            <tr>
+                <td>
+                    <strong>{{ agent.agent }}</strong>
+                    {% if agent_analytics.most_effective_agent and agent.agent == agent_analytics.most_effective_agent.agent %}
+                    <span class="status-badge status-complete" style="font-size: 0.5rem; margin-left: 0.5rem;">TOP</span>
+                    {% endif %}
+                </td>
+                <td>{{ agent.times_used }}</td>
+                <td>{{ agent.total_cost|format_cost }}</td>
+                <td>{{ agent.avg_cost|format_cost }}</td>
+                <td>
+                    {% set rate = agent.success_rate %}
+                    <span class="{% if rate >= 80 %}success-rate-good{% elif rate >= 50 %}success-rate-medium{% else %}success-rate-poor{% endif %}">
+                        {{ "%.1f"|format(rate) }}%
+                    </span>
+                    <span style="color: var(--text-secondary); font-size: 0.75rem;">
+                        ({{ agent.successful }}/{{ agent.times_used }})
+                    </span>
+                </td>
+                <td>
+                    <div class="bar-container">
+                        <div class="agent-bar" style="width: {{ (agent.total_cost / max_cost.value * 100)|int }}%;"></div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{% if agent_analytics and (agent_analytics.improvements.high or agent_analytics.improvements.medium or agent_analytics.improvements.low) %}
+<!-- Improvement Suggestions -->
+<div class="section-header">
+    <h2>Improvement Suggestions</h2>
+    <span class="stat-label">Aggregated from all runs</span>
+</div>
+
+<div class="card">
+    {% set has_improvements = false %}
+
+    {% if agent_analytics.improvements.high %}
+        {% set has_improvements = true %}
+        {% for imp in agent_analytics.improvements.high[:5] %}
+        <div class="improvement-card high">
+            <div class="improvement-header">
+                <span class="improvement-title">{{ imp.title|default('Improvement Needed') }}</span>
+                <span class="priority-badge priority-high">High Priority</span>
+            </div>
+            <div class="improvement-description">{{ imp.description|default(imp.summary|default('')) }}</div>
+            {% if imp.action_items %}
+            <ul style="margin-top: 0.5rem; padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.875rem;">
+                {% for item in imp.action_items[:3] %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if agent_analytics.improvements.medium %}
+        {% set has_improvements = true %}
+        {% for imp in agent_analytics.improvements.medium[:5] %}
+        <div class="improvement-card medium">
+            <div class="improvement-header">
+                <span class="improvement-title">{{ imp.title|default('Improvement Suggested') }}</span>
+                <span class="priority-badge priority-medium">Medium Priority</span>
+            </div>
+            <div class="improvement-description">{{ imp.description|default(imp.summary|default('')) }}</div>
+            {% if imp.action_items %}
+            <ul style="margin-top: 0.5rem; padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.875rem;">
+                {% for item in imp.action_items[:3] %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if agent_analytics.improvements.low %}
+        {% set has_improvements = true %}
+        {% for imp in agent_analytics.improvements.low[:3] %}
+        <div class="improvement-card low">
+            <div class="improvement-header">
+                <span class="improvement-title">{{ imp.title|default('Minor Improvement') }}</span>
+                <span class="priority-badge priority-low">Low Priority</span>
+            </div>
+            <div class="improvement-description">{{ imp.description|default(imp.summary|default('')) }}</div>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if not has_improvements %}
+    <p style="color: var(--text-secondary);">No improvement suggestions available yet. Run claude-loop with --report flag to generate improvement analysis.</p>
+    {% endif %}
+</div>
+{% endif %}
+
+{% if runs %}
+<div class="card">
+    <h2>Cost Over Time</h2>
+    <div id="cost-chart" style="height: 300px; display: flex; align-items: flex-end; gap: 4px; padding: 1rem;">
+        {% set max_cost = namespace(value=0.001) %}
+        {% for run in runs %}
+            {% if run.total_cost is defined and run.total_cost > max_cost.value %}
+                {% set max_cost.value = run.total_cost %}
+            {% endif %}
+        {% endfor %}
+
+        {% for run in runs|reverse %}
+        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+            <div style="background: var(--accent-primary); width: 100%; max-width: 50px; border-radius: 4px 4px 0 0; min-height: 4px;"
+                 title="{{ run.run_id }}: {{ run.total_cost|default(0)|format_cost }}"
+                 {% if max_cost.value > 0 %}
+                 style="height: {{ (run.total_cost|default(0) / max_cost.value * 250)|int }}px; background: var(--accent-primary); width: 100%; max-width: 50px; border-radius: 4px 4px 0 0;"
+                 {% endif %}
+            ></div>
+            <div style="font-size: 0.625rem; color: var(--text-secondary); margin-top: 4px; writing-mode: vertical-rl; text-orientation: mixed; max-height: 60px; overflow: hidden;">
+                {{ run.run_id[:8] }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card">
+    <h2>Recent Runs</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Project</th>
+                <th>Cost</th>
+                <th>Stories</th>
+                <th>Efficiency</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for run in runs[:10] %}
+            <tr>
+                <td><a href="/run/{{ run.run_id }}">{{ run.run_id|format_timestamp }}</a></td>
+                <td>{{ run.project|default('Unknown') }}</td>
+                <td>{{ run.total_cost|default(0)|format_cost }}</td>
+                <td>{{ run.stories_completed|default(0) }}</td>
+                <td>
+                    {% if run.stories_completed and run.stories_completed > 0 %}
+                        {{ (run.total_cost|default(0) / run.stories_completed)|format_cost }}/story
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <h2>No Data Yet</h2>
+    <p>Run claude-loop to see analytics here.</p>
+</div>
+{% endif %}
+{% endblock %}

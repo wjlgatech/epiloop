@@ -1,0 +1,30 @@
+task_id: PHASE2-TASK-008
+title: Create Metrics Collection Pipeline (Medium)
+description: |
+  Implement end-to-end metrics collection pipeline with storage and querying.
+  Support multiple metric types (counters, gauges, histograms).
+  Provide aggregation functions and time-series queries.
+
+acceptance_criteria:
+  - "MetricsCollector class with record(), query(), aggregate() methods"
+  - "Support for counter, gauge, histogram metric types"
+  - "Storage backend using SQLite"
+  - "Time-series aggregation (sum, avg, p50, p95, p99)"
+  - "Query by metric name, time range, tags"
+  - "Unit tests cover all metric types and queries"
+  - "Documentation includes metric best practices"
+
+context:
+  background: "Medium complexity requiring database design and statistical functions."
+  constraints:
+    - "Use SQLite for persistence"
+    - "Efficient time-series queries (indexed)"
+    - "Support metric tags for filtering"
+
+complexity: medium
+estimated_hours: 7
+fileScope:
+  - "lib/metrics_collector.py"
+  - "lib/metrics_storage.py"
+  - "tests/test_metrics.py"
+  - "docs/features/metrics-collection.md"

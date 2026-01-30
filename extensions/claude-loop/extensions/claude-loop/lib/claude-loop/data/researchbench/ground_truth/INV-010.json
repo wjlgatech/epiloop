@@ -1,0 +1,117 @@
+{
+  "question_id": "INV-010",
+  "question": "What are the key risks and strategies in volatility trading?",
+  "expert_sources": [
+    {
+      "title": "The VIX Index and Volatility",
+      "authors": ["CBOE"],
+      "venue": "CBOE Documentation",
+      "url": "https://www.cboe.com/tradable_products/vix/",
+      "relevance": "Official VIX methodology"
+    },
+    {
+      "title": "Volatility and the Alchemy of Risk",
+      "authors": ["Artemis Capital Management"],
+      "venue": "Artemis Research 2017",
+      "url": "https://artemiscm.docsend.com/view/75b69",
+      "relevance": "Comprehensive volatility regime analysis"
+    },
+    {
+      "title": "The Variance Risk Premium",
+      "authors": ["Carr and Wu"],
+      "venue": "Review of Financial Studies 2009",
+      "url": "https://doi.org/10.1093/rfs/hhn038",
+      "relevance": "Theoretical foundation for volatility risk premium"
+    },
+    {
+      "title": "Volatility Managed Portfolios",
+      "authors": ["Moreira and Muir"],
+      "venue": "Journal of Finance 2017",
+      "url": "https://doi.org/10.1111/jofi.12513",
+      "relevance": "Volatility timing strategies"
+    },
+    {
+      "title": "The February 2018 Volatility Event",
+      "authors": ["Various market analyses"],
+      "venue": "Market reports 2018",
+      "url": "Multiple sources",
+      "relevance": "XIV collapse case study"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "Implied volatility systematically exceeds realized volatility (variance risk premium)",
+      "importance": "critical",
+      "sources": ["Carr and Wu 2009"]
+    },
+    {
+      "finding": "Short volatility strategies earn premium but have severe tail risk",
+      "importance": "critical",
+      "sources": ["Artemis 2017", "XIV event"]
+    },
+    {
+      "finding": "VIX futures are typically in contango, creating roll cost for long vol positions",
+      "importance": "critical",
+      "sources": ["CBOE documentation"]
+    },
+    {
+      "finding": "The XIV collapse in Feb 2018 showed catastrophic short vol risks",
+      "importance": "critical",
+      "sources": ["Market analyses 2018"]
+    },
+    {
+      "finding": "Volatility mean-reverts but regime changes can persist",
+      "importance": "high",
+      "sources": ["Artemis 2017"]
+    },
+    {
+      "finding": "Long volatility positions provide crisis alpha but bleed in calm markets",
+      "importance": "high",
+      "sources": ["Moreira and Muir 2017"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "Volatility risk premium compensates for legitimate risk",
+      "validity": "True, but sizing is critical to avoid ruin",
+      "sources": ["Academic literature"]
+    },
+    {
+      "argument": "VIX products don't perfectly track volatility",
+      "validity": "Valid, VIX futures have basis risk to spot VIX",
+      "sources": ["CBOE documentation"]
+    },
+    {
+      "argument": "Dynamic hedging can manage short vol risk",
+      "validity": "Partially true but gap risk remains",
+      "sources": ["Risk management literature"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.85,
+    "areas_of_uncertainty": [
+      "Future volatility regime changes",
+      "Optimal sizing for short vol strategies",
+      "Impact of market structure changes"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "Implied vs realized volatility difference",
+      "Variance/volatility risk premium concept",
+      "Short volatility tail risks",
+      "VIX or volatility products explanation"
+    ],
+    "should_include": [
+      "Contango/backwardation in VIX futures",
+      "XIV or similar product risks",
+      "Mean reversion property"
+    ],
+    "bonus_points": [
+      "Feb 2018 event details",
+      "Volatility regime discussion",
+      "Specific strategy examples (straddles, variance swaps)"
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+task_id: PHASE2-TASK-009
+title: Implement Hierarchical Task Executor (Complex)
+description: |
+  Create a sophisticated task executor that supports hierarchical task delegation.
+  Parent tasks can spawn child tasks with context inheritance and result aggregation.
+  Include depth limiting, cycle detection, and parallel execution support.
+
+acceptance_criteria:
+  - "TaskExecutor class with execute(), delegate(), aggregate_results() methods"
+  - "Hierarchical task tree with parent-child relationships"
+  - "Maximum delegation depth enforcement (configurable, default=3)"
+  - "Cycle detection to prevent A→B→A loops"
+  - "Parallel child task execution using threading/multiprocessing"
+  - "Context inheritance from parent to child tasks"
+  - "Result aggregation from child to parent"
+  - "Detailed execution logging with tree visualization"
+  - "Unit tests cover depth limits, cycles, parallel execution"
+  - "Integration tests with real delegated tasks"
+  - "Comprehensive documentation with examples"
+
+context:
+  background: "Complex task requiring advanced concurrency, tree algorithms, and process management."
+  constraints:
+    - "MAX_DEPTH enforced strictly to prevent runaway recursion"
+    - "Support both threading and multiprocessing backends"
+    - "Graceful error handling and recovery"
+    - "Memory-efficient for large task trees"
+
+complexity: complex
+estimated_hours: 12
+fileScope:
+  - "lib/task_executor.py"
+  - "lib/task_tree.py"
+  - "lib/result_aggregator.py"
+  - "tests/test_task_executor.py"
+  - "tests/integration/test_delegation.py"
+  - "docs/features/hierarchical-execution.md"

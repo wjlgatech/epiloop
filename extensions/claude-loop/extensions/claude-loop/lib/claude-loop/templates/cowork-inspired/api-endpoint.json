@@ -1,0 +1,165 @@
+{
+  "metadata": {
+    "templateName": "api-endpoint",
+    "templateVersion": "1.0.0",
+    "description": "REST or GraphQL API endpoint with validation, error handling, documentation, and comprehensive testing",
+    "estimatedComplexity": "simple",
+    "typicalDuration": "2-4 hours",
+    "requiredSkills": ["backend", "API design", "testing", "documentation"],
+    "variables": [
+      {
+        "name": "PROJECT_NAME",
+        "description": "Name of the project",
+        "required": true,
+        "example": "user-service"
+      },
+      {
+        "name": "ENDPOINT_NAME",
+        "description": "Name of the API endpoint or resource",
+        "required": true,
+        "example": "users"
+      },
+      {
+        "name": "BRANCH_NAME",
+        "description": "Git branch name for this endpoint",
+        "required": false,
+        "default": "feature/api-{{ENDPOINT_NAME}}",
+        "example": "feature/api-users"
+      },
+      {
+        "name": "HTTP_METHOD",
+        "description": "HTTP method (GET, POST, PUT, DELETE, PATCH)",
+        "required": false,
+        "default": "POST",
+        "example": "POST"
+      },
+      {
+        "name": "ROUTE_PATH",
+        "description": "API route path",
+        "required": false,
+        "default": "/api/{{ENDPOINT_NAME}}",
+        "example": "/api/users"
+      }
+    ]
+  },
+  "prd": {
+    "project": "{{PROJECT_NAME}}-api-{{ENDPOINT_NAME}}",
+    "branchName": "{{BRANCH_NAME}}",
+    "description": "Implement {{HTTP_METHOD}} {{ROUTE_PATH}} API endpoint with request validation, error handling, proper response formatting, and comprehensive test coverage. Includes OpenAPI/Swagger documentation.",
+    "userStories": [
+      {
+        "id": "API-001",
+        "title": "Request Schema and Validation",
+        "description": "Define request schema and implement validation for {{ENDPOINT_NAME}} endpoint",
+        "acceptanceCriteria": [
+          "Create JSON schema or TypeScript interface for request body",
+          "Implement request validation middleware using Joi, Zod, or similar",
+          "Add validation for required fields, data types, and constraints",
+          "Define clear validation error messages for user feedback",
+          "Add query parameter validation if applicable",
+          "Add path parameter validation if applicable",
+          "Create unit tests for validation logic covering all edge cases",
+          "Document request schema in OpenAPI/Swagger format"
+        ],
+        "priority": 1,
+        "dependencies": [],
+        "fileScope": ["src/schemas/", "src/middleware/validation.ts"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "API-002",
+        "title": "Endpoint Handler Implementation",
+        "description": "Implement core business logic for {{ENDPOINT_NAME}} endpoint",
+        "acceptanceCriteria": [
+          "Create route handler function for {{HTTP_METHOD}} {{ROUTE_PATH}}",
+          "Implement business logic with proper error handling",
+          "Add database operations if data persistence required",
+          "Implement authentication/authorization checks",
+          "Add request logging for debugging and monitoring",
+          "Return standardized response format (success and error)",
+          "Handle common error cases: not found, unauthorized, validation errors",
+          "Write unit tests for handler logic (minimum 80% coverage)"
+        ],
+        "priority": 2,
+        "dependencies": ["API-001"],
+        "fileScope": ["src/routes/", "src/controllers/", "src/services/"],
+        "estimatedComplexity": "medium",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "API-003",
+        "title": "Response Schema and Serialization",
+        "description": "Define response schema and implement proper serialization for {{ENDPOINT_NAME}} endpoint",
+        "acceptanceCriteria": [
+          "Create JSON schema or TypeScript interface for response body",
+          "Implement response serialization/formatting",
+          "Add pagination support if returning collections",
+          "Add filtering and sorting support if applicable",
+          "Implement HATEOAS links for discoverability (optional)",
+          "Define error response format with error codes and messages",
+          "Add response compression for large payloads if needed",
+          "Document response schema in OpenAPI/Swagger format"
+        ],
+        "priority": 2,
+        "dependencies": ["API-001"],
+        "fileScope": ["src/schemas/", "src/serializers/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "API-004",
+        "title": "Integration Tests and API Documentation",
+        "description": "Create integration tests and comprehensive API documentation for {{ENDPOINT_NAME}} endpoint",
+        "acceptanceCriteria": [
+          "Write integration tests covering happy path scenarios",
+          "Write integration tests for error cases (4xx, 5xx responses)",
+          "Test authentication and authorization flows",
+          "Test rate limiting if implemented",
+          "Create OpenAPI/Swagger documentation for the endpoint",
+          "Add example requests and responses to documentation",
+          "Document all possible error codes and their meanings",
+          "Add API documentation to project README or docs folder",
+          "Test API with tools like Postman or curl (manual verification)"
+        ],
+        "priority": 3,
+        "dependencies": ["API-002", "API-003"],
+        "fileScope": ["tests/integration/", "docs/api/", "openapi.yaml"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "API-005",
+        "title": "Performance and Security Review",
+        "description": "Review and optimize {{ENDPOINT_NAME}} endpoint for performance and security",
+        "acceptanceCriteria": [
+          "Add rate limiting middleware to prevent abuse",
+          "Implement request size limits to prevent DoS attacks",
+          "Add input sanitization to prevent injection attacks",
+          "Review and fix any SQL injection vulnerabilities",
+          "Review and fix any XSS vulnerabilities in responses",
+          "Add CORS configuration if needed",
+          "Profile endpoint performance and optimize slow queries",
+          "Add caching headers if appropriate",
+          "Run security linter (e.g., npm audit, safety)",
+          "Document security considerations in API documentation"
+        ],
+        "priority": 4,
+        "dependencies": ["API-004"],
+        "fileScope": ["src/middleware/", "src/routes/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      }
+    ]
+  }
+}

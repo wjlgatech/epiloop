@@ -20,7 +20,7 @@ import {
   SignalConfigSchema,
   type ChannelPlugin,
   type ResolvedSignalAccount,
-} from "clawdbot/plugin-sdk";
+} from "epiloop/plugin-sdk";
 
 import { getSignalRuntime } from "./runtime.js";
 

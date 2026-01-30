@@ -1,0 +1,117 @@
+{
+  "question_id": "INTER-003",
+  "question": "How do social media algorithms affect political polarization, and what interventions might help?",
+  "expert_sources": [
+    {
+      "title": "Exposure to opposing views on social media can increase political polarization",
+      "authors": ["Bail et al."],
+      "venue": "PNAS 2018",
+      "url": "https://doi.org/10.1073/pnas.1804840115",
+      "relevance": "Counter-intuitive exposure effects"
+    },
+    {
+      "title": "Filter Bubbles, Echo Chambers, and Online News Consumption",
+      "authors": ["Flaxman et al."],
+      "venue": "Public Opinion Quarterly 2016",
+      "url": "https://doi.org/10.1093/poq/nfw006",
+      "relevance": "Filter bubble empirical analysis"
+    },
+    {
+      "title": "Asymmetric Polarization and Social Media",
+      "authors": ["Guess et al."],
+      "venue": "Science 2023",
+      "url": "https://www.science.org/doi/10.1126/science.add2521",
+      "relevance": "Large-scale Facebook experiment results"
+    },
+    {
+      "title": "The Psychology of Online Political Hostility",
+      "authors": ["Rathje et al."],
+      "venue": "American Psychologist 2021",
+      "url": "https://doi.org/10.1037/amp0000871",
+      "relevance": "Psychological mechanisms of online conflict"
+    },
+    {
+      "title": "Reducing Online Hate and Misinformation",
+      "authors": ["Pennycook and Rand"],
+      "venue": "Annual Review of Psychology 2021",
+      "url": "https://doi.org/10.1146/annurev-psych-031520-023831",
+      "relevance": "Intervention strategies review"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "Recommendation algorithms optimize for engagement, which correlates with emotional and divisive content",
+      "importance": "critical",
+      "sources": ["Rathje et al. 2021"]
+    },
+    {
+      "finding": "Filter bubbles exist but their magnitude is debated; people self-select into homogeneous environments",
+      "importance": "critical",
+      "sources": ["Flaxman et al. 2016", "Guess et al. 2023"]
+    },
+    {
+      "finding": "Exposure to opposing views can backfire and increase polarization",
+      "importance": "critical",
+      "sources": ["Bail et al. 2018"]
+    },
+    {
+      "finding": "Outrage and moral-emotional language spreads faster on social media",
+      "importance": "high",
+      "sources": ["Rathje et al. 2021"]
+    },
+    {
+      "finding": "Accuracy nudges can reduce misinformation sharing",
+      "importance": "high",
+      "sources": ["Pennycook and Rand 2021"]
+    },
+    {
+      "finding": "2023 Facebook experiments showed limited algorithm impact on key attitudes",
+      "importance": "high",
+      "sources": ["Guess et al. 2023"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "Polarization predates social media and has multiple causes",
+      "validity": "Valid, social media is one factor among many",
+      "sources": ["Political science literature"]
+    },
+    {
+      "argument": "Most people don't engage deeply with political content online",
+      "validity": "True, heavy users drive much political engagement",
+      "sources": ["Usage studies"]
+    },
+    {
+      "argument": "Traditional media also contributes to polarization",
+      "validity": "Valid, cable news effects are significant",
+      "sources": ["Media studies"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.70,
+    "areas_of_uncertainty": [
+      "Causal direction between algorithms and attitudes",
+      "Effectiveness of proposed interventions at scale",
+      "Cross-platform and cross-cultural differences"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "Engagement optimization in algorithms",
+      "Filter bubble/echo chamber concept",
+      "Psychological factors (outrage, tribalism)",
+      "At least one intervention approach"
+    ],
+    "should_include": [
+      "Empirical evidence on algorithm effects",
+      "Backfire effect from cross-partisan exposure",
+      "Platform-specific considerations"
+    ],
+    "bonus_points": [
+      "2023 Facebook experiment findings",
+      "Regulatory approaches comparison",
+      "Distinction between perceived and actual polarization"
+    ]
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "question_id": "INV-005",
+  "question": "How do momentum strategies generate returns and what are their risks?",
+  "expert_sources": [
+    {
+      "title": "Returns to Buying Winners and Selling Losers: Implications for Stock Market Efficiency",
+      "authors": ["Jegadeesh and Titman"],
+      "venue": "Journal of Finance 1993",
+      "url": "https://doi.org/10.1111/j.1540-6261.1993.tb04702.x",
+      "relevance": "Original momentum anomaly documentation"
+    },
+    {
+      "title": "Momentum Crashes",
+      "authors": ["Daniel and Moskowitz"],
+      "venue": "Journal of Financial Economics 2016",
+      "url": "https://doi.org/10.1016/j.jfineco.2016.01.006",
+      "relevance": "Analysis of momentum strategy failures"
+    },
+    {
+      "title": "Value and Momentum Everywhere",
+      "authors": ["Asness, Moskowitz, and Pedersen"],
+      "venue": "Journal of Finance 2013",
+      "url": "https://doi.org/10.1111/jofi.12021",
+      "relevance": "Cross-asset momentum evidence"
+    },
+    {
+      "title": "Momentum Strategies",
+      "authors": ["Chan, Jegadeesh, and Lakonishok"],
+      "venue": "Journal of Finance 1996",
+      "url": "https://doi.org/10.1111/j.1540-6261.1996.tb05222.x",
+      "relevance": "Momentum and earnings analysis"
+    },
+    {
+      "title": "An Anatomy of the Trading Process",
+      "authors": ["Grinblatt and Han"],
+      "venue": "Journal of Financial Economics 2005",
+      "url": "https://doi.org/10.1016/j.jfineco.2004.10.006",
+      "relevance": "Disposition effect explanation for momentum"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "Stocks that performed well over 3-12 months tend to continue outperforming",
+      "importance": "critical",
+      "sources": ["Jegadeesh and Titman 1993"]
+    },
+    {
+      "finding": "Momentum exists across asset classes (equities, currencies, commodities, bonds)",
+      "importance": "critical",
+      "sources": ["Asness et al. 2013"]
+    },
+    {
+      "finding": "Momentum crashes occur during market reversals, especially after bear markets",
+      "importance": "critical",
+      "sources": ["Daniel and Moskowitz 2016"]
+    },
+    {
+      "finding": "Behavioral explanations include underreaction to news and disposition effect",
+      "importance": "high",
+      "sources": ["Grinblatt and Han 2005", "Chan et al. 1996"]
+    },
+    {
+      "finding": "Momentum is negatively correlated with value, providing diversification",
+      "importance": "high",
+      "sources": ["Asness et al. 2013"]
+    },
+    {
+      "finding": "Transaction costs significantly reduce momentum profits",
+      "importance": "medium",
+      "sources": ["Implementation studies"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "Momentum is compensation for crash risk, not an anomaly",
+      "validity": "Partially valid, but premium exceeds crash risk premium",
+      "sources": ["Daniel and Moskowitz 2016"]
+    },
+    {
+      "argument": "Momentum has decayed as it became widely known",
+      "validity": "Some evidence of decay but strategy remains profitable",
+      "sources": ["Recent factor performance studies"]
+    },
+    {
+      "argument": "Capacity constraints limit momentum strategy scalability",
+      "validity": "Valid for smaller stocks, less for liquid markets",
+      "sources": ["Capacity research"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.88,
+    "areas_of_uncertainty": [
+      "Exact mechanism driving momentum",
+      "Future persistence of the anomaly",
+      "Optimal implementation parameters"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "Definition of momentum (past winners continue)",
+      "Empirical evidence across markets",
+      "Momentum crashes as key risk",
+      "At least one explanation (behavioral or risk-based)"
+    ],
+    "should_include": [
+      "Specific lookback periods (3-12 months)",
+      "Cross-asset evidence",
+      "Transaction cost considerations"
+    ],
+    "bonus_points": [
+      "Value-momentum negative correlation",
+      "2009 momentum crash example",
+      "Implementation details (rebalancing frequency)"
+    ]
+  }
+}

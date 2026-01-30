@@ -1,0 +1,61 @@
+{
+  "project": "progress-streaming",
+  "branchName": "feature/progress-streaming",
+  "description": "Add real-time progress streaming that shows live updates without blocking execution. Replace polling-based progress with event-driven streaming.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Implement non-blocking progress display",
+      "description": "As a user, I want to see real-time progress updates without blocking the main execution thread so that I can monitor long-running tasks",
+      "acceptanceCriteria": [
+        "Create lib/progress-streamer.sh with background monitoring process",
+        "Use named pipes or file tailing for non-blocking updates",
+        "Display current story, iteration count, time elapsed in real-time",
+        "Update every 2 seconds without blocking main thread",
+        "Gracefully handle process termination"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "",
+      "fileScope": ["lib/progress-streamer.sh", "lib/monitoring.sh"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-002",
+      "title": "Add progress event emission",
+      "description": "As the system, I want to emit progress events at key points so that streaming display can show accurate updates",
+      "acceptanceCriteria": [
+        "Emit events on: story_start, iteration_start, iteration_end, story_complete",
+        "Write events to .claude-loop/progress-events.jsonl",
+        "Include: timestamp, event_type, story_id, iteration, status",
+        "Keep only last 1000 events (rotate file)",
+        "Test by verifying all events are emitted during execution"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "",
+      "fileScope": ["lib/worker.sh", "lib/execution-logger.sh"],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    },
+    {
+      "id": "US-003",
+      "title": "Integrate streaming with existing monitoring",
+      "description": "As a user, I want progress streaming to work alongside token/cost monitoring so that I get a complete view of execution",
+      "acceptanceCriteria": [
+        "Start progress-streamer automatically when --no-progress is NOT set",
+        "Display both progress updates and cost ticker in separate areas",
+        "Ensure no race conditions between streaming and monitoring",
+        "Test with parallel execution (multiple PRDs)",
+        "Verify clean shutdown and no orphaned processes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "",
+      "fileScope": ["claude-loop.sh", "lib/progress-streamer.sh", "lib/monitoring.sh"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    }
+  ]
+}

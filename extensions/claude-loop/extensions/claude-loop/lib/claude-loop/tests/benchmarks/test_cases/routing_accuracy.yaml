@@ -1,0 +1,88 @@
+description: "Routing accuracy test cases for orchestrator benchmarking"
+version: "1.0"
+
+# Test cases with expected routing decisions
+# Format: request → expected_routing (list of component IDs)
+# These test cases reflect the current orchestrator behavior
+test_cases:
+  # Creation/Modification - Agents + Workflows
+  - request: "build authentication feature with JWT"
+    expected_routing:
+      - "workflow:tdd-enforcement"
+      - "agent:security-auditor"
+      - "agent:code-reviewer"
+      - "workflow:two-stage-review"
+
+  - request: "design microservices architecture"
+    expected_routing:
+      - "skill:brainstorming"
+
+  # Simple Operations - Debugger Agent
+  - request: "fix typo in README"
+    expected_routing:
+      - "agent:debugger"
+
+  - request: "update version number in package.json"
+    expected_routing:
+      - "agent:code-reviewer"
+      - "agent:git-workflow"
+      - "workflow:two-stage-review"
+
+  # Creation Operations - TDD + Code Review + Two-Stage Review
+  - request: "create REST API for user management"
+    expected_routing:
+      - "workflow:tdd-enforcement"
+      - "agent:code-reviewer"
+      - "workflow:two-stage-review"
+
+  - request: "create payment processing endpoint"
+    expected_routing:
+      - "workflow:tdd-enforcement"
+      - "agent:code-reviewer"
+      - "workflow:two-stage-review"
+
+  # Testing Domain - Test Runner
+  - request: "write tests for payment processing"
+    expected_routing:
+      - "workflow:tdd-enforcement"
+      - "agent:code-reviewer"
+      - "workflow:two-stage-review"
+
+  - request: "create test suite for authentication module"
+    expected_routing:
+      - "workflow:tdd-enforcement"
+      - "agent:code-reviewer"
+      - "agent:test-runner"
+      - "agent:security-auditor"
+      - "workflow:two-stage-review"
+
+  # Documentation/Planning - No routing (simple operations)
+  - request: "convert user requirements into PRD format"
+    expected_routing: []
+
+  - request: "validate PRD structure and dependencies"
+    expected_routing: []
+
+  # Optimization - Simple modification
+  - request: "optimize slow database queries"
+    expected_routing:
+      - "agent:code-reviewer"
+      - "agent:git-workflow"
+      - "workflow:two-stage-review"
+
+  - request: "analyze story complexity for model selection"
+    expected_routing: []
+
+  # Bug Fixing - Debugger
+  - request: "debug production API error"
+    expected_routing:
+      - "agent:debugger"
+
+  - request: "fix bug in user profile"
+    expected_routing:
+      - "agent:debugger"
+
+  # Git Operations - Git Workflow Agent
+  - request: "commit changes and push to remote"
+    expected_routing:
+      - "agent:git-workflow"

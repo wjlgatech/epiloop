@@ -1,0 +1,124 @@
+{
+  "question_id": "AIML-002",
+  "question": "How do different RLHF techniques compare in aligning large language models, and what are the known failure modes?",
+  "expert_sources": [
+    {
+      "title": "Training language models to follow instructions with human feedback",
+      "authors": ["Ouyang et al."],
+      "venue": "NeurIPS 2022",
+      "url": "https://arxiv.org/abs/2203.02155",
+      "relevance": "InstructGPT paper introducing RLHF for LLMs"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": ["Rafailov et al."],
+      "venue": "NeurIPS 2023",
+      "url": "https://arxiv.org/abs/2305.18290",
+      "relevance": "DPO as alternative to PPO-based RLHF"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": ["Bai et al."],
+      "venue": "arXiv 2022",
+      "url": "https://arxiv.org/abs/2212.08073",
+      "relevance": "Constitutional AI approach from Anthropic"
+    },
+    {
+      "title": "Scaling Laws for Reward Model Overoptimization",
+      "authors": ["Gao et al."],
+      "venue": "ICML 2023",
+      "url": "https://arxiv.org/abs/2210.10760",
+      "relevance": "Reward hacking and overoptimization analysis"
+    },
+    {
+      "title": "Open Problems and Fundamental Limitations of Reinforcement Learning from Human Feedback",
+      "authors": ["Casper et al."],
+      "venue": "arXiv 2023",
+      "url": "https://arxiv.org/abs/2307.15217",
+      "relevance": "Comprehensive survey of RLHF limitations"
+    },
+    {
+      "title": "RLAIF: Scaling Reinforcement Learning from Human Feedback with AI Feedback",
+      "authors": ["Lee et al."],
+      "venue": "arXiv 2023",
+      "url": "https://arxiv.org/abs/2309.00267",
+      "relevance": "Using AI feedback to scale RLHF"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "RLHF with PPO requires training separate reward model and is computationally expensive",
+      "importance": "critical",
+      "sources": ["Ouyang et al. 2022"]
+    },
+    {
+      "finding": "DPO achieves comparable results without explicit reward model by optimizing preferences directly",
+      "importance": "critical",
+      "sources": ["Rafailov et al. 2023"]
+    },
+    {
+      "finding": "Reward hacking occurs when model exploits reward model weaknesses",
+      "importance": "critical",
+      "sources": ["Gao et al. 2023", "Casper et al. 2023"]
+    },
+    {
+      "finding": "Constitutional AI reduces need for human feedback through AI-generated critiques",
+      "importance": "high",
+      "sources": ["Bai et al. 2022"]
+    },
+    {
+      "finding": "Human preferences are inconsistent, noisy, and may not reflect true values",
+      "importance": "high",
+      "sources": ["Casper et al. 2023"]
+    },
+    {
+      "finding": "Models can learn to appear helpful without being genuinely helpful (sycophancy)",
+      "importance": "high",
+      "sources": ["Anthropic research", "Casper et al. 2023"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "DPO may be less robust than PPO for complex preference landscapes",
+      "validity": "Some evidence, but DPO variants address this",
+      "sources": ["Various ablation studies"]
+    },
+    {
+      "argument": "RLHF fundamentally cannot capture complex human values",
+      "validity": "Philosophical concern, practical impact unclear",
+      "sources": ["Casper et al. 2023"]
+    },
+    {
+      "argument": "Reward models can be improved to reduce hacking",
+      "validity": "Partially valid, but fundamental limits exist",
+      "sources": ["Gao et al. 2023"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.82,
+    "areas_of_uncertainty": [
+      "Long-term effects of RLHF on model capabilities",
+      "Optimal combination of techniques",
+      "Scalability of different approaches"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "RLHF/PPO pipeline description",
+      "DPO as alternative approach",
+      "Reward hacking/overoptimization",
+      "At least one specific failure mode"
+    ],
+    "should_include": [
+      "Constitutional AI approach",
+      "Reward model training",
+      "KL divergence regularization"
+    ],
+    "bonus_points": [
+      "Sycophancy discussion",
+      "RLAIF and AI feedback",
+      "Comparison of computational costs"
+    ]
+  }
+}

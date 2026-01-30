@@ -1,0 +1,117 @@
+{
+  "question_id": "TECH-005",
+  "question": "What are the key considerations for designing event-driven architectures?",
+  "expert_sources": [
+    {
+      "title": "Event Sourcing",
+      "authors": ["Fowler"],
+      "venue": "martinfowler.com",
+      "url": "https://martinfowler.com/eaaDev/EventSourcing.html",
+      "relevance": "Event sourcing pattern definition"
+    },
+    {
+      "title": "Kafka: a Distributed Messaging System for Log Processing",
+      "authors": ["Kreps et al."],
+      "venue": "NetDB 2011",
+      "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2017/09/Kafka.pdf",
+      "relevance": "Kafka architecture and design"
+    },
+    {
+      "title": "Making Sense of Stream Processing",
+      "authors": ["Kleppmann"],
+      "venue": "O'Reilly 2016",
+      "url": "https://www.oreilly.com/library/view/making-sense-of/9781491937266/",
+      "relevance": "Stream processing concepts"
+    },
+    {
+      "title": "Building Event-Driven Microservices",
+      "authors": ["Stopford"],
+      "venue": "O'Reilly 2020",
+      "url": "https://www.oreilly.com/library/view/building-event-driven-microservices/9781492057888/",
+      "relevance": "Event-driven microservices patterns"
+    },
+    {
+      "title": "Designing Data-Intensive Applications",
+      "authors": ["Kleppmann"],
+      "venue": "O'Reilly 2017",
+      "url": "https://dataintensive.net/",
+      "relevance": "Comprehensive data systems architecture"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "Event sourcing stores all state changes as immutable events, enabling audit and replay",
+      "importance": "critical",
+      "sources": ["Fowler", "Kleppmann 2017"]
+    },
+    {
+      "finding": "Kafka provides durable, ordered, partitioned log for event streaming",
+      "importance": "critical",
+      "sources": ["Kreps et al. 2011"]
+    },
+    {
+      "finding": "Eventual consistency requires handling out-of-order events and idempotency",
+      "importance": "critical",
+      "sources": ["Kleppmann 2016", "Stopford 2020"]
+    },
+    {
+      "finding": "Partitioning by key ensures ordering for related events",
+      "importance": "high",
+      "sources": ["Kafka documentation"]
+    },
+    {
+      "finding": "Idempotent consumers prevent duplicate processing",
+      "importance": "high",
+      "sources": ["Stopford 2020"]
+    },
+    {
+      "finding": "CQRS pattern separates read and write models in event-driven systems",
+      "importance": "medium",
+      "sources": ["Fowler", "Stopford 2020"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "Event sourcing adds complexity compared to CRUD",
+      "validity": "True, not appropriate for all use cases",
+      "sources": ["Fowler"]
+    },
+    {
+      "argument": "Eventual consistency is harder to reason about",
+      "validity": "Valid, requires careful design",
+      "sources": ["Kleppmann 2017"]
+    },
+    {
+      "argument": "Event schema evolution is challenging",
+      "validity": "True, requires versioning strategies",
+      "sources": ["Stopford 2020"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.88,
+    "areas_of_uncertainty": [
+      "Optimal event granularity",
+      "When event sourcing is appropriate",
+      "Schema evolution best practices"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "Event sourcing concept",
+      "Message broker role (Kafka or similar)",
+      "Eventual consistency challenges",
+      "Idempotency requirement"
+    ],
+    "should_include": [
+      "Event ordering guarantees",
+      "Partitioning strategies",
+      "CQRS pattern"
+    ],
+    "bonus_points": [
+      "Saga pattern for distributed transactions",
+      "Event schema evolution",
+      "Compaction and retention"
+    ]
+  }
+}
