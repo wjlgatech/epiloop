@@ -1,0 +1,16 @@
+✅ Task Completed Successfully
+
+Task ID: {{TASK_ID}}
+Status: {{STATUS}}
+Project: {{PROJECT}}
+
+Results:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ Stories Completed: {{STORIES_COMPLETED}}
+✓ Time Taken: {{TIME_TAKEN}}
+✓ Cost: {{COST}}
+
+All user stories have been implemented successfully and tests are passing.
+
+--
+claude-loop autonomous feature implementation

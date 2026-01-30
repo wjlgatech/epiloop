@@ -1,0 +1,340 @@
+# SCWM Research Configuration
+# Configuration for autonomous research execution on Self-Calibrating World Model
+
+# ============================================================================
+# Research Loop Settings
+# ============================================================================
+
+research_loop:
+  # PRD file to use
+  prd_file: "prds/scwm-research.json"
+
+  # Domain adapter
+  adapter: "physical-ai"
+
+  # Output directory for research artifacts
+  output_dir: "research-outputs/scwm"
+
+  # State file for tracking progress
+  state_file: ".claude-loop/scwm-research-state.json"
+
+# ============================================================================
+# Agent Configuration
+# ============================================================================
+
+agents:
+  # Path to agents directory
+  directory: "./agents"
+
+  # Enable automatic agent selection
+  auto_select: true
+
+  # Maximum agents per research story
+  max_per_story: 3
+
+  # Maximum tokens per agent prompt
+  max_tokens_per_agent: 2000
+
+  # Enabled agent tiers
+  enabled_tiers:
+    - 1  # Core agents (lead-researcher, academic-scanner)
+    - 2  # Specialists (technical-diver, benchmark-analyst)
+    - 3  # Quality control (fact-checker, devils-advocate)
+
+  # Agent composition mode
+  composition_mode: true
+
+  # Research-specific agent mappings
+  story_agent_mapping:
+    literature-review:
+      - academic-scanner
+      - lead-researcher
+    technical-analysis:
+      - technical-diver
+      - academic-scanner
+      - benchmark-analyst
+    benchmark-survey:
+      - benchmark-analyst
+      - technical-diver
+    design:
+      - technical-diver
+      - lead-researcher
+    integration-analysis:
+      - technical-diver
+      - benchmark-analyst
+    experimental-design:
+      - benchmark-analyst
+      - lead-researcher
+    implementation-planning:
+      - technical-diver
+      - lead-researcher
+    competitive-analysis:
+      - market-analyst
+      - academic-scanner
+    publication-planning:
+      - lead-researcher
+      - academic-scanner
+    synthesis:
+      - lead-researcher
+      - fact-checker
+      - devils-advocate
+
+# ============================================================================
+# Quality Gates
+# ============================================================================
+
+quality:
+  # Minimum confidence score to proceed
+  min_confidence: 70
+
+  # Require fact-checking for key findings
+  require_fact_check: true
+
+  # Require devil's advocate review for conclusions
+  require_counterargument: true
+
+  # Maximum source age (years)
+  max_source_age: 2
+
+  # Minimum sources per finding
+  min_sources_per_finding: 2
+
+  # Research-specific gates
+  gates:
+    literature_review:
+      min_papers: 15
+      require_taxonomy: true
+      require_gaps_analysis: true
+
+    technical_analysis:
+      require_math: true
+      require_code_review: true
+      require_comparison: true
+
+    benchmark_survey:
+      require_sota_check: true
+      require_metrics_documentation: true
+
+    integration_analysis:
+      require_api_analysis: true
+      require_compute_budget: true
+      require_risk_assessment: true
+
+# ============================================================================
+# Human Checkpoints
+# ============================================================================
+
+checkpoints:
+  # Enable human checkpoints
+  enabled: true
+
+  # Timeout for checkpoint approval (seconds)
+  timeout_seconds: 600
+
+  # Auto-approve for high-confidence findings
+  auto_approve_threshold: 90
+
+  # Mandatory checkpoints (always require human approval)
+  mandatory:
+    - afterLiteratureReview
+    - afterArchitectureDesign
+    - afterIntegrationAnalysis
+    - beforeFinalReport
+
+  # Checkpoint triggers
+  triggers:
+    - low_confidence  # Confidence < 60%
+    - conflicting_findings
+    - architecture_decision
+    - integration_recommendation
+    - publication_decision
+
+# ============================================================================
+# Search Configuration
+# ============================================================================
+
+search:
+  # Primary search provider
+  primary_provider: "tavily"
+
+  # Fallback providers
+  fallback_providers:
+    - "semantic_scholar"
+    - "arxiv"
+    - "duckduckgo"
+
+  # Search caching
+  cache:
+    enabled: true
+    ttl_hours: 24
+    max_size_mb: 100
+
+  # Rate limiting
+  rate_limit:
+    requests_per_minute: 30
+    backoff_seconds: 5
+
+  # arXiv specific settings
+  arxiv:
+    categories:
+      - "cs.RO"
+      - "cs.LG"
+      - "cs.AI"
+      - "cs.CV"
+      - "stat.ML"
+    max_results: 50
+    sort_by: "relevance"
+
+  # GitHub search settings
+  github:
+    max_repos: 20
+    min_stars: 50
+    languages:
+      - "Python"
+      - "C++"
+    orgs_priority:
+      - "NVIDIA-Omniverse"
+      - "NVlabs"
+      - "google-deepmind"
+      - "facebookresearch"
+
+# ============================================================================
+# Integration Settings
+# ============================================================================
+
+integrations:
+  # Cosmos-Predict2 integration
+  cosmos_predict2:
+    enabled: true
+    repo_path: "../physical_ai_playground/cosmos-predict2"
+    analyze_files:
+      - "cosmos_predict2/models/video2world_action_model.py"
+      - "cosmos_predict2/models/video2world_action_dit.py"
+      - "cosmos_predict2/pipelines/video2world_action.py"
+      - "cosmos_predict2/conditioner.py"
+      - "cosmos_predict2/auxiliary/cosmos_reason1.py"
+    documentation:
+      - "CLAUDE.md"
+      - "documentations/inference_video2world_action.md"
+      - "documentations/post-training_video2world_action.md"
+
+  # SCWM module integration
+  scwm:
+    enabled: true
+    repo_path: "../../scwm"
+    modules:
+      - "core/world_model.py"
+      - "core/uncertainty.py"
+      - "core/calibration.py"
+    tests:
+      - "tests/"
+
+  # Isaac Lab (documentation only - not local)
+  isaac_lab:
+    enabled: true
+    documentation_url: "https://isaac-sim.github.io/IsaacLab/"
+    github_repo: "isaac-sim/IsaacLab"
+
+# ============================================================================
+# Output Configuration
+# ============================================================================
+
+output:
+  # Output formats
+  formats:
+    - markdown
+    - json
+
+  # Include confidence scores in output
+  include_confidence: true
+
+  # Include citations in output
+  include_citations: true
+
+  # Citation style
+  citation_style: "ieee"
+
+  # Report sections
+  report_sections:
+    - executive_summary
+    - methodology
+    - findings
+    - gaps_identified
+    - recommendations
+    - risks
+    - next_steps
+    - references
+
+# ============================================================================
+# Execution Settings
+# ============================================================================
+
+execution:
+  # Maximum iterations per story
+  max_iterations: 5
+
+  # Delay between iterations (seconds)
+  delay_between_iterations: 3
+
+  # Verbose output
+  verbose: true
+
+  # Save intermediate state
+  save_intermediate: true
+
+  # Continue on failure
+  continue_on_failure: false
+
+  # Parallel research (independent stories)
+  parallel_execution: false
+
+  # Model selection by complexity
+  model_by_complexity:
+    simple: "haiku"
+    medium: "sonnet"
+    complex: "opus"
+
+# ============================================================================
+# Logging
+# ============================================================================
+
+logging:
+  # Log level
+  level: "info"
+
+  # Log agent decisions
+  log_agent_selection: true
+
+  # Log search queries
+  log_searches: true
+
+  # Log confidence scores
+  log_confidence: true
+
+  # Save logs to file
+  save_logs: true
+  log_dir: "./logs/scwm-research"
+
+# ============================================================================
+# Notifications (Optional)
+# ============================================================================
+
+notifications:
+  # Enable notifications
+  enabled: false
+
+  # Notification channels
+  channels:
+    slack:
+      enabled: false
+      webhook_url: ""
+    email:
+      enabled: false
+      recipients: []
+
+  # Notification triggers
+  triggers:
+    - checkpoint_required
+    - research_complete
+    - confidence_low
+    - error

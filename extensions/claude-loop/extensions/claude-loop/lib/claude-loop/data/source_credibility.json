@@ -1,0 +1,21 @@
+{
+  "sources": {
+    "Technical Analysis": {
+      "source_name": "Technical Analysis",
+      "credibility_score": 100,
+      "total_predictions": 1,
+      "successful_predictions": 1,
+      "avg_return": 22.22,
+      "last_updated": "2026-01-18T07:23:32.107785"
+    },
+    "On-chain Metrics": {
+      "source_name": "On-chain Metrics",
+      "credibility_score": 100,
+      "total_predictions": 1,
+      "successful_predictions": 1,
+      "avg_return": 22.22,
+      "last_updated": "2026-01-18T07:23:32.107789"
+    }
+  },
+  "last_updated": "2026-01-18T07:23:32.107926"
+}

@@ -1,0 +1,400 @@
+[0;31m[ERROR][0m Unknown option: --enable-tdd
+claude-loop - Autonomous Claude Code Loop for Feature Implementation
+
+USAGE:
+    ./claude-loop.sh [OPTIONS]
+    ./claude-loop.sh "feature description"
+
+SINGLE-COMMAND ENTRY (INV-008):
+    Start claude-loop with just a feature description. No PRD required!
+
+    ./claude-loop.sh "Add user authentication with OAuth"
+    ./claude-loop.sh "Create a dark mode toggle for settings"
+
+    This will:
+    1. Auto-generate a PRD from your description
+    2. Auto-detect complexity level (0-4)
+    3. Auto-select track (quick/standard/enterprise)
+    4. Auto-select phases (analysis/planning/solutioning/implementation)
+    5. Show all auto-detected settings before starting
+    6. Begin autonomous implementation
+
+OPTIONS:
+    -m, --max-iterations N   Maximum number of iterations (default: 10)
+    -p, --prd FILE|DIR|ID   Path to prd.json, PRD directory, or PRD ID
+                            Accepts: prds/active/my-feature/prd.json, prds/active/my-feature/,
+                            DOC-001, or ./prd.json. Auto-detects if only one active PRD exists.
+    -a, --agents-dir DIR    Path to claude-agents directory for expertise
+    -d, --delay N           Delay between iterations in seconds (default: 2)
+    -v, --verbose           Enable verbose output
+    --no-agents             Disable agent integration
+    --no-experience         Disable experience augmentation
+    --enable-hooks          Enable hook system for lifecycle extension (default: disabled)
+    --no-dashboard          Disable progress dashboard display
+    --compact-dashboard     Use compact single-line progress display
+    --no-progress           Disable real-time progress indicators (for CI/CD)
+    --max-agents N          Max agents per iteration (default: 2)
+    --agent-tiers TIERS     Enabled tiers, comma-separated (default: 1,2)
+    --unity                 Enable Unity automation mode (Quest 3 XR development)
+    --resume                Resume from last session if available
+    --resume-from <id>      Resume from specific session ID
+    --list-sessions         List all available sessions
+    --no-session            Disable session state auto-save
+    -h, --help              Show this help message
+
+ADAPTIVE STORY SPLITTING (Phase 3, US-001):
+    --complexity-threshold N
+                           Complexity score threshold (0-10) for triggering story split
+                           Default: 7. Higher values make splitting less aggressive.
+    --no-adaptive          Disable adaptive story splitting entirely
+
+DYNAMIC PRD GENERATION (Phase 3, US-004):
+    --dynamic "goal"       Generate PRD from high-level goal using Claude
+                           Example: --dynamic "Add user auth with JWT"
+                           Uses Claude to:
+                           - Analyze goal and identify requirements
+                           - Decompose into 5-10 user stories
+                           - Infer dependencies from logical order
+                           - Assign complexity estimates
+                           - Calculate project complexity
+    --dynamic-output FILE  Custom output path for generated PRD
+                           Default: prd-{project-name}.json
+    --codebase-analysis    Enable codebase analysis to estimate file scopes
+                           Scans project for languages, directories, patterns
+
+PRD TEMPLATES (US-002):
+    --list-templates        List all available PRD templates
+    --show-template <name>  Show template details and required variables
+    --template <name>       Generate PRD from template (interactive)
+    --template-output <file> Output file for generated PRD (default: prd.json)
+    --template-var KEY=VAL  Set template variable (can be used multiple times)
+    --template-vars <file>  Load variables from JSON file
+
+WORKSPACE SANDBOXING (US-003):
+    --workspace <folders>   Limit execution scope to specific folders (comma-separated)
+                           Example: --workspace "lib,src,tests"
+                           Features:
+                           - Validates folders exist and are within repository
+                           - Auto-infers fileScope from workspace contents
+                           - Mounts workspace in worker directories for parallel execution
+                           - Informs Claude of workspace boundaries in prompts
+    --workspace-mode <mode> Workspace enforcement mode (default: permissive)
+                           Options:
+                           - strict: Hard fail if files outside workspace are accessed
+                           - permissive: Warning only, allows outside access
+    --disable-workspace-checks
+                           Disable all workspace sandboxing checks
+
+CHECKPOINT CONFIRMATIONS (US-004):
+    --safety-level <level>  Safety confirmation level (default: normal)
+                           Options:
+                           - paranoid: Confirm all operations
+                           - cautious: Confirm destructive operations and sensitive modifications
+                           - normal: Confirm only sensitive file modifications
+                           - yolo: No confirmations (use with caution!)
+    --safety-dry-run       Show what would be confirmed without executing
+    --disable-safety       Disable all safety checks (equivalent to --safety-level yolo)
+
+IMPROVEMENT MANAGEMENT:
+    --list-improvements     List all improvement PRDs with status
+    --review-improvement <prd_name>
+                           Show details of a specific improvement PRD
+    --approve-improvement <prd_name> [--notes "..."]
+                           Approve an improvement PRD for implementation
+    --reject-improvement <prd_name> --reason "..."
+                           Reject an improvement PRD with feedback
+    --validate-improvement <prd_name> [--force]
+                           Validate a PRD before deployment
+    --execute-improvement <prd_name> [--validate] [--force]
+                           Run an approved improvement PRD with claude-loop
+                           --validate: run validation before execution
+                           --force: bypass validation blocking conditions
+    --rollback-improvement <prd_name> [--reason "..."] [--dry-run]
+                           Rollback an improvement that caused regressions
+                           --reason: specify reason for rollback
+                           --dry-run: show what would happen without changes
+    --improvement-history   Show improvement history with outcomes
+
+GAP ANALYSIS DAEMON:
+    --start-daemon          Start the background gap analysis daemon
+    --stop-daemon           Stop the running daemon
+    --daemon-status         Show daemon status
+
+DAEMON MODE (US-205):
+    daemon start [workers]  Start the background task execution daemon
+                           workers: number of concurrent workers (default: 1)
+    daemon stop            Stop the running daemon gracefully
+    daemon status          Show daemon status and active workers
+    daemon submit <prd> [priority]
+                           Submit a PRD to the daemon queue
+                           priority: high, normal (default), or low
+    daemon queue           Show current task queue
+    daemon cancel <task_id>
+                           Cancel a pending task
+    daemon pause           Pause queue processing
+    daemon resume          Resume queue processing
+
+DASHBOARD MODE (US-207):
+    dashboard start [--port PORT] [--host HOST]
+                           Start the visual progress dashboard backend
+                           port: HTTP port (default: 8080)
+                           host: bind host (default: 127.0.0.1)
+    dashboard stop         Stop the running dashboard server
+    dashboard restart [--port PORT]
+                           Restart the dashboard server
+    dashboard status       Show dashboard server status
+    dashboard logs         Show dashboard server logs (tail -f)
+    dashboard generate-token
+                           Generate new authentication token
+
+    Features:
+    - Fire-and-forget workflow: submit tasks and let daemon handle them
+    - Priority queuing: high/normal/low priority tasks
+    - Worker pool: configurable concurrent workers
+    - Graceful shutdown: finishes current tasks before stopping
+    - Queue management: view, pause, resume, cancel tasks
+    - Persistent queue: survives daemon restarts
+
+QUICK TASK MODE (US-203, US-204):
+    quick "task description"
+                           Execute a single task without PRD authoring
+                           Example: ./claude-loop.sh quick "Add error handling to auth.js"
+
+    Quick Task Options:
+    --workspace <dir>      Workspace directory for quick task (default: .)
+    --commit               Auto-commit changes on success
+    --escalate             Warn and confirm if task appears complex (score >= 60)
+    --dry-run              Show execution plan without running (includes cost estimate)
+    --continue             Resume last failed quick task from checkpoint
+    --template <name>      Use predefined template (refactor, add-tests, fix-bug)
+
+    Quick Task Commands:
+    quick history [N] [filter]
+                           Show last N quick tasks (default: 20)
+                           Filters: all, success, failure
+    quick stats            Show quick task statistics (success rate, avg cost, etc.)
+    quick templates        List available templates
+
+    Advanced Features (US-204):
+    - Complexity Detection: Auto-calculates task complexity (0-100 score)
+    - Auto-Escalation: Suggests PRD mode for complex tasks (--escalate flag)
+    - Task Chaining: Execute multiple tasks sequentially (via lib script)
+    - Templates: Pre-defined patterns for common tasks (refactor, tests, bugs)
+    - Cost Estimation: Shows estimated Claude API cost before execution
+    - Checkpointing: Saves state every 5 steps for resumption (--continue)
+    - Concurrent Execution: Run multiple tasks in parallel (via lib script)
+    - Enhanced History: Filter by status, view statistics
+
+    Core Features:
+    - Natural language task description
+    - Automatic plan generation (5-10 steps based on complexity)
+    - User approval checkpoint before execution
+    - Isolated worker directory per task
+    - Real-time progress indicators
+    - Automatic commit message generation (Conventional Commits)
+    - Audit trail in .claude-loop/quick-tasks.jsonl
+
+TIER 1 PATTERN EXTRACTION (Phase 1):
+    --enable-hooks          Enable hook system for lifecycle extension (US-001)
+                           Hooks allow injecting custom bash scripts at key execution points.
+                           Hook types: pre_iteration, post_iteration, pre_commit, post_commit,
+                                      on_error, on_complete
+                           Location: .claude-loop/hooks/<type>/
+                           Execution: Alphanumeric order (01-99 prefix convention)
+
+    --enable-learnings      Enable lightweight learnings JSON storage (US-002)
+                           Complement ChromaDB experience store with simple JSON-based
+                           iteration learnings. Enables rating and querying patterns.
+    --list-learnings [--tag TAG] [--since DATE]
+                           List all learnings with optional filters
+    --rate-learning <ID> --helpful|--unhelpful
+                           Rate learning usefulness (increments/decrements helpful_count)
+
+    --enable-decomposition  Enable automatic task decomposition (US-003)
+                           Detect oversized stories and automatically suggest decomposition
+                           into smaller substories using LLM-powered analysis.
+                           Thresholds: estimatedHours > 16 OR description length > 1000 chars
+                                      OR acceptance criteria count > 8
+    --decompose-story <ID>  Force decomposition of specific story
+    --auto-decompose        Auto-approve decompositions without user interaction
+
+    --enable-structured-output  Enable structured JSON output parsing (US-004)
+                           Replace text-based sigil detection with structured JSON responses.
+                           Improves parsing reliability and enables metadata extraction
+                           (confidence scores, reasoning, file changes, complexity).
+                           Backward compatible: falls back to sigil format if JSON fails.
+
+MCP INTEGRATION (US-005 - Phase 2):
+    --enable-mcp           Enable Model Context Protocol (MCP) integration
+                           Enables access to community MCP tools for database, filesystem,
+                           API, and cloud service operations.
+                           Requires: pip install mcp==1.13.1
+                           Configure servers in: .claude-loop/mcp-config.json
+    --list-mcp-tools       List all available MCP tools from configured servers
+                           Shows tool names, descriptions, and server status
+
+MULTI-PROVIDER LLM (US-006 - Phase 2):
+    --enable-multi-provider  Enable multi-provider LLM routing with cost optimization
+                           Automatically selects cheapest capable provider based on complexity.
+                           Complexity 0-2: cheap models (Haiku, GPT-4o-mini, Gemini Flash)
+                           Complexity 3-5: medium models (Sonnet, GPT-4o, Gemini Pro)
+                           Complexity 6+: powerful models (Opus, O1, Gemini Thinking)
+                           Requires: litellm and provider API keys
+                           Configure providers in: lib/llm_providers.yaml
+    --cost-report [days]   Show cost analysis report (default: last 7 days)
+                           Displays: provider usage, cost breakdown, savings vs baseline,
+                           success rates, and performance metrics
+                           Example: --cost-report 30 (last 30 days)
+
+BOUNDED DELEGATION (US-007 - Phase 2):
+    --enable-delegation    Enable hierarchical task delegation (EXPERIMENTAL)
+                           Allows agent to delegate subtasks to subordinate agents.
+                           Safety bounds: MAX_DEPTH=2, MAX_CONTEXT=100k tokens
+                           Delegation syntax: [delegate:description:hours]
+                           Features:
+                           - Automatic depth limit enforcement (prevents runaway delegation)
+                           - Cycle detection (prevents A→B→A loops)
+                           - Context budget management (prevents token explosion)
+                           - Parallel execution via git worktrees
+                           - Cost attribution to parent story
+                           Delegation logged to: .claude-loop/logs/delegation.jsonl
+
+SKILLS FRAMEWORK (US-201, US-202):
+    --list-skills          List all available skills with descriptions
+    --skill <name>         Execute a specific skill
+    --skill-arg <arg>      Pass argument to skill (can be used multiple times)
+
+    Available Skills:
+    - hello-world: Example skill demonstrating the framework
+    - prd-validator: Validate PRD structure and dependencies
+    - test-scaffolder: Generate test file structures from code
+    - commit-formatter: Enforce Conventional Commits standards
+    - api-spec-generator: Generate OpenAPI specs from code
+    - cost-optimizer: Analyze story complexity and recommend models
+
+AUTONOMOUS MODE:
+    --autonomous            Enable autonomous mode for daemon (auto-approve low-risk improvements)
+    --disable-autonomous    Disable autonomous mode (revert to human-approval)
+    --autonomous-status     Show autonomous mode gate status
+
+MULTI-LLM REVIEW:
+    --enable-review         Enable multi-LLM review panel after story completion
+    --reviewers <list>      Comma-separated list of providers (default: all configured)
+                           Example: --reviewers openai,gemini,deepseek
+    --review-threshold N    Minimum consensus score to pass (1-10, default: 7)
+    --max-review-cycles N   Maximum review-fix cycles per story (default: 2)
+
+PROVIDER REPLACEMENT MODE (LLM-013):
+    --provider <provider>   Primary provider for implementation (default: claude)
+                           Options: claude, openai, gemini, deepseek
+                           WARNING: Non-Claude providers have reduced capabilities
+    --model <model>         Override model selection for provider
+                           Examples: gpt-4o, gemini-2.0-flash, deepseek-chat
+
+VALIDATION & TESTING:
+    --validate-classifier   Run classification accuracy tests (requires >80% for autonomous mode)
+
+DESCRIPTION:
+    claude-loop runs Claude Code in repeated iterations to implement complete
+    features based on a Product Requirements Document (PRD). Each iteration:
+
+    1. Reads prd.json and progress.txt for context
+    2. Picks the highest priority incomplete user story
+    3. Auto-selects specialist agents based on story keywords
+    4. Implements the story with agent expertise
+    5. Runs quality checks (tests, typecheck, lint)
+    6. Commits changes and updates state files
+    7. Repeats until all stories pass or max iterations reached
+
+AGENT INTEGRATION (Hybrid Approach):
+    claude-loop comes with bundled core agents that work out of the box:
+    - code-reviewer, test-runner, debugger, security-auditor, git-workflow
+
+    For each story, claude-loop will:
+    - Analyze keywords (test, security, python, etc.)
+    - Load matching specialist agent prompts
+    - Combine agent expertise with iteration instructions
+    - Use up to --max-agents specialists per story
+
+    Use --agents-dir to add external specialists on top of bundled agents.
+
+    Agent Tiers:
+      1 = Core (bundled: code-reviewer, test-runner, debugger, etc.)
+      2 = Curated specialists (python-dev, typescript-specialist, etc.)
+      3 = Domain-specific (physical AI, industry-specific)
+      4 = Community (untrusted, disabled by default)
+
+UNITY AUTOMATION MODE:
+    The --unity flag enables Unity Editor automation for Quest 3 XR development.
+    Supported commands:
+      unity.setup_quest3   - Full Quest 3 SDK setup workflow
+      unity.build          - Build APK for Android/Quest
+      unity.deploy         - Deploy APK to connected Quest device
+      unity.install_meta_sdk - Install Meta XR SDK from Asset Store
+      unity.configure_xr   - Configure XR settings for a platform
+
+    Workflow files (YAML) can define multi-step Unity automation sequences.
+
+SELF-IMPROVEMENT WORKFLOW:
+    claude-loop includes a self-improvement pipeline that:
+    1. Logs execution data and classifies failures
+    2. Clusters similar failures into patterns
+    3. Analyzes root causes with 5-Whys decomposition
+    4. Generalizes to capability gaps
+    5. Generates improvement PRDs automatically
+
+    Use --list-improvements to see generated PRDs pending review.
+    Use --approve-improvement to approve and --execute-improvement to run.
+    Use --rollback-improvement to revert changes if an improvement causes issues.
+
+    PRD Status Lifecycle:
+      pending_review -> approved -> in_progress -> complete -> rolled_back
+                    \-> rejected
+
+EXAMPLES:
+    # Works out of the box with bundled agents
+    ./claude-loop.sh
+
+    # Add external specialists for more expertise
+    ./claude-loop.sh --agents-dir ~/claude-agents
+
+    # Unity automation mode for Quest 3 development
+    ./claude-loop.sh --unity
+
+    # Full options
+    ./claude-loop.sh -a ~/claude-agents -m 20 --max-agents 3 -v
+
+    # Improvement management
+    ./claude-loop.sh --list-improvements
+    ./claude-loop.sh --review-improvement improve-file-handling-abc123
+    ./claude-loop.sh --approve-improvement improve-file-handling-abc123 --notes "Looks good"
+    ./claude-loop.sh --reject-improvement improve-ui-abc789 --reason "Too risky"
+    ./claude-loop.sh --execute-improvement improve-file-handling-abc123
+    ./claude-loop.sh --rollback-improvement improve-file-handling-abc123 --reason "Caused test failures"
+
+FILES (legacy mode - ./prd.json):
+    prd.json      - Task state machine with user stories
+    progress.txt  - Append-only log of learnings
+    AGENTS.md     - Pattern documentation for future iterations
+    prompt.md     - Instructions for each Claude iteration
+
+FILES (new PRD structure - prds/active/*):
+    prds/
+    ├── active/         - PRDs currently in progress
+    │   └── my-feature/
+    │       ├── prd.json        - User stories
+    │       ├── MANIFEST.yaml   - PRD metadata and status
+    │       └── progress.txt    - Iteration learnings
+    ├── completed/      - Successfully completed PRDs (auto-moved)
+    ├── abandoned/      - Abandoned PRDs
+    └── drafts/         - Draft PRDs (not yet approved)
+
+    When all stories pass:
+    1. MANIFEST.yaml status is updated to 'completed'
+    2. PRD directory is moved from prds/active/ to prds/completed/
+
+    Use lib/prd-manager.py for PRD lifecycle management:
+    - prd-manager.py create DOC-001 "My Feature"
+    - prd-manager.py approve DOC-001
+    - prd-manager.py list --status active
+

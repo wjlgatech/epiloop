@@ -1,0 +1,18 @@
+❌ Task Failed
+
+Task ID: {{TASK_ID}}
+Status: {{STATUS}}
+Project: {{PROJECT}}
+
+Results:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✗ Stories Completed: {{STORIES_COMPLETED}}
+✗ Time Taken: {{TIME_TAKEN}}
+✗ Cost: {{COST}}
+
+The task encountered errors during execution. Please review the logs for details.
+
+Action Required: Manual intervention may be needed to resolve the issue.
+
+--
+claude-loop autonomous feature implementation

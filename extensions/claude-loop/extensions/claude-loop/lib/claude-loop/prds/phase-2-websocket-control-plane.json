@@ -1,0 +1,209 @@
+{
+  "project": "phase-2-websocket-control-plane",
+  "branchName": "feature/websocket-v1-6-0",
+  "description": "Implement WebSocket Control Plane for real-time progress streaming and web-based UI. Enables modern UX with live updates, remote control, and foundation for multi-channel architecture.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "WebSocket Server Foundation",
+      "description": "As a developer, I want a WebSocket server that handles real-time bidirectional communication so that clients can receive live progress updates and send commands",
+      "acceptanceCriteria": [
+        "Create lib/websocket_server.py with Flask-SocketIO",
+        "Server listens on localhost:8080 by default (configurable)",
+        "Supports multiple concurrent client connections",
+        "Token-based authentication for security",
+        "Session management with UUIDs",
+        "Event emission: story_started, story_progress, story_complete, error",
+        "RPC methods: submit_prd, pause_story, resume_session, stop_execution",
+        "Graceful shutdown with active connection cleanup",
+        "Unit tests with 80%+ coverage",
+        "Integration tests with mock WebSocket client",
+        "Document in docs/features/websocket-server.md"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/websocket_server.py",
+        "tests/test_websocket_server.py",
+        "docs/features/websocket-server.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-002",
+      "title": "Progress Streaming Integration",
+      "description": "As a user, I want real-time progress updates streamed to connected clients so that I can monitor execution without polling",
+      "acceptanceCriteria": [
+        "Create lib/progress_streamer.py with event emitter",
+        "Integrate with existing execution-logger.sh",
+        "Stream events: ac_completion, tool_execution, test_running, test_result",
+        "Include metadata: story_id, iteration, timestamp, duration",
+        "Emit tool execution progress (start, progress, complete)",
+        "Stream test output in real-time (chunked)",
+        "Event latency <100ms from source to client",
+        "Handle backpressure (slow clients don't block execution)",
+        "Unit tests for event emission",
+        "Integration test: full story execution with event capture",
+        "Document in docs/features/progress-streaming.md"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/progress_streamer.py",
+        "lib/execution-logger.sh",
+        "tests/test_progress_streamer.py",
+        "docs/features/progress-streaming.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-003",
+      "title": "Web Dashboard UI - Foundation",
+      "description": "As a user, I want a web-based dashboard to view active PRDs and their status so that I can monitor claude-loop from a browser",
+      "acceptanceCriteria": [
+        "Create web-ui/ directory with Vite + React setup",
+        "Dashboard layout with header, sidebar, main content",
+        "PRD list view showing: project, status, progress %, elapsed time",
+        "Real-time status updates via WebSocket connection",
+        "Authentication flow (token input)",
+        "Responsive design (desktop + tablet)",
+        "Build process: npm run build → dist/",
+        "Serve static files from Flask server",
+        "Unit tests with Vitest",
+        "E2E tests with Playwright",
+        "Document in docs/ui/getting-started.md"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "web-ui/",
+        "lib/websocket_server.py",
+        "tests/ui/",
+        "docs/ui/getting-started.md"
+      ],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-004",
+      "title": "Live Log Viewer Component",
+      "description": "As a user, I want to view real-time execution logs in the web UI so that I can debug issues as they happen",
+      "acceptanceCriteria": [
+        "Create LogViewer React component with virtual scrolling",
+        "Display streamed events with syntax highlighting",
+        "Auto-scroll to bottom (with pause option)",
+        "Filter by event type (ac, tool, test, error)",
+        "Search functionality (Ctrl+F)",
+        "Export logs to file (JSON/text)",
+        "Performance: handle 10,000+ log lines smoothly",
+        "WebSocket reconnection with resume",
+        "Component tests with React Testing Library",
+        "Visual regression tests",
+        "Document in docs/ui/components.md"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "web-ui/src/components/LogViewer.tsx",
+        "tests/ui/LogViewer.test.tsx",
+        "docs/ui/components.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-005",
+      "title": "Lane-Based Concurrency",
+      "description": "As a developer, I want lane-based execution to prevent race conditions in parallel PRD execution so that git operations are safe and predictable",
+      "acceptanceCriteria": [
+        "Create lib/lane_executor.py with async queue per lane",
+        "Global lane for git operations (serialized)",
+        "Per-PRD lanes for story execution (isolated)",
+        "Automatic deadlock detection (timeout-based)",
+        "Lane metrics: queue depth, execution time, throughput",
+        "Integrate with existing parallel.sh execution",
+        "Migration guide from current git worktree approach",
+        "Unit tests with concurrent execution scenarios",
+        "Stress test: 10 concurrent PRDs",
+        "Document in docs/architecture/lane-based-concurrency.md"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/lane_executor.py",
+        "lib/parallel.sh",
+        "tests/test_lane_executor.py",
+        "docs/architecture/lane-based-concurrency.md"
+      ],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-006",
+      "title": "Configuration Management UI",
+      "description": "As a user, I want to manage configuration (API keys, models, failover) through the web UI so that I don't need to edit YAML files manually",
+      "acceptanceCriteria": [
+        "Create ConfigEditor React component",
+        "Forms for: API keys, model selection, failover settings, hooks",
+        "Real-time validation (API key format, URL format)",
+        "Test connection button (verify API key works)",
+        "Save to config.yaml with backup",
+        "Diff view showing changes before save",
+        "Secure storage (API keys encrypted)",
+        "Import/export configuration",
+        "Component tests",
+        "Integration test: save and load config",
+        "Document in docs/ui/configuration.md"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "web-ui/src/components/ConfigEditor.tsx",
+        "lib/config_manager.py",
+        "tests/ui/ConfigEditor.test.tsx",
+        "tests/test_config_manager.py",
+        "docs/ui/configuration.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-007",
+      "title": "Cost Tracker Visualization",
+      "description": "As a user, I want to visualize token usage and costs over time so that I can optimize spending and track project budgets",
+      "acceptanceCriteria": [
+        "Create CostTracker React component with charts",
+        "Display: tokens per story, cost per feature, total spend",
+        "Time-series chart (daily/weekly/monthly)",
+        "Breakdown by model (sonnet vs haiku vs opus)",
+        "Budget alerts (configurable thresholds)",
+        "Export cost report (CSV/PDF)",
+        "Real-time cost updates during execution",
+        "Integration with existing provider_usage.jsonl logs",
+        "Chart library: Recharts or Chart.js",
+        "Component tests",
+        "Document in docs/ui/cost-tracking.md"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "web-ui/src/components/CostTracker.tsx",
+        "lib/cost_analytics.py",
+        "tests/ui/CostTracker.test.tsx",
+        "tests/test_cost_analytics.py",
+        "docs/ui/cost-tracking.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    }
+  ]
+}

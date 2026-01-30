@@ -311,7 +311,7 @@ importers:
         specifier: ^10.5.0
         version: 10.5.0
     devDependencies:
-      clawdbot:
+      epiloop:
         specifier: workspace:*
         version: link:../..
 
@@ -339,7 +339,7 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
-      clawdbot:
+      epiloop:
         specifier: workspace:*
         version: link:../..
 
@@ -347,7 +347,7 @@ importers:
 
   extensions/memory-core:
     dependencies:
-      clawdbot:
+      epiloop:
         specifier: '>=2026.1.23-1'
         version: 2026.1.23-1(@types/express@5.0.6)(audio-decode@2.2.3)(devtools-protocol@0.0.1561482)(typescript@5.9.3)
 
@@ -374,7 +374,7 @@ importers:
       '@microsoft/agents-hosting-extensions-teams':
         specifier: ^1.2.2
         version: 1.2.2
-      clawdbot:
+      epiloop:
         specifier: workspace:*
         version: link:../..
       express:
@@ -388,7 +388,7 @@ importers:
 
   extensions/nostr:
     dependencies:
-      clawdbot:
+      epiloop:
         specifier: workspace:*
         version: link:../..
       nostr-tools:
@@ -431,7 +431,7 @@ importers:
 
   extensions/zalo:
     dependencies:
-      clawdbot:
+      epiloop:
         specifier: workspace:*
         version: link:../..
       undici:
@@ -443,7 +443,7 @@ importers:
       '@sinclair/typebox':
         specifier: 0.34.47
         version: 0.34.47
-      clawdbot:
+      epiloop:
         specifier: workspace:*
         version: link:../..
 
@@ -3108,7 +3108,7 @@ packages:
   class-variance-authority@0.7.1:
     resolution: {integrity: sha512-Ka+9Trutv7G8M6WT6SeiRWz792K5qEqIGEGzXKhAE6xOWAY6pPH8U+9IY3oCMv6kqTmLsv7Xh/2w2RigkePMsg==}
 
-  clawdbot@2026.1.23-1:
+  epiloop@2026.1.23-1:
     resolution: {integrity: sha512-t51ks5bnTRQNCzoTunUJaoeMjamvP3zP5EyyadmI34kXYGIbWcCx242w5XMr5h4sLSw59nBw3lJ74vErWDsz9w==}
     engines: {node: '>=22.12.0'}
     hasBin: true
@@ -8839,7 +8839,7 @@ snapshots:
     dependencies:
       clsx: 2.1.1
 
-  clawdbot@2026.1.23-1(@types/express@5.0.6)(audio-decode@2.2.3)(devtools-protocol@0.0.1561482)(typescript@5.9.3):
+  epiloop@2026.1.23-1(@types/express@5.0.6)(audio-decode@2.2.3)(devtools-protocol@0.0.1561482)(typescript@5.9.3):
     dependencies:
       '@agentclientprotocol/sdk': 0.13.1(zod@4.3.6)
       '@aws-sdk/client-bedrock': 3.975.0

@@ -1,0 +1,142 @@
+#========================================================
+# VALIDATION GAP TEST CASE 005
+# Purpose: Test threshold boundary (exactly 90% score)
+# Expected: Auto-pass triggers at exactly 0.90 threshold
+#========================================================
+
+id: VGAP-005
+name: "Email Validator with Weighted Criteria"
+tier: micro
+source_project: null
+difficulty: 2
+estimated_time_human_minutes: 18
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Requirement**: Validate email addresses with basic checks.
+
+  **Task**: Create `email_validator.py` with function `is_valid_email(email)`
+  that:
+  1. Returns True for valid emails, False for invalid
+  2. Checks for @ symbol (CRITICAL - highest weight)
+  3. Checks for domain part after @ (HIGH weight)
+  4. Checks for local part before @ (HIGH weight)
+  5. Optional: Check for valid TLD (MEDIUM weight)
+  6. Optional: No consecutive dots (LOW weight)
+
+  **Why This Tests Validation Gap**:
+  This has WEIGHTED criteria where the most important checks (AC2-AC4)
+  total exactly 90% when combined. This tests if auto-pass triggers at
+  the exact threshold (≥0.90) even if optional criteria are missed.
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Creates email_validator.py file"
+    weight: 0.10
+    validation_method: "file_exists"
+    validation_script: |
+      test -f email_validator.py
+
+  - id: AC2
+    description: "Checks for @ symbol presence"
+    weight: 0.35  # CRITICAL
+    validation_method: "grep"
+    validation_script: |
+      grep -E "('@' in|\.count.*@)" email_validator.py
+
+  - id: AC3
+    description: "Checks for domain part (text after @)"
+    weight: 0.25  # HIGH
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(split.*@|after.*@|domain)" email_validator.py
+
+  - id: AC4
+    description: "Checks for local part (text before @)"
+    weight: 0.20  # HIGH
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(split.*@|before.*@|local)" email_validator.py
+
+  - id: AC5
+    description: "Validates TLD format (optional, nice-to-have)"
+    weight: 0.05  # MEDIUM - Optional
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(\..*[a-z]|endswith|TLD|tld)" email_validator.py
+
+  - id: AC6
+    description: "Checks for consecutive dots (optional)"
+    weight: 0.05  # LOW - Optional
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(\.\.|\.\{2\})" email_validator.py
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach: |
+    Basic email validation:
+    ```python
+    def is_valid_email(email):
+        if '@' not in email:
+            return False
+
+        parts = email.split('@')
+        if len(parts) != 2:
+            return False
+
+        local, domain = parts
+
+        if not local or not domain:
+            return False
+
+        # Optional: TLD check
+        if '.' not in domain:
+            return False
+
+        return True
+    ```
+
+  expected_behavior: |
+    Implementation of AC1-AC4 is straightforward and gives exactly
+    0.90 score (90%). This should trigger auto-pass even if AC5-AC6
+    are missed. Tests the threshold boundary.
+
+#--------------------------------------------------------
+# VALIDATION GAP TEST METADATA
+#--------------------------------------------------------
+validation_gap_test:
+  purpose: "Test auto-pass threshold boundary (exactly 0.90)"
+  expected_score: 0.90  # Exactly at threshold
+  expected_passes_update: true  # Should auto-pass
+  failure_mode: "Threshold check is off-by-one (> vs >=)"
+  auto_pass_threshold: 0.90
+  threshold_test: true
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ email_validator.py exists
+  2. ✓ Checks for @ symbol (critical)
+  3. ✓ Validates domain part
+  4. ✓ Validates local part
+  5. ~ Optional TLD/dot checks (not required)
+  6. ✓ AUTO-PASS: Score 0.90 triggers passes:true ← THE KEY TEST
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["validation-gap-test", "threshold", "weighted", "synthetic"]
+  test_type: "priority1-boundary"
+  created_at: "2026-01-23"
+  difficulty_reason: "Tests exact auto-pass threshold (≥0.90)"

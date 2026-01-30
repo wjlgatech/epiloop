@@ -17,7 +17,7 @@ import { EdgeTTS } from "node-edge-tts";
 import type { ReplyPayload } from "../auto-reply/types.js";
 import { normalizeChannelId } from "../channels/plugins/index.js";
 import type { ChannelId } from "../channels/plugins/types.js";
-import type { ClawdbotConfig } from "../config/config.js";
+import type { EpiloopConfig } from "../config/config.js";
 import type {
   TtsConfig,
   TtsMode,
@@ -216,7 +216,7 @@ function resolveModelOverridePolicy(
   };
 }
 
-export function resolveTtsConfig(cfg: ClawdbotConfig): ResolvedTtsConfig {
+export function resolveTtsConfig(cfg: EpiloopConfig): ResolvedTtsConfig {
   const raw: TtsConfig = cfg.messages?.tts ?? {};
   const providerSource = raw.provider ? "config" : "default";
   const edgeOutputFormat = raw.edge?.outputFormat?.trim();
@@ -274,12 +274,12 @@ export function resolveTtsConfig(cfg: ClawdbotConfig): ResolvedTtsConfig {
 
 export function resolveTtsPrefsPath(config: ResolvedTtsConfig): string {
   if (config.prefsPath?.trim()) return resolveUserPath(config.prefsPath.trim());
-  const envPath = process.env.CLAWDBOT_TTS_PREFS?.trim();
+  const envPath = process.env.EPILOOP_TTS_PREFS?.trim();
   if (envPath) return resolveUserPath(envPath);
   return path.join(CONFIG_DIR, "settings", "tts.json");
 }
 
-export function buildTtsSystemPromptHint(cfg: ClawdbotConfig): string | undefined {
+export function buildTtsSystemPromptHint(cfg: EpiloopConfig): string | undefined {
   const config = resolveTtsConfig(cfg);
   const prefsPath = resolveTtsPrefsPath(config);
   if (!isTtsEnabled(config, prefsPath)) return undefined;
@@ -713,7 +713,7 @@ type SummaryModelSelection = {
 };
 
 function resolveSummaryModelRef(
-  cfg: ClawdbotConfig,
+  cfg: EpiloopConfig,
   config: ResolvedTtsConfig,
 ): SummaryModelSelection {
   const defaultRef = resolveDefaultModelForAgent({ cfg });
@@ -737,7 +737,7 @@ function isTextContentBlock(block: { type: string }): block is TextContent {
 async function summarizeText(params: {
   text: string;
   targetLength: number;
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   config: ResolvedTtsConfig;
   timeoutMs: number;
 }): Promise<SummarizeResult> {
@@ -982,7 +982,7 @@ async function edgeTTS(params: {
 
 export async function textToSpeech(params: {
   text: string;
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   prefsPath?: string;
   channel?: string;
   overrides?: TtsDirectiveOverrides;
@@ -1153,7 +1153,7 @@ export async function textToSpeech(params: {
 
 export async function maybeApplyTtsToPayload(params: {
   payload: ReplyPayload;
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   channel?: string;
   kind?: "tool" | "block" | "final";
 }): Promise<ReplyPayload> {

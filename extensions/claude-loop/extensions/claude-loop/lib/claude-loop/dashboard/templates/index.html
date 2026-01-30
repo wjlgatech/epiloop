@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Runs - Claude-Loop Dashboard{% endblock %}
+
+{% block content %}
+<h1>Run History</h1>
+
+{% if runs %}
+<div class="stat-grid">
+    <div class="stat-card">
+        <div class="stat-value">{{ runs|length }}</div>
+        <div class="stat-label">Total Runs</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">
+            {% set total_cost = namespace(value=0) %}
+            {% for run in runs %}
+                {% if run.total_cost is defined %}
+                    {% set total_cost.value = total_cost.value + run.total_cost %}
+                {% endif %}
+            {% endfor %}
+            {{ total_cost.value|format_cost }}
+        </div>
+        <div class="stat-label">Total Cost</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">
+            {% set total_stories = namespace(value=0) %}
+            {% for run in runs %}
+                {% if run.stories_completed is defined %}
+                    {% set total_stories.value = total_stories.value + run.stories_completed %}
+                {% endif %}
+            {% endfor %}
+            {{ total_stories.value }}
+        </div>
+        <div class="stat-label">Stories Completed</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">
+            {% set total_iterations = namespace(value=0) %}
+            {% for run in runs %}
+                {% if run.total_iterations is defined %}
+                    {% set total_iterations.value = total_iterations.value + run.total_iterations %}
+                {% endif %}
+            {% endfor %}
+            {{ total_iterations.value }}
+        </div>
+        <div class="stat-label">Total Iterations</div>
+    </div>
+</div>
+
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Project</th>
+                <th>Stories</th>
+                <th>Iterations</th>
+                <th>Cost</th>
+                <th>Duration</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for run in runs %}
+            <tr>
+                <td>{{ run.run_id|format_timestamp }}</td>
+                <td>{{ run.project|default('Unknown') }}</td>
+                <td>{{ run.stories_completed|default(0) }}/{{ run.stories_total|default('?') }}</td>
+                <td>{{ run.total_iterations|default(run.iterations|length if run.iterations else 0) }}</td>
+                <td>{{ run.total_cost|default(0)|format_cost }}</td>
+                <td>{{ run.total_duration_ms|default(0)|format_duration }}</td>
+                <td>
+                    {% if run.status == 'complete' or run.stories_completed == run.stories_total %}
+                        <span class="status-badge status-complete">Complete</span>
+                    {% elif run.status == 'error' %}
+                        <span class="status-badge status-error">Error</span>
+                    {% else %}
+                        <span class="status-badge status-running">In Progress</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/run/{{ run.run_id }}" class="btn btn-secondary">View</a>
+                    {% if run.has_report %}
+                        <a href="/api/run/{{ run.run_id }}" class="btn btn-secondary" target="_blank">JSON</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <h2>No Runs Yet</h2>
+    <p>Run claude-loop to see metrics here.</p>
+    <pre style="margin-top: 1rem; background: var(--bg-secondary); padding: 1rem; border-radius: var(--border-radius); display: inline-block;">./claude-loop.sh</pre>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,70 @@
+{
+  "project": "workspace-source-cloning",
+  "branchName": "feature/workspace-source-cloning",
+  "description": "Add automatic source repository cloning to workspaces. Currently workspaces are created empty causing 7 early termination failures (score 0.0). Add optional source_project field to PRD that automatically clones the repository into workspace before execution.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Add source_project field to PRD schema",
+      "description": "As a user, I want to specify source_project in my PRD so that the source repository is automatically available in the workspace",
+      "acceptanceCriteria": [
+        "PRD schema accepts optional source_project field (string path)",
+        "Field is documented in PRD format documentation",
+        "Validation allows both absolute and relative paths",
+        "Defaults to null if not specified (backward compatible)",
+        "Test with sample PRD containing source_project field"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented source_project field validation and documentation. Commit: a1f98c7",
+      "fileScope": [
+        "lib/prd-parser.sh",
+        "lib/prd-manager.py"
+      ],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    },
+    {
+      "id": "US-002",
+      "title": "Clone source repository into workspace",
+      "description": "As the system, I need to clone the specified source repository into the workspace before the first iteration starts",
+      "acceptanceCriteria": [
+        "Read source_project from PRD during workspace setup",
+        "Clone repository contents (excluding .git directory) into workspace",
+        "Handle relative paths relative to project root",
+        "Skip if source_project is null or not specified",
+        "Log cloning operation with source and destination paths",
+        "Test with agent-zero repository cloning"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented source repository cloning in workspace-manager.sh and integrated into worker.sh. Added clone_source_to_workspace() function that reads source_project from PRD, validates path, clones contents (excluding .git and .claude-loop), handles relative/absolute paths, and logs all operations. Tested successfully with lib directory cloning.",
+      "fileScope": [
+        "lib/workspace-manager.sh",
+        "lib/worker.sh"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-003",
+      "title": "Handle cloning errors gracefully",
+      "description": "As the system, I need to handle errors during source cloning without crashing the entire execution",
+      "acceptanceCriteria": [
+        "Validate source path exists before attempting clone",
+        "Log clear error if source path not found",
+        "Log warning if clone fails but continue execution",
+        "Skip cloning if destination already exists (resume scenario)",
+        "Test with invalid path and verify graceful handling"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/workspace-manager.sh"
+      ],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    }
+  ]
+}

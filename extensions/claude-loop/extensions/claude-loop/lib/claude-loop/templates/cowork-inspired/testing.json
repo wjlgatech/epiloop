@@ -1,0 +1,172 @@
+{
+  "metadata": {
+    "templateName": "testing",
+    "templateVersion": "1.0.0",
+    "description": "Test coverage expansion with unit tests, integration tests, and end-to-end tests",
+    "estimatedComplexity": "simple",
+    "typicalDuration": "3-5 hours",
+    "requiredSkills": ["testing", "test automation", "QA"],
+    "variables": [
+      {
+        "name": "PROJECT_NAME",
+        "description": "Name of the project",
+        "required": true,
+        "example": "user-management"
+      },
+      {
+        "name": "TEST_TARGET",
+        "description": "What is being tested (module, feature, component)",
+        "required": true,
+        "example": "authentication-flow"
+      },
+      {
+        "name": "BRANCH_NAME",
+        "description": "Git branch name for testing",
+        "required": false,
+        "default": "test/{{TEST_TARGET}}",
+        "example": "test/authentication-flow"
+      },
+      {
+        "name": "CURRENT_COVERAGE",
+        "description": "Current test coverage percentage",
+        "required": false,
+        "default": "0",
+        "example": "45"
+      },
+      {
+        "name": "TARGET_COVERAGE",
+        "description": "Target test coverage percentage",
+        "required": false,
+        "default": "80",
+        "example": "90"
+      }
+    ]
+  },
+  "prd": {
+    "project": "{{PROJECT_NAME}}-test-{{TEST_TARGET}}",
+    "branchName": "{{BRANCH_NAME}}",
+    "description": "Expand test coverage for {{TEST_TARGET}} from {{CURRENT_COVERAGE}}% to {{TARGET_COVERAGE}}% with comprehensive unit tests, integration tests, and end-to-end tests. Focus on untested code paths, edge cases, and error handling.",
+    "userStories": [
+      {
+        "id": "TEST-001",
+        "title": "Test Coverage Analysis and Planning",
+        "description": "Analyze current test coverage and create comprehensive test plan",
+        "acceptanceCriteria": [
+          "Run coverage tool to measure baseline coverage for {{TEST_TARGET}}",
+          "Identify untested code paths, functions, and branches",
+          "Analyze which edge cases are missing tests",
+          "Review error handling and verify tests exist",
+          "Create test matrix covering all scenarios",
+          "Prioritize tests by risk and importance",
+          "Document test plan with coverage goals",
+          "Identify required test fixtures and mock data",
+          "Set up test framework if not already configured"
+        ],
+        "priority": 1,
+        "dependencies": [],
+        "fileScope": ["tests/", "docs/testing/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "TEST-002",
+        "title": "Unit Tests Implementation",
+        "description": "Write comprehensive unit tests for {{TEST_TARGET}} covering all functions and branches",
+        "acceptanceCriteria": [
+          "Write unit tests for all public functions",
+          "Write unit tests for all private functions with complex logic",
+          "Test happy path scenarios with valid inputs",
+          "Test edge cases: null, undefined, empty, max/min values",
+          "Test error conditions and exception handling",
+          "Test boundary conditions",
+          "Mock external dependencies (APIs, databases, file system)",
+          "Ensure tests are isolated and don't depend on each other",
+          "Achieve minimum 80% line coverage for {{TEST_TARGET}}",
+          "Ensure all tests pass consistently"
+        ],
+        "priority": 2,
+        "dependencies": ["TEST-001"],
+        "fileScope": ["tests/unit/"],
+        "estimatedComplexity": "medium",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "TEST-003",
+        "title": "Integration Tests Implementation",
+        "description": "Write integration tests covering interactions between components",
+        "acceptanceCriteria": [
+          "Write integration tests for component interactions",
+          "Test database operations if applicable",
+          "Test API integrations with real or mocked services",
+          "Test authentication and authorization flows",
+          "Test data flow through multiple layers",
+          "Test configuration and environment setup",
+          "Test error propagation across boundaries",
+          "Use test database or containers for isolation",
+          "Ensure tests clean up after themselves",
+          "Add integration tests to CI pipeline"
+        ],
+        "priority": 2,
+        "dependencies": ["TEST-001"],
+        "fileScope": ["tests/integration/"],
+        "estimatedComplexity": "medium",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "TEST-004",
+        "title": "End-to-End Tests Implementation",
+        "description": "Write end-to-end tests simulating real user workflows",
+        "acceptanceCriteria": [
+          "Write E2E tests for critical user journeys",
+          "Test complete workflows from start to finish",
+          "Use E2E testing framework (Playwright, Cypress, Selenium)",
+          "Test across different browsers if web application",
+          "Test responsive design on different screen sizes",
+          "Test performance and load times",
+          "Add visual regression tests if applicable",
+          "Test accessibility (ARIA, keyboard navigation)",
+          "Handle test flakiness with retries and proper waits",
+          "Add E2E tests to CI/CD pipeline"
+        ],
+        "priority": 3,
+        "dependencies": ["TEST-002", "TEST-003"],
+        "fileScope": ["tests/e2e/"],
+        "estimatedComplexity": "medium",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "TEST-005",
+        "title": "Test Documentation and Maintenance",
+        "description": "Document test suite, set up CI, and establish test maintenance practices",
+        "acceptanceCriteria": [
+          "Document how to run tests locally",
+          "Document test organization and structure",
+          "Create README for test suite",
+          "Add test scripts to package.json or Makefile",
+          "Configure CI to run tests on every commit",
+          "Configure code coverage reporting",
+          "Add coverage badges to README",
+          "Set up test result notifications",
+          "Document flaky tests and how to fix them",
+          "Create guidelines for writing new tests",
+          "Verify {{TARGET_COVERAGE}}% coverage goal achieved"
+        ],
+        "priority": 4,
+        "dependencies": ["TEST-004"],
+        "fileScope": ["tests/", "README.md", ".github/workflows/", "docs/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      }
+    ]
+  }
+}

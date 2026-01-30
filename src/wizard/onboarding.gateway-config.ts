@@ -1,6 +1,6 @@
 import { randomToken } from "../commands/onboard-helpers.js";
 import type { GatewayAuthChoice } from "../commands/onboard-types.js";
-import type { ClawdbotConfig } from "../config/config.js";
+import type { EpiloopConfig } from "../config/config.js";
 import { findTailscaleBinary } from "../infra/tailscale.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type {
@@ -12,8 +12,8 @@ import type { WizardPrompter } from "./prompts.js";
 
 type ConfigureGatewayOptions = {
   flow: WizardFlow;
-  baseConfig: ClawdbotConfig;
-  nextConfig: ClawdbotConfig;
+  baseConfig: EpiloopConfig;
+  nextConfig: EpiloopConfig;
   localPort: number;
   quickstartGateway: QuickstartGatewayDefaults;
   prompter: WizardPrompter;
@@ -21,7 +21,7 @@ type ConfigureGatewayOptions = {
 };
 
 type ConfigureGatewayResult = {
-  nextConfig: ClawdbotConfig;
+  nextConfig: EpiloopConfig;
   settings: GatewayWizardSettings;
 };
 

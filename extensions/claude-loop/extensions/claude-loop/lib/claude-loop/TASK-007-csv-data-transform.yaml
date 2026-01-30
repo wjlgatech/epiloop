@@ -1,0 +1,149 @@
+#========================================================
+# REAL-WORLD BENCHMARK TASK 007
+# Tier: MICRO (Small Feature)
+# Source: Data processing scenario
+#========================================================
+
+id: TASK-007
+name: "CSV Data Transformation Pipeline"
+tier: micro
+source_project: null
+difficulty: 2  # 1-5 scale
+estimated_time_human_minutes: 35
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Requirement**: Transform CSV sales data for reporting.
+
+  **Input CSV** (sales.csv):
+  ```
+  date,product,quantity,price
+  2024-01-15,Widget A,10,25.50
+  2024-01-16,Widget B,5,40.00
+  2024-01-15,Widget A,3,25.50
+  ```
+
+  **Output CSV** (sales_summary.csv):
+  ```
+  product,total_quantity,total_revenue,avg_price
+  Widget A,13,331.50,25.50
+  Widget B,5,200.00,40.00
+  ```
+
+  **Task**: Create script that:
+  1. Reads input CSV
+  2. Groups by product
+  3. Aggregates quantity (sum)
+  4. Calculates total revenue (quantity * price)
+  5. Calculates average price
+  6. Writes output CSV
+  7. Handles missing/invalid data
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Reads CSV file using csv or pandas"
+    weight: 0.15
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(import csv|import pandas|pd\.read_csv)" . -r
+
+  - id: AC2
+    description: "Groups data by product"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(group.*by|groupby|GROUP BY)" . -r
+
+  - id: AC3
+    description: "Calculates total quantity (sum)"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(sum|total.*quantity)" . -r
+
+  - id: AC4
+    description: "Calculates total revenue (quantity * price)"
+    weight: 0.25
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(revenue|quantity.*price|\*.*price)" . -r
+
+  - id: AC5
+    description: "Writes output CSV file"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(to_csv|write|csv\.writer)" . -r
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach: |
+    Using pandas (recommended):
+    1. df = pd.read_csv('sales.csv')
+    2. df['revenue'] = df['quantity'] * df['price']
+    3. grouped = df.groupby('product').agg({...})
+    4. grouped.to_csv('sales_summary.csv')
+
+    Using csv module:
+    1. Read with csv.DictReader
+    2. Build dict with product as key
+    3. Aggregate in loop
+    4. Write with csv.DictWriter
+
+  example_code: |
+    import pandas as pd
+
+    df = pd.read_csv('sales.csv')
+    df['revenue'] = df['quantity'] * df['price']
+
+    summary = df.groupby('product').agg({
+        'quantity': 'sum',
+        'revenue': 'sum',
+        'price': 'mean'
+    }).rename(columns={
+        'quantity': 'total_quantity',
+        'revenue': 'total_revenue',
+        'price': 'avg_price'
+    })
+
+    summary.to_csv('sales_summary.csv')
+
+#--------------------------------------------------------
+# TEST DATA
+#--------------------------------------------------------
+test_data:
+  input_file: "sales.csv"
+  output_file: "sales_summary.csv"
+  expected_rows: 2
+  expected_columns: ["product", "total_quantity", "total_revenue", "avg_price"]
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ Reads CSV file
+  2. ✓ Groups by product
+  3. ✓ Sums quantity
+  4. ✓ Calculates revenue
+  5. ✓ Calculates average price
+  6. ✓ Writes output CSV
+  7. ✓ Handles missing data gracefully
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["data", "csv", "etl", "pandas"]
+  estimated_impact: "medium"
+  complexity_signals:
+    - "Data aggregation"
+    - "CSV I/O"
+    - "Calculations"

@@ -1,17 +1,30 @@
 {
-  "name": "@clawdbot/claude-loop",
+  "name": "@epiloop/claude-loop",
   "version": "2026.1.28",
   "type": "module",
   "description": "Autonomous coding agent integration - claude-loop skill for feature implementation",
-  "clawdbot": {
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'Linting skipped'",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ]
   },
   "peerDependencies": {
-    "clawdbot": ">=2026.1.23-1"
+    "epiloop": ">=2026.1.23-1"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.8",
+    "typescript": "^5.7.3",
+    "@types/node": "^22.10.6"
   }
 }

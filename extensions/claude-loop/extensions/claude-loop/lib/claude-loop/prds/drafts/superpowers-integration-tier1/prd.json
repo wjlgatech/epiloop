@@ -1,0 +1,249 @@
+{
+  "project": "superpowers-integration-tier1",
+  "branchName": "feature/superpowers-integration-tier1",
+  "description": "Integrate critical Superpowers learnings into claude-loop: mandatory skill enforcement, SessionStart hooks, and interactive design refinement. These changes reduce setup friction by 80%, increase quality consistency by 60%, and reduce wasted work by 50%.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "SessionStart Hook System",
+      "description": "As a user, I want claude-loop to auto-inject context on every session so that I don't have to manually specify configuration flags (--agents-dir, --workspace, etc.)",
+      "acceptanceCriteria": [
+        "Create lib/session-hooks.sh with session_start_hook function",
+        "Auto-load skills overview from lib/skills-overview.md",
+        "Auto-load agent registry (brief format)",
+        "Auto-load experience store status (brief format)",
+        "Inject session context into Claude prompt automatically",
+        "Hook triggers on ./claude-loop.sh startup",
+        "Tests verify hook runs and context is injected",
+        "Documentation in docs/features/session-hooks.md"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "",
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "lib/session-hooks.sh",
+        "lib/skills-overview.md",
+        "claude-loop.sh",
+        "tests/test_session_hooks.py",
+        "docs/features/session-hooks.md"
+      ]
+    },
+    {
+      "id": "US-002",
+      "title": "Mandatory Skill Enforcement Layer",
+      "description": "As a developer, I want skills to be mandatory workflows (not optional suggestions) so that quality is consistent and best practices are always followed",
+      "acceptanceCriteria": [
+        "Create lib/skill-enforcer.sh with check_mandatory_skills function",
+        "Detect required skills based on story content (implement/create → TDD, bug/fix → debugging)",
+        "Inject <MANDATORY-SKILL> markers into prompt",
+        "Skills marked as MANDATORY cannot be rationalized away",
+        "Add EXTREMELY-IMPORTANT wrapper with non-negotiable language",
+        "Integrate into claude-loop.sh main iteration loop",
+        "Tests verify skills are enforced for matching stories",
+        "Configuration option to disable enforcement (default: enabled)",
+        "Documentation in docs/features/mandatory-skills.md"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "",
+      "dependencies": ["US-001"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "lib/skill-enforcer.sh",
+        "claude-loop.sh",
+        "prompt.md",
+        "tests/test_skill_enforcement.py",
+        "docs/features/mandatory-skills.md",
+        "config.yaml.example"
+      ]
+    },
+    {
+      "id": "US-003",
+      "title": "Skills Catalog with Using-Skills Introduction",
+      "description": "As Claude, I want a comprehensive skills catalog that's auto-injected on session start so that I know what skills are available and MUST use them",
+      "acceptanceCriteria": [
+        "Create lib/skills-overview.md with skills catalog",
+        "Include Superpowers-style using-skills introduction",
+        "List all skills with: name, description, when to use",
+        "Add red flags table (rationalizations to avoid)",
+        "Include skill priority rules (process skills first, then implementation)",
+        "Add EXTREMELY-IMPORTANT header: 'If 1% chance, MUST invoke'",
+        "Format for token efficiency (< 1000 tokens)",
+        "Skills overview auto-loaded by session hook",
+        "Tests verify content completeness and formatting",
+        "Documentation shows example injection"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "",
+      "dependencies": ["US-001"],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "lib/skills-overview.md",
+        "tests/test_skills_overview.py",
+        "docs/features/skills-catalog.md"
+      ]
+    },
+    {
+      "id": "US-004",
+      "title": "Interactive Design Refinement (Brainstorming Skill)",
+      "description": "As a user, I want to interactively refine my requirements through Socratic dialogue before any code is written so that misunderstandings are caught early and design quality improves",
+      "acceptanceCriteria": [
+        "Create skills/brainstorming/ directory with SKILL.md",
+        "Implement brainstorming workflow: understand context → ask questions (one at a time) → explore alternatives (2-3 approaches) → present design in sections (200-300 words) → validate incrementally",
+        "Questions are multiple choice when possible",
+        "Design saved to docs/plans/YYYY-MM-DD-<topic>-design.md",
+        "After design: offer to generate PRD or continue to implementation",
+        "Commit design document to git",
+        "Add ./claude-loop.sh brainstorm '<description>' command",
+        "Brainstorming skill enforced for stories with complexity >= 5",
+        "Tests verify workflow steps execute in order",
+        "Documentation with examples in docs/features/brainstorming.md"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "",
+      "dependencies": ["US-002"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "skills/brainstorming/SKILL.md",
+        "lib/brainstorming-handler.sh",
+        "claude-loop.sh",
+        "tests/test_brainstorming.py",
+        "docs/features/brainstorming.md"
+      ]
+    },
+    {
+      "id": "US-005",
+      "title": "Two-Stage Review System (Spec Compliance + Code Quality)",
+      "description": "As a quality gate, I want separate spec compliance and code quality reviews after each story so that over/under-building is prevented and quality issues are caught early",
+      "acceptanceCriteria": [
+        "Create lib/spec-compliance-reviewer.py with review_spec_compliance function",
+        "Spec reviewer checks: all requirements met, nothing extra, exactly what asked",
+        "Returns PASS/FAIL with specific issues",
+        "If FAIL: agent must fix issues and re-review (loop until PASS)",
+        "Spec compliance MUST pass before code quality review",
+        "Integrate existing code-reviewer agent as second stage",
+        "Add review loop logic to main iteration",
+        "Track review results in execution log",
+        "Tests verify two-stage execution and review loops",
+        "Configuration: enable/disable two-stage review (default: enabled)",
+        "Documentation in docs/features/two-stage-review.md"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "",
+      "dependencies": ["US-002"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "lib/spec-compliance-reviewer.py",
+        "agents/code-reviewer.md",
+        "claude-loop.sh",
+        "tests/test_two_stage_review.py",
+        "docs/features/two-stage-review.md",
+        "config.yaml.example"
+      ]
+    },
+    {
+      "id": "US-006",
+      "title": "TDD Enforcement (Iron Law)",
+      "description": "As a quality enforcer, I want to verify that tests fail before implementation code is written so that tests actually test behavior (not just pass because implementation exists)",
+      "acceptanceCriteria": [
+        "Create lib/tdd-enforcer.py with enforce_tdd function",
+        "Before implementation: check test exists",
+        "Run test, verify it fails (RED phase)",
+        "If test passes: FAIL with 'Test should fail first'",
+        "If implementation exists before test passes: FAIL with 'Delete implementation, start over'",
+        "Add pre-implementation hook to call TDD enforcer",
+        "Track TDD compliance in execution log",
+        "Tests verify enforcement logic",
+        "Configuration: enable/disable TDD enforcement (default: enabled for new features)",
+        "Documentation in docs/features/tdd-enforcement.md with 'Iron Law' explanation"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "",
+      "dependencies": ["US-002"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "lib/tdd-enforcer.py",
+        "skills/test-driven-development/SKILL.md",
+        "claude-loop.sh",
+        "tests/test_tdd_enforcement.py",
+        "docs/features/tdd-enforcement.md",
+        "config.yaml.example"
+      ]
+    },
+    {
+      "id": "US-007",
+      "title": "Configuration System for Execution Modes",
+      "description": "As a user, I want to configure execution mode (interactive/autonomous/hybrid) and enable/disable features so that I can customize claude-loop to my workflow",
+      "acceptanceCriteria": [
+        "Add execution_mode section to config.yaml",
+        "Support modes: interactive, autonomous, hybrid (default)",
+        "Interactive mode: mandatory brainstorming, two-stage review, TDD enforcement",
+        "Autonomous mode: current behavior, optional brainstorming, experience retrieval, adaptive splitting",
+        "Hybrid mode: optional brainstorming (complexity >= 5), two-stage review, experience retrieval",
+        "Add mode selection logic in claude-loop.sh based on complexity",
+        "Add --mode flag to override config: --mode interactive|autonomous|hybrid",
+        "Tests verify mode selection logic and feature enabling",
+        "Update config.yaml.example with documented options",
+        "Documentation in docs/features/execution-modes.md"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": "",
+      "dependencies": ["US-001", "US-002", "US-004", "US-005", "US-006"],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "config.yaml.example",
+        "lib/config-loader.sh",
+        "claude-loop.sh",
+        "tests/test_execution_modes.py",
+        "docs/features/execution-modes.md"
+      ]
+    },
+    {
+      "id": "US-008",
+      "title": "Integration Testing and Documentation",
+      "description": "As a user, I want comprehensive tests and documentation so that I can trust the new features work correctly and understand how to use them",
+      "acceptanceCriteria": [
+        "Integration test: session hook loads context correctly",
+        "Integration test: mandatory skills are enforced",
+        "Integration test: brainstorming workflow completes",
+        "Integration test: two-stage review catches issues",
+        "Integration test: TDD enforcement prevents early implementation",
+        "Integration test: execution modes select correctly",
+        "Update main README.md with Superpowers integration section",
+        "Create migration guide: docs/MIGRATION-SUPERPOWERS.md",
+        "Add examples directory with sample workflows",
+        "Record demo video showing new features",
+        "All tests pass with > 80% coverage",
+        "Documentation complete and reviewed"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": "",
+      "dependencies": ["US-001", "US-002", "US-003", "US-004", "US-005", "US-006", "US-007"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "fileScope": [
+        "tests/integration/test_superpowers_integration.py",
+        "README.md",
+        "docs/MIGRATION-SUPERPOWERS.md",
+        "examples/interactive-workflow.sh",
+        "examples/hybrid-workflow.sh"
+      ]
+    }
+  ],
+  "complexity": 7,
+  "estimatedDuration": "2 weeks"
+}

@@ -1,0 +1,167 @@
+id: PRD-TIER1-VALIDATION
+title: 'Tier 1 Quick Validation: Agent-Zero vs Claude-Loop Benchmark'
+status: active
+version: 1.0.0
+created: 2026-01-19 00:30:00+00:00
+updated: 2026-01-19 00:30:00+00:00
+metadata:
+  type: research-validation
+  domain: benchmark
+  complexity: medium
+  estimated_effort: 2_weeks
+  budget_usd: 50
+approval:
+  approved_by: Claude Code
+  approved_at: '2026-01-19T08:38:48Z'
+  approval_hash: 28d0e97d572c470ca79bdb9ae7726a84c7a4b8a9b98db2c9ff9f0581694c01f0
+dependencies:
+  external:
+  - name: Claude Code CLI
+    version: latest
+    required: true
+  - name: agent-zero
+    version: current
+    required: false
+  - name: pyyaml
+    version: '>=6.0'
+    required: true
+  - name: scipy
+    version: '>=1.9'
+    required: true
+  internal:
+  - path: benchmark-tasks/
+    type: code
+    description: Benchmark infrastructure
+  - path: benchmark-tasks/TASK-*.yaml
+    type: specification
+    description: Task definitions
+  - path: benchmark-tasks/benchmark_runner.py
+    type: tool
+    description: Benchmark orchestrator
+success_metrics:
+  primary:
+  - metric: benchmark_completion_rate
+    target: 100%
+    description: All 9 runs (or 6 if agent-zero deferred) complete successfully
+  - metric: decision_confidence
+    target: high
+    description: Clear statistical evidence for recommendation
+  - metric: budget_adherence
+    target: < $50
+    description: Total API costs under budget
+  secondary:
+  - metric: reproducibility
+    target: ±10%
+    description: Re-running same task yields similar results
+  - metric: documentation_quality
+    target: complete
+    description: All deliverables documented and usable
+risks:
+- id: RISK-001
+  description: Agent-zero integration complexity
+  likelihood: medium
+  impact: low
+  mitigation: Make US-003 optional; proceed with baseline + claude-loop
+  status: monitored
+- id: RISK-002
+  description: Task execution failures
+  likelihood: medium
+  impact: medium
+  mitigation: Capture partial results; re-run failed tasks
+  status: monitored
+- id: RISK-003
+  description: API cost overrun
+  likelihood: low
+  impact: low
+  mitigation: Monitor costs per run; stop at $40; use cheaper models
+  status: monitored
+- id: RISK-004
+  description: Inconclusive results
+  likelihood: medium
+  impact: low
+  mitigation: '''No clear difference'' is valid data; document accordingly'
+  status: accepted
+stories:
+  total: 10
+  completed: 0
+  in_progress: 0
+  pending: 10
+  blocked: 0
+phases:
+- id: phase1
+  name: Implementation
+  duration: Week 1
+  stories:
+  - US-001
+  - US-002
+  - US-003
+  - US-004
+  status: pending
+- id: phase2
+  name: Execution
+  duration: Week 2 (Days 1-3)
+  stories:
+  - US-005
+  status: pending
+- id: phase3
+  name: Analysis & Reporting
+  duration: Week 2 (Days 4-5)
+  stories:
+  - US-006
+  - US-007
+  - US-008
+  - US-009
+  - US-010
+  status: pending
+outputs:
+  code:
+  - benchmark-tasks/benchmark_runner.py (enhanced)
+  - benchmark-tasks/validation/*.py
+  - benchmark-tasks/analyze_results.py
+  data:
+  - benchmark-results/*.json (9-18 files)
+  - benchmark-results/benchmark_report.json
+  documentation:
+  - benchmark-tasks/DECISION_REPORT.md
+  - benchmark-tasks/EXECUTION_GUIDE.md
+  - benchmark-tasks/PRESENTATION.md (optional)
+tags:
+- benchmark
+- validation
+- agent-zero
+- claude-loop
+- integration-analysis
+- tier1
+- research
+links:
+  analysis: /Users/jialiang.wu/Documents/Projects/benchmark-tasks/ANALYSIS.md
+  tasks:
+  - /Users/jialiang.wu/Documents/Projects/benchmark-tasks/TASK-001-vision-summary.yaml
+  - /Users/jialiang.wu/Documents/Projects/benchmark-tasks/TASK-002-llm-health-check.yaml
+  - /Users/jialiang.wu/Documents/Projects/benchmark-tasks/TASK-003-scheduler-duplicate-jobs.yaml
+  runner: /Users/jialiang.wu/Documents/Projects/benchmark-tasks/benchmark_runner.py
+notes: 'This PRD represents a critical validation step before committing to
+
+  any integration strategy. The benchmark uses real tasks from actual
+
+  codebases (not synthetic) to provide unbiased performance comparison.
+
+
+  Key decision point: If results show >20% improvement, proceed with
+
+  Option B (Selective Integration). If <10%, stay with current claude-loop.
+
+
+  The PRD itself is being managed BY claude-loop as a dogfooding exercise.
+
+  This validates claude-loop''s capability to manage research and validation
+
+  tasks, not just feature implementation.
+
+  '
+updated_at: '2026-01-19T08:38:48Z'
+approved_at: '2026-01-19T08:38:48Z'
+contributors:
+- name: Claude Code
+  role: approver
+  added_at: '2026-01-19T08:38:48Z'

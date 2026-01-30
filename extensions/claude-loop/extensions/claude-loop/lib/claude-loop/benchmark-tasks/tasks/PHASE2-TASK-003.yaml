@@ -1,0 +1,26 @@
+task_id: PHASE2-TASK-003
+title: Add CLI Help Text Formatter (Simple)
+description: |
+  Create a utility to format CLI help text with proper alignment and wrapping.
+  Support sections for commands, options, and examples.
+  Make output terminal-width aware.
+
+acceptance_criteria:
+  - "format_help() function with sections support"
+  - "Automatic text wrapping based on terminal width"
+  - "Proper alignment for command descriptions"
+  - "Example section formatting"
+  - "Unit tests with different terminal widths"
+
+context:
+  background: "Simple text formatting utility to test string manipulation."
+  constraints:
+    - "Detect terminal width dynamically"
+    - "Default to 80 columns if detection fails"
+    - "Support ANSI color codes (preserve them)"
+
+complexity: simple
+estimated_hours: 2
+fileScope:
+  - "lib/help_formatter.py"
+  - "tests/test_help_formatter.py"

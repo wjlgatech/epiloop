@@ -1,0 +1,5 @@
+[0;34m[SAFETY][0m Initialized safety checker
+[0;34m[SAFETY][0m   Safety Level: normal
+[0;34m[SAFETY][0m   Non-Interactive: true
+[0;34m[SAFETY][0m   Dry Run: false
+[0;34m[SAFETY][0m   Log File: .claude-loop/safety-log.jsonl

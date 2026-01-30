@@ -1,0 +1,17 @@
+{
+  "project": "test-002",
+  "title": "Test PRD 002",
+  "branchName": "test/prd-002",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Create test file",
+      "description": "Create a simple test file",
+      "passes": false,
+      "acceptanceCriteria": [
+        "File test-002.txt exists",
+        "File contains 'TEST-002 COMPLETE'"
+      ]
+    }
+  ]
+}

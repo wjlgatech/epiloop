@@ -1,0 +1,194 @@
+{
+  "project": "claude-loop-gui-automation-upgrade",
+  "branchName": "feature/enhanced-gui-automation",
+  "description": "Upgrade claude-loop GUI automation with multi-monitor support, vision-based element detection, and progress monitoring",
+  "parallelization": {
+    "enabled": true,
+    "maxWorkers": 3
+  },
+  "userStories": [
+    {
+      "id": "GUI-001",
+      "title": "Add multi-monitor screenshot capture",
+      "description": "As an automation script, I want to capture screenshots from all connected monitors so that I can see UI elements on external displays",
+      "acceptanceCriteria": [
+        "Use CGGetActiveDisplayList() to enumerate all displays",
+        "Capture each display using CGDisplayCreateImage()",
+        "Stitch images into a single panoramic screenshot",
+        "Return screen coordinates relative to the combined display space",
+        "Handle Retina displays with proper scaling",
+        "Add tests with mock display configurations"
+      ],
+      "priority": 1,
+      "dependencies": [],
+      "fileScope": ["agents/computer_use/screenshot.py", "agents/computer_use/__init__.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": "Use pyobjc-framework-Quartz for display enumeration"
+    },
+    {
+      "id": "GUI-002",
+      "title": "Add display coordinate mapping",
+      "description": "As an automation script, I want to convert screen coordinates between display coordinate systems",
+      "acceptanceCriteria": [
+        "Get display arrangement from CGDisplayBounds()",
+        "Map coordinates from stitched screenshot to actual screen position",
+        "Handle negative Y coordinates for displays above primary",
+        "Support left/right/top/bottom monitor arrangements",
+        "Add coordinate_to_display(x, y) function",
+        "Add display_to_global(display_id, local_x, local_y) function"
+      ],
+      "priority": 2,
+      "dependencies": ["GUI-001"],
+      "fileScope": ["agents/computer_use/screenshot.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "GUI-003",
+      "title": "Add Unity Editor log monitoring",
+      "description": "As an automation script, I want to monitor Unity's Editor.log for build progress and completion",
+      "acceptanceCriteria": [
+        "Create UnityLogMonitor class",
+        "Implement tail-like following of Editor.log",
+        "Detect build start, progress, success, and failure messages",
+        "Parse build errors and return structured error info",
+        "Support timeout with configurable duration",
+        "Emit progress events during monitoring"
+      ],
+      "priority": 3,
+      "dependencies": [],
+      "fileScope": ["agents/computer_use/unity_monitor.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": "Log path: ~/Library/Logs/Unity/Editor.log"
+    },
+    {
+      "id": "GUI-004",
+      "title": "Add Vision API element detection",
+      "description": "As an automation script, I want to use Claude Vision API to locate UI elements in screenshots",
+      "acceptanceCriteria": [
+        "Create VisionElementFinder class",
+        "Accept screenshot bytes and element description",
+        "Call Claude Vision API with structured prompt for coordinates",
+        "Parse response to extract x,y coordinates and confidence",
+        "Return None if element not found with high confidence",
+        "Cache results for repeated queries on same screenshot",
+        "Track API usage for cost monitoring"
+      ],
+      "priority": 4,
+      "dependencies": ["GUI-001"],
+      "fileScope": ["agents/computer_use/vision_finder.py"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": false,
+      "notes": "Requires ANTHROPIC_API_KEY environment variable"
+    },
+    {
+      "id": "GUI-005",
+      "title": "Implement click-with-vision fallback",
+      "description": "As an automation script, I want click operations to fall back to vision-based detection when AppleScript fails",
+      "acceptanceCriteria": [
+        "Add vision_fallback parameter to click methods",
+        "Try AppleScript click first (fast path)",
+        "On failure, capture screenshot and use vision to find element",
+        "Calculate click coordinates from vision result",
+        "Execute click using Quartz CGEventCreateMouseEvent",
+        "Log which path was used (applescript vs vision)",
+        "Add before/after screenshot verification"
+      ],
+      "priority": 5,
+      "dependencies": ["GUI-004", "GUI-002"],
+      "fileScope": ["agents/computer_use/unity.py"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "GUI-006",
+      "title": "Add dialog handler registry",
+      "description": "As an automation script, I want configurable dialog handlers loaded from YAML",
+      "acceptanceCriteria": [
+        "Create DialogRegistry class",
+        "Load dialog patterns from .claude-loop/dialog-handlers.yaml",
+        "Support regex patterns for dialog detection",
+        "Support actions: click_button, capture_and_abort, require_human, ignore",
+        "Match dialogs against registry by title or content",
+        "Execute appropriate action when dialog matched",
+        "Log all handled dialogs"
+      ],
+      "priority": 6,
+      "dependencies": [],
+      "fileScope": ["agents/computer_use/dialog_registry.py", "agents/computer_use/safety.py"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "GUI-007",
+      "title": "Add workflow checkpointing",
+      "description": "As an automation script, I want to save progress checkpoints during long workflows",
+      "acceptanceCriteria": [
+        "Create WorkflowCheckpoint class",
+        "Save checkpoint after each successful step to .claude-loop/checkpoints/",
+        "Include step ID, timestamp, and context in checkpoint",
+        "Support --resume flag to continue from last checkpoint",
+        "Clean up checkpoints on successful workflow completion",
+        "Add list_checkpoints() for debugging"
+      ],
+      "priority": 7,
+      "dependencies": [],
+      "fileScope": ["agents/computer_use/checkpoint.py", "claude-loop.sh"],
+      "estimatedComplexity": "low",
+      "suggestedModel": "haiku",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "GUI-008",
+      "title": "Integrate enhancements into UnityAgent",
+      "description": "As a developer, I want all enhancements integrated into the UnityAgent class",
+      "acceptanceCriteria": [
+        "Update UnityAgent to use multi-monitor screenshots",
+        "Integrate vision fallback into existing click methods",
+        "Add log monitoring to build operations",
+        "Use dialog registry for dialog handling",
+        "Add checkpoint calls at workflow boundaries",
+        "Update README with new capabilities"
+      ],
+      "priority": 8,
+      "dependencies": ["GUI-001", "GUI-003", "GUI-004", "GUI-005", "GUI-006", "GUI-007"],
+      "fileScope": ["agents/computer_use/unity.py", "agents/computer_use/README.md"],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "opus",
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "GUI-009",
+      "title": "Add tests for new capabilities",
+      "description": "As a developer, I want tests to verify the new GUI automation features",
+      "acceptanceCriteria": [
+        "Test multi-monitor coordinate mapping with mock displays",
+        "Test vision element finder with sample screenshots",
+        "Test dialog registry loading and matching",
+        "Test checkpoint save/load/resume",
+        "Test log monitoring with sample log entries",
+        "Run pytest with coverage report"
+      ],
+      "priority": 9,
+      "dependencies": ["GUI-008"],
+      "fileScope": ["agents/computer_use/tests/"],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet",
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

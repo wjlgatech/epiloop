@@ -1,12 +1,12 @@
-import type { ClawdbotConfig, WizardPrompter } from "clawdbot/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "clawdbot/plugin-sdk";
+import type { EpiloopConfig, WizardPrompter } from "epiloop/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "epiloop/plugin-sdk";
 
 type PromptAccountIdParams = {
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   prompter: WizardPrompter;
   label: string;
   currentId?: string;
-  listAccountIds: (cfg: ClawdbotConfig) => string[];
+  listAccountIds: (cfg: EpiloopConfig) => string[];
   defaultAccountId: string;
 };
 

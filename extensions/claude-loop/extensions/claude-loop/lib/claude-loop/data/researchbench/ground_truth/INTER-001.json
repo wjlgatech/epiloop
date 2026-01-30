@@ -1,0 +1,117 @@
+{
+  "question_id": "INTER-001",
+  "question": "How do machine learning approaches improve drug discovery, and what are the current limitations?",
+  "expert_sources": [
+    {
+      "title": "Highly accurate protein structure prediction with AlphaFold",
+      "authors": ["Jumper et al."],
+      "venue": "Nature 2021",
+      "url": "https://doi.org/10.1038/s41586-021-03819-2",
+      "relevance": "AlphaFold protein structure prediction"
+    },
+    {
+      "title": "A Deep Learning Approach to Antibiotic Discovery",
+      "authors": ["Stokes et al."],
+      "venue": "Cell 2020",
+      "url": "https://doi.org/10.1016/j.cell.2020.01.021",
+      "relevance": "ML-discovered antibiotic halicin"
+    },
+    {
+      "title": "Machine Learning in Drug Discovery: A Review",
+      "authors": ["Vamathevan et al."],
+      "venue": "Nature Reviews Drug Discovery 2019",
+      "url": "https://doi.org/10.1038/s41573-019-0024-5",
+      "relevance": "Comprehensive ML drug discovery review"
+    },
+    {
+      "title": "Deep Learning for Drug Discovery and Development",
+      "authors": ["Chen et al."],
+      "venue": "Drug Discovery Today 2018",
+      "url": "https://doi.org/10.1016/j.drudis.2018.01.039",
+      "relevance": "Deep learning applications overview"
+    },
+    {
+      "title": "Why Drug Candidates Fail in Clinical Development",
+      "authors": ["Sun et al."],
+      "venue": "Acta Pharmaceutica Sinica B 2022",
+      "url": "https://doi.org/10.1016/j.apsb.2022.02.019",
+      "relevance": "Clinical trial failure analysis"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "AlphaFold solved protein structure prediction, enabling structure-based drug design at scale",
+      "importance": "critical",
+      "sources": ["Jumper et al. 2021"]
+    },
+    {
+      "finding": "ML models can predict molecular properties (toxicity, solubility, binding affinity)",
+      "importance": "critical",
+      "sources": ["Vamathevan et al. 2019"]
+    },
+    {
+      "finding": "Generative models can propose novel drug candidates with desired properties",
+      "importance": "high",
+      "sources": ["Chen et al. 2018"]
+    },
+    {
+      "finding": "ML-discovered compound halicin showed novel antibiotic activity",
+      "importance": "high",
+      "sources": ["Stokes et al. 2020"]
+    },
+    {
+      "finding": "Clinical trial success rates remain low despite ML advances (~10% from Phase I to approval)",
+      "importance": "critical",
+      "sources": ["Sun et al. 2022"]
+    },
+    {
+      "finding": "Data quality, domain shift, and lack of negative data limit ML effectiveness",
+      "importance": "critical",
+      "sources": ["Vamathevan et al. 2019"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "ML predictions often don't translate to clinical success",
+      "validity": "Valid, in vitro/in silico to clinical gap is large",
+      "sources": ["Sun et al. 2022"]
+    },
+    {
+      "argument": "Training data doesn't represent novel chemical space",
+      "validity": "True, out-of-distribution generalization is poor",
+      "sources": ["Vamathevan et al. 2019"]
+    },
+    {
+      "argument": "AlphaFold doesn't directly enable drug discovery",
+      "validity": "Partially valid, still need to understand dynamics and binding",
+      "sources": ["Structural biology community"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.80,
+    "areas_of_uncertainty": [
+      "True impact on drug approval rates",
+      "Generalization to novel targets",
+      "Integration with experimental workflows"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "Molecular property prediction",
+      "AlphaFold and structure prediction",
+      "Generative molecule design",
+      "Clinical trial failure rates as limitation"
+    ],
+    "should_include": [
+      "Specific success examples (halicin)",
+      "Data quality limitations",
+      "ADMET prediction"
+    ],
+    "bonus_points": [
+      "Distribution shift challenges",
+      "Virtual screening applications",
+      "Comparison of ML vs traditional approaches"
+    ]
+  }
+}

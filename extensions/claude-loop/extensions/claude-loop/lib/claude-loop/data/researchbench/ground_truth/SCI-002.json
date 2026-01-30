@@ -1,0 +1,117 @@
+{
+  "question_id": "SCI-002",
+  "question": "How do CRISPR-Cas systems work and what are the key advances in gene editing technology?",
+  "expert_sources": [
+    {
+      "title": "A Programmable Dual-RNA-Guided DNA Endonuclease in Adaptive Bacterial Immunity",
+      "authors": ["Jinek et al."],
+      "venue": "Science 2012",
+      "url": "https://doi.org/10.1126/science.1225829",
+      "relevance": "Original CRISPR-Cas9 gene editing paper"
+    },
+    {
+      "title": "Programmable base editing of A*T to G*C in genomic DNA without DNA cleavage",
+      "authors": ["Gaudelli et al."],
+      "venue": "Nature 2017",
+      "url": "https://doi.org/10.1038/nature24644",
+      "relevance": "Adenine base editor development"
+    },
+    {
+      "title": "Search-and-replace genome editing without double-strand breaks or donor DNA",
+      "authors": ["Anzalone et al."],
+      "venue": "Nature 2019",
+      "url": "https://doi.org/10.1038/s41586-019-1711-4",
+      "relevance": "Prime editing introduction"
+    },
+    {
+      "title": "Off-target Effects in CRISPR/Cas9-mediated Genome Engineering",
+      "authors": ["Zhang et al."],
+      "venue": "Molecular Therapy 2015",
+      "url": "https://doi.org/10.1016/j.omtn.2015.07.005",
+      "relevance": "Off-target effect analysis"
+    },
+    {
+      "title": "CRISPR-Cas9 Therapeutics: Progress and Future Prospects",
+      "authors": ["Various clinical reviews"],
+      "venue": "Multiple journals",
+      "url": "Various",
+      "relevance": "Clinical applications overview"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "CRISPR-Cas9 creates double-strand breaks at guide RNA-specified locations",
+      "importance": "critical",
+      "sources": ["Jinek et al. 2012"]
+    },
+    {
+      "finding": "Base editors enable C-to-T and A-to-G conversions without double-strand breaks",
+      "importance": "critical",
+      "sources": ["Gaudelli et al. 2017"]
+    },
+    {
+      "finding": "Prime editing enables any small edit without DSBs or donor DNA templates",
+      "importance": "critical",
+      "sources": ["Anzalone et al. 2019"]
+    },
+    {
+      "finding": "Off-target effects occur when guide RNA matches unintended genomic sites",
+      "importance": "critical",
+      "sources": ["Zhang et al. 2015"]
+    },
+    {
+      "finding": "High-fidelity Cas9 variants reduce off-target editing",
+      "importance": "high",
+      "sources": ["Various Cas9 engineering papers"]
+    },
+    {
+      "finding": "FDA approved first CRISPR therapy (Casgevy for sickle cell) in 2023",
+      "importance": "high",
+      "sources": ["FDA approvals"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "CRISPR may cause undetected large deletions or rearrangements",
+      "validity": "Valid concern, improved detection methods being developed",
+      "sources": ["Kosicki et al. 2018"]
+    },
+    {
+      "argument": "Delivery to target tissues remains a major challenge",
+      "validity": "True, especially for in vivo applications",
+      "sources": ["Clinical development challenges"]
+    },
+    {
+      "argument": "Immune responses to Cas proteins may limit repeated use",
+      "validity": "Valid for some applications, being addressed",
+      "sources": ["Immunogenicity studies"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.92,
+    "areas_of_uncertainty": [
+      "Long-term safety of edited cells",
+      "Optimal delivery methods for different tissues",
+      "Unintended consequences of large-scale editing"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "CRISPR-Cas9 mechanism (guide RNA, DSB)",
+      "Base editing or prime editing advances",
+      "Off-target effects as key concern",
+      "At least one clinical application"
+    ],
+    "should_include": [
+      "PAM sequence requirement",
+      "HDR vs NHEJ repair pathways",
+      "High-fidelity variants"
+    ],
+    "bonus_points": [
+      "Comparison of Cas9, base editors, prime editors",
+      "Specific approved therapies",
+      "Delivery challenges"
+    ]
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "title": "Quest 3 Phase 3: AR Overlay System Implementation",
+  "description": "Implement AR overlay rendering system for DataCenterAR (Meta Spatial SDK) including BoundingBoxRenderer, ArrowRenderer, TextRenderer, and OverlayManager orchestration. This enables visual guidance overlays to be rendered in 3D space for technician assistance during GPU hot-swap procedures.",
+  "context": {
+    "technology": "Meta Spatial SDK v0.9.2 + Android/Kotlin",
+    "project_path": "spatial_quest3_client/DataCenterAR",
+    "phase": "Phase 3 (Week 3-4)",
+    "dependencies": [
+      "Phase 2 Backend Integration (COMPLETE)",
+      "DeviceRegistration (10/10 tests passing)",
+      "BackendClient (Retrofit HTTP client ready)",
+      "Component detection models (backend)"
+    ],
+    "testing_approach": "Reality-Grounded TDD (test against actual execution)",
+    "constraints": [
+      "Must work with Meta Spatial SDK Entity.create() API",
+      "Must use Material color API for visual feedback",
+      "Must follow TestInfrastructure.kt patterns",
+      "60-minute time-box per component",
+      "No complex Meta Spatial SDK mocking (learned from Phase 2)"
+    ]
+  },
+  "objectives": [
+    "Enable AR bounding boxes around detected components (GPUs, servers)",
+    "Display navigation arrows pointing to target components",
+    "Show text labels with step instructions",
+    "Implement overlay manager to orchestrate all overlays",
+    "Track overlays with physical objects in 3D space"
+  ],
+  "acceptanceCriteria": [
+    "BoundingBoxRenderer draws 3D wireframe boxes at specified positions",
+    "ArrowRenderer draws 3D arrows pointing from camera to targets",
+    "TextRenderer displays text labels in world space",
+    "OverlayManager can show/hide/update multiple overlays",
+    "All 4 components have passing unit tests (12+ tests total)",
+    "Components integrate with existing ComponentDetectionIntegration",
+    "Tests follow ArrowRendererTest pattern (MockK, setup/teardown)",
+    "No hardcoded positions - all overlays driven by backend data",
+    "Overlays update at 20 FPS (50ms detection interval)"
+  ],
+  "stories": [
+    {
+      "id": "AR-001",
+      "title": "Implement BoundingBoxRenderer for component highlighting",
+      "description": "Create BoundingBoxRenderer.kt that draws 3D wireframe bounding boxes around detected components (GPUs, servers). Uses Meta Spatial SDK Entity.create() to generate box geometry. Supports color configuration (green=correct, red=warning, yellow=info). Position and size driven by backend detection results.",
+      "acceptanceCriteria": [
+        "BoundingBoxRenderer.kt created in ar/ directory",
+        "createBoundingBox(position, size, color) method implemented",
+        "updateBoundingBox(id, position, size) method for tracking",
+        "removeBoundingBox(id) cleanup method",
+        "BoundingBoxRendererTest.kt with 6+ test cases",
+        "Tests use MockK for Entity mocking",
+        "Wireframe rendering uses line primitives",
+        "Color parameter supports RGB color objects"
+      ],
+      "estimatedEffort": "60 minutes"
+    },
+    {
+      "id": "AR-002",
+      "title": "Implement ArrowRenderer for navigation guidance",
+      "description": "Create ArrowRenderer.kt that draws 3D arrows pointing from camera position to target components. Arrow dynamically updates as user moves. Uses cone geometry for arrowhead and cylinder for shaft. Color indicates urgency (green=optional, yellow=next step, red=critical).",
+      "acceptanceCriteria": [
+        "ArrowRenderer.kt created in ar/ directory",
+        "createArrow(targetPosition, color) method implemented",
+        "updateArrow(id, targetPosition) for camera tracking",
+        "removeArrow(id) cleanup method",
+        "ArrowRendererTest.kt with 6+ test cases",
+        "Arrow points from camera to target in 3D space",
+        "Arrow length scales with distance (min 0.5m, max 2m)",
+        "Arrow rotates to always point at target"
+      ],
+      "estimatedEffort": "60 minutes"
+    },
+    {
+      "id": "AR-003",
+      "title": "Implement TextRenderer for instruction labels",
+      "description": "Create TextRenderer.kt that displays text labels in 3D world space. Labels show step instructions, component names, warnings. Uses TextMesh or sprite-based text rendering. Font size scales with distance. Background panel for readability.",
+      "acceptanceCriteria": [
+        "TextRenderer.kt created in ar/ directory",
+        "createTextLabel(text, position, fontSize) method",
+        "updateTextLabel(id, text) for dynamic content",
+        "removeTextLabel(id) cleanup method",
+        "TextRendererTest.kt with 6+ test cases",
+        "Text always faces camera (billboard effect)",
+        "Background panel improves contrast",
+        "Font size scales: 0.02 at 1m, 0.04 at 2m"
+      ],
+      "estimatedEffort": "60 minutes"
+    },
+    {
+      "id": "AR-004",
+      "title": "Implement OverlayManager orchestration",
+      "description": "Create OverlayManager.kt that coordinates all overlay renderers (BoundingBox, Arrow, Text). Manages overlay lifecycle, priority, visibility. Integrates with ComponentDetectionIntegration to automatically create overlays from detection results. Handles concurrent overlays without performance degradation.",
+      "acceptanceCriteria": [
+        "OverlayManager.kt created in ar/ directory",
+        "initialize(scene) method sets up all renderers",
+        "showComponentOverlay(component, type) creates overlays",
+        "updateOverlays() refresh all active overlays",
+        "clearAllOverlays() cleanup method",
+        "OverlayManagerTest.kt with 6+ test cases",
+        "Integrates BoundingBoxRenderer, ArrowRenderer, TextRenderer",
+        "Supports overlay priority (high overlays drawn last)",
+        "Performance: handles 10+ concurrent overlays at 20 FPS"
+      ],
+      "estimatedEffort": "60 minutes"
+    }
+  ],
+  "technicalNotes": {
+    "architecture": "Each renderer is a standalone Kotlin class in ar/ directory. OverlayManager acts as facade coordinating all renderers. Renderers use Meta Spatial SDK Entity.create() API directly.",
+    "file_locations": {
+      "source": "DataCenterAR/app/src/main/java/com/accenture/datacenter/ar/",
+      "tests": "DataCenterAR/app/src/test/kotlin/com/accenture/datacenter/ar/"
+    },
+    "testing_pattern": "Follow ArrowRendererTest pattern: MockK with relaxed mocking, setup/teardown lifecycle, test internal logic not Meta SDK rendering",
+    "integration": "ComponentDetectionIntegration will call OverlayManager.showComponentOverlay() when backend returns detection results",
+    "performance": "Target 20 FPS (50ms frame time). Each overlay update must complete <5ms."
+  },
+  "outOfScope": [
+    "Hand tracking visualization (separate HandTrackingVisualizer exists)",
+    "Voice guidance (separate VoiceGuidance exists)",
+    "Backend integration (Phase 2 complete)",
+    "SOP scenarios (Phase 4)",
+    "WebSocket real-time (Phase 5)",
+    "Complex physics interactions",
+    "Occlusion detection",
+    "Multi-user overlays"
+  ],
+  "successMetrics": {
+    "tests_passing": "12+ unit tests (3 per component)",
+    "code_coverage": ">80% for ar/ directory",
+    "performance": "20 FPS with 10 concurrent overlays",
+    "compilation": "Zero Kotlin compilation errors",
+    "dependencies": "No new external dependencies beyond Phase 2"
+  }
+}

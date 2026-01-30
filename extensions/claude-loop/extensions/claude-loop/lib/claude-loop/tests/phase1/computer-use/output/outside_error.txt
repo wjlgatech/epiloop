@@ -1,0 +1,4 @@
+[0;31m[WORKSPACE][0m Workspace folder is outside repository: /tmp
+[0;31m[WORKSPACE][0m   Real path: /private/tmp
+[0;31m[WORKSPACE][0m   Repo root: /Users/jialiang.wu/Documents/Projects/claude-loop
+[0;31m[WORKSPACE][0m Validation failed for 1 folder(s)

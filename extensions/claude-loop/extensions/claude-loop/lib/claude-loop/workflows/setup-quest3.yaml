@@ -1,0 +1,89 @@
+# setup-quest3.yaml - Quest 3 XR Project Setup Workflow
+#
+# This workflow automates the complete setup of a Unity project for Quest 3
+# XR development. It installs the Meta XR SDK, configures XR settings,
+# runs the Meta Project Setup Tool, and builds a development APK.
+#
+# Usage:
+#   python3 agents/computer_use/orchestrator.py --workflow workflows/setup-quest3.yaml
+#
+# Requirements:
+#   - Unity Editor running with a project open
+#   - Signed into Unity Asset Store (for SDK download)
+#   - Android SDK configured in Unity preferences
+#   - Quest 3 connected via USB (for deploy step)
+#
+# Note: PyYAML is required to parse this file. Install with: pip install pyyaml
+
+name: setup-quest3
+description: Complete Quest 3 XR project setup workflow
+
+# Variables available to all steps
+variables:
+  output_path: "./Build/app.apk"
+  development_build: true
+
+steps:
+  # Step 1: Check Unity is running
+  - command: unity.is_running
+    name: Check Unity Running
+    description: Verify Unity Editor is running before proceeding
+
+  # Step 2: Get current project info
+  - command: unity.get_project
+    name: Get Project Info
+    description: Read information about the currently open Unity project
+    continue_on_error: true
+
+  # Step 3: Handle any pending dialogs
+  - command: unity.handle_dialogs
+    name: Clear Dialogs
+    description: Dismiss any pending Unity dialogs before starting
+    args:
+      max_dialogs: 5
+      timeout: 10
+
+  # Step 4: Full Quest 3 setup
+  - command: unity.setup_quest3
+    name: Setup Quest 3 SDK
+    description: Install Meta XR SDK, configure XR, run setup tool
+    args:
+      install_sdk: true
+      configure_xr: true
+      run_meta_setup: true
+      add_define_symbol: true
+
+  # Step 5: Wait for Unity to become idle
+  - command: unity.wait_idle
+    name: Wait for Unity
+    description: Wait for all imports and compilation to complete
+    args:
+      timeout: 300
+
+  # Step 6: Check for errors
+  - command: unity.console_errors
+    name: Check Console Errors
+    description: Verify no compilation errors exist
+    args:
+      max_messages: 10
+
+  # Step 7: Build APK
+  - command: unity.build.apk
+    name: Build Development APK
+    description: Build Android APK with development options enabled
+    args:
+      development: true
+    continue_on_error: true
+
+  # Step 8: List connected devices
+  - command: unity.devices
+    name: List Devices
+    description: Show connected Quest devices for deployment
+
+  # Step 9: Deploy to Quest 3
+  - command: unity.deploy.quest
+    name: Deploy to Quest 3
+    description: Deploy APK to connected Quest 3 device
+    args:
+      development: true
+    continue_on_error: true

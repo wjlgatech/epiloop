@@ -8,7 +8,7 @@ describe("system-presence", () => {
     const instanceIdLower = instanceIdUpper.toLowerCase();
 
     upsertPresence(instanceIdUpper, {
-      host: "clawdbot",
+      host: "epiloop",
       mode: "ui",
       instanceId: instanceIdUpper,
       reason: "connect",
@@ -39,7 +39,7 @@ describe("system-presence", () => {
 
     upsertPresence(deviceId, {
       deviceId,
-      host: "clawdbot",
+      host: "epiloop",
       roles: ["operator"],
       scopes: ["operator.admin"],
       reason: "connect",

@@ -13,11 +13,11 @@ For model selection rules, see [/concepts/models](/concepts/models).
 
 - Model refs use `provider/model` (example: `opencode/claude-opus-4-5`).
 - If you set `agents.defaults.models`, it becomes the allowlist.
-- CLI helpers: `clawdbot onboard`, `clawdbot models list`, `clawdbot models set <provider/model>`.
+- CLI helpers: `epiloop onboard`, `epiloop models list`, `epiloop models set <provider/model>`.
 
 ## Built-in providers (pi-ai catalog)
 
-Clawdbot ships with the pi‑ai catalog. These providers require **no**
+Epiloop ships with the pi‑ai catalog. These providers require **no**
 `models.providers` config; just set auth + pick a model.
 
 ### OpenAI
@@ -25,7 +25,7 @@ Clawdbot ships with the pi‑ai catalog. These providers require **no**
 - Provider: `openai`
 - Auth: `OPENAI_API_KEY`
 - Example model: `openai/gpt-5.2`
-- CLI: `clawdbot onboard --auth-choice openai-api-key`
+- CLI: `epiloop onboard --auth-choice openai-api-key`
 
 ```json5
 {
@@ -38,7 +38,7 @@ Clawdbot ships with the pi‑ai catalog. These providers require **no**
 - Provider: `anthropic`
 - Auth: `ANTHROPIC_API_KEY` or `claude setup-token`
 - Example model: `anthropic/claude-opus-4-5`
-- CLI: `clawdbot onboard --auth-choice token` (paste setup-token) or `clawdbot models auth paste-token --provider anthropic`
+- CLI: `epiloop onboard --auth-choice token` (paste setup-token) or `epiloop models auth paste-token --provider anthropic`
 
 ```json5
 {
@@ -51,7 +51,7 @@ Clawdbot ships with the pi‑ai catalog. These providers require **no**
 - Provider: `openai-codex`
 - Auth: OAuth or Codex CLI (`~/.codex/auth.json`)
 - Example model: `openai-codex/gpt-5.2`
-- CLI: `clawdbot onboard --auth-choice openai-codex` or `codex-cli`
+- CLI: `epiloop onboard --auth-choice openai-codex` or `codex-cli`
 
 ```json5
 {
@@ -64,7 +64,7 @@ Clawdbot ships with the pi‑ai catalog. These providers require **no**
 - Provider: `opencode`
 - Auth: `OPENCODE_API_KEY` (or `OPENCODE_ZEN_API_KEY`)
 - Example model: `opencode/claude-opus-4-5`
-- CLI: `clawdbot onboard --auth-choice opencode-zen`
+- CLI: `epiloop onboard --auth-choice opencode-zen`
 
 ```json5
 {
@@ -77,25 +77,25 @@ Clawdbot ships with the pi‑ai catalog. These providers require **no**
 - Provider: `google`
 - Auth: `GEMINI_API_KEY`
 - Example model: `google/gemini-3-pro-preview`
-- CLI: `clawdbot onboard --auth-choice gemini-api-key`
+- CLI: `epiloop onboard --auth-choice gemini-api-key`
 
 ### Google Vertex / Antigravity / Gemini CLI
 
 - Providers: `google-vertex`, `google-antigravity`, `google-gemini-cli`
 - Auth: Vertex uses gcloud ADC; Antigravity/Gemini CLI use their respective auth flows
 - Antigravity OAuth is shipped as a bundled plugin (`google-antigravity-auth`, disabled by default).
-  - Enable: `clawdbot plugins enable google-antigravity-auth`
-  - Login: `clawdbot models auth login --provider google-antigravity --set-default`
+  - Enable: `epiloop plugins enable google-antigravity-auth`
+  - Login: `epiloop models auth login --provider google-antigravity --set-default`
 - Gemini CLI OAuth is shipped as a bundled plugin (`google-gemini-cli-auth`, disabled by default).
-  - Enable: `clawdbot plugins enable google-gemini-cli-auth`
-  - Login: `clawdbot models auth login --provider google-gemini-cli --set-default`
+  - Enable: `epiloop plugins enable google-gemini-cli-auth`
+  - Login: `epiloop models auth login --provider google-gemini-cli --set-default`
 
 ### Z.AI (GLM)
 
 - Provider: `zai`
 - Auth: `ZAI_API_KEY`
 - Example model: `zai/glm-4.7`
-- CLI: `clawdbot onboard --auth-choice zai-api-key`
+- CLI: `epiloop onboard --auth-choice zai-api-key`
   - Aliases: `z.ai/*` and `z-ai/*` normalize to `zai/*`
 
 ### Vercel AI Gateway
@@ -103,7 +103,7 @@ Clawdbot ships with the pi‑ai catalog. These providers require **no**
 - Provider: `vercel-ai-gateway`
 - Auth: `AI_GATEWAY_API_KEY`
 - Example model: `vercel-ai-gateway/anthropic/claude-opus-4.5`
-- CLI: `clawdbot onboard --auth-choice ai-gateway-api-key`
+- CLI: `epiloop onboard --auth-choice ai-gateway-api-key`
 
 ### Other built-in providers
 
@@ -189,8 +189,8 @@ Qwen provides OAuth access to Qwen Coder + Vision via a device-code flow.
 Enable the bundled plugin, then log in:
 
 ```bash
-clawdbot plugins enable qwen-portal-auth
-clawdbot models auth login --provider qwen-portal --set-default
+epiloop plugins enable qwen-portal-auth
+epiloop models auth login --provider qwen-portal --set-default
 ```
 
 Model refs:
@@ -206,7 +206,7 @@ Synthetic provides Anthropic-compatible models behind the `synthetic` provider:
 - Provider: `synthetic`
 - Auth: `SYNTHETIC_API_KEY`
 - Example model: `synthetic/hf:MiniMaxAI/MiniMax-M2.1`
-- CLI: `clawdbot onboard --auth-choice synthetic-api-key`
+- CLI: `epiloop onboard --auth-choice synthetic-api-key`
 
 ```json5
 {
@@ -297,7 +297,7 @@ Example (OpenAI‑compatible):
 
 Notes:
 - For custom providers, `reasoning`, `input`, `cost`, `contextWindow`, and `maxTokens` are optional.
-  When omitted, Clawdbot defaults to:
+  When omitted, Epiloop defaults to:
   - `reasoning: false`
   - `input: ["text"]`
   - `cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }`
@@ -308,9 +308,9 @@ Notes:
 ## CLI examples
 
 ```bash
-clawdbot onboard --auth-choice opencode-zen
-clawdbot models set opencode/claude-opus-4-5
-clawdbot models list
+epiloop onboard --auth-choice opencode-zen
+epiloop models set opencode/claude-opus-4-5
+epiloop models list
 ```
 
 See also: [/gateway/configuration](/gateway/configuration) for full configuration examples.

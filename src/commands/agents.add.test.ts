@@ -25,7 +25,7 @@ const runtime: RuntimeEnv = {
 };
 
 const baseSnapshot = {
-  path: "/tmp/clawdbot.json",
+  path: "/tmp/epiloop.json",
   exists: true,
   raw: "{}",
   parsed: {},

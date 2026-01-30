@@ -3,7 +3,7 @@ import type { ReplyPayload } from "../../auto-reply/types.js";
 import { resolveChannelMediaMaxBytes } from "../../channels/plugins/media-limits.js";
 import { loadChannelOutboundAdapter } from "../../channels/plugins/outbound/load.js";
 import type { ChannelOutboundAdapter } from "../../channels/plugins/types.js";
-import type { ClawdbotConfig } from "../../config/config.js";
+import type { EpiloopConfig } from "../../config/config.js";
 import { resolveMarkdownTableMode } from "../../config/markdown-tables.js";
 import type { sendMessageDiscord } from "../../discord/send.js";
 import type { sendMessageIMessage } from "../../imessage/send.js";
@@ -75,7 +75,7 @@ function throwIfAborted(abortSignal?: AbortSignal): void {
 
 // Channel docking: outbound delivery delegates to plugin.outbound adapters.
 async function createChannelHandler(params: {
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   channel: Exclude<OutboundChannel, "none">;
   to: string;
   accountId?: string;
@@ -107,7 +107,7 @@ async function createChannelHandler(params: {
 
 function createPluginHandler(params: {
   outbound?: ChannelOutboundAdapter;
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   channel: Exclude<OutboundChannel, "none">;
   to: string;
   accountId?: string;
@@ -151,7 +151,7 @@ function createPluginHandler(params: {
 }
 
 export async function deliverOutboundPayloads(params: {
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   channel: Exclude<OutboundChannel, "none">;
   to: string;
   accountId?: string;

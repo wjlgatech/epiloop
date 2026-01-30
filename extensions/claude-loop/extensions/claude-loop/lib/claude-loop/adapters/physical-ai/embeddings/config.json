@@ -1,0 +1,149 @@
+{
+  "model": "all-MiniLM-L6-v2",
+  "prefix": "[physical-ai]",
+  "domain_prefixes": {
+    "isaac_sim": "[isaac-sim]",
+    "ros2": "[ros2]",
+    "unity_xr": "[unity-xr]",
+    "nvidia_omniverse": "[omniverse]",
+    "robotics": "[robotics]"
+  },
+  "domain_terms": [
+    "USD",
+    "prim",
+    "stage",
+    "layer",
+    "composition",
+    "URDF",
+    "joint",
+    "link",
+    "articulation",
+    "sensor",
+    "camera",
+    "lidar",
+    "IMU",
+    "ROS2",
+    "topic",
+    "node",
+    "service",
+    "action",
+    "QoS",
+    "Isaac Sim",
+    "PhysX",
+    "Omniverse",
+    "RTX",
+    "Unity",
+    "XR",
+    "VR",
+    "AR",
+    "OpenXR",
+    "simulation",
+    "physics",
+    "collision",
+    "rigid body",
+    "kinematics",
+    "dynamics",
+    "transform",
+    "coordinate frame",
+    "TF",
+    "SLAM",
+    "navigation",
+    "perception",
+    "manipulation",
+    "gripper",
+    "end effector"
+  ],
+  "boost_patterns": [
+    {
+      "pattern": "prim.*not found",
+      "boost": 1.5,
+      "category": "usd_error"
+    },
+    {
+      "pattern": "invalid.*path",
+      "boost": 1.4,
+      "category": "path_error"
+    },
+    {
+      "pattern": "USD.*error|stage.*failed",
+      "boost": 1.5,
+      "category": "usd_error"
+    },
+    {
+      "pattern": "URDF.*invalid|missing.*link|missing.*joint",
+      "boost": 1.4,
+      "category": "urdf_error"
+    },
+    {
+      "pattern": "topic.*not.*published|no.*subscribers",
+      "boost": 1.3,
+      "category": "ros2_error"
+    },
+    {
+      "pattern": "QoS.*incompatible|reliability.*mismatch",
+      "boost": 1.4,
+      "category": "ros2_qos"
+    },
+    {
+      "pattern": "transform.*exception|TF.*lookup.*failed",
+      "boost": 1.4,
+      "category": "ros2_tf"
+    },
+    {
+      "pattern": "physics.*unstable|simulation.*diverge",
+      "boost": 1.5,
+      "category": "physics_error"
+    },
+    {
+      "pattern": "collision.*detected|self.*collision",
+      "boost": 1.3,
+      "category": "collision_error"
+    },
+    {
+      "pattern": "sensor.*not.*responding|camera.*timeout",
+      "boost": 1.4,
+      "category": "sensor_error"
+    },
+    {
+      "pattern": "XR.*tracking.*lost|headset.*disconnected",
+      "boost": 1.4,
+      "category": "xr_error"
+    },
+    {
+      "pattern": "Unity.*build.*failed|compile.*error",
+      "boost": 1.3,
+      "category": "unity_error"
+    },
+    {
+      "pattern": "Isaac.*extension.*failed|omni\\.kit.*error",
+      "boost": 1.4,
+      "category": "isaac_error"
+    }
+  ],
+  "similarity_threshold": 0.72,
+  "cross_domain_threshold": 0.80,
+  "category_weights": {
+    "usd_error": 1.2,
+    "urdf_error": 1.2,
+    "ros2_error": 1.1,
+    "ros2_qos": 1.0,
+    "ros2_tf": 1.1,
+    "physics_error": 1.3,
+    "collision_error": 1.0,
+    "sensor_error": 1.1,
+    "xr_error": 1.2,
+    "unity_error": 1.0,
+    "isaac_error": 1.2
+  },
+  "synonyms": {
+    "prim": ["primitive", "scene object", "stage object"],
+    "stage": ["scene", "USD file", "root"],
+    "joint": ["articulation joint", "connection", "hinge"],
+    "link": ["rigid body", "body", "segment"],
+    "topic": ["channel", "message stream", "pub-sub"],
+    "node": ["ROS node", "process", "executable"],
+    "transform": ["TF", "pose", "position and orientation"],
+    "lidar": ["laser scanner", "laser", "range sensor"],
+    "IMU": ["inertial sensor", "accelerometer + gyro", "motion sensor"]
+  }
+}

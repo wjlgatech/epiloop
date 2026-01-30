@@ -1,17 +1,17 @@
 ---
-summary: "CLI reference for `clawdbot uninstall` (remove gateway service + local data)"
+summary: "CLI reference for `epiloop uninstall` (remove gateway service + local data)"
 read_when:
   - You want to remove the gateway service and/or local state
   - You want a dry-run first
 ---
 
-# `clawdbot uninstall`
+# `epiloop uninstall`
 
 Uninstall the gateway service + local data (CLI remains).
 
 ```bash
-clawdbot uninstall
-clawdbot uninstall --all --yes
-clawdbot uninstall --dry-run
+epiloop uninstall
+epiloop uninstall --all --yes
+epiloop uninstall --dry-run
 ```
 

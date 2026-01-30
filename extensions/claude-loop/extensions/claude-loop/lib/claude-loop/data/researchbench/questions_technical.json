@@ -1,0 +1,1502 @@
+[
+  {
+    "id": "TECH-001",
+    "domain": "Technical",
+    "question": "What are the key differences between microservices and monolithic architectures, and when should each be used?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the characteristics of monolithic architecture?",
+      "How do microservices enable independent deployment?",
+      "What are the operational challenges of microservices?",
+      "What factors should guide the architecture choice?"
+    ],
+    "evaluation_criteria": "Must compare architectures with specific trade-offs and decision criteria",
+    "tags": ["microservices", "architecture", "monolith", "distributed-systems"]
+  },
+  {
+    "id": "TECH-002",
+    "domain": "Technical",
+    "question": "How do modern database systems achieve high availability and consistency?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the CAP theorem and its implications?",
+      "How do consensus algorithms like Raft work?",
+      "What replication strategies exist for databases?",
+      "How do systems like CockroachDB achieve distributed SQL?"
+    ],
+    "evaluation_criteria": "Must explain CAP, consensus, and specific system implementations",
+    "tags": ["databases", "distributed-systems", "CAP", "consensus"]
+  },
+  {
+    "id": "TECH-003",
+    "domain": "Technical",
+    "question": "What are the best practices for securing APIs against common attack vectors?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How should API authentication be implemented?",
+      "What is rate limiting and how is it implemented?",
+      "How do you prevent injection attacks in APIs?",
+      "What API security headers should be used?"
+    ],
+    "evaluation_criteria": "Must cover authentication, rate limiting, and common vulnerabilities",
+    "tags": ["API-security", "authentication", "rate-limiting", "OWASP"]
+  },
+  {
+    "id": "TECH-004",
+    "domain": "Technical",
+    "question": "How do container orchestration systems like Kubernetes manage workloads?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the core Kubernetes components?",
+      "How does the scheduler place workloads?",
+      "How do services enable network communication?",
+      "What is the role of the control plane?"
+    ],
+    "evaluation_criteria": "Must explain architecture, scheduling, and networking",
+    "tags": ["Kubernetes", "containers", "orchestration", "DevOps"]
+  },
+  {
+    "id": "TECH-005",
+    "domain": "Technical",
+    "question": "What are the key considerations for designing event-driven architectures?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is event sourcing and when should it be used?",
+      "How do message brokers like Kafka handle event streaming?",
+      "What are the challenges of eventual consistency?",
+      "How do you handle event ordering and idempotency?"
+    ],
+    "evaluation_criteria": "Must explain patterns, brokers, and consistency challenges",
+    "tags": ["event-driven", "Kafka", "event-sourcing", "messaging"]
+  },
+  {
+    "id": "TECH-006",
+    "domain": "Technical",
+    "question": "How do SQL query optimizers generate efficient execution plans?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do cost-based optimizers estimate query costs?",
+      "What statistics do optimizers use?",
+      "How are join orders determined?",
+      "What is the role of indexes in query optimization?"
+    ],
+    "evaluation_criteria": "Must explain cost estimation, join optimization, and indexing",
+    "tags": ["SQL", "query-optimization", "databases", "execution-plans"]
+  },
+  {
+    "id": "TECH-007",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing zero-trust security architectures?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the principles of zero-trust security?",
+      "How is identity verification implemented continuously?",
+      "What is micro-segmentation?",
+      "How do you implement least-privilege access?"
+    ],
+    "evaluation_criteria": "Must explain principles and implementation approaches",
+    "tags": ["zero-trust", "security", "identity", "access-control"]
+  },
+  {
+    "id": "TECH-008",
+    "domain": "Technical",
+    "question": "How do garbage collectors in managed languages work?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the different garbage collection algorithms?",
+      "How do generational collectors optimize GC?",
+      "What are stop-the-world pauses and how are they minimized?",
+      "How do concurrent collectors like G1 work?"
+    ],
+    "evaluation_criteria": "Must explain algorithms, generational approach, and modern collectors",
+    "tags": ["garbage-collection", "memory-management", "JVM", "runtime"]
+  },
+  {
+    "id": "TECH-009",
+    "domain": "Technical",
+    "question": "What are the best practices for implementing CI/CD pipelines?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What stages should a CI/CD pipeline include?",
+      "How should testing be integrated into pipelines?",
+      "What deployment strategies reduce risk?",
+      "How do you handle secrets in CI/CD?"
+    ],
+    "evaluation_criteria": "Must cover pipeline stages, testing, and deployment strategies",
+    "tags": ["CI/CD", "DevOps", "automation", "deployment"]
+  },
+  {
+    "id": "TECH-010",
+    "domain": "Technical",
+    "question": "How do content delivery networks optimize web performance?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does edge caching reduce latency?",
+      "What is anycast routing in CDNs?",
+      "How do CDNs handle cache invalidation?",
+      "What security features do modern CDNs provide?"
+    ],
+    "evaluation_criteria": "Must explain caching, routing, and security features",
+    "tags": ["CDN", "performance", "caching", "networking"]
+  },
+  {
+    "id": "TECH-011",
+    "domain": "Technical",
+    "question": "What are the techniques for handling real-time data processing at scale?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do stream processing frameworks differ from batch?",
+      "What is windowing in stream processing?",
+      "How do systems like Flink achieve exactly-once semantics?",
+      "How do you handle late-arriving data?"
+    ],
+    "evaluation_criteria": "Must explain stream vs batch, windowing, and semantics",
+    "tags": ["stream-processing", "Flink", "real-time", "big-data"]
+  },
+  {
+    "id": "TECH-012",
+    "domain": "Technical",
+    "question": "How do modern compilers optimize code generation?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is SSA form and why is it used?",
+      "What loop optimizations do compilers perform?",
+      "How does inlining improve performance?",
+      "What is link-time optimization?"
+    ],
+    "evaluation_criteria": "Must explain SSA, loop optimizations, and LTO",
+    "tags": ["compilers", "optimization", "SSA", "code-generation"]
+  },
+  {
+    "id": "TECH-013",
+    "domain": "Technical",
+    "question": "What are the best practices for designing RESTful APIs?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What are the REST architectural constraints?",
+      "How should resources and endpoints be named?",
+      "What HTTP status codes should be used?",
+      "How should API versioning be handled?"
+    ],
+    "evaluation_criteria": "Must explain REST principles and practical guidelines",
+    "tags": ["REST", "API-design", "HTTP", "web-services"]
+  },
+  {
+    "id": "TECH-014",
+    "domain": "Technical",
+    "question": "How do cryptographic hash functions work and what are their applications?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What properties must cryptographic hashes have?",
+      "How does SHA-256 operate internally?",
+      "What is a hash collision and why is it dangerous?",
+      "What are the applications of hashing beyond integrity?"
+    ],
+    "evaluation_criteria": "Must explain properties, algorithms, and applications",
+    "tags": ["cryptography", "hashing", "SHA-256", "security"]
+  },
+  {
+    "id": "TECH-015",
+    "domain": "Technical",
+    "question": "What are the approaches for achieving database connection pooling?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "Why is connection pooling necessary?",
+      "How do connection pools manage connections?",
+      "What configuration parameters are important?",
+      "How do proxies like PgBouncer work?"
+    ],
+    "evaluation_criteria": "Must explain pooling mechanics and configuration",
+    "tags": ["databases", "connection-pooling", "performance", "PgBouncer"]
+  },
+  {
+    "id": "TECH-016",
+    "domain": "Technical",
+    "question": "How do web browsers render pages and optimize performance?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the critical rendering path?",
+      "How does the browser parse and construct the DOM?",
+      "What is layout and paint in the rendering pipeline?",
+      "How do browsers optimize JavaScript execution?"
+    ],
+    "evaluation_criteria": "Must explain rendering pipeline and optimization techniques",
+    "tags": ["browsers", "rendering", "DOM", "performance"]
+  },
+  {
+    "id": "TECH-017",
+    "domain": "Technical",
+    "question": "What are the key considerations for implementing OAuth 2.0 and OpenID Connect?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the OAuth 2.0 grant types and when to use them?",
+      "How does PKCE prevent authorization code interception?",
+      "What claims should JWTs contain?",
+      "What are common OAuth implementation vulnerabilities?"
+    ],
+    "evaluation_criteria": "Must explain flows, PKCE, and security considerations",
+    "tags": ["OAuth", "OIDC", "authentication", "security"]
+  },
+  {
+    "id": "TECH-018",
+    "domain": "Technical",
+    "question": "How do load balancers distribute traffic across servers?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What load balancing algorithms exist?",
+      "What is the difference between L4 and L7 load balancing?",
+      "How is session persistence handled?",
+      "How do health checks work?"
+    ],
+    "evaluation_criteria": "Must explain algorithms, layers, and health checking",
+    "tags": ["load-balancing", "networking", "high-availability", "infrastructure"]
+  },
+  {
+    "id": "TECH-019",
+    "domain": "Technical",
+    "question": "What are the techniques for preventing SQL injection attacks?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "How do SQL injection attacks work?",
+      "What are parameterized queries?",
+      "How does input validation help?",
+      "What defense-in-depth strategies should be used?"
+    ],
+    "evaluation_criteria": "Must explain attack mechanics and prevention methods",
+    "tags": ["SQL-injection", "security", "databases", "OWASP"]
+  },
+  {
+    "id": "TECH-020",
+    "domain": "Technical",
+    "question": "How do distributed tracing systems work?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is distributed tracing and why is it needed?",
+      "How do trace and span IDs propagate?",
+      "What is the OpenTelemetry standard?",
+      "How do sampling strategies affect overhead?"
+    ],
+    "evaluation_criteria": "Must explain tracing concepts, standards, and sampling",
+    "tags": ["distributed-tracing", "observability", "OpenTelemetry", "microservices"]
+  },
+  {
+    "id": "TECH-021",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing full-text search in applications?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do inverted indexes enable fast text search?",
+      "What is tokenization and stemming?",
+      "How does relevance scoring work?",
+      "How do Elasticsearch and PostgreSQL full-text differ?"
+    ],
+    "evaluation_criteria": "Must explain indexing, text processing, and scoring",
+    "tags": ["full-text-search", "Elasticsearch", "inverted-index", "databases"]
+  },
+  {
+    "id": "TECH-022",
+    "domain": "Technical",
+    "question": "How do service meshes improve microservices communication?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is a service mesh and what problems does it solve?",
+      "How does the sidecar proxy pattern work?",
+      "What traffic management features do meshes provide?",
+      "How do Istio and Linkerd compare?"
+    ],
+    "evaluation_criteria": "Must explain architecture, features, and specific implementations",
+    "tags": ["service-mesh", "Istio", "microservices", "networking"]
+  },
+  {
+    "id": "TECH-023",
+    "domain": "Technical",
+    "question": "What are the best practices for database schema migrations?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How should migrations be versioned and managed?",
+      "What are expand-contract migrations?",
+      "How do you handle large table migrations without downtime?",
+      "What rollback strategies should be in place?"
+    ],
+    "evaluation_criteria": "Must explain migration patterns and zero-downtime techniques",
+    "tags": ["migrations", "databases", "schema", "DevOps"]
+  },
+  {
+    "id": "TECH-024",
+    "domain": "Technical",
+    "question": "How do memory allocators work in systems programming?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does malloc manage the heap?",
+      "What is memory fragmentation and how is it addressed?",
+      "How do arena allocators work?",
+      "What is jemalloc and why is it used?"
+    ],
+    "evaluation_criteria": "Must explain allocation strategies and specific allocators",
+    "tags": ["memory-allocation", "systems-programming", "malloc", "performance"]
+  },
+  {
+    "id": "TECH-025",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing rate limiting in distributed systems?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What rate limiting algorithms exist?",
+      "How is distributed rate limiting coordinated?",
+      "What is the token bucket algorithm?",
+      "How do you handle rate limiting at scale?"
+    ],
+    "evaluation_criteria": "Must explain algorithms and distributed coordination",
+    "tags": ["rate-limiting", "distributed-systems", "token-bucket", "API"]
+  },
+  {
+    "id": "TECH-026",
+    "domain": "Technical",
+    "question": "How do graph databases differ from relational databases?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What data models do graph databases use?",
+      "How do graph queries traverse relationships?",
+      "When are graph databases more efficient than relational?",
+      "How do Neo4j and relational DBs compare for graph workloads?"
+    ],
+    "evaluation_criteria": "Must compare data models, query patterns, and performance",
+    "tags": ["graph-databases", "Neo4j", "databases", "data-modeling"]
+  },
+  {
+    "id": "TECH-027",
+    "domain": "Technical",
+    "question": "What are the key considerations for implementing WebSocket connections at scale?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do WebSocket connections differ from HTTP?",
+      "How do you handle connection state and reconnection?",
+      "What are the challenges of scaling WebSocket servers?",
+      "How do you implement pub/sub over WebSockets?"
+    ],
+    "evaluation_criteria": "Must explain protocol, state management, and scaling",
+    "tags": ["WebSocket", "real-time", "networking", "scaling"]
+  },
+  {
+    "id": "TECH-028",
+    "domain": "Technical",
+    "question": "How do time-series databases optimize for temporal data?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What data structures are used for time-series storage?",
+      "How is time-series data compressed?",
+      "What query patterns are optimized?",
+      "How do InfluxDB and TimescaleDB differ?"
+    ],
+    "evaluation_criteria": "Must explain storage, compression, and specific systems",
+    "tags": ["time-series", "databases", "InfluxDB", "compression"]
+  },
+  {
+    "id": "TECH-029",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing feature flags in software systems?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the use cases for feature flags?",
+      "How should feature flag evaluation be implemented?",
+      "What are the risks of feature flag debt?",
+      "How do feature flag management platforms work?"
+    ],
+    "evaluation_criteria": "Must explain implementation and lifecycle management",
+    "tags": ["feature-flags", "deployment", "A/B-testing", "DevOps"]
+  },
+  {
+    "id": "TECH-030",
+    "domain": "Technical",
+    "question": "How do consensus algorithms handle network partitions?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the split-brain problem?",
+      "How does Paxos achieve consensus?",
+      "How does Raft handle leader election during partitions?",
+      "What are Byzantine fault-tolerant algorithms?"
+    ],
+    "evaluation_criteria": "Must explain partition handling in specific algorithms",
+    "tags": ["consensus", "distributed-systems", "Raft", "Paxos"]
+  },
+  {
+    "id": "TECH-031",
+    "domain": "Technical",
+    "question": "What are the approaches for securing container images?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What vulnerabilities exist in container images?",
+      "How do image scanning tools work?",
+      "What are best practices for minimal images?",
+      "How should image signing and verification work?"
+    ],
+    "evaluation_criteria": "Must explain vulnerabilities, scanning, and hardening",
+    "tags": ["containers", "security", "Docker", "image-scanning"]
+  },
+  {
+    "id": "TECH-032",
+    "domain": "Technical",
+    "question": "How do database transactions ensure ACID properties?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the ACID properties?",
+      "How does write-ahead logging ensure durability?",
+      "What isolation levels exist and what anomalies do they prevent?",
+      "How do optimistic and pessimistic concurrency differ?"
+    ],
+    "evaluation_criteria": "Must explain ACID implementation mechanisms",
+    "tags": ["transactions", "ACID", "databases", "isolation"]
+  },
+  {
+    "id": "TECH-033",
+    "domain": "Technical",
+    "question": "What are the key considerations for designing idempotent APIs?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is idempotency and why is it important?",
+      "How do idempotency keys work?",
+      "What challenges exist in implementing idempotency?",
+      "How should duplicate requests be detected?"
+    ],
+    "evaluation_criteria": "Must explain implementation patterns and challenges",
+    "tags": ["idempotency", "API-design", "distributed-systems", "reliability"]
+  },
+  {
+    "id": "TECH-034",
+    "domain": "Technical",
+    "question": "How do reverse proxies improve application security and performance?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What functions do reverse proxies serve?",
+      "How do reverse proxies handle SSL termination?",
+      "What caching strategies do reverse proxies use?",
+      "How do Nginx and HAProxy compare?"
+    ],
+    "evaluation_criteria": "Must explain proxy functions and specific implementations",
+    "tags": ["reverse-proxy", "Nginx", "security", "performance"]
+  },
+  {
+    "id": "TECH-035",
+    "domain": "Technical",
+    "question": "What are the techniques for debugging memory leaks in production systems?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What causes memory leaks in different languages?",
+      "How do memory profilers identify leaks?",
+      "What are heap dumps and how are they analyzed?",
+      "How do you debug leaks in containerized environments?"
+    ],
+    "evaluation_criteria": "Must explain detection and debugging techniques",
+    "tags": ["memory-leaks", "debugging", "profiling", "performance"]
+  },
+  {
+    "id": "TECH-036",
+    "domain": "Technical",
+    "question": "How do blob storage systems like S3 achieve durability and availability?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does S3 replicate data across availability zones?",
+      "What consistency model does S3 provide?",
+      "How is data integrity verified?",
+      "What storage classes exist and how do they differ?"
+    ],
+    "evaluation_criteria": "Must explain replication, consistency, and storage tiers",
+    "tags": ["blob-storage", "S3", "durability", "cloud"]
+  },
+  {
+    "id": "TECH-037",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing circuit breakers in distributed systems?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What problem does the circuit breaker pattern solve?",
+      "What are the circuit breaker states?",
+      "How should failure thresholds be configured?",
+      "How do circuit breakers interact with retries?"
+    ],
+    "evaluation_criteria": "Must explain pattern and configuration considerations",
+    "tags": ["circuit-breaker", "resilience", "distributed-systems", "patterns"]
+  },
+  {
+    "id": "TECH-038",
+    "domain": "Technical",
+    "question": "How do lock-free data structures achieve thread safety without mutexes?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are compare-and-swap operations?",
+      "How do lock-free queues work?",
+      "What is the ABA problem?",
+      "When should lock-free structures be used?"
+    ],
+    "evaluation_criteria": "Must explain CAS, data structures, and trade-offs",
+    "tags": ["lock-free", "concurrency", "CAS", "data-structures"]
+  },
+  {
+    "id": "TECH-039",
+    "domain": "Technical",
+    "question": "What are the best practices for API versioning?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What API versioning strategies exist?",
+      "How should breaking changes be handled?",
+      "What is semantic versioning for APIs?",
+      "How long should old versions be supported?"
+    ],
+    "evaluation_criteria": "Must compare versioning approaches with trade-offs",
+    "tags": ["API-versioning", "API-design", "backwards-compatibility", "deprecation"]
+  },
+  {
+    "id": "TECH-040",
+    "domain": "Technical",
+    "question": "How do document databases handle schema flexibility?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is schema-on-read vs schema-on-write?",
+      "How does MongoDB index flexible documents?",
+      "What are the trade-offs of schemaless design?",
+      "How should schema evolution be managed?"
+    ],
+    "evaluation_criteria": "Must explain flexibility trade-offs and best practices",
+    "tags": ["document-databases", "MongoDB", "schema", "NoSQL"]
+  },
+  {
+    "id": "TECH-041",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing blue-green and canary deployments?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does blue-green deployment work?",
+      "What is canary deployment and how is traffic shifted?",
+      "What metrics should trigger rollback?",
+      "How do these strategies interact with database changes?"
+    ],
+    "evaluation_criteria": "Must explain deployment strategies and rollback considerations",
+    "tags": ["deployment", "blue-green", "canary", "DevOps"]
+  },
+  {
+    "id": "TECH-042",
+    "domain": "Technical",
+    "question": "How do key-value stores optimize for high throughput?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does Redis achieve in-memory performance?",
+      "What is the LSM tree storage engine?",
+      "How do systems like RocksDB optimize writes?",
+      "What consistency trade-offs exist in distributed KV stores?"
+    ],
+    "evaluation_criteria": "Must explain storage engines and performance optimizations",
+    "tags": ["key-value", "Redis", "LSM-tree", "performance"]
+  },
+  {
+    "id": "TECH-043",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing chaos engineering?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the principles of chaos engineering?",
+      "What types of failures should be injected?",
+      "How do you design chaos experiments?",
+      "What tools exist for chaos engineering?"
+    ],
+    "evaluation_criteria": "Must explain principles, experiments, and tools",
+    "tags": ["chaos-engineering", "resilience", "testing", "reliability"]
+  },
+  {
+    "id": "TECH-044",
+    "domain": "Technical",
+    "question": "How do TLS certificates and the PKI system work?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does the TLS handshake establish encryption?",
+      "What is the certificate chain of trust?",
+      "How do Certificate Authorities validate domains?",
+      "What is certificate pinning and when should it be used?"
+    ],
+    "evaluation_criteria": "Must explain handshake, PKI, and certificate management",
+    "tags": ["TLS", "certificates", "PKI", "security"]
+  },
+  {
+    "id": "TECH-045",
+    "domain": "Technical",
+    "question": "What are the key considerations for caching in distributed systems?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What caching strategies exist (write-through, write-back)?",
+      "How do you handle cache invalidation?",
+      "What is cache stampede and how is it prevented?",
+      "How should cache consistency be maintained?"
+    ],
+    "evaluation_criteria": "Must explain strategies, invalidation, and consistency",
+    "tags": ["caching", "distributed-systems", "invalidation", "performance"]
+  },
+  {
+    "id": "TECH-046",
+    "domain": "Technical",
+    "question": "How do log aggregation systems handle high-volume log data?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does the ELK stack process logs?",
+      "What is structured logging and why is it important?",
+      "How should log retention be managed?",
+      "What are the performance considerations for logging?"
+    ],
+    "evaluation_criteria": "Must explain ingestion, processing, and retention",
+    "tags": ["logging", "ELK", "observability", "monitoring"]
+  },
+  {
+    "id": "TECH-047",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing horizontal auto-scaling?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What metrics should trigger scaling decisions?",
+      "How do predictive scaling approaches work?",
+      "What are the challenges of stateful auto-scaling?",
+      "How should scaling policies be tuned?"
+    ],
+    "evaluation_criteria": "Must explain metrics, policies, and stateful challenges",
+    "tags": ["auto-scaling", "cloud", "performance", "infrastructure"]
+  },
+  {
+    "id": "TECH-048",
+    "domain": "Technical",
+    "question": "How do column-oriented databases optimize analytical queries?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does columnar storage differ from row storage?",
+      "What compression techniques work well for columns?",
+      "How do vectorized query engines work?",
+      "What are the trade-offs for OLTP workloads?"
+    ],
+    "evaluation_criteria": "Must explain storage, compression, and query execution",
+    "tags": ["columnar", "databases", "analytics", "compression"]
+  },
+  {
+    "id": "TECH-049",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing data pipeline orchestration?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is a DAG in pipeline orchestration?",
+      "How do tools like Airflow schedule tasks?",
+      "What are the failure handling patterns?",
+      "How should pipeline dependencies be managed?"
+    ],
+    "evaluation_criteria": "Must explain orchestration concepts and tools",
+    "tags": ["data-pipelines", "Airflow", "orchestration", "ETL"]
+  },
+  {
+    "id": "TECH-050",
+    "domain": "Technical",
+    "question": "How do security headers protect web applications?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What is Content Security Policy and how does it prevent XSS?",
+      "How does HSTS enforce HTTPS?",
+      "What is the X-Frame-Options header?",
+      "What other security headers should be implemented?"
+    ],
+    "evaluation_criteria": "Must explain header functions and configurations",
+    "tags": ["security-headers", "CSP", "HSTS", "web-security"]
+  },
+  {
+    "id": "TECH-051",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing distributed locks?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "Why are distributed locks difficult to implement correctly?",
+      "How does Redlock algorithm work?",
+      "What are the fencing token approaches?",
+      "What are the alternatives to distributed locks?"
+    ],
+    "evaluation_criteria": "Must explain challenges, algorithms, and alternatives",
+    "tags": ["distributed-locks", "Redlock", "coordination", "distributed-systems"]
+  },
+  {
+    "id": "TECH-052",
+    "domain": "Technical",
+    "question": "How do serverless platforms manage function execution?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the cold start problem?",
+      "How do Lambda and similar platforms scale functions?",
+      "What are the limitations of serverless architectures?",
+      "How should state be managed in serverless?"
+    ],
+    "evaluation_criteria": "Must explain execution model and limitations",
+    "tags": ["serverless", "Lambda", "FaaS", "cloud"]
+  },
+  {
+    "id": "TECH-053",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing vector similarity search?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do approximate nearest neighbor algorithms work?",
+      "What is HNSW and how does it perform?",
+      "How do vector databases like Pinecone index embeddings?",
+      "What distance metrics are appropriate for different use cases?"
+    ],
+    "evaluation_criteria": "Must explain ANN algorithms and specific implementations",
+    "tags": ["vector-search", "embeddings", "ANN", "HNSW"]
+  },
+  {
+    "id": "TECH-054",
+    "domain": "Technical",
+    "question": "How do DNS systems resolve domain names at scale?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the DNS resolution hierarchy?",
+      "How do DNS caches improve performance?",
+      "What is DNSSEC and how does it work?",
+      "How do DNS-based load balancing and failover work?"
+    ],
+    "evaluation_criteria": "Must explain resolution, caching, and security",
+    "tags": ["DNS", "networking", "DNSSEC", "infrastructure"]
+  },
+  {
+    "id": "TECH-055",
+    "domain": "Technical",
+    "question": "What are the techniques for securing microservices communication?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How should service-to-service authentication work?",
+      "What is mTLS and how is it implemented?",
+      "How do API gateways enforce security policies?",
+      "What is the role of service identity?"
+    ],
+    "evaluation_criteria": "Must explain authentication, mTLS, and identity",
+    "tags": ["microservices", "mTLS", "security", "authentication"]
+  },
+  {
+    "id": "TECH-056",
+    "domain": "Technical",
+    "question": "How do backup and disaster recovery strategies differ?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are RPO and RTO and how do they guide strategy?",
+      "What backup strategies exist for databases?",
+      "How does point-in-time recovery work?",
+      "What is the difference between high availability and disaster recovery?"
+    ],
+    "evaluation_criteria": "Must explain RPO/RTO, backup methods, and HA vs DR",
+    "tags": ["backup", "disaster-recovery", "RPO", "RTO"]
+  },
+  {
+    "id": "TECH-057",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing secrets management?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What problems does secrets management solve?",
+      "How do tools like HashiCorp Vault work?",
+      "What is dynamic secret generation?",
+      "How should secrets be rotated?"
+    ],
+    "evaluation_criteria": "Must explain management tools and best practices",
+    "tags": ["secrets-management", "Vault", "security", "DevOps"]
+  },
+  {
+    "id": "TECH-058",
+    "domain": "Technical",
+    "question": "How do multi-region database deployments work?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What consistency challenges exist across regions?",
+      "How do active-active vs active-passive setups differ?",
+      "What is conflict resolution in multi-master replication?",
+      "How do global databases like Spanner achieve consistency?"
+    ],
+    "evaluation_criteria": "Must explain consistency, conflicts, and specific systems",
+    "tags": ["multi-region", "databases", "replication", "consistency"]
+  },
+  {
+    "id": "TECH-059",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing GraphQL efficiently?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does GraphQL differ from REST?",
+      "What is the N+1 query problem in GraphQL?",
+      "How do DataLoader patterns solve batching?",
+      "What caching strategies work for GraphQL?"
+    ],
+    "evaluation_criteria": "Must explain GraphQL optimization techniques",
+    "tags": ["GraphQL", "API", "performance", "DataLoader"]
+  },
+  {
+    "id": "TECH-060",
+    "domain": "Technical",
+    "question": "How do container runtimes isolate processes?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are Linux namespaces and cgroups?",
+      "How do containers differ from VMs?",
+      "What is the container security model?",
+      "How do rootless containers improve security?"
+    ],
+    "evaluation_criteria": "Must explain isolation mechanisms and security",
+    "tags": ["containers", "namespaces", "cgroups", "security"]
+  },
+  {
+    "id": "TECH-061",
+    "domain": "Technical",
+    "question": "What are the approaches for handling eventual consistency in UIs?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is optimistic UI updating?",
+      "How should conflicts be communicated to users?",
+      "What is CRDT and how does it help?",
+      "How do you handle offline-first applications?"
+    ],
+    "evaluation_criteria": "Must explain UI patterns for eventual consistency",
+    "tags": ["eventual-consistency", "UI", "CRDT", "offline-first"]
+  },
+  {
+    "id": "TECH-062",
+    "domain": "Technical",
+    "question": "How do spatial databases handle geographic data?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the PostGIS extension?",
+      "How do spatial indexes like R-trees work?",
+      "What spatial query operations are common?",
+      "How should geographic data be modeled?"
+    ],
+    "evaluation_criteria": "Must explain spatial indexing and query operations",
+    "tags": ["spatial-databases", "PostGIS", "GIS", "R-tree"]
+  },
+  {
+    "id": "TECH-063",
+    "domain": "Technical",
+    "question": "What are the techniques for profiling application performance?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is sampling vs instrumentation profiling?",
+      "How do flame graphs visualize performance?",
+      "What metrics should be monitored in production?",
+      "How do APM tools work?"
+    ],
+    "evaluation_criteria": "Must explain profiling techniques and tools",
+    "tags": ["profiling", "performance", "APM", "flame-graphs"]
+  },
+  {
+    "id": "TECH-064",
+    "domain": "Technical",
+    "question": "How do message queues ensure reliable delivery?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What delivery semantics do message queues support?",
+      "How do acknowledgments prevent message loss?",
+      "What is the dead letter queue pattern?",
+      "How do RabbitMQ and SQS ensure durability?"
+    ],
+    "evaluation_criteria": "Must explain delivery guarantees and durability",
+    "tags": ["message-queues", "RabbitMQ", "reliability", "messaging"]
+  },
+  {
+    "id": "TECH-065",
+    "domain": "Technical",
+    "question": "What are the approaches for testing microservices?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the testing pyramid for microservices?",
+      "How do contract tests validate service interactions?",
+      "What is consumer-driven contract testing?",
+      "How should integration tests be structured?"
+    ],
+    "evaluation_criteria": "Must explain testing strategies and contract testing",
+    "tags": ["testing", "microservices", "contract-testing", "integration"]
+  },
+  {
+    "id": "TECH-066",
+    "domain": "Technical",
+    "question": "How do CDNs handle dynamic content?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is edge computing in the context of CDNs?",
+      "How do CDN workers execute code at the edge?",
+      "What caching strategies work for dynamic content?",
+      "How do CDNs like Cloudflare Workers operate?"
+    ],
+    "evaluation_criteria": "Must explain edge computing and dynamic capabilities",
+    "tags": ["CDN", "edge-computing", "Workers", "performance"]
+  },
+  {
+    "id": "TECH-067",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing search ranking?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is TF-IDF and how is it used in ranking?",
+      "How does BM25 improve on TF-IDF?",
+      "What is learning to rank?",
+      "How do modern search engines combine signals?"
+    ],
+    "evaluation_criteria": "Must explain ranking algorithms and ML approaches",
+    "tags": ["search", "ranking", "TF-IDF", "BM25"]
+  },
+  {
+    "id": "TECH-068",
+    "domain": "Technical",
+    "question": "How do infrastructure-as-code tools manage cloud resources?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does Terraform maintain state?",
+      "What are the challenges of drift detection?",
+      "How do declarative and imperative IaC differ?",
+      "What are the best practices for IaC modules?"
+    ],
+    "evaluation_criteria": "Must explain state management and best practices",
+    "tags": ["IaC", "Terraform", "cloud", "DevOps"]
+  },
+  {
+    "id": "TECH-069",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing request tracing across async boundaries?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How is context propagated across async operations?",
+      "What is the W3C Trace Context standard?",
+      "How do you trace across message queues?",
+      "What challenges exist in tracing event-driven systems?"
+    ],
+    "evaluation_criteria": "Must explain context propagation and standards",
+    "tags": ["tracing", "async", "context-propagation", "observability"]
+  },
+  {
+    "id": "TECH-070",
+    "domain": "Technical",
+    "question": "How do password hashing algorithms protect credentials?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "Why is salting necessary for password hashing?",
+      "How does bcrypt provide adaptive hashing?",
+      "What makes Argon2 more resistant to attacks?",
+      "How should password hashing parameters be chosen?"
+    ],
+    "evaluation_criteria": "Must explain algorithms and parameter selection",
+    "tags": ["password-hashing", "bcrypt", "Argon2", "security"]
+  },
+  {
+    "id": "TECH-071",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing real-time collaboration features?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do operational transformation algorithms work?",
+      "What are CRDTs and how do they enable conflict-free editing?",
+      "How do systems like Google Docs handle concurrent edits?",
+      "What are the trade-offs between OT and CRDTs?"
+    ],
+    "evaluation_criteria": "Must explain OT, CRDTs, and trade-offs",
+    "tags": ["real-time", "collaboration", "OT", "CRDT"]
+  },
+  {
+    "id": "TECH-072",
+    "domain": "Technical",
+    "question": "How do database connection proxies improve performance?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What problems do connection proxies solve?",
+      "How do proxies handle connection multiplexing?",
+      "What is query caching at the proxy level?",
+      "How do read replicas integrate with proxies?"
+    ],
+    "evaluation_criteria": "Must explain proxy functions and configurations",
+    "tags": ["database-proxy", "connection-pooling", "performance", "ProxySQL"]
+  },
+  {
+    "id": "TECH-073",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing webhook reliability?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How should webhook retry logic work?",
+      "What is exponential backoff?",
+      "How do you handle webhook ordering?",
+      "What security measures should webhooks implement?"
+    ],
+    "evaluation_criteria": "Must explain retry logic and security",
+    "tags": ["webhooks", "reliability", "retry", "API"]
+  },
+  {
+    "id": "TECH-074",
+    "domain": "Technical",
+    "question": "How do in-memory data grids distribute data across nodes?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is data partitioning in distributed caches?",
+      "How do consistent hashing algorithms work?",
+      "What replication strategies ensure availability?",
+      "How do systems like Hazelcast handle cluster membership?"
+    ],
+    "evaluation_criteria": "Must explain partitioning, hashing, and replication",
+    "tags": ["data-grids", "caching", "consistent-hashing", "distributed"]
+  },
+  {
+    "id": "TECH-075",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing API gateways?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What functions do API gateways provide?",
+      "How do gateways handle authentication?",
+      "What is request transformation?",
+      "How do Kong and AWS API Gateway compare?"
+    ],
+    "evaluation_criteria": "Must explain gateway functions and implementations",
+    "tags": ["API-gateway", "Kong", "security", "routing"]
+  },
+  {
+    "id": "TECH-076",
+    "domain": "Technical",
+    "question": "How do copy-on-write filesystems work?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the copy-on-write principle?",
+      "How do ZFS and Btrfs implement COW?",
+      "What are the benefits for snapshots and checksums?",
+      "What are the performance implications of COW?"
+    ],
+    "evaluation_criteria": "Must explain COW mechanics and specific filesystems",
+    "tags": ["filesystems", "ZFS", "COW", "storage"]
+  },
+  {
+    "id": "TECH-077",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing multi-tenancy in SaaS applications?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the multi-tenancy isolation models?",
+      "How is data isolation achieved at the database level?",
+      "What are the performance implications of shared vs dedicated resources?",
+      "How should tenant configuration be managed?"
+    ],
+    "evaluation_criteria": "Must explain isolation models and trade-offs",
+    "tags": ["multi-tenancy", "SaaS", "isolation", "architecture"]
+  },
+  {
+    "id": "TECH-078",
+    "domain": "Technical",
+    "question": "How do streaming SQL engines process continuous queries?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is streaming SQL?",
+      "How are windows defined in streaming queries?",
+      "What is the relationship between streams and tables?",
+      "How do ksqlDB and Flink SQL compare?"
+    ],
+    "evaluation_criteria": "Must explain streaming SQL concepts and implementations",
+    "tags": ["streaming-SQL", "ksqlDB", "Flink", "real-time"]
+  },
+  {
+    "id": "TECH-079",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing pagination in APIs?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What are offset and cursor-based pagination?",
+      "What are the performance implications of offset pagination?",
+      "How should pagination be implemented for consistency?",
+      "What metadata should pagination responses include?"
+    ],
+    "evaluation_criteria": "Must compare pagination approaches with trade-offs",
+    "tags": ["pagination", "API-design", "performance", "databases"]
+  },
+  {
+    "id": "TECH-080",
+    "domain": "Technical",
+    "question": "How do systems handle distributed transactions across services?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is two-phase commit and its limitations?",
+      "How does the saga pattern work?",
+      "What are compensating transactions?",
+      "How do you handle saga orchestration vs choreography?"
+    ],
+    "evaluation_criteria": "Must explain 2PC, sagas, and compensation",
+    "tags": ["distributed-transactions", "sagas", "2PC", "microservices"]
+  },
+  {
+    "id": "TECH-081",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing read replicas?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does async replication work?",
+      "What is replication lag and how is it monitored?",
+      "How should applications route reads to replicas?",
+      "What consistency guarantees do replicas provide?"
+    ],
+    "evaluation_criteria": "Must explain replication mechanics and routing",
+    "tags": ["read-replicas", "databases", "replication", "scaling"]
+  },
+  {
+    "id": "TECH-082",
+    "domain": "Technical",
+    "question": "How do HTTP/2 and HTTP/3 improve web performance?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is multiplexing in HTTP/2?",
+      "How does QUIC improve on TCP?",
+      "What is header compression?",
+      "How does server push work?"
+    ],
+    "evaluation_criteria": "Must explain protocol improvements and mechanisms",
+    "tags": ["HTTP2", "HTTP3", "QUIC", "performance"]
+  },
+  {
+    "id": "TECH-083",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing data masking and anonymization?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the difference between masking and anonymization?",
+      "What techniques preserve data utility while anonymizing?",
+      "How is k-anonymity achieved?",
+      "What compliance requirements drive data masking?"
+    ],
+    "evaluation_criteria": "Must explain techniques and compliance considerations",
+    "tags": ["data-masking", "anonymization", "privacy", "GDPR"]
+  },
+  {
+    "id": "TECH-084",
+    "domain": "Technical",
+    "question": "How do query result caches improve database performance?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What types of query caching exist?",
+      "How do you invalidate query caches correctly?",
+      "What is the cache-aside pattern?",
+      "How should cache hit rates be monitored?"
+    ],
+    "evaluation_criteria": "Must explain caching strategies and invalidation",
+    "tags": ["query-cache", "databases", "caching", "performance"]
+  },
+  {
+    "id": "TECH-085",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing graceful degradation?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is graceful degradation in distributed systems?",
+      "How do you implement fallback behaviors?",
+      "What is the bulkhead pattern?",
+      "How should degradation be communicated to users?"
+    ],
+    "evaluation_criteria": "Must explain degradation patterns and implementation",
+    "tags": ["graceful-degradation", "resilience", "fallback", "reliability"]
+  },
+  {
+    "id": "TECH-086",
+    "domain": "Technical",
+    "question": "How do immutable infrastructure patterns improve reliability?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is immutable infrastructure?",
+      "How do image-based deployments work?",
+      "What are the benefits for reproducibility?",
+      "How does immutability affect debugging?"
+    ],
+    "evaluation_criteria": "Must explain immutability concepts and trade-offs",
+    "tags": ["immutable-infrastructure", "DevOps", "deployment", "reliability"]
+  },
+  {
+    "id": "TECH-087",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing data lineage tracking?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is data lineage and why is it important?",
+      "How do tools like Apache Atlas track lineage?",
+      "What is the difference between technical and business lineage?",
+      "How should lineage be captured in data pipelines?"
+    ],
+    "evaluation_criteria": "Must explain lineage concepts and tools",
+    "tags": ["data-lineage", "data-governance", "Apache-Atlas", "metadata"]
+  },
+  {
+    "id": "TECH-088",
+    "domain": "Technical",
+    "question": "How do error budgets guide reliability engineering decisions?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is an error budget in SRE?",
+      "How are SLOs and SLIs defined?",
+      "How should error budget consumption guide decisions?",
+      "What happens when error budgets are exhausted?"
+    ],
+    "evaluation_criteria": "Must explain SRE concepts and decision-making",
+    "tags": ["error-budget", "SRE", "SLO", "reliability"]
+  },
+  {
+    "id": "TECH-089",
+    "domain": "Technical",
+    "question": "What are the techniques for handling database deadlocks?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What causes database deadlocks?",
+      "How do databases detect deadlocks?",
+      "What application patterns prevent deadlocks?",
+      "How should applications handle deadlock errors?"
+    ],
+    "evaluation_criteria": "Must explain causes, detection, and prevention",
+    "tags": ["deadlocks", "databases", "concurrency", "transactions"]
+  },
+  {
+    "id": "TECH-090",
+    "domain": "Technical",
+    "question": "How do columnar file formats optimize big data storage?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the Parquet file format?",
+      "How does columnar storage enable efficient compression?",
+      "What is predicate pushdown?",
+      "How do ORC and Parquet compare?"
+    ],
+    "evaluation_criteria": "Must explain format internals and query optimization",
+    "tags": ["Parquet", "columnar", "big-data", "storage"]
+  },
+  {
+    "id": "TECH-091",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing change data capture?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is change data capture?",
+      "How does log-based CDC work?",
+      "What tools like Debezium implement CDC?",
+      "What are the use cases for CDC?"
+    ],
+    "evaluation_criteria": "Must explain CDC mechanisms and use cases",
+    "tags": ["CDC", "Debezium", "data-integration", "streaming"]
+  },
+  {
+    "id": "TECH-092",
+    "domain": "Technical",
+    "question": "How do browsers optimize JavaScript execution?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is JIT compilation in V8?",
+      "How does inline caching improve performance?",
+      "What is hidden class optimization?",
+      "How do you write JIT-friendly JavaScript?"
+    ],
+    "evaluation_criteria": "Must explain JIT and optimization techniques",
+    "tags": ["JavaScript", "V8", "JIT", "performance"]
+  },
+  {
+    "id": "TECH-093",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing efficient batch processing?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the MapReduce paradigm?",
+      "How does Spark improve on MapReduce?",
+      "What is lazy evaluation in batch frameworks?",
+      "How should batch job failures be handled?"
+    ],
+    "evaluation_criteria": "Must explain batch processing frameworks and patterns",
+    "tags": ["batch-processing", "Spark", "MapReduce", "big-data"]
+  },
+  {
+    "id": "TECH-094",
+    "domain": "Technical",
+    "question": "How do API rate limiting headers communicate limits to clients?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What standard rate limit headers exist?",
+      "How should retry-after be implemented?",
+      "What client behaviors should rate limits trigger?",
+      "How do quotas differ from rate limits?"
+    ],
+    "evaluation_criteria": "Must explain headers and client handling",
+    "tags": ["rate-limiting", "API", "headers", "HTTP"]
+  },
+  {
+    "id": "TECH-095",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing event replay and reprocessing?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "Why is event replay needed in event-sourced systems?",
+      "How should events be stored for replayability?",
+      "What are the challenges of replaying against changed schemas?",
+      "How do you implement partial replay?"
+    ],
+    "evaluation_criteria": "Must explain replay patterns and challenges",
+    "tags": ["event-sourcing", "replay", "event-driven", "reprocessing"]
+  },
+  {
+    "id": "TECH-096",
+    "domain": "Technical",
+    "question": "How do static analysis tools detect code quality issues?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What types of analysis do linters perform?",
+      "How does dataflow analysis work?",
+      "What is taint tracking for security?",
+      "How should static analysis be integrated into CI?"
+    ],
+    "evaluation_criteria": "Must explain analysis techniques and integration",
+    "tags": ["static-analysis", "linting", "code-quality", "security"]
+  },
+  {
+    "id": "TECH-097",
+    "domain": "Technical",
+    "question": "What are the techniques for implementing database sharding?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What sharding strategies exist?",
+      "How is the shard key chosen?",
+      "What queries become difficult after sharding?",
+      "How is data rebalanced across shards?"
+    ],
+    "evaluation_criteria": "Must explain sharding strategies and challenges",
+    "tags": ["sharding", "databases", "scaling", "partitioning"]
+  },
+  {
+    "id": "TECH-098",
+    "domain": "Technical",
+    "question": "How do WebAssembly modules execute in browsers?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the WebAssembly execution model?",
+      "How does WASM interact with JavaScript?",
+      "What is WASI?",
+      "What use cases are WASM best suited for?"
+    ],
+    "evaluation_criteria": "Must explain execution model and use cases",
+    "tags": ["WebAssembly", "WASM", "browsers", "performance"]
+  },
+  {
+    "id": "TECH-099",
+    "domain": "Technical",
+    "question": "What are the approaches for implementing audit logging?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What events should be audit logged?",
+      "How should audit logs be secured from tampering?",
+      "What retention policies apply to audit logs?",
+      "How do you make audit logs searchable?"
+    ],
+    "evaluation_criteria": "Must explain audit requirements and implementation",
+    "tags": ["audit-logging", "security", "compliance", "logging"]
+  },
+  {
+    "id": "TECH-100",
+    "domain": "Technical",
+    "question": "How do dependency injection frameworks manage object lifecycles?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is inversion of control?",
+      "What object scopes do DI containers support?",
+      "How do containers resolve dependencies?",
+      "What are the trade-offs of DI frameworks?"
+    ],
+    "evaluation_criteria": "Must explain IoC, scopes, and resolution",
+    "tags": ["dependency-injection", "IoC", "design-patterns", "architecture"]
+  }
+]

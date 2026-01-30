@@ -1,0 +1,28 @@
+task_id: TASK-003
+title: Prevent Duplicate Job Executions
+description: |
+  Add locking mechanism to prevent duplicate executions of background jobs.
+  Currently, if the daemon restarts or multiple instances run, jobs can be executed multiple times.
+  Implement file-based locking to ensure only one instance processes each job.
+
+acceptance_criteria:
+  - "File-based locking implemented for job execution"
+  - "Lock acquired before job starts, released after completion"
+  - "Stale locks are detected and cleaned up (timeout: 1 hour)"
+  - "Multiple instances can run concurrently on different jobs"
+  - "Same job cannot run twice simultaneously"
+  - "Lock status visible in daemon status output"
+  - "Tests added for concurrent execution scenarios"
+
+context:
+  background: "Multiple daemon instances or restarts can cause jobs to run multiple times, causing data corruption."
+  constraints:
+    - "Must work across process boundaries (file-based, not in-memory)"
+    - "Must handle graceful and ungraceful shutdowns"
+    - "Lock cleanup must not require manual intervention"
+
+fileScope:
+  - "lib/daemon.sh"
+  - "lib/task-queue.sh"
+  - "tests/test_daemon_locking.sh"
+  - "docs/features/daemon-mode.md"

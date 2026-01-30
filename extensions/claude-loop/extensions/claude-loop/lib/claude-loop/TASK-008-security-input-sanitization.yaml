@@ -1,0 +1,174 @@
+#========================================================
+# REAL-WORLD BENCHMARK TASK 008
+# Tier: MESO (Medium Feature)
+# Source: Security vulnerability fix
+#========================================================
+
+id: TASK-008
+name: "Input Sanitization for SQL Injection Prevention"
+tier: meso
+source_project: null
+difficulty: 4  # 1-5 scale
+estimated_time_human_minutes: 75
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Security Issue**: SQL injection vulnerability found in user search.
+
+  **Vulnerable Code**:
+  ```python
+  def search_users(name):
+      query = f"SELECT * FROM users WHERE name = '{name}'"
+      return db.execute(query)
+  ```
+
+  **Exploit Example**:
+  ```
+  name = "'; DROP TABLE users; --"
+  # Executes: SELECT * FROM users WHERE name = ''; DROP TABLE users; --'
+  ```
+
+  **Task**: Fix SQL injection by:
+  1. Using parameterized queries (prepared statements)
+  2. Adding input validation/sanitization
+  3. Implementing query logging for security audit
+  4. Adding unit tests for injection attempts
+  5. Documenting secure coding practices
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Uses parameterized queries (?, %s, or ORM)"
+    weight: 0.35
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(\?|\%s|execute.*params|\.filter\()" . -r
+
+  - id: AC2
+    description: "Removes string interpolation in SQL (f-strings, +)"
+    weight: 0.25
+    validation_method: "grep"
+    validation_script: |
+      ! grep -E "(f\".*SELECT|\".*\+.*SELECT)" . -r
+
+  - id: AC3
+    description: "Validates input (length, allowed characters)"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(validate|sanitize|re\.match|len\()" . -r
+
+  - id: AC4
+    description: "Adds security tests for injection attempts"
+    weight: 0.15
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(test.*injection|test.*sql|DROP TABLE)" . -r
+
+  - id: AC5
+    description: "Logs queries for security audit"
+    weight: 0.05
+    validation_method: "grep"
+    validation_script: |
+      grep -iE "(log.*query|audit|security)" . -r
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach: |
+    **Option 1: Parameterized Query (SQLite/MySQL)**
+    ```python
+    def search_users(name):
+        query = "SELECT * FROM users WHERE name = ?"
+        return db.execute(query, (name,))
+    ```
+
+    **Option 2: ORM (SQLAlchemy)**
+    ```python
+    def search_users(name):
+        return User.query.filter(User.name == name).all()
+    ```
+
+    **Option 3: Escape + Validate**
+    ```python
+    def search_users(name):
+        # Validate input
+        if not re.match(r'^[a-zA-Z0-9_]+$', name):
+            raise ValueError("Invalid name")
+
+        # Use parameterized query
+        query = "SELECT * FROM users WHERE name = %s"
+        return db.execute(query, (name,))
+    ```
+
+  security_tests: |
+    def test_sql_injection_attempt():
+        malicious_input = "'; DROP TABLE users; --"
+
+        # Should not execute DROP TABLE
+        result = search_users(malicious_input)
+
+        # Should return empty or raise error, not delete table
+        assert table_exists('users')
+
+#--------------------------------------------------------
+# TEST DATA
+#--------------------------------------------------------
+test_data:
+  injection_attempts:
+    - input: "' OR '1'='1"
+      description: "Classic OR injection"
+    - input: "'; DROP TABLE users; --"
+      description: "Table drop"
+    - input: "admin'--"
+      description: "Comment-based bypass"
+    - input: "1' UNION SELECT password FROM users--"
+      description: "Union-based data extraction"
+
+  valid_inputs:
+    - input: "john_doe"
+      expected: "Returns user john_doe"
+    - input: "alice"
+      expected: "Returns user alice"
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ Uses parameterized queries (no string interpolation)
+  2. ✓ Validates input format and length
+  3. ✓ All injection attempts fail safely
+  4. ✓ Security tests added and passing
+  5. ✓ Query logging for audit trail
+  6. ✓ Documentation on secure practices
+
+#--------------------------------------------------------
+# COMMON MISTAKES
+#--------------------------------------------------------
+common_mistakes:
+  - mistake: "Using escape functions instead of parameterized queries"
+    why_wrong: "Escape functions can be bypassed, parameterized queries are foolproof"
+
+  - mistake: "Validating input but still using string concatenation"
+    why_wrong: "Validation can have edge cases, parameterization is safer"
+
+  - mistake: "Only fixing this one query"
+    why_wrong: "Need to audit all database queries in codebase"
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["security", "sql-injection", "validation", "owasp"]
+  estimated_impact: "critical"
+  complexity_signals:
+    - "Security vulnerability"
+    - "Database queries"
+    - "Input validation"
+    - "Security testing"

@@ -127,7 +127,7 @@ export function renderApp(state: AppViewState) {
             <span class="nav-collapse-toggle__icon">☰</span>
           </button>
           <div class="brand">
-            <div class="brand-title">CLAWDBOT</div>
+            <div class="brand-title">EPILOOP</div>
             <div class="brand-sub">Gateway Dashboard</div>
           </div>
         </div>

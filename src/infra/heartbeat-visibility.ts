@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "../config/config.js";
+import type { EpiloopConfig } from "../config/config.js";
 import type { ChannelHeartbeatVisibilityConfig } from "../config/types.channels.js";
 import type { DeliverableMessageChannel } from "../utils/message-channel.js";
 
@@ -15,7 +15,7 @@ const DEFAULT_VISIBILITY: ResolvedHeartbeatVisibility = {
 };
 
 export function resolveHeartbeatVisibility(params: {
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   channel: DeliverableMessageChannel;
   accountId?: string;
 }): ResolvedHeartbeatVisibility {

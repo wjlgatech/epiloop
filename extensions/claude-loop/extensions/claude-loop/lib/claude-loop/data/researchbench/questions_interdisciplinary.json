@@ -1,0 +1,1602 @@
+[
+  {
+    "id": "INTER-001",
+    "domain": "Interdisciplinary",
+    "question": "How do machine learning approaches improve drug discovery, and what are the current limitations?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What ML methods are used for molecular property prediction?",
+      "How does AlphaFold impact drug target identification?",
+      "What is the role of generative models in drug design?",
+      "Why have ML predictions often failed in clinical trials?",
+      "What data quality issues affect drug discovery ML?"
+    ],
+    "evaluation_criteria": "Must bridge AI/ML and pharmaceutical sciences with specific examples and limitations",
+    "tags": ["drug-discovery", "machine-learning", "AlphaFold", "pharmaceutical"]
+  },
+  {
+    "id": "INTER-002",
+    "domain": "Interdisciplinary",
+    "question": "What are the economic and technical challenges of transitioning to renewable energy grids?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the intermittency problem with renewables?",
+      "What grid storage technologies are being developed?",
+      "What are the economic costs of grid modernization?",
+      "How do electricity markets need to adapt?",
+      "What role does demand response play?"
+    ],
+    "evaluation_criteria": "Must integrate energy technology, economics, and policy perspectives",
+    "tags": ["renewable-energy", "economics", "grid", "energy-storage", "policy"]
+  },
+  {
+    "id": "INTER-003",
+    "domain": "Interdisciplinary",
+    "question": "How do social media algorithms affect political polarization, and what interventions might help?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What mechanisms do recommendation algorithms use?",
+      "What is the filter bubble hypothesis?",
+      "What empirical evidence links algorithms to polarization?",
+      "What algorithmic interventions have been tested?",
+      "How do regulatory approaches differ across countries?"
+    ],
+    "evaluation_criteria": "Must connect computer science, political science, and psychology research",
+    "tags": ["social-media", "algorithms", "polarization", "psychology", "regulation"]
+  },
+  {
+    "id": "INTER-004",
+    "domain": "Interdisciplinary",
+    "question": "What are the ethical and practical considerations for AI in medical diagnosis?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What AI diagnostic systems have been FDA approved?",
+      "How do AI systems perform across different patient populations?",
+      "What liability issues arise from AI diagnoses?",
+      "How should AI systems be validated for clinical use?",
+      "What is the appropriate role for AI vs physician judgment?"
+    ],
+    "evaluation_criteria": "Must address technical, medical, legal, and ethical dimensions",
+    "tags": ["AI-medicine", "diagnosis", "ethics", "FDA", "liability"]
+  },
+  {
+    "id": "INTER-005",
+    "domain": "Interdisciplinary",
+    "question": "How do economic incentives affect climate change mitigation efforts?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How do carbon pricing mechanisms work?",
+      "What is the effectiveness of renewable energy subsidies?",
+      "How do international climate agreements create incentives?",
+      "What role do green bonds and sustainable finance play?",
+      "How do stranded asset risks affect energy investment?"
+    ],
+    "evaluation_criteria": "Must integrate climate science, economics, and policy analysis",
+    "tags": ["climate", "economics", "carbon-pricing", "policy", "finance"]
+  },
+  {
+    "id": "INTER-006",
+    "domain": "Interdisciplinary",
+    "question": "What are the psychological and neurological mechanisms underlying financial decision-making biases?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is loss aversion and its neural basis?",
+      "How does framing affect investment decisions?",
+      "What is the role of emotion in risk-taking?",
+      "How do cognitive biases affect market behavior?",
+      "What interventions can debias financial decisions?"
+    ],
+    "evaluation_criteria": "Must connect neuroscience, psychology, and behavioral economics",
+    "tags": ["behavioral-finance", "neuroscience", "psychology", "biases", "decision-making"]
+  },
+  {
+    "id": "INTER-007",
+    "domain": "Interdisciplinary",
+    "question": "How does the gut microbiome influence mental health, and what are the therapeutic implications?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the gut-brain axis?",
+      "What evidence links microbiome to depression and anxiety?",
+      "How do probiotics affect mental health?",
+      "What mechanisms connect gut bacteria to brain function?",
+      "What are the limitations of current microbiome research?"
+    ],
+    "evaluation_criteria": "Must integrate microbiology, neuroscience, and psychiatry",
+    "tags": ["microbiome", "mental-health", "gut-brain-axis", "probiotics", "neuroscience"]
+  },
+  {
+    "id": "INTER-008",
+    "domain": "Interdisciplinary",
+    "question": "What are the geopolitical implications of semiconductor supply chain concentration?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "Why is advanced chip manufacturing concentrated in Taiwan?",
+      "What are the national security concerns around chip supply?",
+      "How are the US and China responding to chip dependencies?",
+      "What is the CHIPS Act and its expected impact?",
+      "What technical barriers exist to diversifying chip production?"
+    ],
+    "evaluation_criteria": "Must connect technology, economics, and geopolitics",
+    "tags": ["semiconductors", "geopolitics", "supply-chain", "Taiwan", "national-security"]
+  },
+  {
+    "id": "INTER-009",
+    "domain": "Interdisciplinary",
+    "question": "How do urbanization patterns affect public health outcomes?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the urban heat island effect and its health impacts?",
+      "How does urban design affect physical activity levels?",
+      "What are the relationships between air quality and urban form?",
+      "How does housing density relate to infectious disease spread?",
+      "What urban planning interventions improve health?"
+    ],
+    "evaluation_criteria": "Must integrate urban planning, epidemiology, and environmental science",
+    "tags": ["urbanization", "public-health", "urban-planning", "epidemiology", "environment"]
+  },
+  {
+    "id": "INTER-010",
+    "domain": "Interdisciplinary",
+    "question": "What are the ethical and regulatory challenges of autonomous weapons systems?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What defines a lethal autonomous weapon system?",
+      "What international law principles apply to autonomous weapons?",
+      "What are the arguments for and against LAWS bans?",
+      "How do different countries approach LAWS regulation?",
+      "What technical limitations affect autonomous weapon deployment?"
+    ],
+    "evaluation_criteria": "Must address technology, ethics, law, and international relations",
+    "tags": ["autonomous-weapons", "ethics", "international-law", "military", "AI"]
+  },
+  {
+    "id": "INTER-011",
+    "domain": "Interdisciplinary",
+    "question": "How do genetic factors interact with environment in determining educational outcomes?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What does twin research reveal about educational heritability?",
+      "How do polygenic scores predict educational attainment?",
+      "What is gene-environment interaction in education?",
+      "How do socioeconomic factors moderate genetic effects?",
+      "What are the ethical concerns of using genetics in education?"
+    ],
+    "evaluation_criteria": "Must integrate genetics, education, and social science",
+    "tags": ["genetics", "education", "heritability", "gene-environment", "ethics"]
+  },
+  {
+    "id": "INTER-012",
+    "domain": "Interdisciplinary",
+    "question": "What are the economic impacts and policy responses to automation-driven job displacement?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What jobs are most vulnerable to automation?",
+      "What is the historical evidence on technology and employment?",
+      "How might universal basic income address displacement?",
+      "What role should retraining programs play?",
+      "How do economists project automation's future impact?"
+    ],
+    "evaluation_criteria": "Must connect technology, economics, and labor policy",
+    "tags": ["automation", "employment", "economics", "policy", "UBI"]
+  },
+  {
+    "id": "INTER-013",
+    "domain": "Interdisciplinary",
+    "question": "How do blockchain technologies affect financial system stability and regulation?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What are the systemic risks from cryptocurrency markets?",
+      "How do DeFi protocols create new regulatory challenges?",
+      "What is the role of stablecoins in financial stability?",
+      "How are different jurisdictions approaching crypto regulation?",
+      "What technical features make blockchain regulation difficult?"
+    ],
+    "evaluation_criteria": "Must integrate finance, technology, and regulatory perspectives",
+    "tags": ["blockchain", "financial-regulation", "DeFi", "systemic-risk", "cryptocurrency"]
+  },
+  {
+    "id": "INTER-014",
+    "domain": "Interdisciplinary",
+    "question": "What are the biological and sociological factors affecting human longevity?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What genetic factors are associated with longevity?",
+      "How do lifestyle factors affect lifespan?",
+      "What role do social connections play in longevity?",
+      "How do healthcare systems affect population longevity?",
+      "What can we learn from blue zones?"
+    ],
+    "evaluation_criteria": "Must integrate biology, epidemiology, and social science",
+    "tags": ["longevity", "genetics", "lifestyle", "blue-zones", "epidemiology"]
+  },
+  {
+    "id": "INTER-015",
+    "domain": "Interdisciplinary",
+    "question": "How do privacy technologies balance security needs with civil liberties?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is end-to-end encryption and why is it controversial?",
+      "How do zero-knowledge proofs enable privacy-preserving verification?",
+      "What legal frameworks govern surveillance vs privacy?",
+      "How do different democracies balance security and privacy?",
+      "What technical approaches might satisfy both goals?"
+    ],
+    "evaluation_criteria": "Must connect cryptography, law, and political science",
+    "tags": ["privacy", "encryption", "security", "civil-liberties", "cryptography"]
+  },
+  {
+    "id": "INTER-016",
+    "domain": "Interdisciplinary",
+    "question": "What are the environmental and economic trade-offs of electric vehicle adoption?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the lifecycle carbon footprint of EVs vs ICE vehicles?",
+      "What are the environmental impacts of battery production?",
+      "How do electricity grid carbon intensities affect EV emissions?",
+      "What economic factors drive EV adoption rates?",
+      "What infrastructure investments are needed for mass EV adoption?"
+    ],
+    "evaluation_criteria": "Must integrate environmental science, economics, and engineering",
+    "tags": ["electric-vehicles", "environment", "economics", "batteries", "infrastructure"]
+  },
+  {
+    "id": "INTER-017",
+    "domain": "Interdisciplinary",
+    "question": "How does climate change affect global food security and agricultural systems?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How do temperature changes affect crop yields?",
+      "What is the impact of changing precipitation patterns?",
+      "How do extreme weather events affect food production?",
+      "What adaptation strategies exist for agriculture?",
+      "How does food insecurity interact with political stability?"
+    ],
+    "evaluation_criteria": "Must connect climate science, agriculture, economics, and security",
+    "tags": ["climate", "food-security", "agriculture", "adaptation", "geopolitics"]
+  },
+  {
+    "id": "INTER-018",
+    "domain": "Interdisciplinary",
+    "question": "What are the neurological and computational bases of human creativity?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What brain regions are involved in creative thinking?",
+      "How do divergent and convergent thinking differ neurally?",
+      "Can computational models replicate human creativity?",
+      "What is the role of constraints in fostering creativity?",
+      "How do drugs and mental states affect creative ability?"
+    ],
+    "evaluation_criteria": "Must integrate neuroscience, psychology, and computer science",
+    "tags": ["creativity", "neuroscience", "AI", "psychology", "cognition"]
+  },
+  {
+    "id": "INTER-019",
+    "domain": "Interdisciplinary",
+    "question": "How do economic inequality and health outcomes interact?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What mechanisms link inequality to health?",
+      "How does childhood poverty affect adult health?",
+      "What is the role of stress in inequality-health relationships?",
+      "How do healthcare access disparities contribute?",
+      "What policies effectively reduce health inequalities?"
+    ],
+    "evaluation_criteria": "Must connect economics, public health, and social policy",
+    "tags": ["inequality", "health", "economics", "social-determinants", "policy"]
+  },
+  {
+    "id": "INTER-020",
+    "domain": "Interdisciplinary",
+    "question": "What are the psychological and economic impacts of digital attention economies?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How do tech companies monetize attention?",
+      "What psychological mechanisms drive compulsive tech use?",
+      "How does attention fragmentation affect productivity?",
+      "What are the developmental effects on children?",
+      "What regulatory approaches address attention economy harms?"
+    ],
+    "evaluation_criteria": "Must integrate psychology, economics, and technology studies",
+    "tags": ["attention-economy", "psychology", "technology", "children", "regulation"]
+  },
+  {
+    "id": "INTER-021",
+    "domain": "Interdisciplinary",
+    "question": "How do pandemics affect economic systems and what lessons can inform future preparedness?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What were the economic impacts of COVID-19?",
+      "How did supply chain disruptions propagate?",
+      "What monetary and fiscal policies responded to the pandemic?",
+      "What public health-economic trade-offs emerged?",
+      "How should pandemic preparedness be economically valued?"
+    ],
+    "evaluation_criteria": "Must connect epidemiology, economics, and public policy",
+    "tags": ["pandemic", "economics", "COVID-19", "preparedness", "policy"]
+  },
+  {
+    "id": "INTER-022",
+    "domain": "Interdisciplinary",
+    "question": "What are the cognitive and social impacts of multilingualism?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What cognitive advantages does bilingualism confer?",
+      "How does multilingualism affect brain structure?",
+      "What are the educational implications of multilingualism?",
+      "How do language policies affect multilingual development?",
+      "What is the relationship between multilingualism and identity?"
+    ],
+    "evaluation_criteria": "Must integrate linguistics, neuroscience, and social science",
+    "tags": ["multilingualism", "cognition", "neuroscience", "education", "identity"]
+  },
+  {
+    "id": "INTER-023",
+    "domain": "Interdisciplinary",
+    "question": "How do facial recognition technologies raise civil liberties and bias concerns?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How accurate are facial recognition systems across demographics?",
+      "What civil liberties concerns does facial recognition raise?",
+      "How have different jurisdictions regulated facial recognition?",
+      "What technical approaches might reduce bias?",
+      "What are appropriate use cases for facial recognition?"
+    ],
+    "evaluation_criteria": "Must address technology, civil rights, and policy",
+    "tags": ["facial-recognition", "bias", "civil-liberties", "privacy", "regulation"]
+  },
+  {
+    "id": "INTER-024",
+    "domain": "Interdisciplinary",
+    "question": "What are the environmental and health impacts of microplastics?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How do microplastics enter ecosystems?",
+      "What is known about microplastic bioaccumulation?",
+      "What human health effects have been observed?",
+      "What policy approaches address microplastic pollution?",
+      "What technological solutions exist for microplastic removal?"
+    ],
+    "evaluation_criteria": "Must connect environmental science, toxicology, and policy",
+    "tags": ["microplastics", "environment", "health", "pollution", "policy"]
+  },
+  {
+    "id": "INTER-025",
+    "domain": "Interdisciplinary",
+    "question": "How does music affect brain function and what are the therapeutic applications?",
+    "difficulty": "medium",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What brain regions process music?",
+      "How does music affect emotion and mood?",
+      "What is music therapy and what evidence supports it?",
+      "How can music aid in neurological rehabilitation?",
+      "What are the mechanisms of music's therapeutic effects?"
+    ],
+    "evaluation_criteria": "Must integrate neuroscience, psychology, and medicine",
+    "tags": ["music", "neuroscience", "therapy", "emotion", "rehabilitation"]
+  },
+  {
+    "id": "INTER-026",
+    "domain": "Interdisciplinary",
+    "question": "What are the economic and ecological considerations of geoengineering for climate change?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What geoengineering approaches are being researched?",
+      "What are the potential unintended consequences?",
+      "How do governance challenges complicate geoengineering?",
+      "What is the economic cost-benefit analysis?",
+      "How might geoengineering affect different regions differently?"
+    ],
+    "evaluation_criteria": "Must address climate science, economics, and governance",
+    "tags": ["geoengineering", "climate", "economics", "governance", "risk"]
+  },
+  {
+    "id": "INTER-027",
+    "domain": "Interdisciplinary",
+    "question": "How do sleep patterns affect cognitive performance and economic productivity?",
+    "difficulty": "medium",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the neuroscience of sleep and cognition?",
+      "How does sleep deprivation affect decision-making?",
+      "What are the economic costs of sleep deprivation?",
+      "How do work schedules affect sleep health?",
+      "What policies might improve population sleep health?"
+    ],
+    "evaluation_criteria": "Must connect neuroscience, economics, and public policy",
+    "tags": ["sleep", "cognition", "productivity", "economics", "policy"]
+  },
+  {
+    "id": "INTER-028",
+    "domain": "Interdisciplinary",
+    "question": "What are the psychological and sociological factors driving vaccine hesitancy?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What psychological factors underlie vaccine hesitancy?",
+      "How does social media spread vaccine misinformation?",
+      "What role does trust in institutions play?",
+      "How do cultural factors affect vaccine acceptance?",
+      "What interventions effectively address hesitancy?"
+    ],
+    "evaluation_criteria": "Must integrate psychology, sociology, and public health",
+    "tags": ["vaccines", "hesitancy", "psychology", "misinformation", "public-health"]
+  },
+  {
+    "id": "INTER-029",
+    "domain": "Interdisciplinary",
+    "question": "How do smart city technologies affect urban governance and citizen privacy?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What technologies comprise smart city infrastructure?",
+      "What data do smart city systems collect?",
+      "How do smart cities balance efficiency and privacy?",
+      "What governance models exist for smart city data?",
+      "How do different cities approach smart city implementation?"
+    ],
+    "evaluation_criteria": "Must address technology, privacy, and urban governance",
+    "tags": ["smart-cities", "privacy", "governance", "IoT", "urban"]
+  },
+  {
+    "id": "INTER-030",
+    "domain": "Interdisciplinary",
+    "question": "What are the biological and cultural factors in human aggression and violence?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What neural systems are involved in aggression?",
+      "What genetic factors are associated with violent behavior?",
+      "How do environmental factors interact with biology?",
+      "What cultural factors affect violence rates?",
+      "What interventions effectively reduce violence?"
+    ],
+    "evaluation_criteria": "Must integrate neuroscience, genetics, psychology, and sociology",
+    "tags": ["aggression", "violence", "neuroscience", "culture", "intervention"]
+  },
+  {
+    "id": "INTER-031",
+    "domain": "Interdisciplinary",
+    "question": "How do economic development and environmental degradation interact in developing countries?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the environmental Kuznets curve hypothesis?",
+      "How does resource extraction affect development?",
+      "What trade-offs exist between growth and conservation?",
+      "How do international trade patterns affect local environments?",
+      "What sustainable development strategies exist?"
+    ],
+    "evaluation_criteria": "Must connect economics, environmental science, and development studies",
+    "tags": ["development", "environment", "economics", "sustainability", "trade"]
+  },
+  {
+    "id": "INTER-032",
+    "domain": "Interdisciplinary",
+    "question": "What are the technological and policy approaches to reducing carbon emissions from aviation?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is aviation's contribution to global emissions?",
+      "What sustainable aviation fuel options exist?",
+      "What is the potential for electric and hydrogen aircraft?",
+      "How do carbon offset programs for aviation work?",
+      "What policy mechanisms target aviation emissions?"
+    ],
+    "evaluation_criteria": "Must integrate engineering, environmental science, and policy",
+    "tags": ["aviation", "emissions", "sustainable-fuel", "policy", "technology"]
+  },
+  {
+    "id": "INTER-033",
+    "domain": "Interdisciplinary",
+    "question": "How do cognitive biases affect medical decision-making?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What cognitive biases affect physician diagnosis?",
+      "How does anchoring bias affect treatment decisions?",
+      "What is the role of availability heuristic in medicine?",
+      "How do decision support systems address biases?",
+      "What training interventions reduce diagnostic error?"
+    ],
+    "evaluation_criteria": "Must connect psychology, medicine, and decision science",
+    "tags": ["cognitive-bias", "medicine", "diagnosis", "decision-making", "psychology"]
+  },
+  {
+    "id": "INTER-034",
+    "domain": "Interdisciplinary",
+    "question": "What are the societal implications of genetic testing and personalized medicine?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How does pharmacogenomics enable personalized treatment?",
+      "What privacy concerns arise from genetic testing?",
+      "How might genetic information affect insurance?",
+      "What equity issues exist in access to personalized medicine?",
+      "How do cultural and religious views affect genetic testing acceptance?"
+    ],
+    "evaluation_criteria": "Must address genetics, ethics, policy, and social science",
+    "tags": ["genetic-testing", "personalized-medicine", "privacy", "ethics", "equity"]
+  },
+  {
+    "id": "INTER-035",
+    "domain": "Interdisciplinary",
+    "question": "How do international trade agreements affect labor standards and environmental protection?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What labor provisions exist in modern trade agreements?",
+      "How do trade agreements affect environmental regulations?",
+      "What is the evidence on trade-labor standards linkages?",
+      "How do dispute resolution mechanisms work?",
+      "What role do NGOs play in trade governance?"
+    ],
+    "evaluation_criteria": "Must connect international economics, law, and political science",
+    "tags": ["trade", "labor-standards", "environment", "international-law", "governance"]
+  },
+  {
+    "id": "INTER-036",
+    "domain": "Interdisciplinary",
+    "question": "What are the neurological and psychological effects of chronic pain?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How does chronic pain alter brain structure and function?",
+      "What is the relationship between chronic pain and depression?",
+      "How does chronic pain affect cognitive function?",
+      "What biopsychosocial factors perpetuate chronic pain?",
+      "What multidisciplinary treatment approaches are effective?"
+    ],
+    "evaluation_criteria": "Must integrate neuroscience, psychology, and medicine",
+    "tags": ["chronic-pain", "neuroscience", "psychology", "depression", "treatment"]
+  },
+  {
+    "id": "INTER-037",
+    "domain": "Interdisciplinary",
+    "question": "How do social networks affect the spread of health behaviors?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What evidence exists for social contagion of obesity?",
+      "How do peer networks affect smoking and drinking?",
+      "What mechanisms explain health behavior spread?",
+      "How can network interventions improve public health?",
+      "What methodological challenges exist in network health research?"
+    ],
+    "evaluation_criteria": "Must connect network science, psychology, and epidemiology",
+    "tags": ["social-networks", "health-behavior", "contagion", "epidemiology", "intervention"]
+  },
+  {
+    "id": "INTER-038",
+    "domain": "Interdisciplinary",
+    "question": "What are the technical and societal challenges of achieving carbon capture at scale?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What carbon capture technologies exist?",
+      "What are the energy costs of carbon capture?",
+      "What geological storage options are available?",
+      "What is the economic viability of carbon capture?",
+      "How should carbon capture be governed and regulated?"
+    ],
+    "evaluation_criteria": "Must address engineering, economics, and policy",
+    "tags": ["carbon-capture", "climate", "technology", "economics", "governance"]
+  },
+  {
+    "id": "INTER-039",
+    "domain": "Interdisciplinary",
+    "question": "How do stress and adversity affect gene expression and health outcomes?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the biological embedding of adversity?",
+      "How does stress affect epigenetic modifications?",
+      "What is allostatic load and how is it measured?",
+      "How do childhood adversity effects persist into adulthood?",
+      "What interventions can reverse stress-related biological changes?"
+    ],
+    "evaluation_criteria": "Must connect epigenetics, psychology, and public health",
+    "tags": ["stress", "epigenetics", "adversity", "health", "biology"]
+  },
+  {
+    "id": "INTER-040",
+    "domain": "Interdisciplinary",
+    "question": "What are the economic and social impacts of demographic aging?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How does aging affect labor force participation?",
+      "What are the fiscal impacts of pension and healthcare costs?",
+      "How does aging affect intergenerational equity?",
+      "What policies address workforce aging?",
+      "How do immigration and fertility affect demographic trajectories?"
+    ],
+    "evaluation_criteria": "Must connect demography, economics, and social policy",
+    "tags": ["aging", "demography", "economics", "pension", "policy"]
+  },
+  {
+    "id": "INTER-041",
+    "domain": "Interdisciplinary",
+    "question": "How do quantum technologies promise to transform computing, communication, and sensing?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is quantum advantage and when might it be achieved?",
+      "How does quantum communication enable secure key exchange?",
+      "What quantum sensing applications are emerging?",
+      "What are the economic implications of quantum supremacy?",
+      "What geopolitical concerns does quantum technology raise?"
+    ],
+    "evaluation_criteria": "Must address physics, computing, and geopolitics",
+    "tags": ["quantum", "computing", "communication", "sensing", "geopolitics"]
+  },
+  {
+    "id": "INTER-042",
+    "domain": "Interdisciplinary",
+    "question": "What are the biological and psychological factors in eating disorders?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What genetic factors contribute to eating disorders?",
+      "How do brain reward systems differ in eating disorders?",
+      "What psychological factors maintain eating disorders?",
+      "How do cultural factors influence eating disorder prevalence?",
+      "What treatments are effective for different eating disorders?"
+    ],
+    "evaluation_criteria": "Must integrate genetics, neuroscience, psychology, and culture",
+    "tags": ["eating-disorders", "genetics", "neuroscience", "psychology", "treatment"]
+  },
+  {
+    "id": "INTER-043",
+    "domain": "Interdisciplinary",
+    "question": "How do land use changes affect biodiversity and ecosystem services?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What are the drivers of land use change?",
+      "How does habitat fragmentation affect species?",
+      "What ecosystem services are lost with land conversion?",
+      "How do conservation and development goals conflict?",
+      "What land management approaches balance multiple goals?"
+    ],
+    "evaluation_criteria": "Must connect ecology, economics, and land management",
+    "tags": ["land-use", "biodiversity", "ecosystem-services", "conservation", "development"]
+  },
+  {
+    "id": "INTER-044",
+    "domain": "Interdisciplinary",
+    "question": "What are the neurological and social dimensions of addiction?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How does addiction affect brain dopamine systems?",
+      "What is the role of genetics in addiction vulnerability?",
+      "How do social factors affect addiction risk and recovery?",
+      "What policy approaches effectively address addiction?",
+      "How do behavioral addictions compare to substance addictions?"
+    ],
+    "evaluation_criteria": "Must integrate neuroscience, genetics, social science, and policy",
+    "tags": ["addiction", "neuroscience", "social-factors", "policy", "genetics"]
+  },
+  {
+    "id": "INTER-045",
+    "domain": "Interdisciplinary",
+    "question": "How do AI systems affect employment discrimination and what safeguards exist?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How are AI systems used in hiring and promotion?",
+      "What evidence exists for AI bias in employment?",
+      "What technical approaches can reduce AI hiring bias?",
+      "What legal frameworks govern AI in employment?",
+      "How should AI employment tools be audited?"
+    ],
+    "evaluation_criteria": "Must address AI, employment law, and civil rights",
+    "tags": ["AI-hiring", "discrimination", "bias", "employment-law", "auditing"]
+  },
+  {
+    "id": "INTER-046",
+    "domain": "Interdisciplinary",
+    "question": "What are the environmental and social impacts of rare earth element mining?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What rare earth elements are critical for technology?",
+      "What environmental damage does REE mining cause?",
+      "How does REE supply chain concentration create risks?",
+      "What are the working conditions in REE mining?",
+      "What recycling and substitution strategies exist?"
+    ],
+    "evaluation_criteria": "Must connect materials science, environment, and geopolitics",
+    "tags": ["rare-earth", "mining", "environment", "supply-chain", "geopolitics"]
+  },
+  {
+    "id": "INTER-047",
+    "domain": "Interdisciplinary",
+    "question": "How does the placebo effect work and what are its clinical implications?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What neurobiological mechanisms underlie placebo effects?",
+      "How do psychological expectations affect outcomes?",
+      "What factors influence placebo response strength?",
+      "Is it ethical to use placebos in clinical practice?",
+      "How should placebo effects be accounted for in drug trials?"
+    ],
+    "evaluation_criteria": "Must integrate neuroscience, psychology, and medical ethics",
+    "tags": ["placebo", "neuroscience", "psychology", "ethics", "clinical-trials"]
+  },
+  {
+    "id": "INTER-048",
+    "domain": "Interdisciplinary",
+    "question": "What are the urban planning and public health implications of walkable cities?",
+    "difficulty": "medium",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What defines a walkable urban environment?",
+      "What health benefits are associated with walkability?",
+      "How does walkability affect economic activity?",
+      "What barriers exist to improving walkability?",
+      "What policies promote walkable urban design?"
+    ],
+    "evaluation_criteria": "Must connect urban planning, public health, and economics",
+    "tags": ["walkability", "urban-planning", "health", "economics", "policy"]
+  },
+  {
+    "id": "INTER-049",
+    "domain": "Interdisciplinary",
+    "question": "How do misinformation and disinformation spread online and what countermeasures exist?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What technical factors enable misinformation spread?",
+      "What psychological factors make people susceptible?",
+      "How do platform interventions affect misinformation?",
+      "What is the role of media literacy education?",
+      "How do different countries regulate online misinformation?"
+    ],
+    "evaluation_criteria": "Must address technology, psychology, and policy",
+    "tags": ["misinformation", "disinformation", "psychology", "platforms", "regulation"]
+  },
+  {
+    "id": "INTER-050",
+    "domain": "Interdisciplinary",
+    "question": "What are the neurological and social factors in decision-making under uncertainty?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How does the brain represent uncertainty?",
+      "What is the role of emotion in risky decisions?",
+      "How do social influences affect risk perception?",
+      "What individual differences affect risk-taking?",
+      "How can decision-making under uncertainty be improved?"
+    ],
+    "evaluation_criteria": "Must integrate neuroscience, psychology, and behavioral economics",
+    "tags": ["decision-making", "uncertainty", "neuroscience", "risk", "psychology"]
+  },
+  {
+    "id": "INTER-051",
+    "domain": "Interdisciplinary",
+    "question": "How do synthetic biology approaches raise biosecurity concerns?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What dual-use risks exist in synthetic biology?",
+      "How accessible are gene synthesis technologies?",
+      "What biosecurity governance frameworks exist?",
+      "How do scientists address biosecurity in research?",
+      "What technical safeguards can limit misuse?"
+    ],
+    "evaluation_criteria": "Must connect biotechnology, security studies, and governance",
+    "tags": ["synthetic-biology", "biosecurity", "dual-use", "governance", "risk"]
+  },
+  {
+    "id": "INTER-052",
+    "domain": "Interdisciplinary",
+    "question": "What are the economic and technological factors affecting space commercialization?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What cost reductions have enabled commercial space?",
+      "What is the economics of satellite constellations?",
+      "What are the prospects for space resource mining?",
+      "What regulatory frameworks govern commercial space?",
+      "What geopolitical issues affect space commercialization?"
+    ],
+    "evaluation_criteria": "Must address technology, economics, and space policy",
+    "tags": ["space", "commercialization", "economics", "technology", "policy"]
+  },
+  {
+    "id": "INTER-053",
+    "domain": "Interdisciplinary",
+    "question": "How do childhood experiences shape adult mental health through biological mechanisms?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What are adverse childhood experiences (ACEs)?",
+      "How do ACEs affect brain development?",
+      "What epigenetic changes result from early adversity?",
+      "How does attachment style affect adult mental health?",
+      "What interventions break the cycle of adversity?"
+    ],
+    "evaluation_criteria": "Must integrate developmental psychology, neuroscience, and public health",
+    "tags": ["ACEs", "development", "neuroscience", "mental-health", "intervention"]
+  },
+  {
+    "id": "INTER-054",
+    "domain": "Interdisciplinary",
+    "question": "What are the environmental and economic considerations for nuclear energy?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the lifecycle carbon footprint of nuclear energy?",
+      "What are the economics of new nuclear construction?",
+      "How do small modular reactors change the calculus?",
+      "What is the status of nuclear waste management?",
+      "How does public perception affect nuclear energy policy?"
+    ],
+    "evaluation_criteria": "Must address energy engineering, economics, and public policy",
+    "tags": ["nuclear-energy", "climate", "economics", "waste", "policy"]
+  },
+  {
+    "id": "INTER-055",
+    "domain": "Interdisciplinary",
+    "question": "How do algorithmic content recommendation systems affect consumer behavior?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What techniques do recommendation systems use?",
+      "How do recommendations affect consumer choices?",
+      "What is the filter bubble effect in e-commerce?",
+      "How do recommendations affect price discrimination?",
+      "What consumer protection issues do recommendations raise?"
+    ],
+    "evaluation_criteria": "Must connect AI, economics, and consumer protection",
+    "tags": ["recommendations", "consumer-behavior", "AI", "e-commerce", "regulation"]
+  },
+  {
+    "id": "INTER-056",
+    "domain": "Interdisciplinary",
+    "question": "What are the biological and social determinants of educational achievement gaps?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How does poverty affect brain development?",
+      "What role does nutrition play in cognitive development?",
+      "How do stress and trauma affect learning?",
+      "What school-based factors contribute to achievement gaps?",
+      "What early interventions effectively reduce gaps?"
+    ],
+    "evaluation_criteria": "Must integrate neuroscience, sociology, and education policy",
+    "tags": ["achievement-gap", "education", "poverty", "neuroscience", "intervention"]
+  },
+  {
+    "id": "INTER-057",
+    "domain": "Interdisciplinary",
+    "question": "How do antibiotic use in agriculture and human health interact?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How do antibiotics promote growth in livestock?",
+      "How does agricultural use contribute to resistance?",
+      "What pathways transmit resistance from farms to humans?",
+      "What regulations govern agricultural antibiotic use?",
+      "What alternative approaches exist for animal health?"
+    ],
+    "evaluation_criteria": "Must connect agriculture, microbiology, and public health",
+    "tags": ["antibiotics", "agriculture", "resistance", "one-health", "regulation"]
+  },
+  {
+    "id": "INTER-058",
+    "domain": "Interdisciplinary",
+    "question": "What are the neurological and philosophical aspects of free will?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What do neuroscience experiments reveal about volition?",
+      "What is the Libet experiment and its interpretations?",
+      "How do determinism and free will debates relate to neuroscience?",
+      "What are the legal implications of neuroscience for responsibility?",
+      "How do compatibilist and libertarian views differ?"
+    ],
+    "evaluation_criteria": "Must integrate neuroscience, philosophy, and law",
+    "tags": ["free-will", "neuroscience", "philosophy", "determinism", "law"]
+  },
+  {
+    "id": "INTER-059",
+    "domain": "Interdisciplinary",
+    "question": "How do remote work trends affect urban economies and real estate markets?",
+    "difficulty": "medium",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How did COVID-19 accelerate remote work adoption?",
+      "What are the productivity effects of remote work?",
+      "How has remote work affected commercial real estate?",
+      "What are the implications for urban tax bases?",
+      "How might cities adapt to post-pandemic work patterns?"
+    ],
+    "evaluation_criteria": "Must connect labor economics, urban economics, and real estate",
+    "tags": ["remote-work", "urban-economics", "real-estate", "COVID", "cities"]
+  },
+  {
+    "id": "INTER-060",
+    "domain": "Interdisciplinary",
+    "question": "What are the technical and ethical considerations for brain-computer interfaces?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What BCI technologies currently exist?",
+      "What medical applications do BCIs enable?",
+      "What privacy concerns do BCIs raise?",
+      "What identity and autonomy issues do BCIs create?",
+      "How should BCIs be regulated?"
+    ],
+    "evaluation_criteria": "Must address neurotechnology, ethics, and regulation",
+    "tags": ["BCI", "neurotechnology", "ethics", "privacy", "regulation"]
+  },
+  {
+    "id": "INTER-061",
+    "domain": "Interdisciplinary",
+    "question": "How do ocean circulation patterns affect global climate and fisheries?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What drives ocean circulation patterns?",
+      "How does circulation affect heat distribution?",
+      "What is the Atlantic Meridional Overturning Circulation?",
+      "How does circulation affect marine ecosystems?",
+      "What are the risks of circulation changes?"
+    ],
+    "evaluation_criteria": "Must connect oceanography, climate science, and marine biology",
+    "tags": ["ocean-circulation", "climate", "AMOC", "fisheries", "ecosystems"]
+  },
+  {
+    "id": "INTER-062",
+    "domain": "Interdisciplinary",
+    "question": "What are the social and psychological factors in radicalization and deradicalization?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What psychological vulnerabilities enable radicalization?",
+      "How do social networks facilitate extremism?",
+      "What role does online content play in radicalization?",
+      "What deradicalization programs have evidence of effectiveness?",
+      "How do policy approaches differ across countries?"
+    ],
+    "evaluation_criteria": "Must integrate psychology, sociology, and security studies",
+    "tags": ["radicalization", "extremism", "psychology", "deradicalization", "security"]
+  },
+  {
+    "id": "INTER-063",
+    "domain": "Interdisciplinary",
+    "question": "How do precision agriculture technologies affect farming economics and sustainability?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What technologies comprise precision agriculture?",
+      "How does precision agriculture reduce input use?",
+      "What are the economic returns on precision ag investment?",
+      "What barriers limit adoption by small farmers?",
+      "How does precision agriculture affect data ownership?"
+    ],
+    "evaluation_criteria": "Must connect agricultural technology, economics, and sustainability",
+    "tags": ["precision-agriculture", "sustainability", "economics", "technology", "farming"]
+  },
+  {
+    "id": "INTER-064",
+    "domain": "Interdisciplinary",
+    "question": "What are the neurological and educational implications of learning differences?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What brain differences characterize dyslexia?",
+      "How does ADHD affect learning and attention?",
+      "What educational accommodations are effective?",
+      "How do early interventions affect outcomes?",
+      "What is the neurodiversity perspective on learning differences?"
+    ],
+    "evaluation_criteria": "Must integrate neuroscience, education, and psychology",
+    "tags": ["learning-differences", "dyslexia", "ADHD", "education", "neuroscience"]
+  },
+  {
+    "id": "INTER-065",
+    "domain": "Interdisciplinary",
+    "question": "How do water scarcity and water quality issues affect geopolitical stability?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What regions face critical water scarcity?",
+      "How do transboundary water resources create conflict?",
+      "What is the water-energy-food nexus?",
+      "How does climate change affect water security?",
+      "What technological solutions address water scarcity?"
+    ],
+    "evaluation_criteria": "Must connect hydrology, geopolitics, and climate science",
+    "tags": ["water-scarcity", "geopolitics", "climate", "conflict", "technology"]
+  },
+  {
+    "id": "INTER-066",
+    "domain": "Interdisciplinary",
+    "question": "How do AI systems learn to generate misinformation and how can this be prevented?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How can LLMs generate convincing misinformation?",
+      "What technical approaches detect AI-generated content?",
+      "How do AI-generated deepfakes threaten trust?",
+      "What governance frameworks address AI misinformation?",
+      "How might AI help combat misinformation?"
+    ],
+    "evaluation_criteria": "Must address AI technology, information science, and governance",
+    "tags": ["AI-misinformation", "deepfakes", "detection", "governance", "trust"]
+  },
+  {
+    "id": "INTER-067",
+    "domain": "Interdisciplinary",
+    "question": "What are the biological and policy approaches to antibiotic resistance crisis?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What mechanisms allow bacteria to become resistant?",
+      "What is the global burden of antibiotic resistance?",
+      "What alternative therapies to antibiotics exist?",
+      "How can economic incentives promote new antibiotic development?",
+      "What policy interventions can slow resistance?"
+    ],
+    "evaluation_criteria": "Must integrate microbiology, economics, and health policy",
+    "tags": ["antibiotic-resistance", "microbiology", "policy", "economics", "alternatives"]
+  },
+  {
+    "id": "INTER-068",
+    "domain": "Interdisciplinary",
+    "question": "How do sports analytics transform athletic performance and team strategy?",
+    "difficulty": "medium",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What data sources are used in sports analytics?",
+      "How do analytics affect player evaluation?",
+      "What is the impact on game strategy?",
+      "How has analytics changed team management?",
+      "What ethical issues arise from player monitoring?"
+    ],
+    "evaluation_criteria": "Must connect data science, sports science, and management",
+    "tags": ["sports-analytics", "data-science", "performance", "strategy", "ethics"]
+  },
+  {
+    "id": "INTER-069",
+    "domain": "Interdisciplinary",
+    "question": "What are the economic and environmental trade-offs of different protein sources?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the environmental footprint of meat production?",
+      "How do plant-based proteins compare environmentally?",
+      "What is the status of cultivated meat technology?",
+      "What are the economic barriers to protein transition?",
+      "How do cultural factors affect protein choices?"
+    ],
+    "evaluation_criteria": "Must connect food science, environmental science, and economics",
+    "tags": ["protein", "meat-alternatives", "environment", "economics", "food-systems"]
+  },
+  {
+    "id": "INTER-070",
+    "domain": "Interdisciplinary",
+    "question": "How do digital health technologies transform healthcare delivery and patient outcomes?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What digital health technologies have demonstrated efficacy?",
+      "How does telemedicine affect access and outcomes?",
+      "What are the privacy and security considerations?",
+      "How do digital therapeutics compare to traditional treatments?",
+      "What regulatory approaches govern digital health?"
+    ],
+    "evaluation_criteria": "Must integrate health technology, medicine, and policy",
+    "tags": ["digital-health", "telemedicine", "health-tech", "regulation", "outcomes"]
+  },
+  {
+    "id": "INTER-071",
+    "domain": "Interdisciplinary",
+    "question": "What are the neurological and social factors in empathy and prosocial behavior?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What brain systems support empathy?",
+      "How do mirror neurons relate to empathy?",
+      "What factors affect individual differences in empathy?",
+      "How does empathy relate to moral decision-making?",
+      "Can empathy be enhanced through training?"
+    ],
+    "evaluation_criteria": "Must integrate neuroscience, psychology, and social science",
+    "tags": ["empathy", "neuroscience", "prosocial", "morality", "psychology"]
+  },
+  {
+    "id": "INTER-072",
+    "domain": "Interdisciplinary",
+    "question": "How do building design and indoor environments affect occupant health?",
+    "difficulty": "medium",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does indoor air quality affect health?",
+      "What is the role of natural light in buildings?",
+      "How do building materials affect occupant health?",
+      "What are the productivity effects of healthy buildings?",
+      "What building certification systems address health?"
+    ],
+    "evaluation_criteria": "Must connect architecture, environmental health, and occupational health",
+    "tags": ["building-health", "indoor-air", "architecture", "productivity", "wellness"]
+  },
+  {
+    "id": "INTER-073",
+    "domain": "Interdisciplinary",
+    "question": "What are the biological and ethical considerations for xenotransplantation?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What genetic modifications enable xenotransplantation?",
+      "What immunological challenges exist?",
+      "What are the risks of cross-species infection?",
+      "What ethical issues does xenotransplantation raise?",
+      "What regulatory frameworks govern xenotransplantation?"
+    ],
+    "evaluation_criteria": "Must address biotechnology, medicine, and bioethics",
+    "tags": ["xenotransplantation", "genetics", "immunology", "ethics", "regulation"]
+  },
+  {
+    "id": "INTER-074",
+    "domain": "Interdisciplinary",
+    "question": "How do social determinants affect access to and outcomes of cancer care?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What disparities exist in cancer screening rates?",
+      "How do socioeconomic factors affect treatment access?",
+      "What role does health literacy play in outcomes?",
+      "How do geographic factors create care deserts?",
+      "What interventions reduce cancer care disparities?"
+    ],
+    "evaluation_criteria": "Must connect oncology, public health, and social science",
+    "tags": ["cancer", "health-disparities", "social-determinants", "access", "outcomes"]
+  },
+  {
+    "id": "INTER-075",
+    "domain": "Interdisciplinary",
+    "question": "What are the technical and market factors affecting hydrogen economy development?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What production methods exist for hydrogen?",
+      "What are the infrastructure requirements for hydrogen?",
+      "How do hydrogen economics compare to alternatives?",
+      "What applications are most promising for hydrogen?",
+      "What policy support is needed for hydrogen adoption?"
+    ],
+    "evaluation_criteria": "Must address energy technology, economics, and policy",
+    "tags": ["hydrogen", "energy", "economics", "infrastructure", "policy"]
+  },
+  {
+    "id": "INTER-076",
+    "domain": "Interdisciplinary",
+    "question": "How do language and communication affect patient safety in healthcare?",
+    "difficulty": "medium",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What communication failures contribute to medical errors?",
+      "How do language barriers affect patient safety?",
+      "What is the role of handoffs in patient safety?",
+      "How can standardized communication improve safety?",
+      "What training improves healthcare communication?"
+    ],
+    "evaluation_criteria": "Must connect linguistics, medicine, and safety science",
+    "tags": ["patient-safety", "communication", "healthcare", "handoffs", "training"]
+  },
+  {
+    "id": "INTER-077",
+    "domain": "Interdisciplinary",
+    "question": "What are the ecological and economic impacts of invasive species?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How do invasive species affect native ecosystems?",
+      "What are the economic costs of invasive species?",
+      "What factors predict invasion success?",
+      "What control methods are effective?",
+      "How does climate change affect invasion patterns?"
+    ],
+    "evaluation_criteria": "Must connect ecology, economics, and conservation",
+    "tags": ["invasive-species", "ecology", "economics", "conservation", "climate"]
+  },
+  {
+    "id": "INTER-078",
+    "domain": "Interdisciplinary",
+    "question": "How do behavioral economics insights improve public policy effectiveness?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is nudge theory and how is it applied?",
+      "How do defaults affect policy outcomes?",
+      "What are the ethics of behavioral policy interventions?",
+      "What evidence exists for behavioral policy effectiveness?",
+      "How have behavioral insights units operated?"
+    ],
+    "evaluation_criteria": "Must connect behavioral economics, policy, and ethics",
+    "tags": ["behavioral-economics", "nudge", "policy", "defaults", "ethics"]
+  },
+  {
+    "id": "INTER-079",
+    "domain": "Interdisciplinary",
+    "question": "What are the psychological and technological factors in online privacy behavior?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the privacy paradox?",
+      "How do cognitive biases affect privacy decisions?",
+      "What role does interface design play in privacy choices?",
+      "How do cultural factors affect privacy attitudes?",
+      "What interventions improve privacy behavior?"
+    ],
+    "evaluation_criteria": "Must integrate psychology, technology, and design",
+    "tags": ["privacy", "psychology", "behavior", "design", "paradox"]
+  },
+  {
+    "id": "INTER-080",
+    "domain": "Interdisciplinary",
+    "question": "How do circadian rhythms affect medication effectiveness and drug metabolism?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is chronopharmacology?",
+      "How do circadian rhythms affect drug metabolism?",
+      "What medications show time-of-day effects?",
+      "How might dosing schedules be optimized?",
+      "What challenges exist in implementing chronotherapy?"
+    ],
+    "evaluation_criteria": "Must connect chronobiology, pharmacology, and medicine",
+    "tags": ["chronopharmacology", "circadian", "medication", "dosing", "metabolism"]
+  },
+  {
+    "id": "INTER-081",
+    "domain": "Interdisciplinary",
+    "question": "What are the economic and social impacts of gambling and gambling regulation?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the psychology of gambling addiction?",
+      "What economic revenues does gambling generate?",
+      "What social costs are associated with gambling?",
+      "How do different regulatory approaches compare?",
+      "How has online gambling changed the landscape?"
+    ],
+    "evaluation_criteria": "Must connect psychology, economics, and public policy",
+    "tags": ["gambling", "addiction", "economics", "regulation", "social-costs"]
+  },
+  {
+    "id": "INTER-082",
+    "domain": "Interdisciplinary",
+    "question": "How do microfinance interventions affect poverty and economic development?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the theory of change for microfinance?",
+      "What does rigorous evidence show about microfinance impacts?",
+      "How do microfinance models vary?",
+      "What are the critiques of microfinance?",
+      "What alternative financial inclusion approaches exist?"
+    ],
+    "evaluation_criteria": "Must connect development economics, finance, and impact evaluation",
+    "tags": ["microfinance", "poverty", "development", "impact", "financial-inclusion"]
+  },
+  {
+    "id": "INTER-083",
+    "domain": "Interdisciplinary",
+    "question": "What are the neurological and environmental factors in attention and concentration?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What brain networks support attention?",
+      "How does digital technology affect attention spans?",
+      "What environmental factors improve concentration?",
+      "How do meditation and mindfulness affect attention?",
+      "What interventions improve attention in educational settings?"
+    ],
+    "evaluation_criteria": "Must integrate neuroscience, psychology, and education",
+    "tags": ["attention", "neuroscience", "technology", "mindfulness", "education"]
+  },
+  {
+    "id": "INTER-084",
+    "domain": "Interdisciplinary",
+    "question": "How do supply chain vulnerabilities affect national security and economic resilience?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What critical supply chains have single points of failure?",
+      "How did COVID-19 expose supply chain vulnerabilities?",
+      "What is the role of just-in-time vs resilient supply chains?",
+      "How do countries address strategic supply chain security?",
+      "What role does nearshoring play in resilience?"
+    ],
+    "evaluation_criteria": "Must connect supply chain management, economics, and security",
+    "tags": ["supply-chain", "security", "resilience", "COVID", "nearshoring"]
+  },
+  {
+    "id": "INTER-085",
+    "domain": "Interdisciplinary",
+    "question": "What are the biological and social factors affecting gender differences in health?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What biological factors create sex differences in disease?",
+      "How do gender roles affect health behaviors?",
+      "What healthcare access disparities exist by gender?",
+      "How has the inclusion of women in research changed?",
+      "What sex-specific medicine approaches are emerging?"
+    ],
+    "evaluation_criteria": "Must integrate biology, sociology, and medicine",
+    "tags": ["gender-health", "sex-differences", "biology", "social-factors", "medicine"]
+  },
+  {
+    "id": "INTER-086",
+    "domain": "Interdisciplinary",
+    "question": "How do restoration ecology principles guide ecosystem recovery efforts?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What are the principles of ecological restoration?",
+      "How is restoration success measured?",
+      "What role do keystone species play in restoration?",
+      "How does climate change affect restoration targets?",
+      "What are the economics of ecosystem restoration?"
+    ],
+    "evaluation_criteria": "Must connect ecology, conservation, and economics",
+    "tags": ["restoration-ecology", "conservation", "ecosystems", "climate", "economics"]
+  },
+  {
+    "id": "INTER-087",
+    "domain": "Interdisciplinary",
+    "question": "What are the psychological and economic aspects of consumerism and materialism?",
+    "difficulty": "medium",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What psychological needs drive consumption?",
+      "How does materialism affect well-being?",
+      "What is the hedonic treadmill?",
+      "How do marketing practices exploit psychology?",
+      "What alternatives to consumerism exist?"
+    ],
+    "evaluation_criteria": "Must connect psychology, economics, and culture",
+    "tags": ["consumerism", "materialism", "psychology", "well-being", "marketing"]
+  },
+  {
+    "id": "INTER-088",
+    "domain": "Interdisciplinary",
+    "question": "How do neurodegenerative diseases affect caregivers and what supports are effective?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is caregiver burden and how is it measured?",
+      "What health effects do caregivers experience?",
+      "What support interventions help caregivers?",
+      "How do health systems address caregiver needs?",
+      "What are the economic impacts of informal caregiving?"
+    ],
+    "evaluation_criteria": "Must connect medicine, psychology, and health policy",
+    "tags": ["caregiving", "dementia", "burden", "support", "economics"]
+  },
+  {
+    "id": "INTER-089",
+    "domain": "Interdisciplinary",
+    "question": "What are the technical and policy considerations for autonomous vehicle deployment?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What technical challenges remain for full autonomy?",
+      "What liability frameworks apply to AV accidents?",
+      "How will AVs affect urban planning and traffic?",
+      "What are the cybersecurity risks of connected vehicles?",
+      "How do different countries approach AV regulation?"
+    ],
+    "evaluation_criteria": "Must address technology, law, urban planning, and security",
+    "tags": ["autonomous-vehicles", "technology", "liability", "urban", "regulation"]
+  },
+  {
+    "id": "INTER-090",
+    "domain": "Interdisciplinary",
+    "question": "How do forest management practices affect carbon sequestration and biodiversity?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How do forests sequester carbon?",
+      "What management practices maximize carbon storage?",
+      "How do timber harvesting practices affect carbon?",
+      "What are the trade-offs between carbon and biodiversity?",
+      "How do carbon offset markets affect forest management?"
+    ],
+    "evaluation_criteria": "Must connect forestry, climate science, and ecology",
+    "tags": ["forests", "carbon", "biodiversity", "management", "offsets"]
+  },
+  {
+    "id": "INTER-091",
+    "domain": "Interdisciplinary",
+    "question": "What are the cultural and economic factors affecting organ donation rates?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How do opt-in vs opt-out systems affect donation rates?",
+      "What cultural and religious factors affect donation?",
+      "What is the role of incentives in organ donation?",
+      "How do allocation systems balance fairness and efficiency?",
+      "What alternatives to traditional donation exist?"
+    ],
+    "evaluation_criteria": "Must connect medicine, ethics, economics, and policy",
+    "tags": ["organ-donation", "policy", "culture", "ethics", "allocation"]
+  },
+  {
+    "id": "INTER-092",
+    "domain": "Interdisciplinary",
+    "question": "How do economic conditions affect mental health at individual and population levels?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How do recessions affect mental health outcomes?",
+      "What is the relationship between unemployment and mental health?",
+      "How does economic inequality affect psychological well-being?",
+      "What mental health effects does debt have?",
+      "What policies buffer mental health during economic downturns?"
+    ],
+    "evaluation_criteria": "Must connect economics, psychology, and public health",
+    "tags": ["economics", "mental-health", "recession", "unemployment", "policy"]
+  },
+  {
+    "id": "INTER-093",
+    "domain": "Interdisciplinary",
+    "question": "What are the technological and social considerations for assistive technologies?",
+    "difficulty": "medium",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What assistive technologies exist for different disabilities?",
+      "How do AI advances enable new assistive technologies?",
+      "What barriers limit assistive technology adoption?",
+      "How should assistive technologies be designed inclusively?",
+      "What policies promote assistive technology access?"
+    ],
+    "evaluation_criteria": "Must connect technology, disability studies, and policy",
+    "tags": ["assistive-technology", "disability", "AI", "accessibility", "design"]
+  },
+  {
+    "id": "INTER-094",
+    "domain": "Interdisciplinary",
+    "question": "How do pesticides affect ecosystem health and what alternatives exist?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What are the ecological effects of neonicotinoids?",
+      "How do pesticides affect pollinator populations?",
+      "What integrated pest management approaches exist?",
+      "What are the trade-offs of organic vs conventional farming?",
+      "How do regulatory approaches differ across countries?"
+    ],
+    "evaluation_criteria": "Must connect agriculture, ecology, and policy",
+    "tags": ["pesticides", "pollinators", "IPM", "organic", "regulation"]
+  },
+  {
+    "id": "INTER-095",
+    "domain": "Interdisciplinary",
+    "question": "What are the neurological and legal implications of neuroscience evidence in courts?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What types of neuroscience evidence are used in trials?",
+      "How does brain imaging affect responsibility assessments?",
+      "What are the limitations of neuroscience evidence?",
+      "How do different legal systems approach neuroscience evidence?",
+      "What ethical issues arise from neurolaw?"
+    ],
+    "evaluation_criteria": "Must connect neuroscience, law, and ethics",
+    "tags": ["neurolaw", "neuroscience", "legal", "responsibility", "ethics"]
+  },
+  {
+    "id": "INTER-096",
+    "domain": "Interdisciplinary",
+    "question": "How do urban green spaces affect mental health and property values?",
+    "difficulty": "medium",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What evidence links green space to mental health?",
+      "What mechanisms explain green space benefits?",
+      "How do green spaces affect property values?",
+      "What are the equity issues in green space distribution?",
+      "What policies promote urban green space?"
+    ],
+    "evaluation_criteria": "Must connect urban planning, psychology, and economics",
+    "tags": ["green-space", "mental-health", "property-values", "equity", "urban"]
+  },
+  {
+    "id": "INTER-097",
+    "domain": "Interdisciplinary",
+    "question": "What are the technical and societal challenges of AI alignment?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the AI alignment problem?",
+      "What technical approaches address alignment?",
+      "How do we specify human values for AI systems?",
+      "What governance structures might ensure aligned AI?",
+      "What are the timelines and risks of advanced AI?"
+    ],
+    "evaluation_criteria": "Must address AI technology, philosophy, and governance",
+    "tags": ["AI-alignment", "safety", "values", "governance", "risk"]
+  },
+  {
+    "id": "INTER-098",
+    "domain": "Interdisciplinary",
+    "question": "How do childhood nutrition interventions affect lifelong health and economic outcomes?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the critical window for nutrition intervention?",
+      "How does early nutrition affect cognitive development?",
+      "What are the long-term health effects of childhood malnutrition?",
+      "What economic returns do nutrition programs provide?",
+      "What delivery mechanisms are most effective?"
+    ],
+    "evaluation_criteria": "Must connect nutrition science, economics, and public health",
+    "tags": ["nutrition", "child-development", "economics", "public-health", "intervention"]
+  },
+  {
+    "id": "INTER-099",
+    "domain": "Interdisciplinary",
+    "question": "What are the biological and social factors in human mate selection?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What evolutionary factors influence mate preferences?",
+      "How do cultural factors shape mate selection?",
+      "What role does physical attractiveness play?",
+      "How have dating technologies changed mate selection?",
+      "What are assortative mating patterns and their effects?"
+    ],
+    "evaluation_criteria": "Must integrate evolutionary psychology, sociology, and technology",
+    "tags": ["mate-selection", "evolution", "culture", "dating", "psychology"]
+  },
+  {
+    "id": "INTER-100",
+    "domain": "Interdisciplinary",
+    "question": "How do disaster preparedness and response systems integrate technical and social factors?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What technologies enable early warning systems?",
+      "How do social factors affect disaster vulnerability?",
+      "What determines community resilience to disasters?",
+      "How should disaster response be coordinated?",
+      "What lessons have recent disasters provided?"
+    ],
+    "evaluation_criteria": "Must connect technology, social science, and emergency management",
+    "tags": ["disaster", "preparedness", "resilience", "technology", "response"]
+  }
+]

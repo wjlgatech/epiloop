@@ -1,0 +1,13 @@
+{
+  "name": "refactor",
+  "description": "Refactor code for better structure and maintainability",
+  "steps": [
+    {"id": 1, "action": "Read and understand current implementation", "type": "read"},
+    {"id": 2, "action": "Identify code smells and improvement opportunities", "type": "read"},
+    {"id": 3, "action": "Plan refactoring approach", "type": "plan"},
+    {"id": 4, "action": "Apply refactoring changes", "type": "write"},
+    {"id": 5, "action": "Verify functionality preserved", "type": "verify"},
+    {"id": 6, "action": "Run existing tests", "type": "bash"}
+  ],
+  "estimated_complexity": "medium"
+}

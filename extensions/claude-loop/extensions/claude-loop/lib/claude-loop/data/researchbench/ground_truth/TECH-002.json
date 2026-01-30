@@ -1,0 +1,117 @@
+{
+  "question_id": "TECH-002",
+  "question": "How do modern database systems achieve high availability and consistency?",
+  "expert_sources": [
+    {
+      "title": "In Search of an Understandable Consensus Algorithm",
+      "authors": ["Ongaro and Ousterhout"],
+      "venue": "USENIX ATC 2014",
+      "url": "https://raft.github.io/raft.pdf",
+      "relevance": "Raft consensus algorithm"
+    },
+    {
+      "title": "Spanner: Google's Globally-Distributed Database",
+      "authors": ["Corbett et al."],
+      "venue": "OSDI 2012",
+      "url": "https://research.google/pubs/pub39966/",
+      "relevance": "Global distributed database architecture"
+    },
+    {
+      "title": "CockroachDB: The Resilient Geo-Distributed SQL Database",
+      "authors": ["Taft et al."],
+      "venue": "SIGMOD 2020",
+      "url": "https://dl.acm.org/doi/10.1145/3318464.3386134",
+      "relevance": "Open-source distributed SQL implementation"
+    },
+    {
+      "title": "Harvest, Yield, and Scalable Tolerant Systems",
+      "authors": ["Fox and Brewer"],
+      "venue": "HotOS 1999",
+      "url": "https://cs.uwaterloo.ca/~brecht/servers/readings-new2/harvest-yield.pdf",
+      "relevance": "CAP theorem origins"
+    },
+    {
+      "title": "Paxos Made Simple",
+      "authors": ["Lamport"],
+      "venue": "ACM SIGACT News 2001",
+      "url": "https://lamport.azurewebsites.net/pubs/paxos-simple.pdf",
+      "relevance": "Foundational consensus algorithm"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "CAP theorem states distributed systems can only guarantee 2 of 3: Consistency, Availability, Partition tolerance",
+      "importance": "critical",
+      "sources": ["Fox and Brewer 1999"]
+    },
+    {
+      "finding": "Raft achieves consensus through leader election and log replication with majority quorums",
+      "importance": "critical",
+      "sources": ["Ongaro and Ousterhout 2014"]
+    },
+    {
+      "finding": "Synchronous replication ensures consistency but adds latency; async improves performance but risks data loss",
+      "importance": "critical",
+      "sources": ["Various database documentation"]
+    },
+    {
+      "finding": "Spanner uses TrueTime GPS/atomic clocks for global ordering without coordination",
+      "importance": "high",
+      "sources": ["Corbett et al. 2012"]
+    },
+    {
+      "finding": "CockroachDB achieves distributed SQL using Raft for consensus per range",
+      "importance": "high",
+      "sources": ["Taft et al. 2020"]
+    },
+    {
+      "finding": "Multi-Paxos and Raft have similar performance; Raft is more understandable",
+      "importance": "medium",
+      "sources": ["Ongaro and Ousterhout 2014"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "CAP is overly simplistic; real systems make nuanced tradeoffs",
+      "validity": "Valid, PACELC extends CAP",
+      "sources": ["Abadi PACELC paper"]
+    },
+    {
+      "argument": "Consensus protocols add significant latency",
+      "validity": "True, but necessary for strong consistency",
+      "sources": ["Latency benchmarks"]
+    },
+    {
+      "argument": "Eventual consistency is sufficient for many applications",
+      "validity": "True for some use cases",
+      "sources": ["Dynamo paper"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.92,
+    "areas_of_uncertainty": [
+      "Optimal tradeoffs for specific workloads",
+      "Performance at extreme scale",
+      "New consistency models"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "CAP theorem explanation",
+      "Consensus algorithm (Raft or Paxos)",
+      "Replication strategies (sync vs async)",
+      "Quorum concept"
+    ],
+    "should_include": [
+      "Leader election mechanism",
+      "Specific systems (Spanner, CockroachDB, etc.)",
+      "Partition handling"
+    ],
+    "bonus_points": [
+      "TrueTime and external consistency",
+      "PACELC extension to CAP",
+      "Multi-region deployment considerations"
+    ]
+  }
+}

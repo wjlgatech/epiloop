@@ -1,14 +1,14 @@
 {
-  "name": "@clawdbot/memory-core",
+  "name": "@epiloop/memory-core",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot core memory search plugin",
-  "clawdbot": {
+  "description": "Epiloop core memory search plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ]
   },
   "peerDependencies": {
-    "clawdbot": ">=2026.1.23-1"
+    "epiloop": ">=2026.1.23-1"
   }
 }

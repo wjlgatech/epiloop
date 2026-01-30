@@ -1,0 +1,41 @@
+{
+  "name": "run_with_timeout",
+  "description": "Run a command with a specified timeout",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "string",
+        "description": "The command to execute"
+      },
+      "timeout_seconds": {
+        "type": "integer",
+        "description": "Maximum execution time in seconds",
+        "default": 30
+      },
+      "capture_stderr": {
+        "type": "boolean",
+        "description": "Whether to capture stderr separately",
+        "default": true
+      }
+    },
+    "required": ["command"]
+  },
+  "returns": {
+    "type": "object",
+    "properties": {
+      "exit_code": {
+        "type": "integer"
+      },
+      "stdout": {
+        "type": "string"
+      },
+      "stderr": {
+        "type": "string"
+      },
+      "timed_out": {
+        "type": "boolean"
+      }
+    }
+  }
+}

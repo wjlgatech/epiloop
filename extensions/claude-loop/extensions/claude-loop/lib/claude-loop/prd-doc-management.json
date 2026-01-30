@@ -1,0 +1,242 @@
+{
+  "project": "documentation-management",
+  "branchName": "feature/doc-management",
+  "description": "Implement systematic documentation management for 1000+ contributors with lifecycle tracking, security, and discoverability",
+  "userStories": [
+    {
+      "id": "DOC-001",
+      "title": "Create New Directory Structure",
+      "description": "Create the new directory structure for PRDs and docs with proper organization",
+      "acceptanceCriteria": [
+        "Create prds/ directory with active/, completed/, abandoned/, drafts/ subdirectories",
+        "Create docs/rfcs/, docs/adrs/, docs/guides/, docs/marketing/ subdirectories",
+        "Add .gitkeep files to preserve empty directories",
+        "Update .gitignore if needed for any temp files"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented in commit 0387e2c - Created prds/ with active/completed/abandoned/drafts subdirs, docs/rfcs/adrs/guides/marketing subdirs, .gitkeep files added"
+    },
+    {
+      "id": "DOC-002",
+      "title": "Define MANIFEST.yaml JSON Schema",
+      "description": "Create a JSON schema for validating MANIFEST.yaml files",
+      "acceptanceCriteria": [
+        "Create schemas/manifest.schema.json with full validation rules",
+        "Include all required fields: id, title, status, owner, created_at",
+        "Include optional fields: supersedes, tags, approval, contributors",
+        "Add enum validation for status (draft, active, completed, abandoned)",
+        "Document schema in docs/guides/manifest-format.md"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Implemented in commit 6dbbb2b - Created schemas/manifest.schema.json with JSON Schema 2020-12 and docs/guides/manifest-format.md"
+    },
+    {
+      "id": "DOC-003",
+      "title": "Migrate Existing PRDs to New Structure",
+      "description": "Move all existing PRD files to the new directory structure with proper manifests",
+      "acceptanceCriteria": [
+        "Move completed PRDs (stratified-memory-v2, self-improvement) to prds/completed/",
+        "Create MANIFEST.yaml for each migrated PRD with correct metadata",
+        "Move abandoned/superseded PRDs to prds/abandoned/",
+        "Remove old PRD files from root directory",
+        "Preserve git history via git mv where possible"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Implemented in commit d029c37 - Migrated stratified-memory-v2 and self-improvement to prds/completed/, stratified-memory-v1 to prds/abandoned/ with MANIFEST.yaml for each"
+    },
+    {
+      "id": "DOC-004",
+      "title": "Migrate Docs to New Structure",
+      "description": "Reorganize docs/ directory by purpose",
+      "acceptanceCriteria": [
+        "Move SCALE-ARCHITECTURE-DECISION.md to docs/adrs/ADR-002-stratified-memory.md",
+        "Move RFC-001-DOCUMENTATION-MANAGEMENT.md to docs/rfcs/",
+        "Move demo-presentation.md, one-pager.md to docs/marketing/",
+        "Move technical guides to docs/guides/",
+        "Update any internal links between documents"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Implemented in commit 72168ee - Moved docs to adrs/, rfcs/, marketing/, guides/ directories with updated links in README.md"
+    },
+    {
+      "id": "DOC-005",
+      "title": "Implement PRD Manager CLI - Core Commands",
+      "description": "Create lib/prd-manager.py with list, show, and search commands",
+      "acceptanceCriteria": [
+        "Create lib/prd-manager.py with argparse CLI",
+        "Implement 'list' command with --status filter",
+        "Implement 'show' command to display PRD details",
+        "Implement 'search' command with keyword and --tag support",
+        "Add --json output format option for all commands",
+        "Include proper error handling and help text"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "Implemented in commit 7d95b21 - Created lib/prd-manager.py with list, show, search commands, --status and --tag filters, and --json output"
+    },
+    {
+      "id": "DOC-006",
+      "title": "Implement PRD Manager CLI - Lifecycle Commands",
+      "description": "Add create, approve, abandon, and complete commands",
+      "acceptanceCriteria": [
+        "Implement 'create' command that generates new PRD directory with template",
+        "Implement 'approve' command that transitions draft to active",
+        "Implement 'abandon' command with required --reason flag",
+        "Implement 'complete' command for marking PRD done",
+        "Validate state transitions (can't approve completed PRD, etc.)",
+        "Update MANIFEST.yaml timestamps on each transition"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "Implemented in commit d0a044b - Added create/approve/abandon/complete commands with state transition validation and MANIFEST.yaml updates"
+    },
+    {
+      "id": "DOC-007",
+      "title": "Implement PRD Indexer",
+      "description": "Create lib/prd-indexer.py to build searchable index",
+      "acceptanceCriteria": [
+        "Create lib/prd-indexer.py that scans prds/ directory",
+        "Build .claude-loop/prd-index.json with all PRD metadata",
+        "Include id, title, status, owner, tags, story counts",
+        "Add 'rebuild' command to regenerate index",
+        "Add 'verify' command to check index matches filesystem",
+        "Index should be updated automatically by prd-manager commands"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": "Implemented in commit 9278e15 - Created lib/prd-indexer.py with rebuild/verify/show/stats commands, auto-index update integrated into prd-manager.py lifecycle commands"
+    },
+    {
+      "id": "DOC-008",
+      "title": "Implement Audit Log System",
+      "description": "Create append-only audit trail for PRD state changes",
+      "acceptanceCriteria": [
+        "Create .claude-loop/audit-log.jsonl file",
+        "Log all PRD state changes (create, approve, complete, abandon)",
+        "Include timestamp, actor, action, prd_id, hash fields",
+        "Compute SHA256 hash of PRD content at each state change",
+        "Add 'audit' command to prd-manager.py to view log",
+        "Implement 'audit verify' to check hash chain integrity"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": "Implemented in commit - Added audit log with hash chain, audit command with filters, audit verify for integrity checking"
+    },
+    {
+      "id": "DOC-009",
+      "title": "Implement Integrity Verification",
+      "description": "Add hash chain verification for tamper detection",
+      "acceptanceCriteria": [
+        "Store approval_hash in MANIFEST.yaml when PRD is approved",
+        "Implement 'verify' command in prd-manager.py",
+        "Verify current prd.json hash matches approval_hash",
+        "Verify audit log hash chain is unbroken",
+        "Report any integrity violations with details",
+        "Add --fix option to recalculate hashes (admin only)"
+      ],
+      "priority": 9,
+      "passes": true,
+      "notes": "Implemented in commit - Added verify command with IntegrityIssue dataclass, verify_prd_integrity() and verify_all_prds() functions, fix_prd_hash() for --fix option"
+    },
+    {
+      "id": "DOC-010",
+      "title": "Implement Retention Policy Automation",
+      "description": "Create automated cleanup based on retention rules",
+      "acceptanceCriteria": [
+        "Create lib/prd-retention.py for retention enforcement",
+        "Auto-abandon drafts inactive for 30+ days (with warning at 25)",
+        "Move completed PRDs to archive after 90 days",
+        "Delete abandoned PRDs after 30 days (keep audit entries)",
+        "Compress archives older than 7 days",
+        "Add 'retention check' command to preview actions",
+        "Add 'retention run' command to execute cleanup"
+      ],
+      "priority": 10,
+      "passes": true,
+      "notes": "Implemented in commit 50750dd - Created lib/prd-retention.py with check/run/stats commands, retention policies for drafts, completed, abandoned, and archives"
+    },
+    {
+      "id": "DOC-011",
+      "title": "Update claude-loop.sh for New PRD Structure",
+      "description": "Modify claude-loop.sh to work with new prds/ directory",
+      "acceptanceCriteria": [
+        "Support --prd flag pointing to prds/active/*/prd.json",
+        "Auto-detect active PRD if only one exists in prds/active/",
+        "Create progress.txt inside PRD directory (not root)",
+        "Update MANIFEST.yaml status to 'completed' when all stories pass",
+        "Move PRD to prds/completed/ on successful completion"
+      ],
+      "priority": 11,
+      "passes": true,
+      "notes": "Implemented in commit 2cc2de0 - Added PRD path resolution, auto-detection, MANIFEST.yaml completion updates, and auto-move to completed/"
+    },
+    {
+      "id": "DOC-012",
+      "title": "Create PRD Templates",
+      "description": "Create templates for common PRD types",
+      "acceptanceCriteria": [
+        "Create templates/prd-feature.json for feature PRDs",
+        "Create templates/prd-bugfix.json for bug fix PRDs",
+        "Create templates/prd-refactor.json for refactoring PRDs",
+        "Create templates/manifest.yaml template",
+        "prd create command uses appropriate template based on --type flag"
+      ],
+      "priority": 12,
+      "passes": true,
+      "notes": "Implemented in commit b5d690a - Created templates/ directory with prd-feature.json, prd-bugfix.json, prd-refactor.json, and manifest.yaml. Updated prd-manager.py with load_prd_template, load_manifest_template, and apply_template_variables functions."
+    },
+    {
+      "id": "DOC-013",
+      "title": "Create Contributor Guide",
+      "description": "Document the new PRD workflow for contributors",
+      "acceptanceCriteria": [
+        "Create docs/guides/prd-workflow.md with complete workflow",
+        "Document all prd-manager.py commands with examples",
+        "Explain lifecycle states and transitions",
+        "Document security model and approval process",
+        "Include troubleshooting section for common issues",
+        "Add quick reference card at the end"
+      ],
+      "priority": 13,
+      "passes": true,
+      "notes": "Implemented in commit 7b63779 - Created comprehensive docs/guides/prd-workflow.md with workflow documentation, CLI command reference, lifecycle states, security model, troubleshooting, and quick reference card"
+    },
+    {
+      "id": "DOC-014",
+      "title": "Add GitHub Actions for PRD Validation",
+      "description": "Create CI workflows for PRD management",
+      "acceptanceCriteria": [
+        "Create .github/workflows/prd-validation.yml",
+        "On PR: Validate MANIFEST.yaml against schema",
+        "On PR: Check PRD naming convention",
+        "On merge to main: Rebuild prd-index.json",
+        "On schedule (daily): Run retention check",
+        "On schedule (daily): Verify audit log integrity"
+      ],
+      "priority": 14,
+      "passes": true,
+      "notes": "Implemented in commit a2032cb - Created .github/workflows/prd-validation.yml with PR validation (schema, naming), index rebuild on merge, daily retention and audit verification"
+    },
+    {
+      "id": "DOC-015",
+      "title": "Comprehensive Documentation Management Tests",
+      "description": "Create tests for all documentation management components",
+      "acceptanceCriteria": [
+        "Create tests/test_prd_manager.py with CLI tests",
+        "Create tests/test_prd_indexer.py with indexing tests",
+        "Create tests/test_audit_log.py with integrity tests",
+        "Create tests/test_retention.py with cleanup tests",
+        "Test lifecycle state transitions",
+        "Test security/integrity verification",
+        "All tests pass with pytest"
+      ],
+      "priority": 15,
+      "passes": true,
+      "notes": "Implemented in commit eaeaf85 - Created 4 comprehensive test files with 120 tests covering prd-manager CLI, prd-indexer, audit log integrity/chain verification, and prd-retention cleanup. All tests pass."
+    }
+  ]
+}

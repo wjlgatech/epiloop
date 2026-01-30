@@ -1,0 +1,187 @@
+{
+  "name": "unity_editor_automation",
+  "description": "Automate Unity Editor operations for XR and simulation development",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "string",
+        "description": "The Unity Editor command to run",
+        "enum": ["execute_method", "build", "run_tests", "import_package", "export_package", "open_project"]
+      },
+      "project_path": {
+        "type": "string",
+        "description": "Path to the Unity project"
+      },
+      "method": {
+        "type": "string",
+        "description": "Static method to execute (for execute_method command)",
+        "examples": ["BuildScript.BuildPlayer", "MyEditor.RunAutomation"]
+      },
+      "build_target": {
+        "type": "string",
+        "description": "Build target platform",
+        "enum": ["StandaloneWindows64", "StandaloneOSX", "StandaloneLinux64", "Android", "iOS", "WebGL"]
+      },
+      "build_path": {
+        "type": "string",
+        "description": "Output path for build"
+      },
+      "scenes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Scenes to include in build"
+      },
+      "test_platform": {
+        "type": "string",
+        "description": "Test platform",
+        "enum": ["EditMode", "PlayMode"],
+        "default": "EditMode"
+      },
+      "test_filter": {
+        "type": "string",
+        "description": "Filter for test names to run"
+      },
+      "package_path": {
+        "type": "string",
+        "description": "Path to Unity package file"
+      },
+      "assets": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Asset paths to export"
+      },
+      "log_file": {
+        "type": "string",
+        "description": "Path to write Unity log output"
+      },
+      "batch_mode": {
+        "type": "boolean",
+        "description": "Run Unity in batch mode (headless)",
+        "default": true
+      },
+      "quit_on_finish": {
+        "type": "boolean",
+        "description": "Quit Unity after operation completes",
+        "default": true
+      },
+      "timeout_seconds": {
+        "type": "integer",
+        "description": "Maximum execution time",
+        "default": 600
+      },
+      "unity_path": {
+        "type": "string",
+        "description": "Path to Unity executable (auto-detected if not specified)"
+      }
+    },
+    "required": ["command", "project_path"]
+  },
+  "returns": {
+    "type": "object",
+    "properties": {
+      "exit_code": {
+        "type": "integer"
+      },
+      "success": {
+        "type": "boolean"
+      },
+      "log_output": {
+        "type": "string",
+        "description": "Unity Editor log output"
+      },
+      "build_output": {
+        "type": "string",
+        "description": "Path to build output (for build command)"
+      },
+      "test_results": {
+        "type": "object",
+        "description": "Test results (for run_tests command)",
+        "properties": {
+          "passed": {"type": "integer"},
+          "failed": {"type": "integer"},
+          "skipped": {"type": "integer"},
+          "failures": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "test_name": {"type": "string"},
+                "message": {"type": "string"}
+              }
+            }
+          }
+        }
+      },
+      "duration_ms": {
+        "type": "integer"
+      }
+    }
+  },
+  "examples": [
+    {
+      "description": "Build XR application for Windows",
+      "input": {
+        "command": "build",
+        "project_path": "/path/to/project",
+        "build_target": "StandaloneWindows64",
+        "build_path": "/path/to/output/XRApp.exe",
+        "scenes": ["Assets/Scenes/Main.unity", "Assets/Scenes/XRSetup.unity"]
+      }
+    },
+    {
+      "description": "Run PlayMode tests",
+      "input": {
+        "command": "run_tests",
+        "project_path": "/path/to/project",
+        "test_platform": "PlayMode",
+        "test_filter": "XR"
+      }
+    },
+    {
+      "description": "Execute custom editor method",
+      "input": {
+        "command": "execute_method",
+        "project_path": "/path/to/project",
+        "method": "XRSetup.ConfigureProject"
+      }
+    },
+    {
+      "description": "Import a Unity package",
+      "input": {
+        "command": "import_package",
+        "project_path": "/path/to/project",
+        "package_path": "/path/to/package.unitypackage"
+      }
+    },
+    {
+      "description": "Export assets as package",
+      "input": {
+        "command": "export_package",
+        "project_path": "/path/to/project",
+        "package_path": "/path/to/output.unitypackage",
+        "assets": ["Assets/XR", "Assets/Scripts/XRController.cs"]
+      }
+    }
+  ],
+  "implementation_notes": [
+    "Auto-detects Unity Hub installations",
+    "Supports Unity 2020.3+, 2021.x, 2022.x, 6.x versions",
+    "Parses Unity test results XML for structured output",
+    "Handles XR-specific build settings automatically",
+    "Captures compile errors and warnings from log"
+  ],
+  "xr_specific": {
+    "supported_sdks": ["OpenXR", "Oculus", "SteamVR", "Windows Mixed Reality"],
+    "common_methods": [
+      "XRSettings.EnableXR",
+      "XRSettings.ConfigureProviders",
+      "XRBuildHelper.SetupForQuest",
+      "XRBuildHelper.SetupForPCVR"
+    ]
+  }
+}

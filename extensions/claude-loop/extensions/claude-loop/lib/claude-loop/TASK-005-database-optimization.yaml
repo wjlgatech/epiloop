@@ -1,0 +1,125 @@
+#========================================================
+# REAL-WORLD BENCHMARK TASK 005
+# Tier: MESO (Medium Feature)
+# Source: Performance optimization scenario
+#========================================================
+
+id: TASK-005
+name: "Database Query Optimization"
+tier: meso
+source_project: null
+difficulty: 4  # 1-5 scale
+estimated_time_human_minutes: 90
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Current Issue**: A slow database query is causing API timeouts.
+
+  **Problem**: Query joins multiple tables without proper indexing:
+  ```sql
+  SELECT u.*, o.*, p.*
+  FROM users u
+  JOIN orders o ON u.id = o.user_id
+  JOIN products p ON o.product_id = p.id
+  WHERE u.created_at > '2024-01-01'
+  AND o.status = 'pending'
+  ORDER BY o.created_at DESC
+  ```
+
+  **Performance Issue**:
+  - Current: 8-12 seconds for 100K users
+  - Target: < 500ms
+
+  **Task**: Optimize this query by:
+  1. Adding appropriate indexes
+  2. Reducing unnecessary columns
+  3. Using query pagination
+  4. Adding query explain plan analysis
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Creates indexes on foreign keys and filter columns"
+    weight: 0.30
+    validation_method: "grep"
+    validation_script: |
+      grep -iE "(CREATE INDEX|ADD INDEX|idx_)" . -r
+
+  - id: AC2
+    description: "Selects only needed columns (not SELECT *)"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "SELECT\s+(u\.|o\.|p\.)" . -r | grep -v "SELECT \*"
+
+  - id: AC3
+    description: "Implements pagination (LIMIT/OFFSET or cursor)"
+    weight: 0.25
+    validation_method: "grep"
+    validation_script: |
+      grep -iE "(LIMIT|OFFSET|cursor|page)" . -r
+
+  - id: AC4
+    description: "Adds query execution plan analysis (EXPLAIN)"
+    weight: 0.15
+    validation_method: "grep"
+    validation_script: |
+      grep -iE "(EXPLAIN|execution.*plan|analyze)" . -r
+
+  - id: AC5
+    description: "Documents performance improvement"
+    weight: 0.10
+    validation_method: "grep"
+    validation_script: |
+      grep -iE "(performance|benchmark|before.*after|improved)" . -r
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach: |
+    1. Add composite index: (user_id, created_at, status)
+    2. Add index on orders.status
+    3. Select specific columns: u.id, u.name, o.id, o.total, p.name
+    4. Add LIMIT 50 for pagination
+    5. Run EXPLAIN to verify index usage
+
+  example_indexes: |
+    CREATE INDEX idx_users_created ON users(created_at);
+    CREATE INDEX idx_orders_status ON orders(status);
+    CREATE INDEX idx_orders_user_created ON orders(user_id, created_at);
+
+#--------------------------------------------------------
+# TEST DATA
+#--------------------------------------------------------
+test_data:
+  performance_targets:
+    - rows: 100000
+      target_time_ms: 500
+      max_time_ms: 1000
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ Indexes created on filtered/joined columns
+  2. ✓ SELECT statement uses specific columns
+  3. ✓ Pagination implemented
+  4. ✓ EXPLAIN plan shows index usage
+  5. ✓ Query completes in < 500ms
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["database", "performance", "sql", "optimization"]
+  estimated_impact: "high"
+  complexity_signals:
+    - "Database indexing"
+    - "Query optimization"
+    - "Performance analysis"

@@ -1,0 +1,1502 @@
+[
+  {
+    "id": "AIML-001",
+    "domain": "AI-ML",
+    "question": "What are the key architectural differences between transformer-based and state-space models for sequence modeling, and what are the trade-offs in terms of computational complexity and performance?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the attention mechanism in transformers and its computational complexity?",
+      "How do state-space models like Mamba handle sequence modeling?",
+      "What are the memory and compute trade-offs between these architectures?",
+      "Which tasks favor transformers vs state-space models?"
+    ],
+    "evaluation_criteria": "Must explain O(n^2) vs O(n) complexity, discuss specific architectures, provide empirical comparisons",
+    "tags": ["transformers", "state-space-models", "architecture", "complexity"]
+  },
+  {
+    "id": "AIML-002",
+    "domain": "AI-ML",
+    "question": "How do different RLHF techniques compare in aligning large language models, and what are the known failure modes?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "What is the standard RLHF pipeline with PPO?",
+      "How does DPO differ from traditional RLHF?",
+      "What are common reward hacking behaviors?",
+      "How do constitutional AI methods compare?"
+    ],
+    "evaluation_criteria": "Must cover PPO, DPO, reward modeling, and specific failure cases with citations",
+    "tags": ["RLHF", "alignment", "DPO", "PPO", "reward-hacking"]
+  },
+  {
+    "id": "AIML-003",
+    "domain": "AI-ML",
+    "question": "What techniques are most effective for reducing hallucinations in large language models?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What causes hallucinations in LLMs?",
+      "How does retrieval-augmented generation help?",
+      "What training-time interventions reduce hallucinations?",
+      "How can inference-time techniques like self-consistency help?"
+    ],
+    "evaluation_criteria": "Must discuss RAG, fine-tuning approaches, and evaluation metrics for hallucination",
+    "tags": ["hallucination", "RAG", "factuality", "LLM"]
+  },
+  {
+    "id": "AIML-004",
+    "domain": "AI-ML",
+    "question": "What are the current best practices for evaluating code generation models?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What benchmarks exist for code generation (HumanEval, MBPP, etc.)?",
+      "How is pass@k calculated and why?",
+      "What are the limitations of current benchmarks?",
+      "How do execution-based vs match-based metrics compare?"
+    ],
+    "evaluation_criteria": "Must reference specific benchmarks, explain pass@k, discuss contamination issues",
+    "tags": ["code-generation", "evaluation", "benchmarks", "HumanEval"]
+  },
+  {
+    "id": "AIML-005",
+    "domain": "AI-ML",
+    "question": "How do mixture-of-experts models achieve efficiency gains and what are their training challenges?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the MoE architecture and routing mechanism?",
+      "How does sparse activation reduce compute?",
+      "What load balancing problems occur during training?",
+      "How do models like Mixtral implement MoE?"
+    ],
+    "evaluation_criteria": "Must explain gating mechanisms, load balancing losses, and compare to dense models",
+    "tags": ["MoE", "sparse-models", "efficiency", "Mixtral"]
+  },
+  {
+    "id": "AIML-006",
+    "domain": "AI-ML",
+    "question": "What are the theoretical foundations and practical implications of the scaling laws for neural language models?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What do the Chinchilla scaling laws predict?",
+      "How do compute-optimal training budgets differ from earlier estimates?",
+      "What are the limitations of current scaling law research?",
+      "How do scaling laws inform model deployment decisions?"
+    ],
+    "evaluation_criteria": "Must cite Kaplan and Hoffmann papers, discuss compute-optimal ratios",
+    "tags": ["scaling-laws", "Chinchilla", "compute-optimal", "training"]
+  },
+  {
+    "id": "AIML-007",
+    "domain": "AI-ML",
+    "question": "How do different prompting strategies affect reasoning capabilities in LLMs?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is chain-of-thought prompting and why does it help?",
+      "How do few-shot vs zero-shot approaches compare?",
+      "What is self-consistency and how does it improve results?",
+      "What are the limitations of prompting-based approaches?"
+    ],
+    "evaluation_criteria": "Must cover CoT, few-shot learning, self-consistency with examples",
+    "tags": ["prompting", "chain-of-thought", "reasoning", "few-shot"]
+  },
+  {
+    "id": "AIML-008",
+    "domain": "AI-ML",
+    "question": "What are the most promising approaches for making LLMs more efficient at inference time?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does quantization affect model quality and speed?",
+      "What is speculative decoding and how does it work?",
+      "How do KV-cache optimizations improve throughput?",
+      "What are the trade-offs of different serving frameworks?"
+    ],
+    "evaluation_criteria": "Must discuss specific quantization methods, speculative decoding, and memory optimization",
+    "tags": ["inference", "quantization", "speculative-decoding", "efficiency"]
+  },
+  {
+    "id": "AIML-009",
+    "domain": "AI-ML",
+    "question": "What are the key challenges in building reliable AI agents that can use tools and take actions?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do current agent architectures handle planning?",
+      "What are the safety concerns with tool-using agents?",
+      "How is agent performance evaluated?",
+      "What are common failure modes in agentic systems?"
+    ],
+    "evaluation_criteria": "Must discuss ReAct, tool use, safety considerations, and evaluation frameworks",
+    "tags": ["agents", "tool-use", "planning", "safety"]
+  },
+  {
+    "id": "AIML-010",
+    "domain": "AI-ML",
+    "question": "How do different fine-tuning methods compare for adapting foundation models to specific tasks?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is LoRA and how does it reduce parameter count?",
+      "How does full fine-tuning compare to parameter-efficient methods?",
+      "What is the role of learning rate and data quality?",
+      "When should you fine-tune vs use in-context learning?"
+    ],
+    "evaluation_criteria": "Must explain LoRA mechanics, compare PEFT methods, discuss practical considerations",
+    "tags": ["fine-tuning", "LoRA", "PEFT", "adaptation"]
+  },
+  {
+    "id": "AIML-011",
+    "domain": "AI-ML",
+    "question": "What are the current approaches for detecting AI-generated text and their limitations?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do statistical detection methods work?",
+      "What are watermarking approaches for LLM outputs?",
+      "Why is detection becoming increasingly difficult?",
+      "What are the false positive rates of current detectors?"
+    ],
+    "evaluation_criteria": "Must discuss detection methods, watermarking, adversarial robustness",
+    "tags": ["detection", "watermarking", "AI-text", "authenticity"]
+  },
+  {
+    "id": "AIML-012",
+    "domain": "AI-ML",
+    "question": "How do vision-language models like CLIP and its successors enable zero-shot image classification?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is contrastive learning in the context of CLIP?",
+      "How does CLIP achieve zero-shot transfer?",
+      "What improvements have successors like SigLIP made?",
+      "What are the known biases in vision-language models?"
+    ],
+    "evaluation_criteria": "Must explain contrastive training, zero-shot mechanism, and limitations",
+    "tags": ["CLIP", "vision-language", "zero-shot", "contrastive-learning"]
+  },
+  {
+    "id": "AIML-013",
+    "domain": "AI-ML",
+    "question": "What are the ethical considerations and potential harms of large-scale generative AI systems?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the environmental costs of training large models?",
+      "How do these systems perpetuate or amplify biases?",
+      "What are the labor and attribution concerns?",
+      "How should dual-use risks be managed?"
+    ],
+    "evaluation_criteria": "Must address multiple ethical dimensions with specific examples and data",
+    "tags": ["ethics", "bias", "environment", "dual-use"]
+  },
+  {
+    "id": "AIML-014",
+    "domain": "AI-ML",
+    "question": "How do diffusion models generate images and what are their key advantages over GANs?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the forward and reverse diffusion process?",
+      "How does the denoising score matching objective work?",
+      "Why are diffusion models more stable to train than GANs?",
+      "What are the computational costs of diffusion sampling?"
+    ],
+    "evaluation_criteria": "Must explain mathematical foundations, compare training stability, discuss sampling",
+    "tags": ["diffusion", "generative-models", "GANs", "image-generation"]
+  },
+  {
+    "id": "AIML-015",
+    "domain": "AI-ML",
+    "question": "What are the main challenges in multimodal learning and how are they being addressed?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do models align representations across modalities?",
+      "What are effective fusion strategies for multimodal data?",
+      "How is multimodal understanding evaluated?",
+      "What are the data requirements for multimodal training?"
+    ],
+    "evaluation_criteria": "Must discuss alignment, fusion architectures, and evaluation benchmarks",
+    "tags": ["multimodal", "fusion", "alignment", "evaluation"]
+  },
+  {
+    "id": "AIML-016",
+    "domain": "AI-ML",
+    "question": "How do knowledge distillation techniques enable smaller models to match larger ones?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the standard knowledge distillation framework?",
+      "How does distilling from logits differ from feature distillation?",
+      "What is the role of temperature in distillation?",
+      "How much performance is typically retained after distillation?"
+    ],
+    "evaluation_criteria": "Must explain distillation mechanics, temperature scaling, and compression ratios",
+    "tags": ["distillation", "compression", "student-teacher", "efficiency"]
+  },
+  {
+    "id": "AIML-017",
+    "domain": "AI-ML",
+    "question": "What are the current best approaches for long-context modeling in transformers?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do sparse attention patterns extend context length?",
+      "What is RoPE and how does it enable length extrapolation?",
+      "How do retrieval-based methods handle long documents?",
+      "What are the memory requirements for different context lengths?"
+    ],
+    "evaluation_criteria": "Must cover attention modifications, positional encodings, and memory analysis",
+    "tags": ["long-context", "attention", "RoPE", "memory"]
+  },
+  {
+    "id": "AIML-018",
+    "domain": "AI-ML",
+    "question": "How do neural network interpretability techniques help understand model behavior?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are mechanistic interpretability approaches?",
+      "How do attention visualization and probing methods work?",
+      "What are the limitations of current interpretability tools?",
+      "How can interpretability inform safety research?"
+    ],
+    "evaluation_criteria": "Must discuss specific techniques, their assumptions, and limitations",
+    "tags": ["interpretability", "mechanistic", "probing", "safety"]
+  },
+  {
+    "id": "AIML-019",
+    "domain": "AI-ML",
+    "question": "What are the key considerations for building production ML systems that are reliable and maintainable?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How should ML model versioning and deployment be handled?",
+      "What monitoring is needed for detecting model drift?",
+      "How do you handle A/B testing for ML models?",
+      "What are best practices for ML pipeline orchestration?"
+    ],
+    "evaluation_criteria": "Must cover MLOps practices, monitoring, and deployment strategies",
+    "tags": ["MLOps", "production", "monitoring", "deployment"]
+  },
+  {
+    "id": "AIML-020",
+    "domain": "AI-ML",
+    "question": "How do graph neural networks process relational data and what are their key architectures?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is message passing in GNNs?",
+      "How do GCN, GAT, and GraphSAGE differ?",
+      "What is the over-smoothing problem in deep GNNs?",
+      "What applications are GNNs most suited for?"
+    ],
+    "evaluation_criteria": "Must explain message passing, compare architectures, discuss limitations",
+    "tags": ["GNN", "graph-learning", "message-passing", "relational"]
+  },
+  {
+    "id": "AIML-021",
+    "domain": "AI-ML",
+    "question": "What are the current approaches for continual learning without catastrophic forgetting?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What causes catastrophic forgetting in neural networks?",
+      "How do regularization-based methods like EWC work?",
+      "What are replay-based approaches to continual learning?",
+      "How do architectural methods handle task boundaries?"
+    ],
+    "evaluation_criteria": "Must cover multiple method families with specific algorithms and trade-offs",
+    "tags": ["continual-learning", "catastrophic-forgetting", "EWC", "replay"]
+  },
+  {
+    "id": "AIML-022",
+    "domain": "AI-ML",
+    "question": "How do self-supervised learning methods create useful representations without labels?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What pretext tasks are used in self-supervised learning?",
+      "How do contrastive methods like SimCLR work?",
+      "What is the role of data augmentation in self-supervision?",
+      "How do non-contrastive methods avoid collapse?"
+    ],
+    "evaluation_criteria": "Must explain key methods, augmentation strategies, and collapse prevention",
+    "tags": ["self-supervised", "contrastive", "SimCLR", "representation-learning"]
+  },
+  {
+    "id": "AIML-023",
+    "domain": "AI-ML",
+    "question": "What are the main approaches for making neural networks robust to adversarial examples?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are adversarial examples and why do they exist?",
+      "How does adversarial training improve robustness?",
+      "What are certified defense methods?",
+      "What is the trade-off between robustness and accuracy?"
+    ],
+    "evaluation_criteria": "Must discuss attack types, defense methods, and robustness-accuracy trade-offs",
+    "tags": ["adversarial", "robustness", "adversarial-training", "certified-defense"]
+  },
+  {
+    "id": "AIML-024",
+    "domain": "AI-ML",
+    "question": "How do modern object detection architectures balance accuracy and speed?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do one-stage vs two-stage detectors differ?",
+      "What innovations did YOLO bring to detection?",
+      "How do transformer-based detectors like DETR work?",
+      "What are the FPS vs mAP trade-offs in current models?"
+    ],
+    "evaluation_criteria": "Must compare detector families, explain key innovations, provide benchmarks",
+    "tags": ["object-detection", "YOLO", "DETR", "computer-vision"]
+  },
+  {
+    "id": "AIML-025",
+    "domain": "AI-ML",
+    "question": "What are the key challenges and approaches in federated learning?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does federated averaging work?",
+      "What are the communication efficiency challenges?",
+      "How is privacy preserved in federated learning?",
+      "What are non-IID data challenges?"
+    ],
+    "evaluation_criteria": "Must explain FedAvg, privacy mechanisms, and heterogeneity challenges",
+    "tags": ["federated-learning", "privacy", "distributed", "FedAvg"]
+  },
+  {
+    "id": "AIML-026",
+    "domain": "AI-ML",
+    "question": "How do reinforcement learning algorithms learn from sparse rewards?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the sparse reward problem in RL?",
+      "How do intrinsic motivation methods help exploration?",
+      "What is hindsight experience replay?",
+      "How does reward shaping affect learning?"
+    ],
+    "evaluation_criteria": "Must cover exploration strategies, HER, and curriculum learning",
+    "tags": ["reinforcement-learning", "sparse-rewards", "exploration", "HER"]
+  },
+  {
+    "id": "AIML-027",
+    "domain": "AI-ML",
+    "question": "What are the current approaches for neural architecture search?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do weight-sharing NAS methods work?",
+      "What is the search space design challenge?",
+      "How do differentiable NAS methods like DARTS work?",
+      "What are the computational costs of NAS?"
+    ],
+    "evaluation_criteria": "Must explain search strategies, weight sharing, and efficiency considerations",
+    "tags": ["NAS", "architecture-search", "DARTS", "AutoML"]
+  },
+  {
+    "id": "AIML-028",
+    "domain": "AI-ML",
+    "question": "How do attention mechanisms in transformers process information and what variants exist?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does scaled dot-product attention work?",
+      "What is multi-head attention and why is it useful?",
+      "What are efficient attention variants like linear attention?",
+      "How does cross-attention enable encoder-decoder models?"
+    ],
+    "evaluation_criteria": "Must explain attention math, multi-head benefits, and efficiency variants",
+    "tags": ["attention", "transformers", "multi-head", "efficiency"]
+  },
+  {
+    "id": "AIML-029",
+    "domain": "AI-ML",
+    "question": "What are the best practices for handling imbalanced datasets in machine learning?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What sampling strategies help with imbalanced data?",
+      "How do loss function modifications address imbalance?",
+      "What evaluation metrics are appropriate for imbalanced data?",
+      "When should you use synthetic data generation?"
+    ],
+    "evaluation_criteria": "Must cover SMOTE, focal loss, appropriate metrics, and practical guidelines",
+    "tags": ["imbalanced-data", "SMOTE", "focal-loss", "sampling"]
+  },
+  {
+    "id": "AIML-030",
+    "domain": "AI-ML",
+    "question": "How do embedding models encode semantic meaning and how are they evaluated?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How are text embeddings trained?",
+      "What benchmarks evaluate embedding quality?",
+      "How do symmetric vs asymmetric models differ?",
+      "What are the best practices for embedding-based retrieval?"
+    ],
+    "evaluation_criteria": "Must explain training objectives, MTEB benchmark, and retrieval considerations",
+    "tags": ["embeddings", "retrieval", "MTEB", "semantic-search"]
+  },
+  {
+    "id": "AIML-031",
+    "domain": "AI-ML",
+    "question": "What are the main challenges in training very large neural networks across multiple GPUs?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does data parallelism distribute training?",
+      "What is model parallelism and when is it needed?",
+      "How does pipeline parallelism work?",
+      "What are communication bottlenecks in distributed training?"
+    ],
+    "evaluation_criteria": "Must explain parallelism strategies, communication costs, and practical frameworks",
+    "tags": ["distributed-training", "parallelism", "scaling", "communication"]
+  },
+  {
+    "id": "AIML-032",
+    "domain": "AI-ML",
+    "question": "How do language models learn in-context and what are the theoretical explanations?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is in-context learning and how is it demonstrated?",
+      "What theoretical frameworks explain ICL?",
+      "How does ICL relate to meta-learning?",
+      "What factors affect ICL performance?"
+    ],
+    "evaluation_criteria": "Must discuss empirical findings and theoretical explanations with citations",
+    "tags": ["in-context-learning", "meta-learning", "emergent", "theory"]
+  },
+  {
+    "id": "AIML-033",
+    "domain": "AI-ML",
+    "question": "What are the current approaches for video understanding with deep learning?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do 3D CNNs process temporal information?",
+      "What are video transformer architectures?",
+      "How is temporal modeling handled differently across methods?",
+      "What benchmarks evaluate video understanding?"
+    ],
+    "evaluation_criteria": "Must compare architectural approaches and discuss computational trade-offs",
+    "tags": ["video-understanding", "temporal", "3D-CNN", "video-transformers"]
+  },
+  {
+    "id": "AIML-034",
+    "domain": "AI-ML",
+    "question": "How do neural networks for speech recognition convert audio to text?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the CTC loss and how does it enable end-to-end ASR?",
+      "How do encoder-decoder models like Whisper work?",
+      "What preprocessing is needed for audio inputs?",
+      "How is speech recognition evaluated?"
+    ],
+    "evaluation_criteria": "Must explain CTC, encoder-decoder approaches, and WER evaluation",
+    "tags": ["speech-recognition", "ASR", "CTC", "Whisper"]
+  },
+  {
+    "id": "AIML-035",
+    "domain": "AI-ML",
+    "question": "What are the key considerations for deploying machine learning models on edge devices?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What model compression techniques are used for edge deployment?",
+      "How do hardware-aware neural architecture search methods work?",
+      "What inference frameworks support edge deployment?",
+      "How do you handle model updates on edge devices?"
+    ],
+    "evaluation_criteria": "Must cover compression, hardware constraints, and deployment frameworks",
+    "tags": ["edge-deployment", "compression", "TinyML", "mobile"]
+  },
+  {
+    "id": "AIML-036",
+    "domain": "AI-ML",
+    "question": "How do modern recommendation systems combine collaborative and content-based filtering?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the basics of collaborative filtering?",
+      "How do neural collaborative filtering methods work?",
+      "How is content information incorporated?",
+      "What are the cold start challenges and solutions?"
+    ],
+    "evaluation_criteria": "Must explain both paradigms, neural approaches, and practical challenges",
+    "tags": ["recommender-systems", "collaborative-filtering", "content-based", "neural"]
+  },
+  {
+    "id": "AIML-037",
+    "domain": "AI-ML",
+    "question": "What are the main approaches for open-domain question answering?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do retriever-reader architectures work?",
+      "What is the role of dense passage retrieval?",
+      "How do closed-book QA models compare?",
+      "What benchmarks evaluate open-domain QA?"
+    ],
+    "evaluation_criteria": "Must explain retrieval-augmented and parametric approaches with benchmarks",
+    "tags": ["question-answering", "retrieval", "DPR", "open-domain"]
+  },
+  {
+    "id": "AIML-038",
+    "domain": "AI-ML",
+    "question": "How do neural machine translation systems handle low-resource languages?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is transfer learning for low-resource NMT?",
+      "How do multilingual models help low-resource translation?",
+      "What data augmentation techniques are used?",
+      "How is translation quality evaluated for low-resource pairs?"
+    ],
+    "evaluation_criteria": "Must cover transfer, multilingual approaches, and evaluation challenges",
+    "tags": ["machine-translation", "low-resource", "multilingual", "transfer"]
+  },
+  {
+    "id": "AIML-039",
+    "domain": "AI-ML",
+    "question": "What are the current best practices for hyperparameter optimization in deep learning?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "How do Bayesian optimization methods work for HPO?",
+      "What is the role of learning rate schedulers?",
+      "How do population-based training methods work?",
+      "What are efficient early stopping strategies?"
+    ],
+    "evaluation_criteria": "Must cover optimization methods, schedulers, and practical recommendations",
+    "tags": ["hyperparameter-optimization", "Bayesian", "learning-rate", "AutoML"]
+  },
+  {
+    "id": "AIML-040",
+    "domain": "AI-ML",
+    "question": "How do causal inference methods integrate with machine learning?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the difference between prediction and causal inference?",
+      "How do methods like CATE estimation work?",
+      "What role do DAGs play in causal ML?",
+      "How is causal discovery performed with ML?"
+    ],
+    "evaluation_criteria": "Must distinguish correlation from causation, explain key methods",
+    "tags": ["causal-inference", "CATE", "DAG", "causal-discovery"]
+  },
+  {
+    "id": "AIML-041",
+    "domain": "AI-ML",
+    "question": "What are the key innovations in the GPT series of models from GPT-1 to GPT-4?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How did GPT-1 establish the pretraining paradigm?",
+      "What scale and capability changes came with GPT-2 and GPT-3?",
+      "What is known about GPT-4's architecture and capabilities?",
+      "How did training approaches evolve across versions?"
+    ],
+    "evaluation_criteria": "Must trace architectural and capability evolution with specific details",
+    "tags": ["GPT", "language-models", "OpenAI", "scaling"]
+  },
+  {
+    "id": "AIML-042",
+    "domain": "AI-ML",
+    "question": "How do neural networks learn compositional representations?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is compositionality in the context of neural networks?",
+      "Do transformers learn compositional structure?",
+      "What benchmarks test compositional generalization?",
+      "How do neuro-symbolic approaches address compositionality?"
+    ],
+    "evaluation_criteria": "Must define compositionality, discuss evidence and benchmarks",
+    "tags": ["compositionality", "generalization", "neuro-symbolic", "structure"]
+  },
+  {
+    "id": "AIML-043",
+    "domain": "AI-ML",
+    "question": "What are the privacy risks and protections in machine learning systems?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are membership inference attacks?",
+      "How does differential privacy work in ML?",
+      "What are model inversion attacks?",
+      "How do you balance privacy and utility?"
+    ],
+    "evaluation_criteria": "Must cover attack types and defense mechanisms with formal definitions",
+    "tags": ["privacy", "differential-privacy", "membership-inference", "security"]
+  },
+  {
+    "id": "AIML-044",
+    "domain": "AI-ML",
+    "question": "How do text-to-image models like Stable Diffusion generate images from prompts?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does the latent diffusion architecture work?",
+      "What is classifier-free guidance?",
+      "How are text prompts encoded and conditioned?",
+      "What are common failure modes in text-to-image generation?"
+    ],
+    "evaluation_criteria": "Must explain latent space, guidance, and CLIP conditioning",
+    "tags": ["text-to-image", "Stable-Diffusion", "latent-diffusion", "conditioning"]
+  },
+  {
+    "id": "AIML-045",
+    "domain": "AI-ML",
+    "question": "What are the main approaches for few-shot learning in computer vision?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do metric learning approaches work for few-shot?",
+      "What is meta-learning and how does MAML work?",
+      "How do transfer learning methods compare?",
+      "What benchmarks evaluate few-shot vision?"
+    ],
+    "evaluation_criteria": "Must explain metric learning, meta-learning, and evaluation protocols",
+    "tags": ["few-shot", "meta-learning", "MAML", "metric-learning"]
+  },
+  {
+    "id": "AIML-046",
+    "domain": "AI-ML",
+    "question": "How do neural networks process and generate 3D data?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What representations are used for 3D data in neural networks?",
+      "How do point cloud networks like PointNet work?",
+      "What are neural radiance fields (NeRFs)?",
+      "How do 3D generative models work?"
+    ],
+    "evaluation_criteria": "Must cover point clouds, meshes, NeRFs, and generation approaches",
+    "tags": ["3D", "point-cloud", "NeRF", "3D-generation"]
+  },
+  {
+    "id": "AIML-047",
+    "domain": "AI-ML",
+    "question": "What are the current approaches for anomaly detection with deep learning?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do autoencoder-based anomaly detection methods work?",
+      "What is the one-class classification approach?",
+      "How do self-supervised methods detect anomalies?",
+      "What are the challenges in evaluating anomaly detection?"
+    ],
+    "evaluation_criteria": "Must cover multiple approaches and evaluation challenges",
+    "tags": ["anomaly-detection", "autoencoder", "one-class", "out-of-distribution"]
+  },
+  {
+    "id": "AIML-048",
+    "domain": "AI-ML",
+    "question": "How do language models perform mathematical reasoning and what are the limitations?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What benchmarks test mathematical reasoning in LLMs?",
+      "How do chain-of-thought and tool-use help with math?",
+      "What are the systematic failure modes in math reasoning?",
+      "How do specialized math models compare to general LLMs?"
+    ],
+    "evaluation_criteria": "Must discuss benchmarks, prompting techniques, and known limitations",
+    "tags": ["mathematical-reasoning", "GSM8K", "MATH", "tool-use"]
+  },
+  {
+    "id": "AIML-049",
+    "domain": "AI-ML",
+    "question": "What are the best practices for training neural networks from scratch vs fine-tuning?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "When should you train from scratch vs fine-tune?",
+      "What initialization strategies are important?",
+      "How do learning rates differ for new vs pretrained layers?",
+      "What regularization is appropriate in each case?"
+    ],
+    "evaluation_criteria": "Must provide practical guidelines with justification",
+    "tags": ["training", "fine-tuning", "initialization", "transfer-learning"]
+  },
+  {
+    "id": "AIML-050",
+    "domain": "AI-ML",
+    "question": "How do current AI systems approach common sense reasoning?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What benchmarks test common sense reasoning?",
+      "How do knowledge graphs contribute to common sense?",
+      "What are the limitations of current approaches?",
+      "How do LLMs perform on common sense tasks?"
+    ],
+    "evaluation_criteria": "Must discuss benchmarks like CommonsenseQA, approaches, and limitations",
+    "tags": ["common-sense", "reasoning", "knowledge-graphs", "benchmarks"]
+  },
+  {
+    "id": "AIML-051",
+    "domain": "AI-ML",
+    "question": "What are the key differences between decoder-only, encoder-only, and encoder-decoder transformer architectures?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do decoder-only models like GPT process sequences?",
+      "What tasks are encoder-only models like BERT suited for?",
+      "When are encoder-decoder models like T5 preferred?",
+      "How do attention masks differ across architectures?"
+    ],
+    "evaluation_criteria": "Must explain architectural differences and task suitability",
+    "tags": ["transformers", "architecture", "BERT", "GPT", "T5"]
+  },
+  {
+    "id": "AIML-052",
+    "domain": "AI-ML",
+    "question": "How do neural network pruning methods reduce model size while maintaining accuracy?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the lottery ticket hypothesis?",
+      "How do structured vs unstructured pruning differ?",
+      "What criteria are used for selecting weights to prune?",
+      "How much sparsity can be achieved without accuracy loss?"
+    ],
+    "evaluation_criteria": "Must explain pruning methods, lottery ticket hypothesis, and sparsity limits",
+    "tags": ["pruning", "sparsity", "compression", "lottery-ticket"]
+  },
+  {
+    "id": "AIML-053",
+    "domain": "AI-ML",
+    "question": "What are the main challenges in building multilingual language models?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do tokenizers handle multiple languages?",
+      "What is the curse of multilinguality?",
+      "How do cross-lingual transfer capabilities emerge?",
+      "What are the challenges for low-resource languages?"
+    ],
+    "evaluation_criteria": "Must discuss tokenization, capacity trade-offs, and transfer",
+    "tags": ["multilingual", "cross-lingual", "tokenization", "transfer"]
+  },
+  {
+    "id": "AIML-054",
+    "domain": "AI-ML",
+    "question": "How do contrastive learning losses work and why are they effective?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the InfoNCE loss and its relationship to mutual information?",
+      "How does negative sampling affect contrastive learning?",
+      "What role does batch size play in contrastive learning?",
+      "How do hard negatives improve representations?"
+    ],
+    "evaluation_criteria": "Must explain loss functions, negative sampling, and training dynamics",
+    "tags": ["contrastive-learning", "InfoNCE", "negative-sampling", "representation"]
+  },
+  {
+    "id": "AIML-055",
+    "domain": "AI-ML",
+    "question": "What are the approaches for making AI systems more transparent and explainable?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the difference between interpretability and explainability?",
+      "How do post-hoc explanation methods like LIME and SHAP work?",
+      "What are inherently interpretable model architectures?",
+      "How do you evaluate the quality of explanations?"
+    ],
+    "evaluation_criteria": "Must distinguish XAI approaches and discuss evaluation",
+    "tags": ["explainability", "XAI", "LIME", "SHAP", "interpretability"]
+  },
+  {
+    "id": "AIML-056",
+    "domain": "AI-ML",
+    "question": "How do semantic segmentation models assign labels to every pixel in an image?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are fully convolutional networks for segmentation?",
+      "How do encoder-decoder architectures like U-Net work?",
+      "What are transformer-based segmentation approaches?",
+      "How is segmentation evaluated with IoU and mIoU?"
+    ],
+    "evaluation_criteria": "Must explain architectures, skip connections, and evaluation metrics",
+    "tags": ["segmentation", "U-Net", "FCN", "computer-vision"]
+  },
+  {
+    "id": "AIML-057",
+    "domain": "AI-ML",
+    "question": "What are the key challenges in deploying large language models in production?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the latency and throughput challenges?",
+      "How do you handle rate limiting and queuing?",
+      "What caching strategies are effective for LLM serving?",
+      "How do you monitor LLM quality in production?"
+    ],
+    "evaluation_criteria": "Must cover serving infrastructure, monitoring, and practical challenges",
+    "tags": ["LLM-deployment", "serving", "latency", "production"]
+  },
+  {
+    "id": "AIML-058",
+    "domain": "AI-ML",
+    "question": "How do variational autoencoders learn latent representations?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the VAE objective and ELBO?",
+      "How does the reparameterization trick enable backpropagation?",
+      "What is posterior collapse and how is it addressed?",
+      "How do VAEs compare to other generative models?"
+    ],
+    "evaluation_criteria": "Must explain mathematical foundations and practical considerations",
+    "tags": ["VAE", "latent-space", "generative", "ELBO"]
+  },
+  {
+    "id": "AIML-059",
+    "domain": "AI-ML",
+    "question": "What are the current approaches for named entity recognition with deep learning?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "How do sequence labeling models work for NER?",
+      "What is the role of CRF layers in NER?",
+      "How do transformer-based NER models perform?",
+      "What are the challenges in domain-specific NER?"
+    ],
+    "evaluation_criteria": "Must cover architectures, CRF benefits, and evaluation",
+    "tags": ["NER", "sequence-labeling", "CRF", "NLP"]
+  },
+  {
+    "id": "AIML-060",
+    "domain": "AI-ML",
+    "question": "How do offline reinforcement learning methods learn from fixed datasets?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the distribution shift problem in offline RL?",
+      "How do conservative Q-learning methods work?",
+      "What is behavior cloning and its limitations?",
+      "How are offline RL methods evaluated?"
+    ],
+    "evaluation_criteria": "Must explain distribution shift, conservative methods, and evaluation",
+    "tags": ["offline-RL", "CQL", "behavior-cloning", "distribution-shift"]
+  },
+  {
+    "id": "AIML-061",
+    "domain": "AI-ML",
+    "question": "What are the best practices for dataset creation and curation for ML?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "How should train/validation/test splits be created?",
+      "What are best practices for annotation quality?",
+      "How do you handle label noise?",
+      "What documentation should accompany ML datasets?"
+    ],
+    "evaluation_criteria": "Must cover practical guidelines for dataset creation",
+    "tags": ["datasets", "annotation", "data-quality", "documentation"]
+  },
+  {
+    "id": "AIML-062",
+    "domain": "AI-ML",
+    "question": "How do audio generation models like text-to-speech systems work?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the main architectures for neural TTS?",
+      "How do vocoders convert spectrograms to waveforms?",
+      "What is the role of mel spectrograms in audio models?",
+      "How is TTS quality evaluated?"
+    ],
+    "evaluation_criteria": "Must explain acoustic models, vocoders, and evaluation metrics",
+    "tags": ["TTS", "audio-generation", "vocoder", "speech-synthesis"]
+  },
+  {
+    "id": "AIML-063",
+    "domain": "AI-ML",
+    "question": "What are the approaches for handling missing data in machine learning?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What are the types of missing data mechanisms?",
+      "How do imputation methods work?",
+      "When should missing indicators be used?",
+      "How do tree-based models handle missing values?"
+    ],
+    "evaluation_criteria": "Must explain MCAR/MAR/MNAR and imputation strategies",
+    "tags": ["missing-data", "imputation", "preprocessing", "data-quality"]
+  },
+  {
+    "id": "AIML-064",
+    "domain": "AI-ML",
+    "question": "How do model ensembles improve prediction accuracy?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What is the bias-variance trade-off in ensembles?",
+      "How do bagging and boosting differ?",
+      "What are stacking and blending methods?",
+      "When do ensembles fail to improve performance?"
+    ],
+    "evaluation_criteria": "Must explain ensemble theory and practical methods",
+    "tags": ["ensembles", "bagging", "boosting", "stacking"]
+  },
+  {
+    "id": "AIML-065",
+    "domain": "AI-ML",
+    "question": "What are the main challenges in document understanding with AI?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do layout-aware models process documents?",
+      "What is the role of OCR in document understanding?",
+      "How do models like LayoutLM work?",
+      "What benchmarks evaluate document understanding?"
+    ],
+    "evaluation_criteria": "Must cover layout modeling, multimodal approaches, and evaluation",
+    "tags": ["document-understanding", "LayoutLM", "OCR", "multimodal"]
+  },
+  {
+    "id": "AIML-066",
+    "domain": "AI-ML",
+    "question": "How do neural networks for time series forecasting work?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do RNN and LSTM models handle sequential data?",
+      "What are transformer-based time series models?",
+      "How do temporal convolutions compare to recurrent models?",
+      "What are the challenges in long-horizon forecasting?"
+    ],
+    "evaluation_criteria": "Must compare architectures and discuss forecasting challenges",
+    "tags": ["time-series", "forecasting", "LSTM", "temporal"]
+  },
+  {
+    "id": "AIML-067",
+    "domain": "AI-ML",
+    "question": "What are the approaches for learning with noisy labels?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What types of label noise exist?",
+      "How do noise-robust loss functions work?",
+      "What is sample selection for noise handling?",
+      "How do you estimate the noise rate?"
+    ],
+    "evaluation_criteria": "Must explain noise types, robust training, and estimation",
+    "tags": ["noisy-labels", "robust-training", "label-noise", "data-quality"]
+  },
+  {
+    "id": "AIML-068",
+    "domain": "AI-ML",
+    "question": "How do instruction-tuned language models differ from base models?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is instruction tuning and how is it performed?",
+      "How do instruction datasets affect model capabilities?",
+      "What is the relationship between instruction tuning and RLHF?",
+      "How do you evaluate instruction-following ability?"
+    ],
+    "evaluation_criteria": "Must explain instruction tuning process and evaluation",
+    "tags": ["instruction-tuning", "fine-tuning", "RLHF", "LLM"]
+  },
+  {
+    "id": "AIML-069",
+    "domain": "AI-ML",
+    "question": "What are the key considerations for fairness in machine learning systems?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are different definitions of algorithmic fairness?",
+      "Why are fairness metrics often incompatible?",
+      "What are pre-processing, in-processing, and post-processing fairness methods?",
+      "How do you audit ML systems for fairness?"
+    ],
+    "evaluation_criteria": "Must discuss multiple fairness definitions, trade-offs, and methods",
+    "tags": ["fairness", "bias", "ethics", "auditing"]
+  },
+  {
+    "id": "AIML-070",
+    "domain": "AI-ML",
+    "question": "How do pose estimation models detect human body keypoints?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are top-down vs bottom-up pose estimation approaches?",
+      "How do heatmap-based methods work?",
+      "What are the challenges in multi-person pose estimation?",
+      "How is pose estimation evaluated?"
+    ],
+    "evaluation_criteria": "Must explain detection approaches and evaluation metrics",
+    "tags": ["pose-estimation", "keypoints", "computer-vision", "heatmaps"]
+  },
+  {
+    "id": "AIML-071",
+    "domain": "AI-ML",
+    "question": "What are the approaches for data augmentation in deep learning?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What are standard image augmentation techniques?",
+      "How do learned augmentation policies work?",
+      "What is mixup and cutout augmentation?",
+      "How does augmentation affect model generalization?"
+    ],
+    "evaluation_criteria": "Must cover standard and learned augmentation with effects",
+    "tags": ["augmentation", "regularization", "mixup", "training"]
+  },
+  {
+    "id": "AIML-072",
+    "domain": "AI-ML",
+    "question": "How do language models handle tokenization and what are the trade-offs?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does BPE tokenization work?",
+      "What are the trade-offs of different vocabulary sizes?",
+      "How do tokenizers handle out-of-vocabulary words?",
+      "What are the challenges with non-English tokenization?"
+    ],
+    "evaluation_criteria": "Must explain tokenization algorithms and practical trade-offs",
+    "tags": ["tokenization", "BPE", "vocabulary", "NLP"]
+  },
+  {
+    "id": "AIML-073",
+    "domain": "AI-ML",
+    "question": "What are the approaches for multi-task learning in deep learning?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is hard vs soft parameter sharing?",
+      "How do you balance losses across tasks?",
+      "When does multi-task learning help vs hurt?",
+      "What are gradient conflict issues in multi-task learning?"
+    ],
+    "evaluation_criteria": "Must explain architectures, loss balancing, and negative transfer",
+    "tags": ["multi-task", "transfer-learning", "gradient-conflict", "sharing"]
+  },
+  {
+    "id": "AIML-074",
+    "domain": "AI-ML",
+    "question": "How do model calibration methods improve confidence estimates?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is calibration and how is it measured?",
+      "How does temperature scaling calibrate models?",
+      "What are Platt scaling and isotonic regression?",
+      "Why are neural networks often overconfident?"
+    ],
+    "evaluation_criteria": "Must explain calibration metrics and methods",
+    "tags": ["calibration", "confidence", "temperature-scaling", "uncertainty"]
+  },
+  {
+    "id": "AIML-075",
+    "domain": "AI-ML",
+    "question": "What are the approaches for active learning in machine learning?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the active learning loop?",
+      "How do uncertainty sampling methods work?",
+      "What is query-by-committee?",
+      "When is active learning most beneficial?"
+    ],
+    "evaluation_criteria": "Must explain acquisition functions and practical considerations",
+    "tags": ["active-learning", "uncertainty-sampling", "labeling", "annotation"]
+  },
+  {
+    "id": "AIML-076",
+    "domain": "AI-ML",
+    "question": "How do modern image classification models achieve high accuracy?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "What architectural innovations improved CNNs?",
+      "How do vision transformers classify images?",
+      "What role does pretraining play in image classification?",
+      "How is ImageNet accuracy measured?"
+    ],
+    "evaluation_criteria": "Must trace architectural evolution and current best practices",
+    "tags": ["image-classification", "CNN", "ViT", "ImageNet"]
+  },
+  {
+    "id": "AIML-077",
+    "domain": "AI-ML",
+    "question": "What are the approaches for out-of-distribution detection in neural networks?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "Why do neural networks fail on OOD inputs?",
+      "How do confidence-based OOD detection methods work?",
+      "What is the role of input preprocessing for OOD detection?",
+      "How is OOD detection evaluated?"
+    ],
+    "evaluation_criteria": "Must explain detection methods and evaluation benchmarks",
+    "tags": ["OOD-detection", "uncertainty", "robustness", "safety"]
+  },
+  {
+    "id": "AIML-078",
+    "domain": "AI-ML",
+    "question": "How do dialogue systems maintain context across conversation turns?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the difference between retrieval and generative dialogue?",
+      "How do models track dialogue state?",
+      "What are the challenges in multi-turn conversations?",
+      "How is dialogue quality evaluated?"
+    ],
+    "evaluation_criteria": "Must explain context tracking, state management, and evaluation",
+    "tags": ["dialogue", "conversational-AI", "context", "NLP"]
+  },
+  {
+    "id": "AIML-079",
+    "domain": "AI-ML",
+    "question": "What are the approaches for neural architecture design for efficiency?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What makes architectures like MobileNet efficient?",
+      "How do depth-wise separable convolutions reduce computation?",
+      "What is the role of inverted residuals?",
+      "How do you measure model efficiency?"
+    ],
+    "evaluation_criteria": "Must explain efficient building blocks and efficiency metrics",
+    "tags": ["efficient-architectures", "MobileNet", "depthwise", "FLOPs"]
+  },
+  {
+    "id": "AIML-080",
+    "domain": "AI-ML",
+    "question": "How do language models learn and use world knowledge?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How is factual knowledge stored in language models?",
+      "What are knowledge probing methods?",
+      "How do models update or edit stored knowledge?",
+      "What are the limitations of parametric knowledge?"
+    ],
+    "evaluation_criteria": "Must discuss knowledge storage, probing, and editing approaches",
+    "tags": ["knowledge", "factual", "probing", "editing"]
+  },
+  {
+    "id": "AIML-081",
+    "domain": "AI-ML",
+    "question": "What are the approaches for sentiment analysis with deep learning?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "How do classification models perform sentiment analysis?",
+      "What is aspect-based sentiment analysis?",
+      "How do pretrained models improve sentiment analysis?",
+      "What are the challenges in fine-grained sentiment?"
+    ],
+    "evaluation_criteria": "Must cover classification approaches and aspect-level analysis",
+    "tags": ["sentiment-analysis", "classification", "NLP", "opinion"]
+  },
+  {
+    "id": "AIML-082",
+    "domain": "AI-ML",
+    "question": "How do neural networks process tabular data?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "Why do tree-based models often outperform neural networks on tabular data?",
+      "What architectures are designed for tabular data?",
+      "How do embedding layers handle categorical features?",
+      "What preprocessing is important for neural networks on tabular data?"
+    ],
+    "evaluation_criteria": "Must compare to tree models and discuss tabular-specific architectures",
+    "tags": ["tabular", "neural-networks", "embeddings", "XGBoost"]
+  },
+  {
+    "id": "AIML-083",
+    "domain": "AI-ML",
+    "question": "What are the approaches for visual question answering?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do VQA models combine vision and language?",
+      "What attention mechanisms are used in VQA?",
+      "What biases exist in VQA datasets?",
+      "How has VQA performance evolved with large models?"
+    ],
+    "evaluation_criteria": "Must explain fusion methods, benchmarks, and dataset biases",
+    "tags": ["VQA", "vision-language", "multimodal", "attention"]
+  },
+  {
+    "id": "AIML-084",
+    "domain": "AI-ML",
+    "question": "How do normalizing flows model probability distributions?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the change of variables formula for flows?",
+      "How do coupling layers enable efficient computation?",
+      "What are the advantages of flows over VAEs?",
+      "What are continuous normalizing flows?"
+    ],
+    "evaluation_criteria": "Must explain mathematical foundations and architectural choices",
+    "tags": ["normalizing-flows", "generative", "density-estimation", "invertible"]
+  },
+  {
+    "id": "AIML-085",
+    "domain": "AI-ML",
+    "question": "What are the key innovations in the BERT family of models?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does masked language modeling work in BERT?",
+      "What improvements did RoBERTa make?",
+      "How do models like ALBERT reduce parameters?",
+      "What is the role of next sentence prediction?"
+    ],
+    "evaluation_criteria": "Must trace BERT evolution and explain training objectives",
+    "tags": ["BERT", "RoBERTa", "ALBERT", "masked-language-modeling"]
+  },
+  {
+    "id": "AIML-086",
+    "domain": "AI-ML",
+    "question": "How do neural networks learn visual representations from video?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What self-supervised objectives work for video?",
+      "How is temporal consistency leveraged?",
+      "What are contrastive approaches for video?",
+      "How do video representations transfer to downstream tasks?"
+    ],
+    "evaluation_criteria": "Must discuss self-supervised video learning and transfer",
+    "tags": ["video", "self-supervised", "temporal", "representation"]
+  },
+  {
+    "id": "AIML-087",
+    "domain": "AI-ML",
+    "question": "What are the approaches for model selection and comparison in ML?",
+    "difficulty": "easy",
+    "expected_sources": 3,
+    "sub_questions": [
+      "How should cross-validation be performed?",
+      "What statistical tests compare model performance?",
+      "How do you avoid overfitting during model selection?",
+      "What is the role of held-out test sets?"
+    ],
+    "evaluation_criteria": "Must cover validation strategies and statistical comparison",
+    "tags": ["model-selection", "cross-validation", "evaluation", "statistics"]
+  },
+  {
+    "id": "AIML-088",
+    "domain": "AI-ML",
+    "question": "How do language models perform text summarization?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the difference between extractive and abstractive summarization?",
+      "How do encoder-decoder models generate summaries?",
+      "What are the evaluation metrics for summarization?",
+      "What are the challenges in faithfulness and factuality?"
+    ],
+    "evaluation_criteria": "Must compare approaches and discuss evaluation challenges",
+    "tags": ["summarization", "abstractive", "extractive", "faithfulness"]
+  },
+  {
+    "id": "AIML-089",
+    "domain": "AI-ML",
+    "question": "What are the approaches for learning from demonstrations in robotics?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does imitation learning work?",
+      "What is inverse reinforcement learning?",
+      "How do you handle distribution shift in imitation?",
+      "What are the data efficiency challenges?"
+    ],
+    "evaluation_criteria": "Must explain imitation and IRL with practical considerations",
+    "tags": ["imitation-learning", "IRL", "robotics", "demonstrations"]
+  },
+  {
+    "id": "AIML-090",
+    "domain": "AI-ML",
+    "question": "How do attention visualization methods help interpret transformers?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What do attention weights actually represent?",
+      "How are attention patterns visualized?",
+      "What are the limitations of attention as explanation?",
+      "What alternatives to attention visualization exist?"
+    ],
+    "evaluation_criteria": "Must discuss visualization methods and their limitations",
+    "tags": ["attention", "visualization", "interpretability", "transformers"]
+  },
+  {
+    "id": "AIML-091",
+    "domain": "AI-ML",
+    "question": "What are the approaches for domain adaptation in machine learning?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the domain shift problem?",
+      "How do adversarial domain adaptation methods work?",
+      "What is self-training for domain adaptation?",
+      "How do you measure domain adaptation success?"
+    ],
+    "evaluation_criteria": "Must explain shift types and adaptation methods",
+    "tags": ["domain-adaptation", "transfer-learning", "shift", "adversarial"]
+  },
+  {
+    "id": "AIML-092",
+    "domain": "AI-ML",
+    "question": "How do neural networks generate music and audio?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What representations are used for music generation?",
+      "How do autoregressive audio models work?",
+      "What is the role of symbolic vs waveform generation?",
+      "How is music generation quality evaluated?"
+    ],
+    "evaluation_criteria": "Must discuss representations, architectures, and evaluation",
+    "tags": ["music-generation", "audio", "autoregressive", "symbolic"]
+  },
+  {
+    "id": "AIML-093",
+    "domain": "AI-ML",
+    "question": "What are the approaches for handling class imbalance in object detection?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "Why is class imbalance severe in detection?",
+      "How does focal loss address imbalance?",
+      "What sampling strategies help with imbalance?",
+      "How do anchor-free detectors handle imbalance?"
+    ],
+    "evaluation_criteria": "Must explain focal loss and other imbalance solutions",
+    "tags": ["object-detection", "focal-loss", "imbalance", "sampling"]
+  },
+  {
+    "id": "AIML-094",
+    "domain": "AI-ML",
+    "question": "How do language models perform code completion and generation?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What training data is used for code models?",
+      "How do models like Codex and CodeLlama work?",
+      "What is the role of context in code completion?",
+      "How do you evaluate code generation quality?"
+    ],
+    "evaluation_criteria": "Must discuss training, architectures, and evaluation",
+    "tags": ["code-generation", "Codex", "completion", "programming"]
+  },
+  {
+    "id": "AIML-095",
+    "domain": "AI-ML",
+    "question": "What are the approaches for zero-shot and few-shot classification?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do attribute-based zero-shot methods work?",
+      "What is the role of text descriptions in zero-shot?",
+      "How do CLIP-like models enable zero-shot classification?",
+      "What are prompting approaches for few-shot classification?"
+    ],
+    "evaluation_criteria": "Must explain multiple zero-shot approaches and evaluation",
+    "tags": ["zero-shot", "few-shot", "classification", "CLIP"]
+  },
+  {
+    "id": "AIML-096",
+    "domain": "AI-ML",
+    "question": "How do language models handle structured output generation?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do models generate valid JSON or code?",
+      "What is constrained decoding?",
+      "How do grammar-guided generation methods work?",
+      "What are the challenges in structured output reliability?"
+    ],
+    "evaluation_criteria": "Must explain constraint methods and reliability challenges",
+    "tags": ["structured-output", "JSON", "constrained-decoding", "generation"]
+  },
+  {
+    "id": "AIML-097",
+    "domain": "AI-ML",
+    "question": "What are the approaches for visual grounding and referring expression comprehension?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do models localize objects from text descriptions?",
+      "What attention mechanisms are used for grounding?",
+      "What benchmarks evaluate visual grounding?",
+      "How do large vision-language models perform grounding?"
+    ],
+    "evaluation_criteria": "Must explain grounding approaches and evaluation",
+    "tags": ["grounding", "referring-expressions", "vision-language", "localization"]
+  },
+  {
+    "id": "AIML-098",
+    "domain": "AI-ML",
+    "question": "How do Bayesian neural networks quantify uncertainty?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the Bayesian approach to neural networks?",
+      "How does variational inference approximate posteriors?",
+      "What is MC Dropout for uncertainty estimation?",
+      "How do deep ensembles compare to Bayesian approaches?"
+    ],
+    "evaluation_criteria": "Must explain Bayesian methods and practical approximations",
+    "tags": ["Bayesian", "uncertainty", "variational-inference", "MC-Dropout"]
+  },
+  {
+    "id": "AIML-099",
+    "domain": "AI-ML",
+    "question": "What are the approaches for instance segmentation?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do mask-based methods like Mask R-CNN work?",
+      "What are bottom-up instance segmentation approaches?",
+      "How do panoptic segmentation methods unify tasks?",
+      "How is instance segmentation evaluated?"
+    ],
+    "evaluation_criteria": "Must explain mask generation and evaluation metrics",
+    "tags": ["instance-segmentation", "Mask-RCNN", "panoptic", "computer-vision"]
+  },
+  {
+    "id": "AIML-100",
+    "domain": "AI-ML",
+    "question": "How do world models in reinforcement learning enable planning?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is model-based reinforcement learning?",
+      "How do learned dynamics models enable planning?",
+      "What are the challenges in learning accurate world models?",
+      "How do approaches like Dreamer work?"
+    ],
+    "evaluation_criteria": "Must explain world models, planning, and model error issues",
+    "tags": ["world-models", "model-based-RL", "planning", "Dreamer"]
+  }
+]

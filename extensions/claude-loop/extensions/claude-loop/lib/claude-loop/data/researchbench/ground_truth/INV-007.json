@@ -1,0 +1,117 @@
+{
+  "question_id": "INV-007",
+  "question": "How do DeFi lending protocols work and what are the associated risks?",
+  "expert_sources": [
+    {
+      "title": "An Empirical Study of DeFi Liquidations",
+      "authors": ["Qin et al."],
+      "venue": "IMC 2021",
+      "url": "https://arxiv.org/abs/2106.06389",
+      "relevance": "Systematic analysis of DeFi liquidation mechanics"
+    },
+    {
+      "title": "SoK: Decentralized Finance (DeFi)",
+      "authors": ["Werner et al."],
+      "venue": "IEEE S&P 2022",
+      "url": "https://arxiv.org/abs/2101.08778",
+      "relevance": "Comprehensive DeFi systematization"
+    },
+    {
+      "title": "Aave V3 Technical Paper",
+      "authors": ["Aave"],
+      "venue": "Aave Documentation",
+      "url": "https://docs.aave.com/",
+      "relevance": "Leading lending protocol documentation"
+    },
+    {
+      "title": "High-Frequency Trading on Decentralized On-Chain Exchanges",
+      "authors": ["Zhou et al."],
+      "venue": "IEEE S&P 2021",
+      "url": "https://arxiv.org/abs/2009.14021",
+      "relevance": "MEV and front-running in DeFi"
+    },
+    {
+      "title": "Attacking the DeFi Ecosystem with Flash Loans",
+      "authors": ["Qin et al."],
+      "venue": "FC 2021",
+      "url": "https://arxiv.org/abs/2003.03810",
+      "relevance": "Flash loan attack vectors"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "DeFi lending uses overcollateralization (typically 150%+) due to lack of credit checks",
+      "importance": "critical",
+      "sources": ["Werner et al. 2022", "Aave docs"]
+    },
+    {
+      "finding": "Interest rates are algorithmically determined based on utilization",
+      "importance": "critical",
+      "sources": ["Aave docs", "Compound documentation"]
+    },
+    {
+      "finding": "Liquidations cascade during market stress, amplifying volatility",
+      "importance": "critical",
+      "sources": ["Qin et al. 2021"]
+    },
+    {
+      "finding": "Smart contract vulnerabilities have led to billions in losses",
+      "importance": "critical",
+      "sources": ["Various exploit analyses"]
+    },
+    {
+      "finding": "Flash loan attacks can manipulate oracle prices for profit",
+      "importance": "high",
+      "sources": ["Qin et al. 2021 (Flash Loans)"]
+    },
+    {
+      "finding": "MEV extractors front-run liquidations, extracting value from users",
+      "importance": "high",
+      "sources": ["Zhou et al. 2021"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "DeFi protocols have become more secure over time",
+      "validity": "True for major protocols, but new vulnerabilities emerge",
+      "sources": ["Security audits"]
+    },
+    {
+      "argument": "Overcollateralization makes DeFi safer than traditional lending",
+      "validity": "Different risk profile, not necessarily safer overall",
+      "sources": ["Werner et al. 2022"]
+    },
+    {
+      "argument": "Decentralization eliminates counterparty risk",
+      "validity": "Partially true, but smart contract risk replaces it",
+      "sources": ["DeFi security research"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.82,
+    "areas_of_uncertainty": [
+      "Long-term stability under extreme conditions",
+      "Regulatory treatment evolution",
+      "Scalability of current models"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "Overcollateralization requirement",
+      "Algorithmic interest rate mechanism",
+      "Liquidation risk",
+      "Smart contract risk"
+    ],
+    "should_include": [
+      "Specific protocols (Aave, Compound)",
+      "Flash loan risks",
+      "Oracle manipulation"
+    ],
+    "bonus_points": [
+      "Specific historical exploits",
+      "MEV and front-running",
+      "Comparison to traditional lending"
+    ]
+  }
+}

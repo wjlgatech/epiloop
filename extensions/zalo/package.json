@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/zalo",
+  "name": "@epiloop/zalo",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot Zalo channel plugin",
-  "clawdbot": {
+  "description": "Epiloop Zalo channel plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ],
@@ -21,13 +21,13 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@clawdbot/zalo",
+      "npmSpec": "@epiloop/zalo",
       "localPath": "extensions/zalo",
       "defaultChoice": "npm"
     }
   },
   "dependencies": {
-    "clawdbot": "workspace:*",
+    "epiloop": "workspace:*",
     "undici": "7.19.0"
   }
 }

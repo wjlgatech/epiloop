@@ -1,0 +1,28 @@
+task_id: TASK-002
+title: Add Health Check Endpoint with Timeout
+description: |
+  Implement a health check API endpoint that verifies system dependencies are available.
+  The endpoint should check database connectivity, external API availability, and disk space.
+  Include configurable timeout to prevent hanging on slow dependencies.
+
+acceptance_criteria:
+  - "Health check endpoint implemented at /api/health"
+  - "Checks database connectivity with timeout"
+  - "Checks external API availability with timeout"
+  - "Checks disk space availability"
+  - "Returns 200 OK if all checks pass, 503 Service Unavailable if any fail"
+  - "Response includes status of each dependency check"
+  - "Timeout is configurable (default: 5 seconds)"
+  - "Tests added for success and failure scenarios"
+
+context:
+  background: "Need to monitor system health and detect issues before they impact users."
+  constraints:
+    - "Health checks should not impact system performance"
+    - "Timeout should prevent slow dependencies from blocking the endpoint"
+    - "Response should be fast (<6 seconds total)"
+
+fileScope:
+  - "lib/dashboard/api.py"
+  - "tests/test_dashboard_api.py"
+  - "docs/api/health-check.md"

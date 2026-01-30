@@ -4,7 +4,7 @@ import path from "node:path";
 
 import { CURRENT_SESSION_VERSION, SessionManager } from "@mariozechner/pi-coding-agent";
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
-import type { ClawdbotConfig } from "../../config/config.js";
+import type { EpiloopConfig } from "../../config/config.js";
 import {
   DEFAULT_RESET_TRIGGERS,
   deriveSessionMetaPatch,
@@ -89,7 +89,7 @@ function forkSessionFromParent(params: {
 
 export async function initSessionState(params: {
   ctx: MsgContext;
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   commandAuthorized: boolean;
 }): Promise<SessionInitResult> {
   const { ctx, cfg, commandAuthorized } = params;

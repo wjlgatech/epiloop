@@ -1,0 +1,156 @@
+{
+  "metadata": {
+    "templateName": "web-feature",
+    "templateVersion": "1.0.0",
+    "description": "Full-stack web feature with frontend UI, backend API, and comprehensive testing",
+    "estimatedComplexity": "medium",
+    "typicalDuration": "4-8 hours",
+    "requiredSkills": ["frontend", "backend", "testing", "API design"],
+    "variables": [
+      {
+        "name": "PROJECT_NAME",
+        "description": "Name of the project",
+        "required": true,
+        "example": "ecommerce-platform"
+      },
+      {
+        "name": "FEATURE_NAME",
+        "description": "Name of the feature to implement",
+        "required": true,
+        "example": "user-authentication"
+      },
+      {
+        "name": "BRANCH_NAME",
+        "description": "Git branch name for this feature",
+        "required": false,
+        "default": "feature/{{FEATURE_NAME}}",
+        "example": "feature/user-authentication"
+      },
+      {
+        "name": "COMPONENT_NAME",
+        "description": "Main component or module name",
+        "required": false,
+        "example": "AuthProvider"
+      }
+    ]
+  },
+  "prd": {
+    "project": "{{PROJECT_NAME}}-{{FEATURE_NAME}}",
+    "branchName": "{{BRANCH_NAME}}",
+    "description": "Implement {{FEATURE_NAME}} feature with complete frontend UI, backend API endpoints, state management, and comprehensive test coverage. This feature should integrate seamlessly with existing {{PROJECT_NAME}} architecture.",
+    "userStories": [
+      {
+        "id": "WF-001",
+        "title": "Backend API Endpoints",
+        "description": "Create backend API endpoints for {{FEATURE_NAME}} with proper validation, error handling, and authentication",
+        "acceptanceCriteria": [
+          "Create API endpoint handlers in appropriate controller/route files",
+          "Add request validation using schema validation library",
+          "Implement error handling with meaningful error messages",
+          "Add authentication/authorization middleware where needed",
+          "Create database models and migrations if data persistence required",
+          "Add API documentation (OpenAPI/Swagger or inline comments)",
+          "Write unit tests for API endpoints (minimum 80% coverage)",
+          "Write integration tests covering happy path and error cases"
+        ],
+        "priority": 1,
+        "dependencies": [],
+        "fileScope": ["src/api/", "src/models/", "src/middleware/"],
+        "estimatedComplexity": "medium",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "WF-002",
+        "title": "Frontend UI Components",
+        "description": "Build frontend UI components for {{FEATURE_NAME}} with proper state management and user interactions",
+        "acceptanceCriteria": [
+          "Create main component for {{FEATURE_NAME}} feature",
+          "Implement subcomponents for forms, lists, modals as needed",
+          "Add proper TypeScript interfaces/types for props and state",
+          "Implement form validation with user-friendly error messages",
+          "Add loading states and error handling in UI",
+          "Ensure responsive design (mobile, tablet, desktop)",
+          "Add accessibility features (ARIA labels, keyboard navigation)",
+          "Write component tests with React Testing Library or similar",
+          "Add Storybook stories for visual documentation (optional)"
+        ],
+        "priority": 2,
+        "dependencies": ["WF-001"],
+        "fileScope": ["src/components/", "src/pages/"],
+        "estimatedComplexity": "medium",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "WF-003",
+        "title": "State Management Integration",
+        "description": "Integrate {{FEATURE_NAME}} with application state management (Redux, Zustand, Context API, etc.)",
+        "acceptanceCriteria": [
+          "Create state slice/store for {{FEATURE_NAME}} data",
+          "Add actions/reducers for state mutations",
+          "Implement async actions for API calls using thunks or similar",
+          "Add selectors for efficient data access",
+          "Integrate with existing store configuration",
+          "Handle optimistic updates where appropriate",
+          "Add error state handling and user feedback",
+          "Write tests for state management logic"
+        ],
+        "priority": 2,
+        "dependencies": ["WF-001"],
+        "fileScope": ["src/store/", "src/hooks/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "WF-004",
+        "title": "End-to-End Integration",
+        "description": "Wire up frontend components with backend API and ensure complete user flow works smoothly",
+        "acceptanceCriteria": [
+          "Connect UI components to state management hooks",
+          "Implement API client calls from state management layer",
+          "Add proper loading indicators during API calls",
+          "Implement error handling and user notifications",
+          "Test complete user flow manually in development environment",
+          "Write end-to-end tests using Playwright, Cypress, or similar",
+          "Verify data persistence across page refreshes if applicable",
+          "Test edge cases: network failures, invalid data, race conditions"
+        ],
+        "priority": 3,
+        "dependencies": ["WF-002", "WF-003"],
+        "fileScope": ["src/", "tests/e2e/"],
+        "estimatedComplexity": "medium",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "WF-005",
+        "title": "Documentation and Polish",
+        "description": "Add comprehensive documentation, polish UX, and ensure code quality standards",
+        "acceptanceCriteria": [
+          "Update README.md with {{FEATURE_NAME}} usage instructions",
+          "Add inline code comments for complex logic",
+          "Create API documentation for new endpoints",
+          "Add user-facing help text or tooltips in UI",
+          "Run linter and fix all warnings",
+          "Run type checker and fix all type errors",
+          "Ensure all tests pass",
+          "Add performance optimizations if needed (memoization, lazy loading)",
+          "Create pull request with detailed description"
+        ],
+        "priority": 4,
+        "dependencies": ["WF-004"],
+        "fileScope": ["README.md", "docs/", "src/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,597 @@
+{% extends "base.html" %}
+
+{% block title %}Self-Improvement - Claude-Loop Dashboard{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .status-pending {
+        background: var(--warning);
+        color: black;
+    }
+    .status-approved {
+        background: var(--accent-secondary);
+        color: white;
+    }
+    .status-in_progress {
+        background: var(--accent-primary);
+        color: white;
+    }
+    .status-rejected {
+        background: var(--error);
+        color: white;
+    }
+    .priority-high {
+        color: var(--error);
+        font-weight: 600;
+    }
+    .priority-medium {
+        color: var(--warning);
+    }
+    .priority-low {
+        color: var(--accent-secondary);
+    }
+    .gap-card {
+        background: var(--bg-secondary);
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        border-left: 4px solid var(--accent-primary);
+    }
+    .gap-card.high-priority {
+        border-left-color: var(--error);
+    }
+    .gap-card.medium-priority {
+        border-left-color: var(--warning);
+    }
+    .gap-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.5rem;
+    }
+    .gap-id {
+        font-family: monospace;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+    }
+    .gap-category {
+        display: inline-block;
+        padding: 0.125rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.625rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        background: var(--bg-card);
+        color: var(--text-secondary);
+    }
+    .gap-description {
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .gap-meta {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 0.5rem;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+    }
+    .coverage-bar {
+        height: 8px;
+        background: var(--bg-secondary);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 0.5rem;
+    }
+    .coverage-fill {
+        height: 100%;
+        background: var(--success);
+        border-radius: 4px;
+        transition: width 0.3s ease;
+    }
+    .prd-card {
+        background: var(--bg-secondary);
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+    }
+    .prd-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    .prd-name {
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+    .prd-meta {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+    }
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 2rem 0 1rem 0;
+    }
+    .section-header h2 {
+        margin-bottom: 0;
+    }
+    .pattern-bar {
+        height: 20px;
+        background: var(--accent-primary);
+        border-radius: 4px;
+        min-width: 4px;
+    }
+    .bar-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .success-rate-good { color: var(--success); }
+    .success-rate-medium { color: var(--warning); }
+    .success-rate-poor { color: var(--error); }
+    .metric-trend {
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+        height: 40px;
+    }
+    .trend-bar {
+        flex: 1;
+        background: var(--success);
+        border-radius: 2px 2px 0 0;
+        min-width: 8px;
+    }
+    .trend-bar.failed {
+        background: var(--error);
+    }
+    .tab-container {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--bg-secondary);
+        padding-bottom: 0.5rem;
+    }
+    .tab-btn {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+    .tab-btn:hover {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+    }
+    .tab-btn.active {
+        background: var(--accent-primary);
+        color: white;
+    }
+    .tab-content {
+        display: none;
+    }
+    .tab-content.active {
+        display: block;
+    }
+    .empty-state-small {
+        text-align: center;
+        padding: 2rem;
+        color: var(--text-secondary);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Self-Improvement Dashboard</h1>
+
+<!-- Summary Stats -->
+<div class="stat-grid">
+    <div class="stat-card">
+        <div class="stat-value">{{ summary.pending_prds }}</div>
+        <div class="stat-label">Pending PRDs</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ summary.approved_prds + summary.in_progress_prds }}</div>
+        <div class="stat-label">Active Improvements</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ summary.completed_prds }}</div>
+        <div class="stat-label">Completed</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ summary.active_gaps }}</div>
+        <div class="stat-label">Active Gaps</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ summary.total_patterns }}</div>
+        <div class="stat-label">Failure Patterns</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">
+            {% if metrics.success_rate is defined %}
+                <span class="{% if metrics.success_rate >= 80 %}success-rate-good{% elif metrics.success_rate >= 50 %}success-rate-medium{% else %}success-rate-poor{% endif %}">
+                    {{ "%.0f"|format(metrics.success_rate) }}%
+                </span>
+            {% else %}
+                N/A
+            {% endif %}
+        </div>
+        <div class="stat-label">Success Rate</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">
+            {% if coverage.coverage_rate is defined %}
+                {{ "%.0f"|format(coverage.coverage_rate) }}%
+            {% else %}
+                N/A
+            {% endif %}
+        </div>
+        <div class="stat-label">Capability Coverage</div>
+        {% if coverage.total > 0 %}
+        <div class="coverage-bar">
+            <div class="coverage-fill" style="width: {{ coverage.coverage_rate }}%;"></div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ summary.resolved_gaps }}</div>
+        <div class="stat-label">Resolved Gaps</div>
+    </div>
+</div>
+
+<!-- PRDs Section -->
+<div class="section-header">
+    <h2>Improvement PRDs</h2>
+    <span class="stat-label">{{ prds.total }} total PRDs</span>
+</div>
+
+<div class="card">
+    <div class="tab-container">
+        <button class="tab-btn active" onclick="showTab('pending')">
+            Pending Review ({{ prds.pending_review|length }})
+        </button>
+        <button class="tab-btn" onclick="showTab('approved')">
+            Approved ({{ prds.approved|length }})
+        </button>
+        <button class="tab-btn" onclick="showTab('in_progress')">
+            In Progress ({{ prds.in_progress|length }})
+        </button>
+        <button class="tab-btn" onclick="showTab('complete')">
+            Completed ({{ prds.complete|length }})
+        </button>
+    </div>
+
+    <div id="tab-pending" class="tab-content active">
+        {% if prds.pending_review %}
+            {% for prd in prds.pending_review[:10] %}
+            <div class="prd-card">
+                <div class="prd-header">
+                    <span class="prd-name">{{ prd.name }}</span>
+                    <span class="status-badge status-pending">Pending Review</span>
+                </div>
+                <div style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">
+                    {{ prd.description[:120] }}{% if prd.description|length > 120 %}...{% endif %}
+                </div>
+                <div class="prd-meta">
+                    <span>Category: <span class="gap-category">{{ prd.gap_category }}</span></span>
+                    <span>Priority: <span class="{% if prd.priority_score >= 70 %}priority-high{% elif prd.priority_score >= 40 %}priority-medium{% else %}priority-low{% endif %}">{{ "%.1f"|format(prd.priority_score) }}</span></span>
+                    <span>Stories: {{ prd.userStories|length }}</span>
+                    <span>Effort: {{ prd.estimated_effort }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state-small">
+                <p>No PRDs pending review.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="tab-approved" class="tab-content">
+        {% if prds.approved %}
+            {% for prd in prds.approved[:10] %}
+            <div class="prd-card">
+                <div class="prd-header">
+                    <span class="prd-name">{{ prd.name }}</span>
+                    <span class="status-badge status-approved">Approved</span>
+                </div>
+                <div style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">
+                    {{ prd.description[:120] }}{% if prd.description|length > 120 %}...{% endif %}
+                </div>
+                <div class="prd-meta">
+                    <span>Category: <span class="gap-category">{{ prd.gap_category }}</span></span>
+                    <span>Stories: {{ prd.userStories|length }}</span>
+                    {% if prd.reviewed_at %}
+                    <span>Reviewed: {{ prd.reviewed_at[:10] }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state-small">
+                <p>No approved PRDs waiting to start.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="tab-in_progress" class="tab-content">
+        {% if prds.in_progress %}
+            {% for prd in prds.in_progress[:10] %}
+            <div class="prd-card">
+                <div class="prd-header">
+                    <span class="prd-name">{{ prd.name }}</span>
+                    <span class="status-badge status-in_progress">In Progress</span>
+                </div>
+                <div style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">
+                    {{ prd.description[:120] }}{% if prd.description|length > 120 %}...{% endif %}
+                </div>
+                <div class="prd-meta">
+                    <span>Category: <span class="gap-category">{{ prd.gap_category }}</span></span>
+                    {% set completed_stories = prd.userStories|selectattr('passes', 'equalto', true)|list|length %}
+                    <span>Progress: {{ completed_stories }}/{{ prd.userStories|length }} stories</span>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state-small">
+                <p>No improvements currently in progress.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="tab-complete" class="tab-content">
+        {% if prds.complete %}
+            {% for prd in prds.complete[:10] %}
+            <div class="prd-card">
+                <div class="prd-header">
+                    <span class="prd-name">{{ prd.name }}</span>
+                    <span class="status-badge status-complete">Complete</span>
+                </div>
+                <div style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">
+                    {{ prd.description[:120] }}{% if prd.description|length > 120 %}...{% endif %}
+                </div>
+                <div class="prd-meta">
+                    <span>Category: <span class="gap-category">{{ prd.gap_category }}</span></span>
+                    <span>Stories: {{ prd.userStories|length }}</span>
+                    {% if prd.updated_at %}
+                    <span>Completed: {{ prd.updated_at[:10] }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state-small">
+                <p>No completed improvements yet.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Top Unresolved Capability Gaps -->
+<div class="section-header">
+    <h2>Top Unresolved Capability Gaps</h2>
+    <span class="stat-label">{{ gaps.active }} active gaps</span>
+</div>
+
+<div class="card">
+    {% if gaps.top_priority %}
+        {% for gap in gaps.top_priority %}
+        <div class="gap-card {% if gap.priority_score >= 70 %}high-priority{% elif gap.priority_score >= 40 %}medium-priority{% endif %}">
+            <div class="gap-header">
+                <div>
+                    <span class="gap-id">{{ gap.gap_id }}</span>
+                    <span class="gap-category">{{ gap.category }}</span>
+                </div>
+                <span class="{% if gap.priority_score >= 70 %}priority-high{% elif gap.priority_score >= 40 %}priority-medium{% else %}priority-low{% endif %}">
+                    Priority: {{ "%.1f"|format(gap.priority_score) }}
+                </span>
+            </div>
+            <div class="gap-description">
+                {{ gap.description[:200] }}{% if gap.description|length > 200 %}...{% endif %}
+            </div>
+            <div class="gap-meta">
+                <span>Frequency: {{ "%.0f"|format(gap.frequency_score * 100) }}%</span>
+                <span>Impact: {{ "%.0f"|format(gap.impact_score * 100) }}%</span>
+                <span>Feasibility: {{ "%.0f"|format(gap.feasibility_score * 100) }}%</span>
+                <span>Est. Future Failures: {{ "%.0f"|format(gap.estimated_future_failures) }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-state-small">
+            <p>No capability gaps identified yet. Run the gap analysis pipeline to discover gaps.</p>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Failure Patterns -->
+<div class="section-header">
+    <h2>Failure Patterns Discovered</h2>
+    <span class="stat-label">{{ patterns.total_failures }} total failures analyzed</span>
+</div>
+
+<div class="card">
+    {% if patterns.by_error_type %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Error Type</th>
+                    <th>Count</th>
+                    <th>Distribution</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set max_count = namespace(value=1) %}
+                {% for type, count in patterns.by_error_type.items() %}
+                    {% if count > max_count.value %}
+                        {% set max_count.value = count %}
+                    {% endif %}
+                {% endfor %}
+
+                {% for error_type, count in patterns.by_error_type.items()|sort(attribute='1', reverse=true) %}
+                <tr>
+                    <td><strong>{{ error_type }}</strong></td>
+                    <td>{{ count }}</td>
+                    <td>
+                        <div class="bar-container">
+                            <div class="pattern-bar" style="width: {{ (count / max_count.value * 100)|int }}%;"></div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="empty-state-small">
+            <p>No failure patterns discovered yet. Failures will be analyzed after claude-loop runs.</p>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Improvement Success Rate Over Time -->
+{% if metrics.by_month %}
+<div class="section-header">
+    <h2>Improvement Success Rate Over Time</h2>
+</div>
+
+<div class="card">
+    <div style="display: flex; align-items: flex-end; gap: 1rem; height: 150px; padding: 1rem;">
+        {% for month_data in metrics.by_month %}
+        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: flex-end;">
+                {% set total = month_data.successful + month_data.failed %}
+                {% if total > 0 %}
+                    {% set success_height = (month_data.successful / total * 100)|int %}
+                    {% set fail_height = (month_data.failed / total * 100)|int %}
+                    <div style="width: 100%; max-width: 40px; display: flex; flex-direction: column; gap: 2px;">
+                        {% if month_data.successful > 0 %}
+                        <div style="background: var(--success); height: {{ success_height }}px; border-radius: 4px 4px 0 0;" title="{{ month_data.successful }} successful"></div>
+                        {% endif %}
+                        {% if month_data.failed > 0 %}
+                        <div style="background: var(--error); height: {{ fail_height }}px; border-radius: 0 0 4px 4px;" title="{{ month_data.failed }} failed"></div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            <div style="font-size: 0.625rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                {{ month_data.month }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div style="display: flex; gap: 2rem; justify-content: center; padding: 0.5rem; font-size: 0.75rem; color: var(--text-secondary);">
+        <span><span style="display: inline-block; width: 12px; height: 12px; background: var(--success); border-radius: 2px; margin-right: 0.25rem;"></span> Successful</span>
+        <span><span style="display: inline-block; width: 12px; height: 12px; background: var(--error); border-radius: 2px; margin-right: 0.25rem;"></span> Failed/Rejected</span>
+    </div>
+</div>
+{% endif %}
+
+<!-- Capability Coverage by Category -->
+{% if coverage.by_category %}
+<div class="section-header">
+    <h2>Capability Coverage by Category</h2>
+</div>
+
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Available</th>
+                <th>Total</th>
+                <th>Coverage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category, cat_data in coverage.by_category.items()|sort(attribute='0') %}
+            {% set cat_coverage = (cat_data.available / cat_data.total * 100) if cat_data.total > 0 else 0 %}
+            <tr>
+                <td><strong>{{ category }}</strong></td>
+                <td>{{ cat_data.available }}</td>
+                <td>{{ cat_data.total }}</td>
+                <td>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div class="coverage-bar" style="flex: 1; max-width: 100px;">
+                            <div class="coverage-fill" style="width: {{ cat_coverage }}%;"></div>
+                        </div>
+                        <span class="{% if cat_coverage >= 80 %}success-rate-good{% elif cat_coverage >= 50 %}success-rate-medium{% else %}success-rate-poor{% endif %}">
+                            {{ "%.0f"|format(cat_coverage) }}%
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Recent Activity -->
+{% if metrics.recent_activity %}
+<div class="section-header">
+    <h2>Recent Improvement Activity</h2>
+</div>
+
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>PRD</th>
+                <th>Action</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for activity in metrics.recent_activity[:10] %}
+            <tr>
+                <td>{{ activity.timestamp[:19] if activity.timestamp else 'N/A' }}</td>
+                <td>{{ activity.prd_name|default('N/A') }}</td>
+                <td>
+                    <span class="status-badge {% if activity.action == 'complete' %}status-complete{% elif activity.action == 'approve' %}status-approved{% elif activity.action == 'reject' %}status-rejected{% elif activity.action == 'start' %}status-in_progress{% else %}status-pending{% endif %}">
+                        {{ activity.action }}
+                    </span>
+                </td>
+                <td style="color: var(--text-secondary); font-size: 0.875rem;">
+                    {{ activity.notes[:50] if activity.notes else '' }}{% if activity.notes and activity.notes|length > 50 %}...{% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Export JSON Button -->
+<div style="margin-top: 2rem; text-align: center;">
+    <a href="/api/improvements" class="btn" target="_blank">Export Metrics as JSON</a>
+    <a href="/api/improvements/prds" class="btn btn-secondary" target="_blank" style="margin-left: 0.5rem;">Export PRDs</a>
+    <a href="/api/improvements/gaps" class="btn btn-secondary" target="_blank" style="margin-left: 0.5rem;">Export Gaps</a>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+function showTab(tabName) {
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    // Show selected tab
+    document.getElementById('tab-' + tabName).classList.add('active');
+    event.target.classList.add('active');
+}
+</script>
+{% endblock %}

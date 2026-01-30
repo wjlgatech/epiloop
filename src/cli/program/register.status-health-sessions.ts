@@ -39,15 +39,15 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["clawdbot status", "Show channel health + session summary."],
-          ["clawdbot status --all", "Full diagnosis (read-only)."],
-          ["clawdbot status --json", "Machine-readable output."],
-          ["clawdbot status --usage", "Show model provider usage/quota snapshots."],
+          ["epiloop status", "Show channel health + session summary."],
+          ["epiloop status --all", "Full diagnosis (read-only)."],
+          ["epiloop status --json", "Machine-readable output."],
+          ["epiloop status --usage", "Show model provider usage/quota snapshots."],
           [
-            "clawdbot status --deep",
+            "epiloop status --deep",
             "Run channel probes (WA + Telegram + Discord + Slack + Signal).",
           ],
-          ["clawdbot status --deep --timeout 5000", "Tighten probe timeout."],
+          ["epiloop status --deep --timeout 5000", "Tighten probe timeout."],
         ])}`,
     )
     .addHelpText(
@@ -119,10 +119,10 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["clawdbot sessions", "List all sessions."],
-          ["clawdbot sessions --active 120", "Only last 2 hours."],
-          ["clawdbot sessions --json", "Machine-readable output."],
-          ["clawdbot sessions --store ./tmp/sessions.json", "Use a specific session store."],
+          ["epiloop sessions", "List all sessions."],
+          ["epiloop sessions --active 120", "Only last 2 hours."],
+          ["epiloop sessions --json", "Machine-readable output."],
+          ["epiloop sessions --store ./tmp/sessions.json", "Use a specific session store."],
         ])}\n\n${theme.muted(
           "Shows token usage per session when the agent reports it; set agents.defaults.contextTokens to see % of your model window.",
         )}`,

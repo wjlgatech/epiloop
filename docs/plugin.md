@@ -1,5 +1,5 @@
 ---
-summary: "Clawdbot plugins/extensions: discovery, config, and safety"
+summary: "Epiloop plugins/extensions: discovery, config, and safety"
 read_when:
   - Adding or modifying plugins/extensions
   - Documenting plugin install or load rules
@@ -8,11 +8,11 @@ read_when:
 
 ## Quick start (new to plugins?)
 
-A plugin is just a **small code module** that extends Clawdbot with extra
+A plugin is just a **small code module** that extends Epiloop with extra
 features (commands, tools, and Gateway RPC).
 
 Most of the time, you’ll use plugins when you want a feature that’s not built
-into core Clawdbot yet (or you want to keep optional features out of your main
+into core Epiloop yet (or you want to keep optional features out of your main
 install).
 
 Fast path:
@@ -20,13 +20,13 @@ Fast path:
 1) See what’s already loaded:
 
 ```bash
-clawdbot plugins list
+epiloop plugins list
 ```
 
 2) Install an official plugin (example: Voice Call):
 
 ```bash
-clawdbot plugins install @clawdbot/voice-call
+epiloop plugins install @epiloop/voice-call
 ```
 
 3) Restart the Gateway, then configure under `plugins.entries.<id>.config`.
@@ -35,21 +35,21 @@ See [Voice Call](/plugins/voice-call) for a concrete example plugin.
 
 ## Available plugins (official)
 
-- Microsoft Teams is plugin-only as of 2026.1.15; install `@clawdbot/msteams` if you use Teams.
+- Microsoft Teams is plugin-only as of 2026.1.15; install `@epiloop/msteams` if you use Teams.
 - Memory (Core) — bundled memory search plugin (enabled by default via `plugins.slots.memory`)
 - Memory (LanceDB) — bundled long-term memory plugin (auto-recall/capture; set `plugins.slots.memory = "memory-lancedb"`)
-- [Voice Call](/plugins/voice-call) — `@clawdbot/voice-call`
-- [Zalo Personal](/plugins/zalouser) — `@clawdbot/zalouser`
-- [Matrix](/channels/matrix) — `@clawdbot/matrix`
-- [Nostr](/channels/nostr) — `@clawdbot/nostr`
-- [Zalo](/channels/zalo) — `@clawdbot/zalo`
-- [Microsoft Teams](/channels/msteams) — `@clawdbot/msteams`
+- [Voice Call](/plugins/voice-call) — `@epiloop/voice-call`
+- [Zalo Personal](/plugins/zalouser) — `@epiloop/zalouser`
+- [Matrix](/channels/matrix) — `@epiloop/matrix`
+- [Nostr](/channels/nostr) — `@epiloop/nostr`
+- [Zalo](/channels/zalo) — `@epiloop/zalo`
+- [Microsoft Teams](/channels/msteams) — `@epiloop/msteams`
 - Google Antigravity OAuth (provider auth) — bundled as `google-antigravity-auth` (disabled by default)
 - Gemini CLI OAuth (provider auth) — bundled as `google-gemini-cli-auth` (disabled by default)
 - Qwen OAuth (provider auth) — bundled as `qwen-portal-auth` (disabled by default)
 - Copilot Proxy (provider auth) — local VS Code Copilot Proxy bridge; distinct from built-in `github-copilot` device login (bundled, disabled by default)
 
-Clawdbot plugins are **TypeScript modules** loaded at runtime via jiti. **Config
+Epiloop plugins are **TypeScript modules** loaded at runtime via jiti. **Config
 validation does not execute plugin code**; it uses the plugin manifest and JSON
 Schema instead. See [Plugin manifest](/plugins/manifest).
 
@@ -69,27 +69,27 @@ Tool authoring guide: [Plugin agent tools](/plugins/agent-tools).
 
 ## Discovery & precedence
 
-Clawdbot scans, in order:
+Epiloop scans, in order:
 
 1) Config paths
 - `plugins.load.paths` (file or directory)
 
 2) Workspace extensions
-- `<workspace>/.clawdbot/extensions/*.ts`
-- `<workspace>/.clawdbot/extensions/*/index.ts`
+- `<workspace>/.epiloop/extensions/*.ts`
+- `<workspace>/.epiloop/extensions/*/index.ts`
 
 3) Global extensions
-- `~/.clawdbot/extensions/*.ts`
-- `~/.clawdbot/extensions/*/index.ts`
+- `~/.epiloop/extensions/*.ts`
+- `~/.epiloop/extensions/*/index.ts`
 
-4) Bundled extensions (shipped with Clawdbot, **disabled by default**)
-- `<clawdbot>/extensions/*`
+4) Bundled extensions (shipped with Epiloop, **disabled by default**)
+- `<epiloop>/extensions/*`
 
 Bundled plugins must be enabled explicitly via `plugins.entries.<id>.enabled`
-or `clawdbot plugins enable <id>`. Installed plugins are enabled by default,
+or `epiloop plugins enable <id>`. Installed plugins are enabled by default,
 but can be disabled the same way.
 
-Each plugin must include a `clawdbot.plugin.json` file in its root. If a path
+Each plugin must include a `epiloop.plugin.json` file in its root. If a path
 points at a file, the plugin root is the file's directory and must contain the
 manifest.
 
@@ -98,12 +98,12 @@ wins and lower-precedence copies are ignored.
 
 ### Package packs
 
-A plugin directory may include a `package.json` with `clawdbot.extensions`:
+A plugin directory may include a `package.json` with `epiloop.extensions`:
 
 ```json
 {
   "name": "my-pack",
-  "clawdbot": {
+  "epiloop": {
     "extensions": ["./src/safety.ts", "./src/tools.ts"]
   }
 }
@@ -117,15 +117,15 @@ If your plugin imports npm deps, install them in that directory so
 
 ### Channel catalog metadata
 
-Channel plugins can advertise onboarding metadata via `clawdbot.channel` and
-install hints via `clawdbot.install`. This keeps the core catalog data-free.
+Channel plugins can advertise onboarding metadata via `epiloop.channel` and
+install hints via `epiloop.install`. This keeps the core catalog data-free.
 
 Example:
 
 ```json
 {
-  "name": "@clawdbot/nextcloud-talk",
-  "clawdbot": {
+  "name": "@epiloop/nextcloud-talk",
+  "epiloop": {
     "extensions": ["./index.ts"],
     "channel": {
       "id": "nextcloud-talk",
@@ -138,7 +138,7 @@ Example:
       "aliases": ["nc-talk", "nc"]
     },
     "install": {
-      "npmSpec": "@clawdbot/nextcloud-talk",
+      "npmSpec": "@epiloop/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }
@@ -146,15 +146,15 @@ Example:
 }
 ```
 
-Clawdbot can also merge **external channel catalogs** (for example, an MPM
+Epiloop can also merge **external channel catalogs** (for example, an MPM
 registry export). Drop a JSON file at one of:
-- `~/.clawdbot/mpm/plugins.json`
-- `~/.clawdbot/mpm/catalog.json`
-- `~/.clawdbot/plugins/catalog.json`
+- `~/.epiloop/mpm/plugins.json`
+- `~/.epiloop/mpm/catalog.json`
+- `~/.epiloop/plugins/catalog.json`
 
-Or point `CLAWDBOT_PLUGIN_CATALOG_PATHS` (or `CLAWDBOT_MPM_CATALOG_PATHS`) at
+Or point `EPILOOP_PLUGIN_CATALOG_PATHS` (or `EPILOOP_MPM_CATALOG_PATHS`) at
 one or more JSON files (comma/semicolon/`PATH`-delimited). Each file should
-contain `{ "entries": [ { "name": "@scope/pkg", "clawdbot": { "channel": {...}, "install": {...} } } ] }`.
+contain `{ "entries": [ { "name": "@scope/pkg", "epiloop": { "channel": {...}, "install": {...} } } ] }`.
 
 ## Plugin IDs
 
@@ -163,7 +163,7 @@ Default plugin ids:
 - Package packs: `package.json` `name`
 - Standalone file: file base name (`~/.../voice-call.ts` → `voice-call`)
 
-If a plugin exports `id`, Clawdbot uses it but warns when it doesn’t match the
+If a plugin exports `id`, Epiloop uses it but warns when it doesn’t match the
 configured id.
 
 ## Config
@@ -196,7 +196,7 @@ Validation rules (strict):
 - Unknown `channels.<id>` keys are **errors** unless a plugin manifest declares
   the channel id.
 - Plugin config is validated using the JSON Schema embedded in
-  `clawdbot.plugin.json` (`configSchema`).
+  `epiloop.plugin.json` (`configSchema`).
 - If a plugin is disabled, its config is preserved and a **warning** is emitted.
 
 ## Plugin slots (exclusive categories)
@@ -221,7 +221,7 @@ are disabled with diagnostics.
 
 The Control UI uses `config.schema` (JSON Schema + `uiHints`) to render better forms.
 
-Clawdbot augments `uiHints` at runtime based on discovered plugins:
+Epiloop augments `uiHints` at runtime based on discovered plugins:
 
 - Adds per-plugin labels for `plugins.entries.<id>` / `.enabled` / `.config`
 - Merges optional plugin-provided config field hints under:
@@ -253,24 +253,24 @@ Example:
 ## CLI
 
 ```bash
-clawdbot plugins list
-clawdbot plugins info <id>
-clawdbot plugins install <path>                 # copy a local file/dir into ~/.clawdbot/extensions/<id>
-clawdbot plugins install ./extensions/voice-call # relative path ok
-clawdbot plugins install ./plugin.tgz           # install from a local tarball
-clawdbot plugins install ./plugin.zip           # install from a local zip
-clawdbot plugins install -l ./extensions/voice-call # link (no copy) for dev
-clawdbot plugins install @clawdbot/voice-call # install from npm
-clawdbot plugins update <id>
-clawdbot plugins update --all
-clawdbot plugins enable <id>
-clawdbot plugins disable <id>
-clawdbot plugins doctor
+epiloop plugins list
+epiloop plugins info <id>
+epiloop plugins install <path>                 # copy a local file/dir into ~/.epiloop/extensions/<id>
+epiloop plugins install ./extensions/voice-call # relative path ok
+epiloop plugins install ./plugin.tgz           # install from a local tarball
+epiloop plugins install ./plugin.zip           # install from a local zip
+epiloop plugins install -l ./extensions/voice-call # link (no copy) for dev
+epiloop plugins install @epiloop/voice-call # install from npm
+epiloop plugins update <id>
+epiloop plugins update --all
+epiloop plugins enable <id>
+epiloop plugins disable <id>
+epiloop plugins doctor
 ```
 
 `plugins update` only works for npm installs tracked under `plugins.installs`.
 
-Plugins may also register their own top‑level commands (example: `clawdbot voicecall`).
+Plugins may also register their own top‑level commands (example: `epiloop voicecall`).
 
 ## Plugin API (overview)
 
@@ -287,7 +287,7 @@ event-driven automation without a separate hook pack install.
 ### Example
 
 ```
-import { registerPluginHooksFromDir } from "clawdbot/plugin-sdk";
+import { registerPluginHooksFromDir } from "epiloop/plugin-sdk";
 
 export default function register(api) {
   registerPluginHooksFromDir(api, "./hooks");
@@ -297,18 +297,18 @@ export default function register(api) {
 Notes:
 - Hook directories follow the normal hook structure (`HOOK.md` + `handler.ts`).
 - Hook eligibility rules still apply (OS/bins/env/config requirements).
-- Plugin-managed hooks show up in `clawdbot hooks list` with `plugin:<id>`.
-- You cannot enable/disable plugin-managed hooks via `clawdbot hooks`; enable/disable the plugin instead.
+- Plugin-managed hooks show up in `epiloop hooks list` with `plugin:<id>`.
+- You cannot enable/disable plugin-managed hooks via `epiloop hooks`; enable/disable the plugin instead.
 
 ## Provider plugins (model auth)
 
 Plugins can register **model provider auth** flows so users can run OAuth or
-API-key setup inside Clawdbot (no external scripts needed).
+API-key setup inside Epiloop (no external scripts needed).
 
 Register a provider via `api.registerProvider(...)`. Each provider exposes one
 or more auth methods (OAuth, API key, device code, etc.). These methods power:
 
-- `clawdbot models auth login --provider <id> [--method <id>]`
+- `epiloop models auth login --provider <id> [--method <id>]`
 
 Example:
 
@@ -520,7 +520,7 @@ Command handler context:
 - `isAuthorizedSender`: Whether the sender is an authorized user
 - `args`: Arguments passed after the command (if `acceptsArgs: true`)
 - `commandBody`: The full command text
-- `config`: The current Clawdbot config
+- `config`: The current Epiloop config
 
 Command options:
 
@@ -582,14 +582,14 @@ it’s present in your workspace/managed skills locations.
 
 Recommended packaging:
 
-- Main package: `clawdbot` (this repo)
-- Plugins: separate npm packages under `@clawdbot/*` (example: `@clawdbot/voice-call`)
+- Main package: `epiloop` (this repo)
+- Plugins: separate npm packages under `@epiloop/*` (example: `@epiloop/voice-call`)
 
 Publishing contract:
 
-- Plugin `package.json` must include `clawdbot.extensions` with one or more entry files.
+- Plugin `package.json` must include `epiloop.extensions` with one or more entry files.
 - Entry files can be `.js` or `.ts` (jiti loads TS at runtime).
-- `clawdbot plugins install <npm-spec>` uses `npm pack`, extracts into `~/.clawdbot/extensions/<id>/`, and enables it in config.
+- `epiloop plugins install <npm-spec>` uses `npm pack`, extracts into `~/.epiloop/extensions/<id>/`, and enables it in config.
 - Config key stability: scoped packages are normalized to the **unscoped** id for `plugins.entries.*`.
 
 ## Example plugin: Voice Call
@@ -598,7 +598,7 @@ This repo includes a voice‑call plugin (Twilio or log fallback):
 
 - Source: `extensions/voice-call`
 - Skill: `skills/voice-call`
-- CLI: `clawdbot voicecall start|status`
+- CLI: `epiloop voicecall start|status`
 - Tool: `voice_call`
 - RPC: `voicecall.start`, `voicecall.status`
 - Config (twilio): `provider: "twilio"` + `twilio.accountSid/authToken/from` (optional `statusCallbackUrl`, `twimlUrl`)
@@ -619,4 +619,4 @@ Plugins run in-process with the Gateway. Treat them as trusted code:
 Plugins can (and should) ship tests:
 
 - In-repo plugins can keep Vitest tests under `src/**` (example: `src/plugins/voice-call.plugin.test.ts`).
-- Separately published plugins should run their own CI (lint/build/test) and validate `clawdbot.extensions` points at the built entrypoint (`dist/index.js`).
+- Separately published plugins should run their own CI (lint/build/test) and validate `epiloop.extensions` points at the built entrypoint (`dist/index.js`).

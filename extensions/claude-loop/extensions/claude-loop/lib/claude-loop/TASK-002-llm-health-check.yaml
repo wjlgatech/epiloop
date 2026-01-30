@@ -1,0 +1,296 @@
+#========================================================
+# REAL-WORLD BENCHMARK TASK 002
+# Tier: MESO (Medium Feature)
+# Source: Claude-Loop codebase
+#========================================================
+
+id: TASK-002
+name: "LLM Provider Health Check Implementation"
+tier: meso
+source_project: claude-loop
+difficulty: 3  # 1-5 scale
+estimated_time_human_minutes: 60
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Current Issue** (claude-loop/lib/llm_config.py:242):
+  TODO comment states: "Implement actual API test calls in LLM-002 (Provider Abstraction Layer)"
+
+  **Problem**: The `test_provider()` method only validates configuration
+  (API key exists, base URL set) but doesn't actually test if the provider
+  is reachable and working. This means:
+  1. Users don't know if their API keys are valid until first use
+  2. Network/API issues aren't caught proactively
+  3. No way to verify provider health during setup
+
+  **Expected Behavior**: Make actual API test call to each provider to verify:
+  - API key is valid
+  - Provider endpoint is reachable
+  - Provider is responding correctly
+  - Rate limits and quotas are available
+
+#--------------------------------------------------------
+# CONTEXT
+#--------------------------------------------------------
+context:
+  file: "claude-loop/lib/llm_config.py"
+  class: "LLMConfigManager"
+  method: "test_provider"
+  lines: 233-251
+
+  related_files:
+    - "claude-loop/lib/llm_provider.py"  # Provider abstraction
+    - "claude-loop/lib/cost_tracker.py"  # Cost tracking
+    - "claude-loop/config.yaml"  # Provider configuration
+
+  background: |
+    Claude-loop supports multiple LLM providers (Claude, GPT-4o, Gemini, DeepSeek).
+    Each provider has different authentication, endpoints, and error responses.
+
+    The current `test_provider()` method returns early with:
+    "Provider {name} configuration is valid (API test not yet implemented)"
+
+    This leaves users unsure if their setup will actually work when they
+    start executing tasks.
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Makes real API call to test provider"
+    weight: 0.35
+    validation_method: "integration_test"
+    validation_script: |
+      python -m pytest claude-loop/tests/test_llm_health_check.py::test_real_api_call -v
+
+  - id: AC2
+    description: "Validates API key is functional"
+    weight: 0.25
+    validation_method: "integration_test"
+    validation_script: |
+      python claude-loop/lib/llm_config.py test anthropic
+      # Should succeed if API key valid, fail with clear message if not
+
+  - id: AC3
+    description: "Handles provider-specific errors gracefully"
+    weight: 0.20
+    validation_method: "unit_test"
+    validation_script: |
+      python -m pytest claude-loop/tests/test_llm_health_check.py::test_error_handling -v
+
+  - id: AC4
+    description: "Returns structured response with details"
+    weight: 0.15
+    validation_method: "unit_test"
+    validation_script: |
+      # Test returns (success: bool, message: str, details: dict)
+      python -m pytest claude-loop/tests/test_llm_health_check.py::test_response_structure -v
+
+  - id: AC5
+    description: "Completes within reasonable timeout (5s)"
+    weight: 0.05
+    validation_method: "performance_test"
+    validation_script: |
+      time python claude-loop/lib/llm_config.py test anthropic
+      # Should complete in <5 seconds
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach: |
+    1. Import the provider abstraction layer (llm_provider.py)
+    2. Create a minimal test prompt (e.g., "Reply with 'OK'")
+    3. Make API call with timeout and error handling
+    4. Parse response to verify provider is working
+    5. Return structured result with details
+
+  example_code: |
+    from lib.llm_provider import LLMProvider
+
+    def test_provider(self, name: str) -> Tuple[bool, str, dict]:
+        provider = self.get_provider(name)
+
+        try:
+            # Make minimal test call
+            llm = LLMProvider(provider_name=name)
+            response = llm.complete(
+                prompt="Reply with exactly 'OK'",
+                max_tokens=10,
+                timeout=5
+            )
+
+            # Verify response
+            if "OK" in response.text:
+                return True, f"Provider {name} is healthy", {
+                    "latency_ms": response.latency,
+                    "model": response.model_used
+                }
+            else:
+                return False, f"Provider {name} returned unexpected response", {}
+
+        except AuthenticationError as e:
+            return False, f"Invalid API key for {name}: {str(e)}", {}
+        except TimeoutError as e:
+            return False, f"Provider {name} timeout: {str(e)}", {}
+        except Exception as e:
+            return False, f"Provider {name} error: {str(e)}", {}
+
+  edge_cases:
+    - "Rate limit exceeded during health check"
+    - "Provider partially down (some models work, others don't)"
+    - "Network timeout"
+    - "Invalid API key format"
+    - "Expired API key"
+    - "Insufficient quota/credits"
+
+#--------------------------------------------------------
+# TEST DATA
+#--------------------------------------------------------
+test_data:
+  mock_providers:
+    - name: "mock_success"
+      should_succeed: true
+      response: "OK"
+      latency_ms: 150
+
+    - name: "mock_auth_fail"
+      should_succeed: false
+      error: "AuthenticationError: Invalid API key"
+
+    - name: "mock_timeout"
+      should_succeed: false
+      error: "TimeoutError: Request exceeded 5s"
+
+  real_provider_tests:
+    - name: "anthropic"
+      requires_api_key: true
+      expected_latency: "< 2000ms"
+
+    - name: "openai"
+      requires_api_key: true
+      expected_latency: "< 2000ms"
+
+#--------------------------------------------------------
+# VALIDATION CHECKLIST
+#--------------------------------------------------------
+validation_checklist:
+  code_quality:
+    - "Proper exception handling for all provider errors"
+    - "Timeout configuration to prevent hanging"
+    - "Minimal token usage (keep test prompt short)"
+    - "No hardcoded provider-specific logic (use abstraction)"
+    - "Logging for debugging failed health checks"
+
+  testing:
+    - "Unit tests with mocked providers"
+    - "Integration tests with real API (optional, CI-gated)"
+    - "Error handling tests for common failure modes"
+    - "Performance tests for timeout behavior"
+
+  security:
+    - "API keys never logged or exposed in errors"
+    - "Secure credential handling"
+
+  documentation:
+    - "Remove or update TODO comment"
+    - "Add docstring explaining health check behavior"
+    - "Document return value structure"
+    - "Add usage example in README"
+
+#--------------------------------------------------------
+# BASELINE SOLUTION (Ground Truth)
+#--------------------------------------------------------
+ground_truth_approach: |
+  The correct solution:
+  1. Uses existing LLMProvider abstraction (don't reimplement API calls)
+  2. Sends minimal test prompt (5-10 tokens max)
+  3. Validates response is coherent
+  4. Returns structured result: (bool, str, dict)
+  5. Handles provider-specific errors uniformly
+  6. Completes within 5s timeout
+  7. Logs failures for debugging
+
+  Cost impact: ~$0.0001 per health check (negligible)
+
+#--------------------------------------------------------
+# FAILURE MODES TO AVOID
+#--------------------------------------------------------
+common_mistakes:
+  - mistake: "Reimplementing API calls instead of using llm_provider.py"
+    why_wrong: "Duplicates code and breaks abstraction"
+
+  - mistake: "Using expensive test prompts (100+ tokens)"
+    why_wrong: "Unnecessary cost for health check"
+
+  - mistake: "No timeout, blocking indefinitely"
+    why_wrong: "Hangs user's setup process"
+
+  - mistake: "Provider-specific conditional logic"
+    why_wrong: "Breaks when adding new providers"
+
+  - mistake: "Logging API keys in error messages"
+    why_wrong: "Security vulnerability"
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ Makes real API call to provider (not just config validation)
+  2. ✓ Returns structured result with success/failure and details
+  3. ✓ Handles authentication, network, and timeout errors gracefully
+  4. ✓ CLI command `python lib/llm_config.py test <provider>` works
+  5. ✓ Unit tests pass with mocked providers
+  6. ✓ Integration tests pass with real API (when keys available)
+  7. ✓ Completes within 5s timeout
+  8. ✓ TODO comment removed/updated
+
+#--------------------------------------------------------
+# INTEGRATION WITH EXISTING SYSTEM
+#--------------------------------------------------------
+integration_notes:
+  cli_usage: |
+    # Test single provider
+    python lib/llm_config.py test anthropic
+
+    # Test all enabled providers
+    python lib/llm_config.py test-all
+
+  programmatic_usage: |
+    from lib.llm_config import LLMConfigManager
+
+    config = LLMConfigManager()
+    success, message, details = config.test_provider("anthropic")
+
+    if success:
+        print(f"✓ {message}")
+        print(f"  Latency: {details['latency_ms']}ms")
+    else:
+        print(f"✗ {message}")
+
+  workflow_integration: |
+    This feature should be called:
+    1. During initial setup (after API keys configured)
+    2. Before starting a PRD execution (optional pre-flight check)
+    3. In CI/CD to verify provider configuration
+    4. On-demand via CLI for troubleshooting
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["llm", "provider", "health-check", "devops", "reliability"]
+  related_issues: ["LLM-002"]
+  created_by: "benchmark-task-generator"
+  created_at: "2026-01-19"
+  estimated_impact: "high"  # Improves user experience, reduces setup friction
+  complexity_signals:
+    - "Multi-file integration (llm_config + llm_provider)"
+    - "External API calls (real network I/O)"
+    - "Error handling for multiple failure modes"
+    - "CLI and programmatic interfaces"
+    - "Security considerations (API keys)"

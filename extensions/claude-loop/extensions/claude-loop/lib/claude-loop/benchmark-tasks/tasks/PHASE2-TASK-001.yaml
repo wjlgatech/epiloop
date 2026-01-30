@@ -1,0 +1,26 @@
+task_id: PHASE2-TASK-001
+title: Add Input Validation Function (Simple)
+description: |
+  Create a simple input validation function that checks if a string is a valid email address.
+  Implement using regex pattern matching with clear error messages.
+  Add basic unit tests to verify validation works correctly.
+
+acceptance_criteria:
+  - "validate_email() function implemented with regex pattern"
+  - "Returns True for valid emails, False for invalid"
+  - "Clear error messages for invalid input"
+  - "Unit tests cover valid and invalid cases"
+  - "Documentation includes usage examples"
+
+context:
+  background: "Simple task to test basic code generation and validation logic."
+  constraints:
+    - "Use standard Python regex library"
+    - "No external dependencies"
+    - "Must handle common email formats"
+
+complexity: simple
+estimated_hours: 2
+fileScope:
+  - "lib/validators.py"
+  - "tests/test_validators.py"

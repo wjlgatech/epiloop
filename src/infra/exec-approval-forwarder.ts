@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "../config/config.js";
+import type { EpiloopConfig } from "../config/config.js";
 import { loadConfig } from "../config/config.js";
 import { loadSessionStore, resolveStorePath } from "../config/sessions.js";
 import type {
@@ -52,11 +52,11 @@ export type ExecApprovalForwarder = {
 };
 
 export type ExecApprovalForwarderDeps = {
-  getConfig?: () => ClawdbotConfig;
+  getConfig?: () => EpiloopConfig;
   deliver?: typeof deliverOutboundPayloads;
   nowMs?: () => number;
   resolveSessionTarget?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     request: ExecApprovalRequest;
   }) => ExecApprovalForwardTarget | null;
 };
@@ -136,7 +136,7 @@ function buildExpiredMessage(request: ExecApprovalRequest) {
 }
 
 function defaultResolveSessionTarget(params: {
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   request: ExecApprovalRequest;
 }): ExecApprovalForwardTarget | null {
   const sessionKey = params.request.request.sessionKey?.trim();
@@ -159,7 +159,7 @@ function defaultResolveSessionTarget(params: {
 }
 
 async function deliverToTargets(params: {
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   targets: ForwardTarget[];
   text: string;
   deliver: typeof deliverOutboundPayloads;

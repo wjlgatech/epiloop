@@ -6,6 +6,23 @@
   "api_limit": 10,
   "active_prds": {},
   "queued_prds": [],
-  "completed_prds": [],
+  "completed_prds": [
+    {
+      "prd_id": "claude-loop-integration",
+      "prd_path": "prds/active/claude-loop-integration",
+      "worktree_path": ".claude-loop/worktrees/claude-loop-integration",
+      "branch": "feature/claude-loop-integration",
+      "pid": 72707,
+      "started_at": "2026-01-28T20:27:36Z",
+      "status": "running",
+      "current_story": null,
+      "progress": {
+        "completed": 0,
+        "total": 0
+      },
+      "completed_at": "2026-01-28T20:30:02Z",
+      "reason": "completed"
+    }
+  ],
   "failed_prds": []
 }

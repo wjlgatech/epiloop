@@ -1,0 +1,13 @@
+{
+  "name": "fix-bug",
+  "description": "Fix a bug in existing code",
+  "steps": [
+    {"id": 1, "action": "Reproduce the bug", "type": "bash"},
+    {"id": 2, "action": "Identify root cause", "type": "read"},
+    {"id": 3, "action": "Plan fix approach", "type": "plan"},
+    {"id": 4, "action": "Implement fix", "type": "write"},
+    {"id": 5, "action": "Verify bug is resolved", "type": "verify"},
+    {"id": 6, "action": "Run regression tests", "type": "bash"}
+  ],
+  "estimated_complexity": "medium"
+}

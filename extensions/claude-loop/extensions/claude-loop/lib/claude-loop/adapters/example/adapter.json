@@ -1,0 +1,37 @@
+{
+  "name": "example",
+  "version": "0.1.0",
+  "domain": "cli_tool",
+  "domains": ["cli_tool", "other"],
+  "description": "Example adapter demonstrating the adapter extension system",
+  "maintainer": "claude-loop team",
+  "capabilities": [
+    {
+      "type": "prompts",
+      "name": "cli-prompts",
+      "path": "prompts",
+      "description": "CLI-specific prompt templates"
+    },
+    {
+      "type": "validators",
+      "name": "cli-validators",
+      "path": "validators",
+      "description": "CLI argument and output validators"
+    },
+    {
+      "type": "tools",
+      "name": "cli-tools",
+      "path": "tools",
+      "description": "CLI-specific tool definitions"
+    },
+    {
+      "type": "embeddings",
+      "name": "cli-embeddings",
+      "path": "embeddings",
+      "description": "CLI-optimized embedding configuration"
+    }
+  ],
+  "dependencies": [],
+  "min_claude_loop_version": "1.0.0",
+  "keywords": ["cli", "command-line", "terminal"]
+}

@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import { resolveBlueBubblesAccount } from "./accounts.js";
-import type { ClawdbotConfig } from "clawdbot/plugin-sdk";
+import type { EpiloopConfig } from "epiloop/plugin-sdk";
 import { blueBubblesFetchWithTimeout, buildBlueBubblesApiUrl } from "./types.js";
 
 export type BlueBubblesChatOpts = {
@@ -8,7 +8,7 @@ export type BlueBubblesChatOpts = {
   password?: string;
   accountId?: string;
   timeoutMs?: number;
-  cfg?: ClawdbotConfig;
+  cfg?: EpiloopConfig;
 };
 
 function resolveAccount(params: BlueBubblesChatOpts) {

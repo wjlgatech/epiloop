@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "../../config/config.js";
+import type { EpiloopConfig } from "../../config/config.js";
 import type { GroupToolPolicyConfig } from "../../config/types.tools.js";
 import type { OutboundDeliveryResult, OutboundSendDeps } from "../../infra/outbound/deliver.js";
 import type { RuntimeEnv } from "../../runtime.js";
@@ -19,45 +19,45 @@ import type {
 } from "./types.core.js";
 
 export type ChannelSetupAdapter = {
-  resolveAccountId?: (params: { cfg: ClawdbotConfig; accountId?: string }) => string;
+  resolveAccountId?: (params: { cfg: EpiloopConfig; accountId?: string }) => string;
   applyAccountName?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId: string;
     name?: string;
-  }) => ClawdbotConfig;
+  }) => EpiloopConfig;
   applyAccountConfig: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId: string;
     input: ChannelSetupInput;
-  }) => ClawdbotConfig;
+  }) => EpiloopConfig;
   validateInput?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId: string;
     input: ChannelSetupInput;
   }) => string | null;
 };
 
 export type ChannelConfigAdapter<ResolvedAccount> = {
-  listAccountIds: (cfg: ClawdbotConfig) => string[];
-  resolveAccount: (cfg: ClawdbotConfig, accountId?: string | null) => ResolvedAccount;
-  defaultAccountId?: (cfg: ClawdbotConfig) => string;
+  listAccountIds: (cfg: EpiloopConfig) => string[];
+  resolveAccount: (cfg: EpiloopConfig, accountId?: string | null) => ResolvedAccount;
+  defaultAccountId?: (cfg: EpiloopConfig) => string;
   setAccountEnabled?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId: string;
     enabled: boolean;
-  }) => ClawdbotConfig;
-  deleteAccount?: (params: { cfg: ClawdbotConfig; accountId: string }) => ClawdbotConfig;
-  isEnabled?: (account: ResolvedAccount, cfg: ClawdbotConfig) => boolean;
-  disabledReason?: (account: ResolvedAccount, cfg: ClawdbotConfig) => string;
-  isConfigured?: (account: ResolvedAccount, cfg: ClawdbotConfig) => boolean | Promise<boolean>;
-  unconfiguredReason?: (account: ResolvedAccount, cfg: ClawdbotConfig) => string;
-  describeAccount?: (account: ResolvedAccount, cfg: ClawdbotConfig) => ChannelAccountSnapshot;
+  }) => EpiloopConfig;
+  deleteAccount?: (params: { cfg: EpiloopConfig; accountId: string }) => EpiloopConfig;
+  isEnabled?: (account: ResolvedAccount, cfg: EpiloopConfig) => boolean;
+  disabledReason?: (account: ResolvedAccount, cfg: EpiloopConfig) => string;
+  isConfigured?: (account: ResolvedAccount, cfg: EpiloopConfig) => boolean | Promise<boolean>;
+  unconfiguredReason?: (account: ResolvedAccount, cfg: EpiloopConfig) => string;
+  describeAccount?: (account: ResolvedAccount, cfg: EpiloopConfig) => ChannelAccountSnapshot;
   resolveAllowFrom?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId?: string | null;
   }) => string[] | undefined;
   formatAllowFrom?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId?: string | null;
     allowFrom: Array<string | number>;
   }) => string[];
@@ -70,7 +70,7 @@ export type ChannelGroupAdapter = {
 };
 
 export type ChannelOutboundContext = {
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   to: string;
   text: string;
   mediaUrl?: string;
@@ -87,7 +87,7 @@ export type ChannelOutboundAdapter = {
   textChunkLimit?: number;
   pollMaxOptions?: number;
   resolveTarget?: (params: {
-    cfg?: ClawdbotConfig;
+    cfg?: EpiloopConfig;
     to?: string;
     allowFrom?: string[];
     accountId?: string | null;
@@ -102,37 +102,37 @@ export type ChannelStatusAdapter<ResolvedAccount> = {
   defaultRuntime?: ChannelAccountSnapshot;
   buildChannelSummary?: (params: {
     account: ResolvedAccount;
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     defaultAccountId: string;
     snapshot: ChannelAccountSnapshot;
   }) => Record<string, unknown> | Promise<Record<string, unknown>>;
   probeAccount?: (params: {
     account: ResolvedAccount;
     timeoutMs: number;
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
   }) => Promise<unknown>;
   auditAccount?: (params: {
     account: ResolvedAccount;
     timeoutMs: number;
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     probe?: unknown;
   }) => Promise<unknown>;
   buildAccountSnapshot?: (params: {
     account: ResolvedAccount;
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     runtime?: ChannelAccountSnapshot;
     probe?: unknown;
     audit?: unknown;
   }) => ChannelAccountSnapshot | Promise<ChannelAccountSnapshot>;
   logSelfId?: (params: {
     account: ResolvedAccount;
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     runtime: RuntimeEnv;
     includeChannelPrefix?: boolean;
   }) => void;
   resolveAccountState?: (params: {
     account: ResolvedAccount;
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     configured: boolean;
     enabled: boolean;
   }) => ChannelAccountState;
@@ -140,7 +140,7 @@ export type ChannelStatusAdapter<ResolvedAccount> = {
 };
 
 export type ChannelGatewayContext<ResolvedAccount = unknown> = {
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   accountId: string;
   account: ResolvedAccount;
   runtime: RuntimeEnv;
@@ -167,7 +167,7 @@ export type ChannelLoginWithQrWaitResult = {
 };
 
 export type ChannelLogoutContext<ResolvedAccount = unknown> = {
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   accountId: string;
   account: ResolvedAccount;
   runtime: RuntimeEnv;
@@ -178,7 +178,7 @@ export type ChannelPairingAdapter = {
   idLabel: string;
   normalizeAllowEntry?: (entry: string) => string;
   notifyApproval?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     id: string;
     runtime?: RuntimeEnv;
   }) => Promise<void>;
@@ -202,7 +202,7 @@ export type ChannelGatewayAdapter<ResolvedAccount = unknown> = {
 
 export type ChannelAuthAdapter = {
   login?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId?: string | null;
     runtime: RuntimeEnv;
     verbose?: boolean;
@@ -212,11 +212,11 @@ export type ChannelAuthAdapter = {
 
 export type ChannelHeartbeatAdapter = {
   checkReady?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId?: string | null;
     deps?: ChannelHeartbeatDeps;
   }) => Promise<{ ok: boolean; reason: string }>;
-  resolveRecipients?: (params: { cfg: ClawdbotConfig; opts?: { to?: string; all?: boolean } }) => {
+  resolveRecipients?: (params: { cfg: EpiloopConfig; opts?: { to?: string; all?: boolean } }) => {
     recipients: string[];
     source: string;
   };
@@ -224,40 +224,40 @@ export type ChannelHeartbeatAdapter = {
 
 export type ChannelDirectoryAdapter = {
   self?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId?: string | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry | null>;
   listPeers?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId?: string | null;
     query?: string | null;
     limit?: number | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry[]>;
   listPeersLive?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId?: string | null;
     query?: string | null;
     limit?: number | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry[]>;
   listGroups?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId?: string | null;
     query?: string | null;
     limit?: number | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry[]>;
   listGroupsLive?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId?: string | null;
     query?: string | null;
     limit?: number | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry[]>;
   listGroupMembers?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId?: string | null;
     groupId: string;
     limit?: number | null;
@@ -277,7 +277,7 @@ export type ChannelResolveResult = {
 
 export type ChannelResolverAdapter = {
   resolveTargets: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId?: string | null;
     inputs: string[];
     kind: ChannelResolveKind;
@@ -287,7 +287,7 @@ export type ChannelResolverAdapter = {
 
 export type ChannelElevatedAdapter = {
   allowFromFallback?: (params: {
-    cfg: ClawdbotConfig;
+    cfg: EpiloopConfig;
     accountId?: string | null;
   }) => Array<string | number> | undefined;
 };

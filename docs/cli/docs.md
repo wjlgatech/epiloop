@@ -1,15 +1,15 @@
 ---
-summary: "CLI reference for `clawdbot docs` (search the live docs index)"
+summary: "CLI reference for `epiloop docs` (search the live docs index)"
 read_when:
-  - You want to search the live Clawdbot docs from the terminal
+  - You want to search the live Epiloop docs from the terminal
 ---
 
-# `clawdbot docs`
+# `epiloop docs`
 
 Search the live docs index.
 
 ```bash
-clawdbot docs browser extension
-clawdbot docs sandbox allowHostControl
+epiloop docs browser extension
+epiloop docs sandbox allowHostControl
 ```
 

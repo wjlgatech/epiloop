@@ -1,0 +1,137 @@
+{
+  "project": "phase3-cowork-features",
+  "branchName": "feature/phase3-cowork-features",
+  "description": "Implement Phase 3 Differentiators from Cowork analysis: Adaptive Story Splitting, Dynamic PRD Generation, Multi-LLM Quality Review, Real-Time Notifications, Interactive PRD Builder, and Rollback & Undo. These features create strategic advantages that differentiate claude-loop from Cowork.",
+  "prerequisites": ["Phase 2 features must be complete and stable", "Multi-LLM support PRD (LLM-006, LLM-010) must be complete"],
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Adaptive Story Splitting - Complexity Detection",
+      "description": "Implement runtime detection of complexity that exceeds story scope. Monitor story execution for signals like acceptance criteria taking >2x estimated time, file scope expansion, high error count, or agent clarification requests.",
+      "priority": 1,
+      "acceptanceCriteria": [
+        "Create lib/complexity-monitor.sh for tracking story execution metrics",
+        "Detect acceptance criteria taking >2x estimated time (compare actual vs estimated)",
+        "Detect file scope expansion: track files modified vs initial fileScope",
+        "Detect high error count: flag if >3 errors occur in single story",
+        "Detect agent clarification requests: parse Claude output for uncertainty signals",
+        "Log all complexity signals to .claude-loop/complexity-signals.jsonl",
+        "Calculate complexity score: weighted combination of all signals",
+        "Trigger split proposal if complexity score exceeds threshold (default: 7/10)",
+        "Add --complexity-threshold flag to configure trigger threshold",
+        "Document complexity detection in docs/features/adaptive-splitting.md"
+      ],
+      "passes": false,
+      "notes": "",
+      "fileScope": ["lib/complexity-monitor.sh", "claude-loop.sh", "docs/features/"],
+      "estimatedComplexity": "medium",
+      "dependencies": []
+    },
+    {
+      "id": "US-002",
+      "title": "Adaptive Story Splitting - Split Proposal Generation",
+      "description": "Use Claude to generate sub-story decomposition when complexity is detected. Present split proposal to user for approval with clear rationale and before/after comparison.",
+      "priority": 1,
+      "acceptanceCriteria": [
+        "Create lib/story-splitter.py for split proposal generation",
+        "Use Claude to analyze complex story and generate 2-4 sub-stories",
+        "Each sub-story includes: id (US-XXXA, US-XXXB), title, description, acceptance criteria",
+        "Generate time estimates for each sub-story (sum should match original estimate)",
+        "Inherit fileScope from parent story, refine per sub-story if needed",
+        "Display split proposal in terminal with syntax highlighting",
+        "Show before/after comparison: original story vs proposed sub-stories",
+        "Implement checkpoint confirmation prompt: [a]pprove, [r]eject, [e]dit, [s]kip",
+        "If approved: insert sub-stories into PRD dynamically",
+        "If rejected: continue with original story (log rejection reason)",
+        "Add audit trail: log split decision and rationale in progress.txt",
+        "Support interactive editing: open sub-stories in $EDITOR before approval"
+      ],
+      "passes": false,
+      "notes": "",
+      "fileScope": ["lib/story-splitter.py", "lib/prd-manager.py", "claude-loop.sh"],
+      "estimatedComplexity": "complex",
+      "dependencies": ["US-001"]
+    },
+    {
+      "id": "US-003",
+      "title": "Adaptive Story Splitting - PRD Dynamic Updates",
+      "description": "Implement safe PRD updates during execution. Insert sub-stories into PRD, update dependencies, maintain execution continuity without data loss or corruption.",
+      "priority": 1,
+      "acceptanceCriteria": [
+        "Extend lib/prd-manager.py with dynamic update capabilities",
+        "Implement atomic PRD updates: use file locking to prevent race conditions",
+        "Insert sub-stories after parent story in PRD (maintain priority order)",
+        "Update dependencies: sub-stories depend on previous sub-story (A→B→C)",
+        "Mark parent story as 'split' (don't mark as passes=true, mark as replaced)",
+        "Update PRD metadata: increment story count, update total complexity",
+        "Create PRD backup before update: .claude-loop/prd-backups/{timestamp}.json",
+        "Validate updated PRD: run prd-validator skill (from Phase 2.1)",
+        "Resume execution: continue with first sub-story after split",
+        "Handle rollback: if split fails, restore from backup",
+        "Add --no-adaptive flag to disable adaptive splitting entirely",
+        "Document PRD update mechanics in docs/features/adaptive-splitting.md"
+      ],
+      "passes": false,
+      "notes": "",
+      "fileScope": ["lib/prd-manager.py", "lib/prd-parser.sh", "claude-loop.sh"],
+      "estimatedComplexity": "complex",
+      "dependencies": ["US-002"]
+    },
+    {
+      "id": "US-004",
+      "title": "Dynamic PRD Generation - Goal Analysis & Story Decomposition",
+      "description": "Implement Claude-powered PRD generation from natural language project description. Analyze high-level goal, decompose into 5-10 user stories with titles, descriptions, acceptance criteria, dependencies, file scopes, and complexity estimates.",
+      "priority": 2,
+      "acceptanceCriteria": [
+        "Create lib/prd-generator.py for dynamic PRD generation",
+        "Accept high-level goal via --dynamic flag: ./claude-loop.sh --dynamic \"Add user auth with JWT\"",
+        "Use Claude to analyze goal and identify: core requirements, technical constraints, domain",
+        "Generate 5-10 user stories with logical decomposition",
+        "Each story includes: id, title, description (user story format), 3-5 acceptance criteria",
+        "Infer dependencies from logical order (e.g., User model before Login endpoint)",
+        "Estimate file scopes by analyzing codebase structure (use Glob tool)",
+        "Assign complexity estimates: simple/medium/complex based on scope",
+        "Calculate total project complexity (Level 0-4 using complexity-detector.py)",
+        "Generate branch name from project: feature/{project-name-kebab-case}",
+        "Output generated PRD to stdout with syntax highlighting",
+        "Save generated PRD to prd-{project}.json (don't overwrite existing files)",
+        "Add --dynamic-output flag to specify custom output path"
+      ],
+      "passes": false,
+      "notes": "",
+      "fileScope": ["lib/prd-generator.py", "lib/complexity-detector.py", "claude-loop.sh"],
+      "estimatedComplexity": "complex",
+      "dependencies": []
+    },
+    {
+      "id": "US-005",
+      "title": "Integration Testing & Documentation for Phase 3",
+      "description": "Create comprehensive integration tests and documentation for Phase 3 features. Test feature interactions, create tutorials, and ensure smooth user onboarding.",
+      "priority": 3,
+      "acceptanceCriteria": [
+        "Create tests/phase3/ directory for integration tests",
+        "Test adaptive splitting: trigger split, approve, verify PRD updates",
+        "Test dynamic PRD generation: generate from description, validate structure",
+        "Write docs/phase3/ documentation for all features",
+        "Create getting-started guide for Phase 3 features",
+        "Add examples and tutorials for each major feature",
+        "Update main README.md with Phase 3 highlights",
+        "Create migration guide from Phase 2 to Phase 3",
+        "Document known issues and troubleshooting tips"
+      ],
+      "passes": false,
+      "notes": "",
+      "fileScope": ["tests/phase3/", "docs/phase3/", "README.md"],
+      "estimatedComplexity": "medium",
+      "dependencies": ["US-001", "US-002", "US-003", "US-004"]
+    }
+  ],
+  "complexity": 4,
+  "estimatedDuration": "8-10 weeks (reduced from original 32-40 weeks scope)",
+  "successMetrics": {
+    "adaptiveSplittingUsage": "15% of stories trigger adaptive splitting",
+    "dynamicPRDAdoption": "30% of new projects use dynamic generation",
+    "userSatisfaction": "NPS >8.5 for Phase 3 features",
+    "competitivePositioning": "Clear differentiation from Cowork established"
+  }
+}

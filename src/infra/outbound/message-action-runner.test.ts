@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import type { ClawdbotConfig } from "../../config/config.js";
+import type { EpiloopConfig } from "../../config/config.js";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";
 import { createIMessageTestPlugin, createTestRegistry } from "../../test-utils/channel-plugins.js";
 import { slackPlugin } from "../../../extensions/slack/src/channel.js";
@@ -26,7 +26,7 @@ const slackConfig = {
       appToken: "xapp-test",
     },
   },
-} as ClawdbotConfig;
+} as EpiloopConfig;
 
 const whatsappConfig = {
   channels: {
@@ -34,7 +34,7 @@ const whatsappConfig = {
       allowFrom: ["*"],
     },
   },
-} as ClawdbotConfig;
+} as EpiloopConfig;
 
 describe("runMessageAction context isolation", () => {
   beforeEach(async () => {
@@ -263,7 +263,7 @@ describe("runMessageAction context isolation", () => {
           token: "tg-test",
         },
       },
-    } as ClawdbotConfig;
+    } as EpiloopConfig;
 
     const result = await runMessageAction({
       cfg: multiConfig,
@@ -305,7 +305,7 @@ describe("runMessageAction context isolation", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as EpiloopConfig;
 
     await expect(
       runMessageAction({
@@ -385,7 +385,7 @@ describe("runMessageAction sendAttachment hydration", () => {
           password: "test-password",
         },
       },
-    } as ClawdbotConfig;
+    } as EpiloopConfig;
 
     const result = await runMessageAction({
       cfg,
@@ -453,7 +453,7 @@ describe("runMessageAction accountId defaults", () => {
 
   it("propagates defaultAccountId into params", async () => {
     await runMessageAction({
-      cfg: {} as ClawdbotConfig,
+      cfg: {} as EpiloopConfig,
       action: "send",
       params: {
         channel: "discord",

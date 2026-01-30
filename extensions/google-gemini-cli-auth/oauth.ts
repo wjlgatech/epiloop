@@ -2,9 +2,9 @@ import { createHash, randomBytes } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { createServer } from "node:http";
 
-const CLIENT_ID_KEYS = ["CLAWDBOT_GEMINI_OAUTH_CLIENT_ID", "GEMINI_CLI_OAUTH_CLIENT_ID"];
+const CLIENT_ID_KEYS = ["EPILOOP_GEMINI_OAUTH_CLIENT_ID", "GEMINI_CLI_OAUTH_CLIENT_ID"];
 const CLIENT_SECRET_KEYS = [
-  "CLAWDBOT_GEMINI_OAUTH_CLIENT_SECRET",
+  "EPILOOP_GEMINI_OAUTH_CLIENT_SECRET",
   "GEMINI_CLI_OAUTH_CLIENT_SECRET",
 ];
 const REDIRECT_URI = "http://localhost:8085/oauth2callback";
@@ -51,7 +51,7 @@ function resolveOAuthClientConfig(): { clientId: string; clientSecret?: string }
   const clientId = resolveEnv(CLIENT_ID_KEYS);
   if (!clientId) {
     throw new Error(
-      "Missing Gemini OAuth client ID. Set CLAWDBOT_GEMINI_OAUTH_CLIENT_ID (or GEMINI_CLI_OAUTH_CLIENT_ID).",
+      "Missing Gemini OAuth client ID. Set EPILOOP_GEMINI_OAUTH_CLIENT_ID (or GEMINI_CLI_OAUTH_CLIENT_ID).",
     );
   }
   const clientSecret = resolveEnv(CLIENT_SECRET_KEYS);
@@ -178,7 +178,7 @@ async function waitForLocalCallback(params: {
         res.end(
           "<!doctype html><html><head><meta charset='utf-8'/></head>" +
             "<body><h2>Gemini CLI OAuth complete</h2>" +
-            "<p>You can close this window and return to Clawdbot.</p></body></html>",
+            "<p>You can close this window and return to Epiloop.</p></body></html>",
         );
 
         finish(undefined, { code, state });
@@ -283,7 +283,7 @@ async function discoverProject(accessToken: string): Promise<string> {
     Authorization: `Bearer ${accessToken}`,
     "Content-Type": "application/json",
     "User-Agent": "google-api-nodejs-client/9.15.1",
-    "X-Goog-Api-Client": "gl-node/clawdbot",
+    "X-Goog-Api-Client": "gl-node/epiloop",
   };
 
   const loadBody = {

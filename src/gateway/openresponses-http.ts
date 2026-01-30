@@ -1,7 +1,7 @@
 /**
  * OpenResponses HTTP Handler
  *
- * Implements the OpenResponses `/v1/responses` endpoint for Clawdbot Gateway.
+ * Implements the OpenResponses `/v1/responses` endpoint for Epiloop Gateway.
  *
  * @see https://www.open-responses.com/
  */
@@ -550,7 +550,7 @@ export async function handleOpenResponsesHttpRequest(
               .map((p) => (typeof p.text === "string" ? p.text : ""))
               .filter(Boolean)
               .join("\n\n")
-          : "No response from Clawdbot.";
+          : "No response from Epiloop.";
 
       const response = createResponseResource({
         id: responseId,
@@ -704,7 +704,7 @@ export async function handleOpenResponsesHttpRequest(
     if (evt.stream === "lifecycle") {
       const phase = evt.data?.phase;
       if (phase === "end" || phase === "error") {
-        const finalText = accumulatedText || "No response from Clawdbot.";
+        const finalText = accumulatedText || "No response from Epiloop.";
         const finalStatus = phase === "error" ? "failed" : "completed";
         requestFinalize(finalStatus, finalText);
       }
@@ -829,7 +829,7 @@ export async function handleOpenResponsesHttpRequest(
                 .map((p) => (typeof p.text === "string" ? p.text : ""))
                 .filter(Boolean)
                 .join("\n\n")
-            : "No response from Clawdbot.";
+            : "No response from Epiloop.";
 
         accumulatedText = content;
         sawAssistantDelta = true;

@@ -1,0 +1,121 @@
+#========================================================
+# VALIDATION GAP TEST CASE 002
+# Purpose: Test auto-pass logic (≥90% criteria met)
+# Expected: High score triggers automatic passes:true
+#========================================================
+
+id: VGAP-002
+name: "JSON Validator Function"
+tier: micro
+source_project: null
+difficulty: 1
+estimated_time_human_minutes: 15
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Requirement**: Create a Python function that validates JSON strings.
+
+  **Task**: Create `json_validator.py` with function `is_valid_json(text)`
+  that:
+  1. Takes a string as input
+  2. Attempts to parse it as JSON
+  3. Returns True if valid JSON, False otherwise
+  4. Does not raise exceptions
+
+  **Why This Tests Validation Gap**:
+  This is a straightforward implementation using json.loads() with
+  try/except. All criteria are easily verifiable. This tests whether
+  auto-pass logic (score ≥0.90) automatically sets passes:true.
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Creates json_validator.py file"
+    weight: 0.20
+    validation_method: "file_exists"
+    validation_script: |
+      test -f json_validator.py
+
+  - id: AC2
+    description: "Defines is_valid_json function with text parameter"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "def is_valid_json\(.*text.*\)" json_validator.py
+
+  - id: AC3
+    description: "Uses json.loads or json.JSONDecoder"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(json\.loads|JSONDecoder)" json_validator.py
+
+  - id: AC4
+    description: "Returns boolean (True or False)"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "return (True|False)" json_validator.py
+
+  - id: AC5
+    description: "Handles exceptions with try/except"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "try:|except" json_validator.py
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach: |
+    Simple try/except around json.loads:
+    ```python
+    import json
+
+    def is_valid_json(text):
+        try:
+            json.loads(text)
+            return True
+        except (ValueError, TypeError):
+            return False
+    ```
+
+  expected_behavior: |
+    Implementation is straightforward. All 5 criteria should pass,
+    giving a score of 1.0 (100%). This should trigger auto-pass logic
+    which automatically sets passes:true in prd.json.
+
+#--------------------------------------------------------
+# VALIDATION GAP TEST METADATA
+#--------------------------------------------------------
+validation_gap_test:
+  purpose: "Test if auto-pass logic (≥90% score) works"
+  expected_score: 1.0  # All criteria met
+  expected_passes_update: true  # Should auto-pass
+  failure_mode: "Score ≥0.90 but auto-pass doesn't trigger"
+  auto_pass_threshold: 0.90
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ json_validator.py exists
+  2. ✓ is_valid_json function defined
+  3. ✓ Uses json.loads with try/except
+  4. ✓ Returns boolean
+  5. ✓ AUTO-PASS: prd.json updated automatically (score ≥0.90)
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["validation-gap-test", "auto-pass", "synthetic"]
+  test_type: "priority1-auto-pass"
+  created_at: "2026-01-23"
+  difficulty_reason: "Tests auto-pass logic with perfect implementation"

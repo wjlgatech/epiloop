@@ -1,0 +1,86 @@
+---
+
+### Iteration: 2026-01-24 10:20 AM
+**Story**: US-001 - Always log tokens to provider_usage.jsonl
+**Status**: Complete
+
+**What was implemented**:
+- Added `log_provider_usage_jsonl()` function to `lib/monitoring.sh` that writes token data to `.claude-loop/logs/provider_usage.jsonl`
+- Function is automatically called from `log_iteration_json()` after each iteration completes
+- Token logging is unconditional - works regardless of `--no-dashboard` or `--no-progress` flags
+- JSONL format matches the multi-provider system specification with fields: timestamp, story_id, iteration, provider, model, complexity, input_tokens, output_tokens, cost_usd, latency_ms, success, fallback_used
+- Provider is auto-detected from model name (anthropic, openai, google, deepseek)
+- Function exported for use by other scripts
+
+**Files changed**:
+- lib/monitoring.sh (added 55 lines)
+  - New function: `log_provider_usage_jsonl()` (lines 798-847)
+  - Called from `log_iteration_json()` (line 795)
+  - Exported on line 1151
+
+**Testing performed**:
+- Created test script `/tmp/test_provider_usage_logging.sh` that sources monitoring.sh and simulates an iteration
+- Verified provider_usage.jsonl is created with non-zero token values
+- Tested with PROGRESS_DASHBOARD_ENABLED=false and PROGRESS_INDICATORS_ENABLED=false
+- Confirmed logging works with all flag combinations
+- Validated JSONL format with jq
+
+**Learnings for future iterations**:
+- The monitoring system previously only wrote to metrics.json in the runs directory
+- The provider_usage.jsonl format was defined by the multi-provider system but wasn't being populated by the main execution flow
+- The fix bridges the gap between the monitoring system and the multi-provider logging format
+- Always-enabled logging is important for benchmarking scenarios where dashboard/progress indicators are disabled for performance
+- The log directory (.claude-loop/logs/) is created automatically if it doesn't exist
+- Token data flows: API call → log_iteration_json() → save_metrics_json() AND log_provider_usage_jsonl()
+
+**Next steps**:
+- US-002: Extract token data from Claude API responses (worker.sh)
+- US-003: Ensure atomic writes to prevent corruption (currently using simple append)
+
+---
+
+### Iteration: 2026-01-24 10:30 AM
+**Story**: US-002 & US-003 - Token Extraction and Atomic Writes
+**Status**: Complete
+
+**What was implemented**:
+- Modified `lib/worker.sh` to use Claude CLI's `--output-format json` flag
+- Added `extract_token_usage()` function to parse actual token counts from API response
+- Extracts: input_tokens, output_tokens, cache_read_input_tokens, cache_creation_input_tokens
+- Modified main execution flow to use actual tokens instead of char-based estimates
+- Improved `log_provider_usage_jsonl()` in `lib/monitoring.sh` with atomic writes
+- Implemented lock directory mechanism (mkdir) for safe concurrent access
+- Added temp file + lock + append pattern to prevent corruption
+
+**Files changed**:
+- lib/worker.sh (lines 353-409, 447-502, 585-640)
+  - Modified `execute_worker()` to use JSON output format
+  - Added JSON response parsing and text extraction
+  - Added `extract_token_usage()` function for parsing token data
+  - Updated main execution flow to extract actual tokens from JSON
+- lib/monitoring.sh (lines 837-877)
+  - Enhanced `log_provider_usage_jsonl()` with atomic writes
+  - Added file locking with mkdir-based lock directory
+  - Implemented temp file + lock + append pattern
+
+**Testing performed**:
+- Unit tested token extraction function with sample JSON response (all tests passed)
+- Verified input tokens includes both direct and cache_read tokens (150 + 500 = 650)
+- Unit tested atomic write mechanism with sequential writes (5 writes, all valid JSON)
+- Verified JSONL format integrity with jq validation
+- Syntax checked both modified files (bash -n)
+
+**Learnings for future iterations**:
+- Claude CLI `--output-format json` provides rich token usage metadata
+- Token usage includes: input_tokens, output_tokens, cache_read_input_tokens, cache_creation_input_tokens
+- Input tokens should include cache_read tokens for accurate billing calculation
+- mkdir-based locking is atomic on all Unix systems (safer than flock for portability)
+- Atomic writes prevent JSONL corruption in parallel/concurrent execution scenarios
+- JSON response format: {"content": [{"type": "text", "text": "..."}], "usage": {...}}
+- Need to extract text content from JSON for backward compatibility with result checking
+
+**Next steps**:
+- All stories in token-logging-fix PRD are now complete (US-001, US-002, US-003)
+- Token data will now be accurately logged to provider_usage.jsonl with actual API counts
+- Benchmarking runs will show non-zero tokens and accurate cost tracking
+

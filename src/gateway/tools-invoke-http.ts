@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 
-import { createClawdbotTools } from "../agents/clawdbot-tools.js";
+import { createEpiloopTools } from "../agents/epiloop-tools.js";
 import {
   filterToolsByPolicy,
   resolveEffectiveToolPolicy,
@@ -116,10 +116,8 @@ export async function handleToolsInvokeHttpRequest(
     !rawSessionKey || rawSessionKey === "main" ? resolveMainSessionKey(cfg) : rawSessionKey;
 
   // Resolve message channel/account hints (optional headers) for policy inheritance.
-  const messageChannel = normalizeMessageChannel(
-    getHeader(req, "x-clawdbot-message-channel") ?? "",
-  );
-  const accountId = getHeader(req, "x-clawdbot-account-id")?.trim() || undefined;
+  const messageChannel = normalizeMessageChannel(getHeader(req, "x-epiloop-message-channel") ?? "");
+  const accountId = getHeader(req, "x-epiloop-account-id")?.trim() || undefined;
 
   const {
     agentId,
@@ -143,7 +141,7 @@ export async function handleToolsInvokeHttpRequest(
     : undefined;
 
   // Build tool list (core + plugin tools).
-  const allTools = createClawdbotTools({
+  const allTools = createEpiloopTools({
     agentSessionKey: sessionKey,
     agentChannel: messageChannel ?? undefined,
     agentAccountId: accountId,

@@ -1,0 +1,207 @@
+{
+  "project": "invisible-intelligence",
+  "branchName": "feature/invisible-intelligence",
+  "description": "Adopt BMAD capabilities with zero cognitive load: auto-detect complexity, auto-select phases/tracks/agents, auto-generate architecture, auto-track progress with resume capability",
+  "userStories": [
+    {
+      "id": "INV-001",
+      "title": "Complexity Auto-Detection",
+      "description": "Automatically detect project complexity (Level 0-4) from user input and PRD content without requiring user to specify",
+      "acceptanceCriteria": [
+        "Create lib/complexity-detector.py with detect_complexity() function",
+        "Analyze signals: story count, security keywords, infrastructure keywords, integration keywords, compliance keywords",
+        "Return complexity level 0-4 (micro, small, medium, large, enterprise)",
+        "Add CLI command: complexity-detector detect <text or --prd file>",
+        "Include unit tests for various input scenarios",
+        "Document complexity level definitions and scoring algorithm"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented in commit c8487a6 - Created lib/complexity-detector.py with detect_complexity(), get_track(), get_phases() functions, CLI support, and 54 unit tests"
+    },
+    {
+      "id": "INV-002",
+      "title": "Track Auto-Selection",
+      "description": "Automatically select implementation track (quick/standard/enterprise) derived from complexity level",
+      "acceptanceCriteria": [
+        "Add get_track(complexity: int) function to complexity-detector.py",
+        "Level 0-1 → quick track, Level 2-3 → standard track, Level 4 → enterprise track",
+        "Define track characteristics in config (quality gates, ADR requirements, approval needs)",
+        "Create lib/track-config.yaml with track definitions",
+        "CLI shows detected track: complexity-detector detect <text> --show-track"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Implemented in commit b24d568 - Created lib/track-config.yaml with track definitions including quality gates (tests/lint/type-check/security/coverage), ADR requirements, approval needs, model preferences. Added TrackConfig dataclass and get_track_config() function. Enhanced CLI --show-track to display full track configuration. 15 new tests added (68 total tests pass)"
+    },
+    {
+      "id": "INV-003",
+      "title": "Phase Auto-Selection",
+      "description": "Automatically determine required phases (analysis/planning/solutioning/implementation) based on complexity",
+      "acceptanceCriteria": [
+        "Add get_phases(complexity: int) function to complexity-detector.py",
+        "Level 0-1: implementation only",
+        "Level 2: planning + implementation",
+        "Level 3: planning + solutioning + implementation",
+        "Level 4: analysis + planning + solutioning + implementation",
+        "Return ordered list of phase names",
+        "CLI shows phases: complexity-detector detect <text> --show-phases"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Already implemented as part of INV-002. get_phases() function exists at lib/complexity-detector.py:707-724 with full test coverage (5 tests in TestGetPhases class). CLI --show-phases flag works correctly."
+    },
+    {
+      "id": "INV-004",
+      "title": "Auto-Generate Solutioning Artifacts",
+      "description": "Automatically generate architecture.md and ADRs for complex features (Level >= 3)",
+      "acceptanceCriteria": [
+        "Create lib/solutioning-generator.py",
+        "Generate architecture.md template with sections: Overview, Components, Data Flow, API Contracts, Security",
+        "Generate ADR templates for major decisions detected in PRD",
+        "Auto-detect ADR topics from keywords: database, API style, auth, state management",
+        "Save artifacts to project's docs/architecture/ and docs/adrs/ directories",
+        "CLI command: solutioning-generator generate --prd <file>",
+        "Skip generation for complexity < 3"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Implemented in commit 4134248 - Created lib/solutioning-generator.py with architecture.md and ADR template generation, ADR topic auto-detection, CLI commands (generate, detect-adrs, topics), complexity-based skip, and 33 unit tests"
+    },
+    {
+      "id": "INV-005",
+      "title": "Phase-Aware Agent Selection",
+      "description": "Enhance agent selection to consider current phase in addition to story content",
+      "acceptanceCriteria": [
+        "Modify lib/agent-registry.sh to accept phase parameter",
+        "Analysis phase: prefer first-principles-analyst, product-strategist",
+        "Solutioning phase: prefer backend-architect, api-designer",
+        "Implementation phase: use existing keyword-based selection",
+        "Update claude-loop.sh to pass current phase to agent selection",
+        "Log which phase influenced agent selection in verbose mode"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "Implemented in commit 0c4e942 - Added phase-aware agent selection to agent-registry.sh with phase-specific preferences, CLI commands (phase-agents, list-phases), and integrated into claude-loop.sh with phase tracking and verbose logging"
+    },
+    {
+      "id": "INV-006",
+      "title": "Progress Dashboard with Phase Tracking",
+      "description": "Create visual progress dashboard showing phases and stories with completion status",
+      "acceptanceCriteria": [
+        "Create lib/progress-dashboard.py with render_dashboard() function",
+        "Show current phase with progress bar (e.g., 'Solutioning [=====>    ] 60%')",
+        "Show story list with status indicators (✓ complete, ▶ running, ○ pending)",
+        "Display auto-detected complexity level and track",
+        "Support terminal colors (disable with --no-color)",
+        "Integrate into claude-loop.sh iteration output",
+        "Dashboard updates after each story completion"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "Implemented in commit 4f683fc - Created lib/progress-dashboard.py with visual progress dashboard showing phase progress bars, story status indicators, complexity/track display, color support, and claude-loop.sh integration. 41 new tests."
+    },
+    {
+      "id": "INV-007",
+      "title": "Auto-Save and Resume Capability",
+      "description": "Automatically save progress state and allow resuming from interruption",
+      "acceptanceCriteria": [
+        "Create .claude-loop/session-state.json with current phase, story, iteration",
+        "Auto-save after each story completion",
+        "Add --resume flag to claude-loop.sh",
+        "On resume: detect last session, show summary, continue from saved state",
+        "Add --resume-from <session-id> for specific session resume",
+        "Clean up old session states after successful completion",
+        "Show 'You can close this. Progress auto-saves.' message"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": "Implemented in commit 4edced0 - Created lib/session-state.sh with full session lifecycle management, integrated into claude-loop.sh with --resume, --resume-from, --list-sessions, --no-session flags. 21 unit tests pass."
+    },
+    {
+      "id": "INV-008",
+      "title": "Single-Command Entry Point",
+      "description": "Enable starting claude-loop with just a feature description, no PRD required",
+      "acceptanceCriteria": [
+        "Support: claude-loop.sh 'Add user authentication with OAuth'",
+        "Auto-generate PRD from description using existing /prd skill",
+        "Auto-detect complexity, track, phases from generated PRD",
+        "Chain: description → PRD → complexity → phases → execution",
+        "Fall back to existing --prd flag behavior if PRD file provided",
+        "Show auto-detection results before starting execution"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": "Implemented in commit ee94b1c - Created lib/prd-from-description.py with PRD generation from feature descriptions, integrated into claude-loop.sh with positional argument support. Auto-detects complexity/track/phases and displays summary before execution. 26 unit tests pass."
+    },
+    {
+      "id": "INV-009",
+      "title": "Invisible Quality Gates by Complexity",
+      "description": "Auto-adjust quality gates based on complexity level without user configuration",
+      "acceptanceCriteria": [
+        "Create lib/quality-gates.py with get_gates(complexity: int) function",
+        "Level 0-1 (quick): tests only, no lint, no type check",
+        "Level 2 (standard): tests + lint, optional type check",
+        "Level 3 (standard+): tests + lint + type check + security scan",
+        "Level 4 (enterprise): all gates + manual approval checkpoint",
+        "Integrate gate selection into claude-loop.sh iteration",
+        "Log which gates are active in verbose mode"
+      ],
+      "priority": 9,
+      "passes": true,
+      "notes": "Implemented in commit f7c0ecf - Created lib/quality-gates.py with get_gates(complexity) function, gate definitions for all 5 levels (tests→lint→type_check→security_scan→coverage→manual_approval), integrated into claude-loop.sh with display_auto_detection_summary and verbose logging. 51 unit tests pass."
+    },
+    {
+      "id": "INV-010",
+      "title": "Completion Summary with Artifacts",
+      "description": "Generate comprehensive completion summary listing all generated artifacts and metrics",
+      "acceptanceCriteria": [
+        "Create lib/completion-summary.py",
+        "Summary includes: stories completed, commits made, tests added",
+        "List generated artifacts: architecture.md, ADRs, new files",
+        "Show execution metrics: total time, iterations used, agents invoked",
+        "Display complexity level, track, and phases that were auto-selected",
+        "Format as terminal-friendly summary with optional --json output",
+        "Auto-display at end of claude-loop.sh execution"
+      ],
+      "priority": 10,
+      "passes": true,
+      "notes": "Implemented in commit 88fd7a5 - Created lib/completion-summary.py with CompletionSummary class, story/commit/artifact/execution metrics, auto-detection info, terminal and JSON output, claude-loop.sh integration. 46 unit tests pass."
+    },
+    {
+      "id": "INV-011",
+      "title": "Integrate All Components into claude-loop.sh",
+      "description": "Wire together all invisible intelligence components into the main loop",
+      "acceptanceCriteria": [
+        "Update claude-loop.sh to call complexity-detector on startup",
+        "Execute phases in order returned by get_phases()",
+        "Run solutioning-generator before implementation for Level >= 3",
+        "Pass phase to agent selection",
+        "Display progress dashboard after each iteration",
+        "Auto-save session state after each story",
+        "Show completion summary when done",
+        "Maintain backward compatibility with existing --prd flag"
+      ],
+      "priority": 11,
+      "passes": true,
+      "notes": "Implemented in commit e7e8745 - Integrated all invisible intelligence components: (1) Complexity detector called on startup via display_auto_detection_summary for all PRD runs, (2) Phases executed via get_prd_phases/get_current_phase with set_current_phase in run_iteration, (3) Solutioning generator runs for Level >= 3 via should_run_solutioning/run_solutioning_generator before main loop, (4) Phase passed to agent selection, (5) Progress dashboard displays after each iteration, (6) Session state auto-saves via save_story_progress, (7) Completion summary shows via display_completion_summary, (8) --prd flag backward compatible"
+    },
+    {
+      "id": "INV-012",
+      "title": "Comprehensive Invisible Intelligence Tests",
+      "description": "Create test suite for all invisible intelligence components",
+      "acceptanceCriteria": [
+        "Create tests/test_complexity_detector.py with level detection tests",
+        "Create tests/test_phase_selection.py with phase ordering tests",
+        "Create tests/test_solutioning_generator.py with artifact generation tests",
+        "Create tests/test_quality_gates.py with gate selection tests",
+        "Create tests/test_session_resume.py with save/restore tests",
+        "Integration test: full flow from description to completion",
+        "All tests pass with pytest"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

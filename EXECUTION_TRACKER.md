@@ -17,7 +17,7 @@ tail -f /private/tmp/claude/-Users-jialiang-wu-Documents-Projects/tasks/bbdf58e.
 ./claude-loop.sh --status
 
 # View specific worker logs
-ls -la ~/.clawdbot/workspaces/claude-loop/
+ls -la ~/.epiloop/workspaces/claude-loop/
 
 # Monitor resource usage
 ps aux | grep claude-loop
@@ -80,11 +80,11 @@ Workers will execute simultaneously:
 ## Failure & Learning Tracking
 
 ### Auto-Logged Data
-- **Execution logs:** ~/.clawdbot/logs/claude-loop/execution-*.jsonl
-- **Failure taxonomy:** ~/.clawdbot/logs/claude-loop/failures/
-- **Improvement proposals:** ~/.clawdbot/claude-loop/improvements/
-- **Experience recordings:** ~/.clawdbot/claude-loop/experience-store/
-- **Metrics:** ~/.clawdbot/metrics/claude-loop/
+- **Execution logs:** ~/.epiloop/logs/claude-loop/execution-*.jsonl
+- **Failure taxonomy:** ~/.epiloop/logs/claude-loop/failures/
+- **Improvement proposals:** ~/.epiloop/claude-loop/improvements/
+- **Experience recordings:** ~/.epiloop/claude-loop/experience-store/
+- **Metrics:** ~/.epiloop/metrics/claude-loop/
 
 ### Analysis Pipeline
 1. **Real-time:** Monitor execution log for errors

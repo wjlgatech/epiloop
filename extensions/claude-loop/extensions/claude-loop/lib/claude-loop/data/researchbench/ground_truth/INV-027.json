@@ -1,0 +1,117 @@
+{
+  "question_id": "INV-027",
+  "question": "How do stablecoins maintain their peg and what are the risks?",
+  "expert_sources": [
+    {
+      "title": "Stablecoins: Growth Potential and Impact on Banking",
+      "authors": ["BIS"],
+      "venue": "BIS Working Papers 2022",
+      "url": "https://www.bis.org/",
+      "relevance": "Regulatory perspective on stablecoin risks"
+    },
+    {
+      "title": "The Economics of Algorithmic Stablecoins",
+      "authors": ["Klages-Mundt et al."],
+      "venue": "FC 2020",
+      "url": "https://arxiv.org/abs/2006.12388",
+      "relevance": "Algorithmic stablecoin mechanisms"
+    },
+    {
+      "title": "Terra Luna Collapse Post-Mortem",
+      "authors": ["Various analysts"],
+      "venue": "Multiple sources 2022",
+      "url": "Various",
+      "relevance": "Case study of algorithmic stablecoin failure"
+    },
+    {
+      "title": "Tether: The Story So Far",
+      "authors": ["Various investigative reports"],
+      "venue": "Multiple sources",
+      "url": "Various",
+      "relevance": "Reserve transparency concerns"
+    },
+    {
+      "title": "USDC Reserve Report",
+      "authors": ["Circle"],
+      "venue": "Circle Documentation",
+      "url": "https://www.circle.com/en/usdc",
+      "relevance": "Fiat-backed stablecoin reserves"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "Fiat-backed stablecoins hold reserves (cash, treasuries) to back outstanding tokens",
+      "importance": "critical",
+      "sources": ["Circle documentation", "BIS 2022"]
+    },
+    {
+      "finding": "Algorithmic stablecoins use market mechanisms without full backing",
+      "importance": "critical",
+      "sources": ["Klages-Mundt et al. 2020"]
+    },
+    {
+      "finding": "Terra/Luna collapsed in May 2022 losing $40B+ in value",
+      "importance": "critical",
+      "sources": ["Post-mortem analyses"]
+    },
+    {
+      "finding": "Death spiral occurs when confidence loss triggers redemptions that can't be met",
+      "importance": "critical",
+      "sources": ["Terra collapse analysis"]
+    },
+    {
+      "finding": "Reserve quality and transparency vary significantly across issuers",
+      "importance": "high",
+      "sources": ["Tether investigations", "Circle reports"]
+    },
+    {
+      "finding": "Regulatory scrutiny is increasing, potentially affecting stablecoin operations",
+      "importance": "high",
+      "sources": ["BIS 2022", "SEC actions"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "Fiat-backed stablecoins are as safe as money market funds",
+      "validity": "Depends on reserve quality and regulatory status",
+      "sources": ["BIS 2022"]
+    },
+    {
+      "argument": "Algorithmic designs can be improved after Terra failure",
+      "validity": "Possible but fundamental vulnerabilities remain",
+      "sources": ["Academic analysis"]
+    },
+    {
+      "argument": "Stablecoins provide important utility despite risks",
+      "validity": "True, but risks must be understood",
+      "sources": ["Market usage data"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.88,
+    "areas_of_uncertainty": [
+      "Future regulatory framework",
+      "Reserve transparency accuracy",
+      "Systemic risk in crypto ecosystem"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "Fiat-backed mechanism (reserves)",
+      "Algorithmic mechanism (market forces)",
+      "Terra/Luna collapse",
+      "Key risk: de-pegging/bank run"
+    ],
+    "should_include": [
+      "Specific stablecoins (USDT, USDC, DAI)",
+      "Reserve composition concerns",
+      "Regulatory considerations"
+    ],
+    "bonus_points": [
+      "Death spiral mechanism explanation",
+      "Crypto-collateralized (DAI/MakerDAO)",
+      "Comparison to traditional money market"
+    ]
+  }
+}

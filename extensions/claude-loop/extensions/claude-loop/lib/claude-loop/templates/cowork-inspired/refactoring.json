@@ -1,0 +1,159 @@
+{
+  "metadata": {
+    "templateName": "refactoring",
+    "templateVersion": "1.0.0",
+    "description": "Code refactoring with backwards compatibility, comprehensive testing, and migration path",
+    "estimatedComplexity": "medium",
+    "typicalDuration": "3-6 hours",
+    "requiredSkills": ["refactoring", "testing", "architecture", "backwards compatibility"],
+    "variables": [
+      {
+        "name": "PROJECT_NAME",
+        "description": "Name of the project",
+        "required": true,
+        "example": "payment-processor"
+      },
+      {
+        "name": "REFACTOR_TARGET",
+        "description": "What is being refactored (module, class, function, etc.)",
+        "required": true,
+        "example": "payment-gateway"
+      },
+      {
+        "name": "BRANCH_NAME",
+        "description": "Git branch name for this refactor",
+        "required": false,
+        "default": "refactor/{{REFACTOR_TARGET}}",
+        "example": "refactor/payment-gateway"
+      },
+      {
+        "name": "REFACTOR_REASON",
+        "description": "Reason for refactoring",
+        "required": false,
+        "default": "improve code quality and maintainability",
+        "example": "reduce complexity and improve testability"
+      }
+    ]
+  },
+  "prd": {
+    "project": "{{PROJECT_NAME}}-refactor-{{REFACTOR_TARGET}}",
+    "branchName": "{{BRANCH_NAME}}",
+    "description": "Refactor {{REFACTOR_TARGET}} to {{REFACTOR_REASON}}. Maintain backwards compatibility, ensure all existing tests pass, add new tests for refactored code, and provide clear migration path for downstream consumers.",
+    "userStories": [
+      {
+        "id": "RF-001",
+        "title": "Baseline Tests and Coverage",
+        "description": "Establish baseline test coverage and ensure all existing tests pass before refactoring",
+        "acceptanceCriteria": [
+          "Run full test suite and verify all tests pass",
+          "Measure current test coverage for {{REFACTOR_TARGET}}",
+          "Document baseline metrics: coverage %, lines of code, complexity",
+          "Identify areas with insufficient test coverage",
+          "Add missing tests to achieve minimum 80% coverage",
+          "Create integration tests if not present",
+          "Document current behavior and expected outputs",
+          "Take snapshot of current API surface for backwards compatibility checks"
+        ],
+        "priority": 1,
+        "dependencies": [],
+        "fileScope": ["tests/", "src/{{REFACTOR_TARGET}}/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "RF-002",
+        "title": "Refactoring Implementation - Phase 1",
+        "description": "Implement first phase of refactoring with focus on internal structure improvements",
+        "acceptanceCriteria": [
+          "Extract large functions into smaller, focused functions",
+          "Remove code duplication using DRY principle",
+          "Improve naming: variables, functions, classes",
+          "Simplify complex conditional logic",
+          "Reduce cyclomatic complexity (target: <10 per function)",
+          "Add appropriate design patterns where beneficial",
+          "Maintain public API surface for backwards compatibility",
+          "Run existing tests continuously to catch regressions",
+          "Document refactoring decisions and trade-offs"
+        ],
+        "priority": 2,
+        "dependencies": ["RF-001"],
+        "fileScope": ["src/{{REFACTOR_TARGET}}/"],
+        "estimatedComplexity": "medium",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "RF-003",
+        "title": "Type Safety and Error Handling",
+        "description": "Improve type safety and error handling in refactored code",
+        "acceptanceCriteria": [
+          "Add TypeScript strict mode checks if applicable",
+          "Replace 'any' types with proper type definitions",
+          "Add input validation with clear error messages",
+          "Implement consistent error handling strategy",
+          "Replace error codes with typed error classes",
+          "Add null/undefined checks where needed",
+          "Document error cases and expected behaviors",
+          "Write tests for error paths and edge cases"
+        ],
+        "priority": 2,
+        "dependencies": ["RF-001"],
+        "fileScope": ["src/{{REFACTOR_TARGET}}/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "RF-004",
+        "title": "Performance Optimization",
+        "description": "Optimize performance of refactored code without sacrificing readability",
+        "acceptanceCriteria": [
+          "Profile code to identify performance bottlenecks",
+          "Optimize hot paths and frequently called functions",
+          "Add caching where appropriate",
+          "Reduce unnecessary allocations and copies",
+          "Optimize database queries if applicable",
+          "Add lazy loading for expensive operations",
+          "Write performance benchmarks comparing before/after",
+          "Document performance improvements with metrics",
+          "Ensure optimizations don't break tests or compatibility"
+        ],
+        "priority": 3,
+        "dependencies": ["RF-002", "RF-003"],
+        "fileScope": ["src/{{REFACTOR_TARGET}}/", "benchmarks/"],
+        "estimatedComplexity": "medium",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "RF-005",
+        "title": "Migration Guide and Documentation",
+        "description": "Create comprehensive migration guide and update documentation",
+        "acceptanceCriteria": [
+          "Document all breaking changes (if any)",
+          "Create migration guide for consumers",
+          "Add deprecation warnings for old APIs",
+          "Update inline code documentation",
+          "Update README with refactoring benefits",
+          "Create before/after comparison examples",
+          "Document new best practices for using refactored code",
+          "Add ADR (Architecture Decision Record) explaining refactoring rationale",
+          "Update changelog with refactoring details",
+          "Ensure all tests pass with 100% of baseline coverage maintained"
+        ],
+        "priority": 4,
+        "dependencies": ["RF-004"],
+        "fileScope": ["docs/", "README.md", "CHANGELOG.md"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      }
+    ]
+  }
+}

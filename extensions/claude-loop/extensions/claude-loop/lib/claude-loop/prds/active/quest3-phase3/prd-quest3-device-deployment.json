@@ -1,0 +1,129 @@
+{
+  "title": "Quest 3 Agent 2: Build APK and Deploy to Device",
+  "description": "Build DataCenterAR debug APK, verify Quest 3 device connection, deploy APK via adb, launch app, and monitor initial startup. Document any deployment issues for troubleshooting and future automation improvements.",
+  "context": {
+    "technology": "Meta Spatial SDK v0.9.2 + Android/Kotlin + Quest 3",
+    "project_path": "spatial_quest3_client/DataCenterAR",
+    "phase": "Phase 3 - Quest 3 Device Deployment (First deployment)",
+    "dependencies": [
+      "TextRenderer.kt completed (parallel agent 1)",
+      "Quest 3 device connected via USB-C",
+      "Developer mode enabled on Quest 3",
+      "adb installed and in PATH"
+    ],
+    "time_constraint": "15-20 minutes (after TextRenderer completes)",
+    "testing_approach": "Document actual deployment process for automation"
+  },
+  "objectives": [
+    "Build DataCenterAR debug APK",
+    "Verify Quest 3 connection",
+    "Deploy APK to Quest 3",
+    "Launch app on device",
+    "Capture logcat for monitoring",
+    "Document deployment process"
+  ],
+  "acceptanceCriteria": [
+    "gradlew assembleDebug completes successfully",
+    "APK file created at app/build/outputs/apk/debug/app-debug.apk",
+    "adb devices shows Quest 3 connected",
+    "adb install succeeds",
+    "App launches on Quest 3",
+    "Initial startup logged (no crashes)",
+    "Deployment script documented for future automation"
+  ],
+  "stories": [
+    {
+      "id": "DEPLOY-001",
+      "title": "Build debug APK",
+      "description": "Execute gradle build to create debug APK. Use JAVA_HOME setting for Android Studio JDK. Run with --no-daemon for reliable build. Capture build output and any warnings/errors.",
+      "acceptanceCriteria": [
+        "export JAVA_HOME set correctly",
+        "./gradlew clean assembleDebug --no-daemon runs",
+        "Build completes successfully",
+        "APK file exists and is >5MB",
+        "Build time logged",
+        "Any warnings documented"
+      ],
+      "estimatedEffort": "5-7 minutes"
+    },
+    {
+      "id": "DEPLOY-002",
+      "title": "Verify Quest 3 connection and deploy",
+      "description": "Check Quest 3 device connection via adb devices, enable developer mode if needed, deploy APK via adb install, and verify installation. Document any connection issues.",
+      "acceptanceCriteria": [
+        "adb devices shows Quest 3 device",
+        "Device status is 'device' (not unauthorized)",
+        "adb install -r app-debug.apk succeeds",
+        "Package installed confirmation received",
+        "Installation time logged"
+      ],
+      "estimatedEffort": "3-5 minutes"
+    },
+    {
+      "id": "DEPLOY-003",
+      "title": "Launch app and monitor startup",
+      "description": "Launch DataCenterAR app on Quest 3 using adb shell am start. Monitor logcat for initial startup logs, crashes, errors. Document app launch behavior.",
+      "acceptanceCriteria": [
+        "adb shell am start launches app",
+        "App appears in Quest 3 VR view",
+        "No immediate crashes logged",
+        "MainActivity onCreate logged",
+        "Scene initialization logged",
+        "Any errors captured in logcat"
+      ],
+      "estimatedEffort": "5-8 minutes"
+    }
+  ],
+  "technicalNotes": {
+    "build_command": "export JAVA_HOME=\"/Applications/Android Studio.app/Contents/jbr/Contents/Home\" && ./gradlew clean assembleDebug --no-daemon",
+    "deployment_commands": [
+      "adb devices",
+      "adb install -r app/build/outputs/apk/debug/app-debug.apk",
+      "adb shell am start -n com.accenture.datacenter/.MainActivity",
+      "adb logcat -c && adb logcat | grep -i datacenter"
+    ],
+    "troubleshooting": {
+      "device_unauthorized": "Enable USB debugging on Quest 3, accept RSA fingerprint",
+      "build_failed": "Check JAVA_HOME, clean build directory",
+      "install_failed": "Uninstall previous version first"
+    },
+    "output_location": "spatial_quest3_client/DataCenterAR/app/build/outputs/apk/debug/"
+  },
+  "outOfScope": [
+    "Release builds",
+    "Code signing",
+    "ProGuard configuration",
+    "Backend deployment",
+    "Network configuration"
+  ],
+  "successMetrics": {
+    "build_time": "<5 minutes",
+    "deployment_time": "<3 minutes",
+    "app_launch_time": "<10 seconds",
+    "zero_crashes": "No crashes in first 30 seconds"
+  },
+  "failure_monitoring": {
+    "track_for_self_improvement": [
+      "Build errors (compilation, resource, manifest)",
+      "ADB connection issues",
+      "Installation failures",
+      "App crashes on startup",
+      "Missing permissions",
+      "Meta SDK initialization errors",
+      "Time overruns (>20 min total)"
+    ],
+    "success_indicators": [
+      "Clean build on first try",
+      "Immediate device recognition",
+      "Successful installation",
+      "App launches without crashes",
+      "Completed in <20 minutes"
+    ],
+    "automation_opportunities": [
+      "Create deploy_quest3.sh script",
+      "Auto-detect Quest 3 device",
+      "Auto-build on code changes",
+      "Integration with claude-loop CI"
+    ]
+  }
+}

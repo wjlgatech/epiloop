@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/bluebubbles",
+  "name": "@epiloop/bluebubbles",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot BlueBubbles channel plugin",
-  "clawdbot": {
+  "description": "Epiloop BlueBubbles channel plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,7 +25,7 @@
       "order": 75
     },
     "install": {
-      "npmSpec": "@clawdbot/bluebubbles",
+      "npmSpec": "@epiloop/bluebubbles",
       "localPath": "extensions/bluebubbles",
       "defaultChoice": "npm"
     }

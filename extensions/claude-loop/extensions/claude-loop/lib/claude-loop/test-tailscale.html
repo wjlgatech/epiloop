@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tailscale Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .status {
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 24px;
+            text-align: center;
+        }
+        .success { background: #22c55e; }
+        .info { background: #3b82f6; }
+    </style>
+</head>
+<body>
+    <div class="status success">
+        ✅ Tailscale Connection Works!
+    </div>
+    <div class="status info">
+        📱 You're connected via Tailscale<br>
+        🌐 From: <span id="ip">Loading...</span>
+    </div>
+    <p>If you see this page, your Tailscale connection is working perfectly!</p>
+    <p>Your Mac IP: 100.125.111.21</p>
+    <p>Now try the full dashboard:</p>
+    <a href="/examples/websocket_client.html" style="color: #60a5fa; font-size: 18px;">
+        → Open Dashboard
+    </a>
+    
+    <script>
+        fetch('https://api.ipify.org?format=json')
+            .then(r => r.json())
+            .then(d => document.getElementById('ip').textContent = d.ip)
+            .catch(() => document.getElementById('ip').textContent = 'Cellular/WiFi');
+    </script>
+</body>
+</html>

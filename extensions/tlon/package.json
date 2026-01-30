@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/tlon",
+  "name": "@epiloop/tlon",
   "version": "2026.1.22",
   "type": "module",
-  "description": "Clawdbot Tlon/Urbit channel plugin",
-  "clawdbot": {
+  "description": "Epiloop Tlon/Urbit channel plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ],
@@ -18,7 +18,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@clawdbot/tlon",
+      "npmSpec": "@epiloop/tlon",
       "localPath": "extensions/tlon",
       "defaultChoice": "npm"
     }

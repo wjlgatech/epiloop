@@ -1,0 +1,141 @@
+#========================================================
+# REAL-WORLD BENCHMARK TASK 006
+# Tier: MICRO (Small Feature)
+# Source: Reliability pattern
+#========================================================
+
+id: TASK-006
+name: "Async Retry Logic with Exponential Backoff"
+tier: micro
+source_project: null
+difficulty: 3  # 1-5 scale
+estimated_time_human_minutes: 45
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Requirement**: Implement retry logic for external API calls that may fail.
+
+  **Problem**: API calls to payment processor occasionally fail due to:
+  - Network timeouts
+  - Rate limiting (429 errors)
+  - Temporary service unavailability (503 errors)
+
+  **Task**: Create a retry decorator/function that:
+  1. Retries failed requests up to 3 times
+  2. Uses exponential backoff (1s, 2s, 4s)
+  3. Only retries on specific errors (network, 429, 503)
+  4. Logs each retry attempt
+  5. Raises exception after max retries
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Implements retry mechanism (decorator or wrapper)"
+    weight: 0.25
+    validation_method: "grep"
+    validation_script: |
+      grep -iE "(retry|@.*retry|def.*retry)" . -r
+
+  - id: AC2
+    description: "Uses exponential backoff (1s, 2s, 4s pattern)"
+    weight: 0.25
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(2.*\*\*|exponential|backoff|sleep.*\*)" . -r
+
+  - id: AC3
+    description: "Limits retries to max 3 attempts"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(max.*retry|retry.*3|attempts.*3)" . -r
+
+  - id: AC4
+    description: "Only retries specific errors (network, 429, 503)"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(429|503|timeout|network.*error)" . -r
+
+  - id: AC5
+    description: "Logs retry attempts"
+    weight: 0.10
+    validation_method: "grep"
+    validation_script: |
+      grep -iE "(log.*retry|retry.*attempt)" . -r
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach: |
+    1. Create retry decorator with max_retries=3
+    2. Use time.sleep(2 ** attempt) for backoff
+    3. Catch specific exceptions (requests.Timeout, HTTPError)
+    4. Check status_code in (429, 503) for HTTP errors
+    5. Log each attempt with timestamp
+
+  example_code: |
+    import time
+    from functools import wraps
+
+    def retry_with_backoff(max_retries=3):
+        def decorator(func):
+            @wraps(func)
+            def wrapper(*args, **kwargs):
+                for attempt in range(max_retries):
+                    try:
+                        return func(*args, **kwargs)
+                    except (Timeout, HTTPError) as e:
+                        if attempt == max_retries - 1:
+                            raise
+                        wait = 2 ** attempt
+                        time.sleep(wait)
+                        log(f"Retry {attempt+1}/{max_retries}")
+            return wrapper
+        return decorator
+
+#--------------------------------------------------------
+# TEST DATA
+#--------------------------------------------------------
+test_data:
+  scenarios:
+    - name: "Success on first try"
+      failures: 0
+      expected_attempts: 1
+
+    - name: "Success on second try"
+      failures: 1
+      expected_attempts: 2
+
+    - name: "Fail all retries"
+      failures: 3
+      expected_attempts: 3
+      expected_exception: true
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ Retry decorator/function created
+  2. ✓ Exponential backoff implemented (1s, 2s, 4s)
+  3. ✓ Max 3 retry attempts
+  4. ✓ Only retries network/429/503 errors
+  5. ✓ Logs each retry
+  6. ✓ Raises exception after max retries
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["async", "retry", "reliability", "error-handling"]
+  estimated_impact: "high"
+  complexity_signals:
+    - "Decorator pattern"
+    - "Exponential backoff algorithm"
+    - "Error handling"

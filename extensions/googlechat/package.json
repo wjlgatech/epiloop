@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/googlechat",
+  "name": "@epiloop/googlechat",
   "version": "2026.1.22",
   "type": "module",
-  "description": "Clawdbot Google Chat channel plugin",
-  "clawdbot": {
+  "description": "Epiloop Google Chat channel plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ],
@@ -22,7 +22,7 @@
       "order": 55
     },
     "install": {
-      "npmSpec": "@clawdbot/googlechat",
+      "npmSpec": "@epiloop/googlechat",
       "localPath": "extensions/googlechat",
       "defaultChoice": "npm"
     }
@@ -31,9 +31,9 @@
     "google-auth-library": "^10.5.0"
   },
   "devDependencies": {
-    "clawdbot": "workspace:*"
+    "epiloop": "workspace:*"
   },
   "peerDependencies": {
-    "clawdbot": ">=2026.1.24-0"
+    "epiloop": ">=2026.1.24-0"
   }
 }

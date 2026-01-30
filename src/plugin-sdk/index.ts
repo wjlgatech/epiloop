@@ -59,13 +59,13 @@ export type {
 } from "../channels/plugins/types.js";
 export type { ChannelConfigSchema, ChannelPlugin } from "../channels/plugins/types.plugin.js";
 export type {
-  ClawdbotPluginApi,
-  ClawdbotPluginService,
-  ClawdbotPluginServiceContext,
+  EpiloopPluginApi,
+  EpiloopPluginService,
+  EpiloopPluginServiceContext,
 } from "../plugins/types.js";
 export type { PluginRuntime } from "../plugins/runtime/types.js";
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
-export type { ClawdbotConfig } from "../config/config.js";
+export type { EpiloopConfig } from "../config/config.js";
 export type { ChannelDock } from "../channels/dock.js";
 export { getChatChannelMeta } from "../channels/registry.js";
 export type {

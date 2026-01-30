@@ -1,6 +1,6 @@
-# @clawdbot/voice-call
+# @epiloop/voice-call
 
-Official Voice Call plugin for **Clawdbot**.
+Official Voice Call plugin for **Epiloop**.
 
 Providers:
 - **Twilio** (Programmable Voice + Media Streams)
@@ -13,10 +13,10 @@ Plugin system: `https://docs.clawd.bot/plugin`
 
 ## Install (local dev)
 
-### Option A: install via Clawdbot (recommended)
+### Option A: install via Epiloop (recommended)
 
 ```bash
-clawdbot plugins install @clawdbot/voice-call
+epiloop plugins install @epiloop/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -24,9 +24,9 @@ Restart the Gateway afterwards.
 ### Option B: copy into your global extensions folder (dev)
 
 ```bash
-mkdir -p ~/.clawdbot/extensions
-cp -R extensions/voice-call ~/.clawdbot/extensions/voice-call
-cd ~/.clawdbot/extensions/voice-call && pnpm install
+mkdir -p ~/.epiloop/extensions
+cp -R extensions/voice-call ~/.epiloop/extensions/voice-call
+cd ~/.epiloop/extensions/voice-call && pnpm install
 ```
 
 ## Config
@@ -78,13 +78,13 @@ Notes:
 ## CLI
 
 ```bash
-clawdbot voicecall call --to "+15555550123" --message "Hello from Clawdbot"
-clawdbot voicecall continue --call-id <id> --message "Any questions?"
-clawdbot voicecall speak --call-id <id> --message "One moment"
-clawdbot voicecall end --call-id <id>
-clawdbot voicecall status --call-id <id>
-clawdbot voicecall tail
-clawdbot voicecall expose --mode funnel
+epiloop voicecall call --to "+15555550123" --message "Hello from Epiloop"
+epiloop voicecall continue --call-id <id> --message "Any questions?"
+epiloop voicecall speak --call-id <id> --message "One moment"
+epiloop voicecall end --call-id <id>
+epiloop voicecall status --call-id <id>
+epiloop voicecall tail
+epiloop voicecall expose --mode funnel
 ```
 
 ## Tool

@@ -1,0 +1,1502 @@
+[
+  {
+    "id": "SCI-001",
+    "domain": "Scientific",
+    "question": "What are the current leading theories explaining the molecular mechanisms of aging, and what evidence supports each?",
+    "difficulty": "hard",
+    "expected_sources": 6,
+    "sub_questions": [
+      "How does telomere shortening contribute to aging?",
+      "What is the role of mitochondrial dysfunction in aging?",
+      "How do senescent cells accumulate and affect aging?",
+      "What is the epigenetic clock and what does it measure?"
+    ],
+    "evaluation_criteria": "Must explain multiple theories with molecular mechanisms and evidence",
+    "tags": ["aging", "biology", "telomeres", "senescence"]
+  },
+  {
+    "id": "SCI-002",
+    "domain": "Scientific",
+    "question": "How do CRISPR-Cas systems work and what are the key advances in gene editing technology?",
+    "difficulty": "medium",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the mechanism of CRISPR-Cas9 gene editing?",
+      "How do base editors and prime editors differ from Cas9?",
+      "What are the off-target effects and how are they minimized?",
+      "What clinical applications have been approved?"
+    ],
+    "evaluation_criteria": "Must explain mechanisms, advances, and applications",
+    "tags": ["CRISPR", "gene-editing", "molecular-biology", "therapeutics"]
+  },
+  {
+    "id": "SCI-003",
+    "domain": "Scientific",
+    "question": "What are the proposed mechanisms for the origin of life on Earth?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the RNA world hypothesis?",
+      "How might protocells have formed?",
+      "What role did hydrothermal vents play?",
+      "What is the evidence for each proposed mechanism?"
+    ],
+    "evaluation_criteria": "Must explain multiple hypotheses with evidence and critiques",
+    "tags": ["origin-of-life", "abiogenesis", "evolution", "biochemistry"]
+  },
+  {
+    "id": "SCI-004",
+    "domain": "Scientific",
+    "question": "How do mRNA vaccines work and how did they enable rapid COVID-19 vaccine development?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the mechanism of mRNA vaccine action?",
+      "What innovations enabled mRNA stability?",
+      "How does lipid nanoparticle delivery work?",
+      "What are the advantages over traditional vaccines?"
+    ],
+    "evaluation_criteria": "Must explain mechanism, delivery, and development advantages",
+    "tags": ["mRNA", "vaccines", "COVID-19", "immunology"]
+  },
+  {
+    "id": "SCI-005",
+    "domain": "Scientific",
+    "question": "What is the current understanding of dark matter and dark energy?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What observational evidence exists for dark matter?",
+      "What are the leading dark matter candidates?",
+      "How was dark energy discovered?",
+      "What are the implications for the fate of the universe?"
+    ],
+    "evaluation_criteria": "Must explain evidence, candidates, and cosmological implications",
+    "tags": ["dark-matter", "dark-energy", "cosmology", "physics"]
+  },
+  {
+    "id": "SCI-006",
+    "domain": "Scientific",
+    "question": "How does the human gut microbiome influence health and disease?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the composition of a healthy microbiome?",
+      "How does the microbiome affect immune function?",
+      "What is the gut-brain axis?",
+      "How do antibiotics and diet affect the microbiome?"
+    ],
+    "evaluation_criteria": "Must explain composition, mechanisms, and health effects",
+    "tags": ["microbiome", "gut-health", "immunology", "bacteria"]
+  },
+  {
+    "id": "SCI-007",
+    "domain": "Scientific",
+    "question": "What are the molecular mechanisms of cancer metastasis?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the epithelial-mesenchymal transition?",
+      "How do cancer cells enter and exit circulation?",
+      "What determines metastatic tropism to specific organs?",
+      "What is the role of the pre-metastatic niche?"
+    ],
+    "evaluation_criteria": "Must explain EMT, circulation, tropism, and niche formation",
+    "tags": ["cancer", "metastasis", "EMT", "oncology"]
+  },
+  {
+    "id": "SCI-008",
+    "domain": "Scientific",
+    "question": "How do quantum computers differ from classical computers in their operation?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are qubits and how do they differ from classical bits?",
+      "What is quantum superposition and entanglement?",
+      "What is quantum error correction?",
+      "What problems are quantum computers best suited for?"
+    ],
+    "evaluation_criteria": "Must explain quantum principles and computational advantages",
+    "tags": ["quantum-computing", "qubits", "entanglement", "physics"]
+  },
+  {
+    "id": "SCI-009",
+    "domain": "Scientific",
+    "question": "What are the current approaches to nuclear fusion energy and their challenges?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does magnetic confinement fusion work?",
+      "What is inertial confinement fusion?",
+      "What is the status of ITER and other fusion projects?",
+      "What are the main engineering challenges for commercial fusion?"
+    ],
+    "evaluation_criteria": "Must explain approaches, projects, and specific challenges",
+    "tags": ["fusion", "energy", "physics", "ITER"]
+  },
+  {
+    "id": "SCI-010",
+    "domain": "Scientific",
+    "question": "How do neurons encode and transmit information in the brain?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the mechanism of action potential generation?",
+      "How does synaptic transmission work?",
+      "What is neural coding?",
+      "How do neural circuits perform computations?"
+    ],
+    "evaluation_criteria": "Must explain action potentials, synapses, and coding schemes",
+    "tags": ["neuroscience", "neurons", "synapses", "neural-coding"]
+  },
+  {
+    "id": "SCI-011",
+    "domain": "Scientific",
+    "question": "What are the mechanisms and impacts of ocean acidification?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does CO2 absorption change ocean chemistry?",
+      "What effects does acidification have on marine organisms?",
+      "How does acidification interact with other stressors?",
+      "What are the projected future impacts?"
+    ],
+    "evaluation_criteria": "Must explain chemistry, biological impacts, and projections",
+    "tags": ["ocean-acidification", "climate", "marine-biology", "chemistry"]
+  },
+  {
+    "id": "SCI-012",
+    "domain": "Scientific",
+    "question": "How do antibiotic resistance mechanisms evolve and spread?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the molecular mechanisms of antibiotic resistance?",
+      "How does horizontal gene transfer spread resistance?",
+      "What role does selective pressure play?",
+      "What strategies combat antibiotic resistance?"
+    ],
+    "evaluation_criteria": "Must explain mechanisms, evolution, and countermeasures",
+    "tags": ["antibiotic-resistance", "microbiology", "evolution", "AMR"]
+  },
+  {
+    "id": "SCI-013",
+    "domain": "Scientific",
+    "question": "What are the leading hypotheses for the Cambrian explosion?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What was the Cambrian explosion?",
+      "How might oxygen levels have enabled the explosion?",
+      "What role did ecological factors play?",
+      "What genetic innovations occurred during this period?"
+    ],
+    "evaluation_criteria": "Must explain event and multiple hypotheses with evidence",
+    "tags": ["Cambrian", "evolution", "paleontology", "biodiversity"]
+  },
+  {
+    "id": "SCI-014",
+    "domain": "Scientific",
+    "question": "How do stem cells maintain pluripotency and differentiate?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What transcription factors maintain pluripotency?",
+      "How does epigenetic regulation control differentiation?",
+      "What signals trigger differentiation?",
+      "How are induced pluripotent stem cells created?"
+    ],
+    "evaluation_criteria": "Must explain molecular mechanisms and iPSC technology",
+    "tags": ["stem-cells", "pluripotency", "differentiation", "iPSC"]
+  },
+  {
+    "id": "SCI-015",
+    "domain": "Scientific",
+    "question": "What is the current understanding of superconductivity and room-temperature superconductors?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the BCS theory of superconductivity?",
+      "How do high-temperature superconductors work?",
+      "What is the status of room-temperature superconductor claims?",
+      "What are the applications of superconductors?"
+    ],
+    "evaluation_criteria": "Must explain theories, materials, and recent developments",
+    "tags": ["superconductivity", "physics", "materials", "BCS-theory"]
+  },
+  {
+    "id": "SCI-016",
+    "domain": "Scientific",
+    "question": "How do CAR-T cell therapies work for cancer treatment?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the mechanism of CAR-T cell therapy?",
+      "How are CAR-T cells manufactured?",
+      "What toxicities are associated with CAR-T?",
+      "What cancers have approved CAR-T treatments?"
+    ],
+    "evaluation_criteria": "Must explain mechanism, manufacturing, and clinical applications",
+    "tags": ["CAR-T", "immunotherapy", "cancer", "cell-therapy"]
+  },
+  {
+    "id": "SCI-017",
+    "domain": "Scientific",
+    "question": "What causes gravitational waves and how are they detected?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What events produce detectable gravitational waves?",
+      "How does LIGO detect gravitational waves?",
+      "What have gravitational wave observations revealed?",
+      "What future detectors are planned?"
+    ],
+    "evaluation_criteria": "Must explain sources, detection methods, and discoveries",
+    "tags": ["gravitational-waves", "LIGO", "astrophysics", "general-relativity"]
+  },
+  {
+    "id": "SCI-018",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of protein folding and misfolding diseases?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do proteins fold to their native structure?",
+      "What is the role of chaperones in folding?",
+      "How does misfolding lead to aggregation?",
+      "What diseases are caused by protein misfolding?"
+    ],
+    "evaluation_criteria": "Must explain folding, chaperones, and disease mechanisms",
+    "tags": ["protein-folding", "prions", "amyloid", "biochemistry"]
+  },
+  {
+    "id": "SCI-019",
+    "domain": "Scientific",
+    "question": "How does photosynthesis convert light energy to chemical energy?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What happens in the light-dependent reactions?",
+      "How does the Calvin cycle fix carbon?",
+      "What is the role of photosystems I and II?",
+      "How efficient is natural photosynthesis?"
+    ],
+    "evaluation_criteria": "Must explain light reactions, dark reactions, and efficiency",
+    "tags": ["photosynthesis", "biochemistry", "plants", "energy"]
+  },
+  {
+    "id": "SCI-020",
+    "domain": "Scientific",
+    "question": "What are the mechanisms by which viruses evolve and emerge?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do RNA viruses achieve high mutation rates?",
+      "What is viral recombination and reassortment?",
+      "How do viruses jump between species?",
+      "What factors drive emergence of new viruses?"
+    ],
+    "evaluation_criteria": "Must explain mutation, recombination, and emergence factors",
+    "tags": ["virology", "evolution", "emergence", "zoonosis"]
+  },
+  {
+    "id": "SCI-021",
+    "domain": "Scientific",
+    "question": "What is the current understanding of memory formation and consolidation?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is synaptic plasticity and LTP?",
+      "How are memories consolidated during sleep?",
+      "What is the role of the hippocampus in memory?",
+      "How do different memory systems work?"
+    ],
+    "evaluation_criteria": "Must explain plasticity, consolidation, and memory systems",
+    "tags": ["memory", "neuroscience", "LTP", "hippocampus"]
+  },
+  {
+    "id": "SCI-022",
+    "domain": "Scientific",
+    "question": "How do batteries store and release electrical energy?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the electrochemical reactions in lithium-ion batteries?",
+      "How do solid-state batteries differ?",
+      "What limits battery energy density?",
+      "What are emerging battery technologies?"
+    ],
+    "evaluation_criteria": "Must explain electrochemistry, current tech, and future directions",
+    "tags": ["batteries", "electrochemistry", "lithium-ion", "energy-storage"]
+  },
+  {
+    "id": "SCI-023",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of epigenetic inheritance?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does DNA methylation affect gene expression?",
+      "What are histone modifications and their effects?",
+      "How can epigenetic marks be inherited?",
+      "What evidence exists for transgenerational epigenetic inheritance?"
+    ],
+    "evaluation_criteria": "Must explain mechanisms and inheritance evidence",
+    "tags": ["epigenetics", "methylation", "histones", "inheritance"]
+  },
+  {
+    "id": "SCI-024",
+    "domain": "Scientific",
+    "question": "How do immune checkpoint inhibitors work in cancer therapy?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are PD-1 and CTLA-4 checkpoints?",
+      "How do tumors evade immune surveillance?",
+      "What determines response to checkpoint inhibitors?",
+      "What are the side effects of checkpoint inhibition?"
+    ],
+    "evaluation_criteria": "Must explain checkpoints, tumor evasion, and clinical aspects",
+    "tags": ["immunotherapy", "checkpoint-inhibitors", "cancer", "PD-1"]
+  },
+  {
+    "id": "SCI-025",
+    "domain": "Scientific",
+    "question": "What is the evidence for and against the multiverse theory?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What versions of multiverse theory exist?",
+      "How does inflation theory relate to multiverses?",
+      "Is the multiverse theory falsifiable?",
+      "What is the fine-tuning argument?"
+    ],
+    "evaluation_criteria": "Must explain theory versions and scientific status",
+    "tags": ["multiverse", "cosmology", "physics", "inflation"]
+  },
+  {
+    "id": "SCI-026",
+    "domain": "Scientific",
+    "question": "How do enzymes achieve catalytic specificity and efficiency?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the induced fit model of enzyme action?",
+      "How do enzymes lower activation energy?",
+      "What factors affect enzyme kinetics?",
+      "How do allosteric regulators work?"
+    ],
+    "evaluation_criteria": "Must explain catalysis mechanisms and kinetics",
+    "tags": ["enzymes", "biochemistry", "catalysis", "kinetics"]
+  },
+  {
+    "id": "SCI-027",
+    "domain": "Scientific",
+    "question": "What are the current approaches to treating Alzheimer's disease?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the amyloid hypothesis and its controversies?",
+      "How do anti-amyloid antibodies work?",
+      "What other therapeutic targets are being explored?",
+      "What lifestyle interventions may reduce Alzheimer's risk?"
+    ],
+    "evaluation_criteria": "Must explain hypotheses, therapies, and controversies",
+    "tags": ["Alzheimers", "neurodegenerative", "amyloid", "therapeutics"]
+  },
+  {
+    "id": "SCI-028",
+    "domain": "Scientific",
+    "question": "How does plate tectonics shape Earth's surface and climate?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What drives plate tectonic motion?",
+      "How do plate boundaries create geological features?",
+      "How does tectonics affect long-term climate?",
+      "What is the Wilson cycle?"
+    ],
+    "evaluation_criteria": "Must explain mechanisms, geological features, and climate effects",
+    "tags": ["plate-tectonics", "geology", "earth-science", "climate"]
+  },
+  {
+    "id": "SCI-029",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of circadian rhythm regulation?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the molecular clock mechanism?",
+      "How does the suprachiasmatic nucleus coordinate rhythms?",
+      "How does light entrain circadian rhythms?",
+      "What health effects result from circadian disruption?"
+    ],
+    "evaluation_criteria": "Must explain molecular mechanisms and health implications",
+    "tags": ["circadian", "biology", "sleep", "chronobiology"]
+  },
+  {
+    "id": "SCI-030",
+    "domain": "Scientific",
+    "question": "How do next-generation sequencing technologies work?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the principle of sequencing by synthesis?",
+      "How do Illumina and PacBio technologies differ?",
+      "What is nanopore sequencing?",
+      "How has sequencing cost and throughput changed?"
+    ],
+    "evaluation_criteria": "Must explain major technologies and their characteristics",
+    "tags": ["sequencing", "genomics", "DNA", "technology"]
+  },
+  {
+    "id": "SCI-031",
+    "domain": "Scientific",
+    "question": "What is the current understanding of consciousness from a neuroscience perspective?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the integrated information theory of consciousness?",
+      "What is global workspace theory?",
+      "What neural correlates of consciousness have been identified?",
+      "How do anesthetics affect consciousness?"
+    ],
+    "evaluation_criteria": "Must explain major theories and empirical findings",
+    "tags": ["consciousness", "neuroscience", "IIT", "GWT"]
+  },
+  {
+    "id": "SCI-032",
+    "domain": "Scientific",
+    "question": "How do antibodies recognize and neutralize pathogens?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the structure of an antibody?",
+      "How do B cells generate antibody diversity?",
+      "What are the mechanisms of antibody-mediated immunity?",
+      "How do monoclonal antibody therapeutics work?"
+    ],
+    "evaluation_criteria": "Must explain structure, diversity generation, and mechanisms",
+    "tags": ["antibodies", "immunology", "B-cells", "therapeutics"]
+  },
+  {
+    "id": "SCI-033",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of drug addiction in the brain?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does dopamine signaling relate to addiction?",
+      "What neuroplasticity changes occur in addiction?",
+      "What is the role of the prefrontal cortex in addiction?",
+      "What are current approaches to addiction treatment?"
+    ],
+    "evaluation_criteria": "Must explain neural mechanisms and treatment approaches",
+    "tags": ["addiction", "neuroscience", "dopamine", "treatment"]
+  },
+  {
+    "id": "SCI-034",
+    "domain": "Scientific",
+    "question": "How do solar cells convert sunlight to electricity?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the photovoltaic effect in silicon cells?",
+      "How do perovskite solar cells work?",
+      "What limits solar cell efficiency?",
+      "What are the environmental impacts of solar panels?"
+    ],
+    "evaluation_criteria": "Must explain physics, materials, and efficiency limits",
+    "tags": ["solar-cells", "photovoltaic", "renewable-energy", "physics"]
+  },
+  {
+    "id": "SCI-035",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of horizontal gene transfer in bacteria?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does conjugation transfer genetic material?",
+      "What is transformation in bacteria?",
+      "How does transduction by phages work?",
+      "What role does HGT play in bacterial evolution?"
+    ],
+    "evaluation_criteria": "Must explain all three mechanisms and evolutionary significance",
+    "tags": ["HGT", "bacteria", "evolution", "microbiology"]
+  },
+  {
+    "id": "SCI-036",
+    "domain": "Scientific",
+    "question": "What is the current understanding of exoplanet habitability?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What defines the habitable zone?",
+      "What planetary characteristics affect habitability?",
+      "How do we detect biosignatures on exoplanets?",
+      "What are the most promising potentially habitable exoplanets?"
+    ],
+    "evaluation_criteria": "Must explain habitability factors and detection methods",
+    "tags": ["exoplanets", "habitability", "astrobiology", "astronomy"]
+  },
+  {
+    "id": "SCI-037",
+    "domain": "Scientific",
+    "question": "How do blood clotting cascades work and what causes disorders?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the intrinsic and extrinsic coagulation pathways?",
+      "What is the role of platelets in hemostasis?",
+      "What causes hemophilia?",
+      "How do anticoagulant drugs work?"
+    ],
+    "evaluation_criteria": "Must explain cascades, disorders, and drug mechanisms",
+    "tags": ["coagulation", "blood", "hemophilia", "hematology"]
+  },
+  {
+    "id": "SCI-038",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of SARS-CoV-2 infection and immune evasion?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does the spike protein enable cell entry?",
+      "What immune responses are triggered by infection?",
+      "How do variants evade immunity?",
+      "What factors determine disease severity?"
+    ],
+    "evaluation_criteria": "Must explain entry, immunity, and variant evolution",
+    "tags": ["COVID-19", "SARS-CoV-2", "virology", "immunology"]
+  },
+  {
+    "id": "SCI-039",
+    "domain": "Scientific",
+    "question": "How do catalysts accelerate chemical reactions without being consumed?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the mechanism of heterogeneous catalysis?",
+      "How do homogeneous catalysts differ?",
+      "What is enzyme catalysis?",
+      "What makes a catalyst effective?"
+    ],
+    "evaluation_criteria": "Must explain different catalysis types and mechanisms",
+    "tags": ["catalysis", "chemistry", "kinetics", "reactions"]
+  },
+  {
+    "id": "SCI-040",
+    "domain": "Scientific",
+    "question": "What are the molecular mechanisms of DNA repair?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does base excision repair work?",
+      "What is nucleotide excision repair?",
+      "How do cells repair double-strand breaks?",
+      "What diseases result from defective DNA repair?"
+    ],
+    "evaluation_criteria": "Must explain multiple repair pathways and disease connections",
+    "tags": ["DNA-repair", "molecular-biology", "mutations", "cancer"]
+  },
+  {
+    "id": "SCI-041",
+    "domain": "Scientific",
+    "question": "How do hormones regulate metabolism and energy balance?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does insulin regulate glucose metabolism?",
+      "What is the role of leptin and ghrelin in appetite?",
+      "How do thyroid hormones affect metabolism?",
+      "What causes metabolic syndrome?"
+    ],
+    "evaluation_criteria": "Must explain hormone mechanisms and metabolic regulation",
+    "tags": ["hormones", "metabolism", "insulin", "endocrinology"]
+  },
+  {
+    "id": "SCI-042",
+    "domain": "Scientific",
+    "question": "What is the current understanding of black hole physics?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the structure of a black hole?",
+      "What is Hawking radiation?",
+      "What is the black hole information paradox?",
+      "What have observations of black holes revealed?"
+    ],
+    "evaluation_criteria": "Must explain structure, quantum effects, and observations",
+    "tags": ["black-holes", "astrophysics", "general-relativity", "quantum"]
+  },
+  {
+    "id": "SCI-043",
+    "domain": "Scientific",
+    "question": "How do organoids model human tissue and disease?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are organoids and how are they grown?",
+      "What tissues can be modeled with organoids?",
+      "How are organoids used in drug discovery?",
+      "What are the limitations of organoid models?"
+    ],
+    "evaluation_criteria": "Must explain creation, applications, and limitations",
+    "tags": ["organoids", "stem-cells", "disease-modeling", "drug-discovery"]
+  },
+  {
+    "id": "SCI-044",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of antibiotic action against bacteria?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do cell wall synthesis inhibitors work?",
+      "What antibiotics target protein synthesis?",
+      "How do DNA synthesis inhibitors kill bacteria?",
+      "What determines antibiotic selectivity?"
+    ],
+    "evaluation_criteria": "Must explain major antibiotic classes and mechanisms",
+    "tags": ["antibiotics", "bacteria", "pharmacology", "mechanisms"]
+  },
+  {
+    "id": "SCI-045",
+    "domain": "Scientific",
+    "question": "How does the Standard Model describe fundamental particles and forces?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the fundamental particles in the Standard Model?",
+      "How do gauge bosons mediate forces?",
+      "What is the Higgs mechanism?",
+      "What are the limitations of the Standard Model?"
+    ],
+    "evaluation_criteria": "Must explain particles, forces, Higgs, and limitations",
+    "tags": ["Standard-Model", "particle-physics", "Higgs", "quarks"]
+  },
+  {
+    "id": "SCI-046",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of bacterial biofilm formation?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What stages are involved in biofilm development?",
+      "How do quorum sensing signals coordinate biofilms?",
+      "Why are biofilms resistant to antibiotics?",
+      "What strategies target biofilm infections?"
+    ],
+    "evaluation_criteria": "Must explain formation, resistance, and treatment strategies",
+    "tags": ["biofilms", "bacteria", "quorum-sensing", "infection"]
+  },
+  {
+    "id": "SCI-047",
+    "domain": "Scientific",
+    "question": "How do climate models predict future warming scenarios?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What physical processes do climate models include?",
+      "How are models validated against historical data?",
+      "What are the different emissions scenarios?",
+      "What uncertainties exist in climate projections?"
+    ],
+    "evaluation_criteria": "Must explain model components, validation, and uncertainties",
+    "tags": ["climate-models", "climate-change", "projections", "uncertainty"]
+  },
+  {
+    "id": "SCI-048",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of pain perception and treatment?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do nociceptors detect painful stimuli?",
+      "What pathways transmit pain signals to the brain?",
+      "How do opioids provide analgesia?",
+      "What causes chronic pain?"
+    ],
+    "evaluation_criteria": "Must explain nociception, pathways, and drug mechanisms",
+    "tags": ["pain", "neuroscience", "nociception", "opioids"]
+  },
+  {
+    "id": "SCI-049",
+    "domain": "Scientific",
+    "question": "How does gene therapy correct genetic diseases?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What viral vectors are used for gene delivery?",
+      "How do ex vivo vs in vivo approaches differ?",
+      "What gene therapies have been approved?",
+      "What are the risks of gene therapy?"
+    ],
+    "evaluation_criteria": "Must explain delivery methods, applications, and risks",
+    "tags": ["gene-therapy", "AAV", "viral-vectors", "genetics"]
+  },
+  {
+    "id": "SCI-050",
+    "domain": "Scientific",
+    "question": "What are the molecular mechanisms of signal transduction?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do G protein-coupled receptors work?",
+      "What is the MAP kinase cascade?",
+      "How does calcium signaling function?",
+      "What happens when signaling pathways malfunction?"
+    ],
+    "evaluation_criteria": "Must explain major pathways and disease connections",
+    "tags": ["signal-transduction", "cell-biology", "GPCR", "kinase"]
+  },
+  {
+    "id": "SCI-051",
+    "domain": "Scientific",
+    "question": "How do mass extinctions reshape life on Earth?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What caused the major mass extinctions?",
+      "How do ecosystems recover after mass extinctions?",
+      "What patterns of selectivity occur during extinctions?",
+      "Are we currently in a sixth mass extinction?"
+    ],
+    "evaluation_criteria": "Must explain causes, recovery, and current status",
+    "tags": ["mass-extinction", "paleontology", "evolution", "biodiversity"]
+  },
+  {
+    "id": "SCI-052",
+    "domain": "Scientific",
+    "question": "How does the immune system distinguish self from non-self?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How are self-reactive T cells eliminated?",
+      "What is central vs peripheral tolerance?",
+      "What causes autoimmune diseases?",
+      "How do regulatory T cells prevent autoimmunity?"
+    ],
+    "evaluation_criteria": "Must explain tolerance mechanisms and autoimmunity",
+    "tags": ["immunology", "tolerance", "autoimmunity", "T-cells"]
+  },
+  {
+    "id": "SCI-053",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of photoreception in the eye?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do rod and cone cells detect light?",
+      "What is the phototransduction cascade?",
+      "How does the retina process visual information?",
+      "What causes retinal diseases?"
+    ],
+    "evaluation_criteria": "Must explain photoreceptors, transduction, and diseases",
+    "tags": ["vision", "retina", "photoreceptors", "neuroscience"]
+  },
+  {
+    "id": "SCI-054",
+    "domain": "Scientific",
+    "question": "How do synthetic biology approaches engineer living systems?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the design-build-test-learn cycle?",
+      "What genetic circuits have been constructed?",
+      "How are minimal genomes designed?",
+      "What applications does synthetic biology enable?"
+    ],
+    "evaluation_criteria": "Must explain approaches, examples, and applications",
+    "tags": ["synthetic-biology", "genetic-circuits", "engineering", "biotechnology"]
+  },
+  {
+    "id": "SCI-055",
+    "domain": "Scientific",
+    "question": "What is the evidence for cosmic inflation?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What problems does inflation solve?",
+      "What observational evidence supports inflation?",
+      "What do CMB measurements tell us?",
+      "What are alternative theories to inflation?"
+    ],
+    "evaluation_criteria": "Must explain theory, evidence, and alternatives",
+    "tags": ["inflation", "cosmology", "CMB", "big-bang"]
+  },
+  {
+    "id": "SCI-056",
+    "domain": "Scientific",
+    "question": "How do neural stem cells contribute to brain plasticity?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "Where are neural stem cells found in the adult brain?",
+      "What is adult neurogenesis?",
+      "How does neurogenesis relate to learning and memory?",
+      "Can neurogenesis be enhanced therapeutically?"
+    ],
+    "evaluation_criteria": "Must explain locations, function, and therapeutic potential",
+    "tags": ["neurogenesis", "stem-cells", "plasticity", "brain"]
+  },
+  {
+    "id": "SCI-057",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of inflammation and its resolution?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What triggers acute inflammation?",
+      "What are the key inflammatory mediators?",
+      "How is inflammation resolved?",
+      "What causes chronic inflammation?"
+    ],
+    "evaluation_criteria": "Must explain initiation, mediators, and resolution",
+    "tags": ["inflammation", "immunology", "resolution", "cytokines"]
+  },
+  {
+    "id": "SCI-058",
+    "domain": "Scientific",
+    "question": "How do prion diseases propagate?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the prion hypothesis?",
+      "How does PrPSc convert normal protein?",
+      "What are the different prion diseases?",
+      "Why are prions difficult to treat?"
+    ],
+    "evaluation_criteria": "Must explain mechanism, diseases, and treatment challenges",
+    "tags": ["prions", "neurodegenerative", "protein-misfolding", "TSE"]
+  },
+  {
+    "id": "SCI-059",
+    "domain": "Scientific",
+    "question": "How does the carbon cycle regulate Earth's climate?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the major carbon reservoirs and fluxes?",
+      "How do oceans absorb carbon?",
+      "What is the role of photosynthesis in the carbon cycle?",
+      "How has human activity altered the carbon cycle?"
+    ],
+    "evaluation_criteria": "Must explain reservoirs, fluxes, and human impacts",
+    "tags": ["carbon-cycle", "climate", "CO2", "earth-science"]
+  },
+  {
+    "id": "SCI-060",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of muscle contraction?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the sliding filament theory?",
+      "How does calcium trigger contraction?",
+      "How do different muscle types differ?",
+      "What causes muscular dystrophies?"
+    ],
+    "evaluation_criteria": "Must explain molecular mechanisms and disease",
+    "tags": ["muscle", "contraction", "actin", "myosin"]
+  },
+  {
+    "id": "SCI-061",
+    "domain": "Scientific",
+    "question": "What are the applications and limitations of cryo-electron microscopy?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does cryo-EM determine protein structures?",
+      "What is single-particle analysis?",
+      "What resolution can cryo-EM achieve?",
+      "How does cryo-EM compare to X-ray crystallography?"
+    ],
+    "evaluation_criteria": "Must explain technique, applications, and comparisons",
+    "tags": ["cryo-EM", "structural-biology", "proteins", "microscopy"]
+  },
+  {
+    "id": "SCI-062",
+    "domain": "Scientific",
+    "question": "How do cells regulate the cell cycle and prevent cancer?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the cell cycle checkpoints?",
+      "How do cyclins and CDKs control the cycle?",
+      "What is the role of tumor suppressors like p53?",
+      "How do cancer cells evade cell cycle control?"
+    ],
+    "evaluation_criteria": "Must explain checkpoints, control mechanisms, and cancer",
+    "tags": ["cell-cycle", "cancer", "p53", "checkpoints"]
+  },
+  {
+    "id": "SCI-063",
+    "domain": "Scientific",
+    "question": "What is the evidence for climate change and its attribution to human activities?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What temperature records document warming?",
+      "How do isotope signatures indicate human sources?",
+      "What other evidence supports anthropogenic warming?",
+      "How do attribution studies work?"
+    ],
+    "evaluation_criteria": "Must explain evidence types and attribution methods",
+    "tags": ["climate-change", "attribution", "evidence", "anthropogenic"]
+  },
+  {
+    "id": "SCI-064",
+    "domain": "Scientific",
+    "question": "How do cells die through apoptosis and necrosis?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What triggers apoptosis?",
+      "What is the role of caspases in apoptosis?",
+      "How does necrosis differ from apoptosis?",
+      "What is the role of cell death in disease?"
+    ],
+    "evaluation_criteria": "Must explain pathways and disease connections",
+    "tags": ["apoptosis", "cell-death", "caspases", "necrosis"]
+  },
+  {
+    "id": "SCI-065",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of hearing and deafness?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does the cochlea convert sound to neural signals?",
+      "What is the role of hair cells?",
+      "What causes sensorineural hearing loss?",
+      "How do cochlear implants restore hearing?"
+    ],
+    "evaluation_criteria": "Must explain transduction, disorders, and treatments",
+    "tags": ["hearing", "cochlea", "deafness", "neuroscience"]
+  },
+  {
+    "id": "SCI-066",
+    "domain": "Scientific",
+    "question": "How do metamaterials achieve unusual electromagnetic properties?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are metamaterials and how are they structured?",
+      "How do metamaterials achieve negative refractive index?",
+      "What applications do metamaterials enable?",
+      "What challenges limit metamaterial applications?"
+    ],
+    "evaluation_criteria": "Must explain structure, properties, and applications",
+    "tags": ["metamaterials", "optics", "physics", "electromagnetism"]
+  },
+  {
+    "id": "SCI-067",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of bacterial pathogenesis?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do bacteria adhere to host cells?",
+      "What are bacterial virulence factors?",
+      "How do bacteria evade host immunity?",
+      "What is the role of toxins in disease?"
+    ],
+    "evaluation_criteria": "Must explain adhesion, virulence, and immune evasion",
+    "tags": ["pathogenesis", "bacteria", "virulence", "toxins"]
+  },
+  {
+    "id": "SCI-068",
+    "domain": "Scientific",
+    "question": "How does electrochemistry enable clean energy technologies?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do fuel cells generate electricity?",
+      "What is electrolysis for hydrogen production?",
+      "How do electrocatalysts improve efficiency?",
+      "What are the challenges for green hydrogen?"
+    ],
+    "evaluation_criteria": "Must explain reactions, catalysis, and challenges",
+    "tags": ["electrochemistry", "fuel-cells", "hydrogen", "clean-energy"]
+  },
+  {
+    "id": "SCI-069",
+    "domain": "Scientific",
+    "question": "What are the molecular mechanisms of obesity?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does energy balance regulation work?",
+      "What role do hormones play in obesity?",
+      "What genetic factors contribute to obesity?",
+      "How do GLP-1 agonists cause weight loss?"
+    ],
+    "evaluation_criteria": "Must explain regulation, hormones, genetics, and drugs",
+    "tags": ["obesity", "metabolism", "leptin", "GLP-1"]
+  },
+  {
+    "id": "SCI-070",
+    "domain": "Scientific",
+    "question": "How do RNA interference mechanisms regulate gene expression?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the siRNA pathway?",
+      "How do microRNAs regulate genes?",
+      "What is the role of the RISC complex?",
+      "What therapeutic applications use RNAi?"
+    ],
+    "evaluation_criteria": "Must explain pathways and therapeutic applications",
+    "tags": ["RNAi", "siRNA", "microRNA", "gene-regulation"]
+  },
+  {
+    "id": "SCI-071",
+    "domain": "Scientific",
+    "question": "What determines the stability of atomic nuclei?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the nuclear binding energy?",
+      "What is the nuclear shell model?",
+      "Why are some isotopes radioactive?",
+      "What are magic numbers in nuclear physics?"
+    ],
+    "evaluation_criteria": "Must explain binding, stability, and radioactivity",
+    "tags": ["nuclear-physics", "isotopes", "radioactivity", "binding-energy"]
+  },
+  {
+    "id": "SCI-072",
+    "domain": "Scientific",
+    "question": "How do coral reefs respond to environmental stressors?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is coral bleaching and what causes it?",
+      "How does ocean acidification affect corals?",
+      "What is the role of zooxanthellae in coral health?",
+      "Can corals adapt to climate change?"
+    ],
+    "evaluation_criteria": "Must explain bleaching, acidification, and adaptation",
+    "tags": ["coral-reefs", "bleaching", "climate", "marine-biology"]
+  },
+  {
+    "id": "SCI-073",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of psychiatric drug action?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do antidepressants affect neurotransmission?",
+      "What is the mechanism of antipsychotic drugs?",
+      "How do anxiolytics work?",
+      "Why is there a delay in antidepressant efficacy?"
+    ],
+    "evaluation_criteria": "Must explain mechanisms for major drug classes",
+    "tags": ["psychiatry", "pharmacology", "antidepressants", "neurotransmitters"]
+  },
+  {
+    "id": "SCI-074",
+    "domain": "Scientific",
+    "question": "How do magnetars and neutron stars form and behave?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do neutron stars form in supernovae?",
+      "What determines if a neutron star becomes a magnetar?",
+      "What unusual phenomena do magnetars produce?",
+      "What can we learn from neutron star observations?"
+    ],
+    "evaluation_criteria": "Must explain formation, properties, and observations",
+    "tags": ["neutron-stars", "magnetars", "astrophysics", "supernovae"]
+  },
+  {
+    "id": "SCI-075",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of plant immunity?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do plants recognize pathogens?",
+      "What are pattern-triggered and effector-triggered immunity?",
+      "What is the hypersensitive response?",
+      "How can plant immunity be enhanced for crop protection?"
+    ],
+    "evaluation_criteria": "Must explain recognition, responses, and applications",
+    "tags": ["plant-immunity", "PTI", "ETI", "plant-biology"]
+  },
+  {
+    "id": "SCI-076",
+    "domain": "Scientific",
+    "question": "How does quantum entanglement enable quantum communication?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is quantum entanglement?",
+      "How does quantum key distribution work?",
+      "What is quantum teleportation?",
+      "What are the challenges for quantum networks?"
+    ],
+    "evaluation_criteria": "Must explain entanglement, protocols, and challenges",
+    "tags": ["quantum-entanglement", "QKD", "quantum-communication", "physics"]
+  },
+  {
+    "id": "SCI-077",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of taste and smell perception?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do taste receptors detect different tastes?",
+      "How does olfactory receptor diversity enable smell?",
+      "How are taste and smell signals processed?",
+      "Why do taste and smell interact?"
+    ],
+    "evaluation_criteria": "Must explain receptors and processing for both senses",
+    "tags": ["taste", "smell", "olfaction", "sensory"]
+  },
+  {
+    "id": "SCI-078",
+    "domain": "Scientific",
+    "question": "How do transposable elements affect genome evolution?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the types of transposable elements?",
+      "How do transposons move within genomes?",
+      "What is the impact of transposons on gene expression?",
+      "How do cells suppress transposon activity?"
+    ],
+    "evaluation_criteria": "Must explain types, mechanisms, and regulation",
+    "tags": ["transposons", "genomics", "evolution", "gene-regulation"]
+  },
+  {
+    "id": "SCI-079",
+    "domain": "Scientific",
+    "question": "What is the chemistry behind lithium-ion battery degradation?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What causes capacity fade in lithium-ion batteries?",
+      "What is the solid electrolyte interphase?",
+      "How does lithium plating damage batteries?",
+      "What strategies extend battery lifespan?"
+    ],
+    "evaluation_criteria": "Must explain degradation mechanisms and mitigation",
+    "tags": ["batteries", "degradation", "SEI", "electrochemistry"]
+  },
+  {
+    "id": "SCI-080",
+    "domain": "Scientific",
+    "question": "How do retroviruses integrate into host genomes?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the retrovirus life cycle?",
+      "How does reverse transcriptase work?",
+      "How does HIV integration occur?",
+      "How are endogenous retroviruses significant?"
+    ],
+    "evaluation_criteria": "Must explain life cycle, integration, and significance",
+    "tags": ["retroviruses", "HIV", "integration", "virology"]
+  },
+  {
+    "id": "SCI-081",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of bone remodeling and osteoporosis?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do osteoblasts and osteoclasts coordinate?",
+      "What signals regulate bone remodeling?",
+      "What causes osteoporosis?",
+      "How do osteoporosis treatments work?"
+    ],
+    "evaluation_criteria": "Must explain cellular mechanisms and treatments",
+    "tags": ["bone", "osteoporosis", "osteoclasts", "remodeling"]
+  },
+  {
+    "id": "SCI-082",
+    "domain": "Scientific",
+    "question": "What is the current understanding of string theory?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the basic principles of string theory?",
+      "What are extra dimensions in string theory?",
+      "What is M-theory?",
+      "Can string theory be tested experimentally?"
+    ],
+    "evaluation_criteria": "Must explain principles, dimensions, and testability",
+    "tags": ["string-theory", "physics", "M-theory", "dimensions"]
+  },
+  {
+    "id": "SCI-083",
+    "domain": "Scientific",
+    "question": "How do phase-change materials store thermal energy?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the principle of latent heat storage?",
+      "What materials are used for thermal storage?",
+      "How are PCMs integrated into buildings?",
+      "What are the advantages and limitations of PCMs?"
+    ],
+    "evaluation_criteria": "Must explain physics, materials, and applications",
+    "tags": ["phase-change", "thermal-storage", "materials", "energy"]
+  },
+  {
+    "id": "SCI-084",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of allergic reactions?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How does sensitization to allergens occur?",
+      "What is the role of IgE and mast cells?",
+      "What causes anaphylaxis?",
+      "How do allergy treatments work?"
+    ],
+    "evaluation_criteria": "Must explain immune mechanisms and treatments",
+    "tags": ["allergy", "IgE", "mast-cells", "immunology"]
+  },
+  {
+    "id": "SCI-085",
+    "domain": "Scientific",
+    "question": "How do ecosystems maintain biodiversity?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is the relationship between biodiversity and ecosystem function?",
+      "How do keystone species affect communities?",
+      "What is the role of disturbance in maintaining diversity?",
+      "How does the biodiversity crisis affect ecosystem services?"
+    ],
+    "evaluation_criteria": "Must explain ecological principles and current threats",
+    "tags": ["biodiversity", "ecology", "ecosystems", "conservation"]
+  },
+  {
+    "id": "SCI-086",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of drug metabolism in the liver?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are Phase I and Phase II metabolism?",
+      "What is the role of cytochrome P450 enzymes?",
+      "How do drug-drug interactions occur?",
+      "What causes individual variation in drug metabolism?"
+    ],
+    "evaluation_criteria": "Must explain phases, enzymes, and variability",
+    "tags": ["pharmacology", "metabolism", "CYP450", "liver"]
+  },
+  {
+    "id": "SCI-087",
+    "domain": "Scientific",
+    "question": "What is the current understanding of ultra-high energy cosmic rays?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the possible sources of UHECRs?",
+      "What is the GZK cutoff?",
+      "How are cosmic rays detected?",
+      "What have recent observations revealed?"
+    ],
+    "evaluation_criteria": "Must explain sources, physics, and observations",
+    "tags": ["cosmic-rays", "astrophysics", "particle-physics", "GZK"]
+  },
+  {
+    "id": "SCI-088",
+    "domain": "Scientific",
+    "question": "How do heart failure treatments improve cardiac function?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the pathophysiology of heart failure?",
+      "How do ACE inhibitors and beta blockers help?",
+      "What are the newer SGLT2 inhibitor treatments?",
+      "When is device therapy indicated?"
+    ],
+    "evaluation_criteria": "Must explain pathophysiology and treatment mechanisms",
+    "tags": ["heart-failure", "cardiology", "pharmacology", "treatment"]
+  },
+  {
+    "id": "SCI-089",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of embryonic development?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How do morphogen gradients pattern embryos?",
+      "What is the role of Hox genes in development?",
+      "How do cells know where they are in the embryo?",
+      "What causes birth defects?"
+    ],
+    "evaluation_criteria": "Must explain patterning, gene regulation, and defects",
+    "tags": ["development", "embryology", "morphogens", "Hox"]
+  },
+  {
+    "id": "SCI-090",
+    "domain": "Scientific",
+    "question": "How do plastics degrade in the environment?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What processes break down plastics in the environment?",
+      "What are microplastics and how do they form?",
+      "What are the ecological effects of plastic pollution?",
+      "What biodegradable alternatives exist?"
+    ],
+    "evaluation_criteria": "Must explain degradation, microplastics, and alternatives",
+    "tags": ["plastics", "pollution", "microplastics", "environment"]
+  },
+  {
+    "id": "SCI-091",
+    "domain": "Scientific",
+    "question": "What are the principles of nuclear magnetic resonance spectroscopy?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What physical principles underlie NMR?",
+      "How does chemical shift reveal molecular structure?",
+      "What is 2D NMR spectroscopy?",
+      "How does MRI use NMR principles?"
+    ],
+    "evaluation_criteria": "Must explain physics and applications",
+    "tags": ["NMR", "spectroscopy", "chemistry", "MRI"]
+  },
+  {
+    "id": "SCI-092",
+    "domain": "Scientific",
+    "question": "How do parasites manipulate host behavior?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What mechanisms do parasites use to alter host behavior?",
+      "How does Toxoplasma affect rodent behavior?",
+      "What are zombie parasites like Ophiocordyceps?",
+      "How did host manipulation evolve?"
+    ],
+    "evaluation_criteria": "Must explain mechanisms, examples, and evolution",
+    "tags": ["parasites", "behavior", "host-manipulation", "evolution"]
+  },
+  {
+    "id": "SCI-093",
+    "domain": "Scientific",
+    "question": "What is the chemistry of atmospheric ozone depletion?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What is the natural ozone cycle?",
+      "How do CFCs destroy ozone?",
+      "Why does the ozone hole form over Antarctica?",
+      "How has the Montreal Protocol affected ozone levels?"
+    ],
+    "evaluation_criteria": "Must explain chemistry, polar effects, and recovery",
+    "tags": ["ozone", "atmosphere", "CFCs", "Montreal-Protocol"]
+  },
+  {
+    "id": "SCI-094",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of autophagy and its role in disease?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What triggers autophagy?",
+      "How is the autophagosome formed?",
+      "What is the role of autophagy in cancer?",
+      "How is autophagy related to neurodegeneration?"
+    ],
+    "evaluation_criteria": "Must explain mechanisms and disease connections",
+    "tags": ["autophagy", "cell-biology", "cancer", "neurodegeneration"]
+  },
+  {
+    "id": "SCI-095",
+    "domain": "Scientific",
+    "question": "How do semiconductors enable modern electronics?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What are the electronic properties of semiconductors?",
+      "How do p-n junctions work?",
+      "How does a transistor function?",
+      "What limits semiconductor miniaturization?"
+    ],
+    "evaluation_criteria": "Must explain physics and device operation",
+    "tags": ["semiconductors", "transistors", "electronics", "physics"]
+  },
+  {
+    "id": "SCI-096",
+    "domain": "Scientific",
+    "question": "What are the causes and consequences of permafrost thaw?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What is permafrost and where is it found?",
+      "How much carbon is stored in permafrost?",
+      "What happens when permafrost thaws?",
+      "Could permafrost thaw cause runaway warming?"
+    ],
+    "evaluation_criteria": "Must explain stores, processes, and feedbacks",
+    "tags": ["permafrost", "climate", "carbon", "Arctic"]
+  },
+  {
+    "id": "SCI-097",
+    "domain": "Scientific",
+    "question": "What are the mechanisms of bacterial sporulation and germination?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "What triggers spore formation?",
+      "What makes spores resistant to harsh conditions?",
+      "How do spores sense conditions for germination?",
+      "Why are spore-forming pathogens dangerous?"
+    ],
+    "evaluation_criteria": "Must explain sporulation, resistance, and germination",
+    "tags": ["spores", "bacteria", "dormancy", "resistance"]
+  },
+  {
+    "id": "SCI-098",
+    "domain": "Scientific",
+    "question": "What is the physics of fluid flow at the nanoscale?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "How does nanofluidics differ from macroscale flow?",
+      "What is the Navier slip length?",
+      "How do surface effects dominate at the nanoscale?",
+      "What applications does nanofluidics enable?"
+    ],
+    "evaluation_criteria": "Must explain physics, surface effects, and applications",
+    "tags": ["nanofluidics", "physics", "surface-effects", "microfluidics"]
+  },
+  {
+    "id": "SCI-099",
+    "domain": "Scientific",
+    "question": "How do vaccines generate long-lasting immunity?",
+    "difficulty": "medium",
+    "expected_sources": 4,
+    "sub_questions": [
+      "How do vaccines activate the immune system?",
+      "What is the role of adjuvants?",
+      "How do memory B and T cells form?",
+      "Why do some vaccines require boosters?"
+    ],
+    "evaluation_criteria": "Must explain activation, memory, and duration",
+    "tags": ["vaccines", "immunology", "memory", "antibodies"]
+  },
+  {
+    "id": "SCI-100",
+    "domain": "Scientific",
+    "question": "What are the mechanisms and applications of optogenetics?",
+    "difficulty": "hard",
+    "expected_sources": 5,
+    "sub_questions": [
+      "What are the light-sensitive proteins used in optogenetics?",
+      "How are opsins delivered to specific neurons?",
+      "What has optogenetics revealed about brain circuits?",
+      "Could optogenetics be used therapeutically?"
+    ],
+    "evaluation_criteria": "Must explain tools, delivery, discoveries, and potential",
+    "tags": ["optogenetics", "neuroscience", "opsins", "circuits"]
+  }
+]

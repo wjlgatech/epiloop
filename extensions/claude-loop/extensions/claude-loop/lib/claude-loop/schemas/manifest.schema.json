@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/wjlgatech/claude-loop/schemas/manifest.schema.json",
+  "title": "PRD Manifest Schema",
+  "description": "Schema for validating MANIFEST.yaml files in PRD directories",
+  "type": "object",
+  "required": ["id", "title", "status", "owner", "created_at"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z]+-[0-9]{3,}$",
+      "description": "Unique identifier for the PRD (e.g., PRD-001, DOC-015)"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 100,
+      "description": "Human-readable title of the PRD"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "active", "completed", "abandoned"],
+      "description": "Current lifecycle status of the PRD"
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Primary owner/author of the PRD (username or email)"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when PRD was created"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of last modification"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when PRD was approved (moved to active)"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when PRD was completed"
+    },
+    "abandoned_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when PRD was abandoned"
+    },
+    "supersedes": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[A-Z]+-[0-9]{3,}$"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z]+-[0-9]{3,}$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      ],
+      "description": "PRD ID(s) that this PRD supersedes/replaces"
+    },
+    "superseded_by": {
+      "type": "string",
+      "pattern": "^[A-Z]+-[0-9]{3,}$",
+      "description": "PRD ID that supersedes this PRD (set when abandoned)"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50,
+        "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$|^[a-z0-9]$"
+      },
+      "uniqueItems": true,
+      "description": "Lowercase kebab-case tags for categorization and search"
+    },
+    "approval": {
+      "type": "object",
+      "properties": {
+        "approved_by": {
+          "type": "string",
+          "description": "Username or email of approver"
+        },
+        "approved_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of approval"
+        },
+        "approval_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA256 hash of prd.json content at approval time"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Optional notes from approver"
+        }
+      },
+      "required": ["approved_by", "approved_at"],
+      "description": "Approval metadata (required when status is active or completed)"
+    },
+    "contributors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "role"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Contributor's name or username"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["author", "reviewer", "implementer", "approver"],
+            "description": "Contributor's role in the PRD"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Optional email address"
+          },
+          "added_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When contributor was added"
+          }
+        }
+      },
+      "description": "List of contributors with their roles"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Brief description of the PRD purpose"
+    },
+    "story_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of user stories in the PRD"
+    },
+    "completed_stories": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of completed user stories"
+    },
+    "branch_name": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9/_-]*[a-z0-9]$|^[a-z0-9]$",
+      "description": "Git branch name for this PRD implementation"
+    },
+    "abandon_reason": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500,
+      "description": "Required explanation when PRD is abandoned"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"],
+      "description": "Priority level of the PRD"
+    },
+    "estimated_effort": {
+      "type": "string",
+      "enum": ["small", "medium", "large", "x-large"],
+      "description": "Estimated effort to complete the PRD"
+    },
+    "related_docs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "type"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Relative path to related document"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["rfc", "adr", "guide", "design-doc", "external"],
+            "description": "Type of related document"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the related document"
+          }
+        }
+      },
+      "description": "Related documentation (RFCs, ADRs, design docs)"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "status": { "const": "abandoned" } }
+      },
+      "then": {
+        "required": ["abandon_reason"]
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "enum": ["active", "completed"] } }
+      },
+      "then": {
+        "required": ["approval"]
+      }
+    }
+  ]
+}

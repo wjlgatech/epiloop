@@ -1,0 +1,193 @@
+{
+  "title": "Quest 3 Agent 3: Reality-Grounded TDD - AR Overlay Testing",
+  "description": "Execute comprehensive Reality-Grounded TDD testing of AR overlays on physical Quest 3 device. Test BoundingBoxRenderer, ArrowRenderer, TextRenderer, and OverlayManager against actual device behavior. Document findings, performance metrics, and create test cases based on real-world observations (not mocked assumptions).",
+  "context": {
+    "technology": "Meta Spatial SDK v0.9.2 + Android/Kotlin + Quest 3",
+    "project_path": "spatial_quest3_client/DataCenterAR",
+    "phase": "Phase 3 - Reality-Grounded TDD (First device testing)",
+    "dependencies": [
+      "DataCenterAR APK deployed to Quest 3 (agent 2)",
+      "App running on device",
+      "All AR components compiled (BoundingBox, Arrow, Text, Overlay)"
+    ],
+    "testing_philosophy": "Reality-Grounded TDD - Test against actual execution, not specifications or mocks",
+    "time_constraint": "2-3 hours comprehensive testing",
+    "reference": "QUEST3_MONDAY_TESTING_PLAN.md - Phase 2 AR & Perception section"
+  },
+  "objectives": [
+    "Test AR overlay rendering on physical Quest 3",
+    "Measure actual performance (FPS, latency, rendering)",
+    "Document real-world behavior vs expected",
+    "Identify bugs, crashes, visual glitches",
+    "Create test cases based on observations",
+    "Capture evidence (screenshots, logcat, metrics)"
+  ],
+  "acceptanceCriteria": [
+    "All 4 AR components tested on device (BoundingBox, Arrow, Text, Overlay)",
+    "Performance metrics captured (FPS, render time, memory)",
+    "Visual validation documented (screenshots or video)",
+    "Bugs and issues logged with reproduction steps",
+    "Reality-Grounded test cases written for each component",
+    "Test report created with pass/fail results",
+    "Recommendations for fixes documented"
+  ],
+  "stories": [
+    {
+      "id": "RGTEST-001",
+      "title": "Test BoundingBoxRenderer on device",
+      "description": "Execute test scenarios for BoundingBoxRenderer. Verify wireframe boxes render at specified positions, correct colors display (green/red/yellow), boxes scale properly, multiple boxes can coexist. Measure rendering performance. Document actual behavior.",
+      "acceptanceCriteria": [
+        "BoundingBox renders visible in VR",
+        "Position matches expected coordinates",
+        "Size (width, height, depth) renders correctly",
+        "Color changes work (confidence-based)",
+        "Multiple boxes render simultaneously (test 1, 5, 10 boxes)",
+        "Performance: <5ms render time per box",
+        "No visual artifacts or z-fighting",
+        "Screenshots captured for evidence"
+      ],
+      "estimatedEffort": "30-40 minutes"
+    },
+    {
+      "id": "RGTEST-002",
+      "title": "Test ArrowRenderer on device",
+      "description": "Execute test scenarios for ArrowRenderer. Verify arrows point from camera to targets, arrow updates as user moves, arrow length scales with distance, colors indicate urgency correctly. Measure tracking accuracy and performance.",
+      "acceptanceCriteria": [
+        "Arrow renders visible in VR",
+        "Arrow points accurately to target position",
+        "Arrow updates smoothly as user moves head",
+        "Arrow length scales (min 0.5m, max 2m verified)",
+        "Arrow rotation tracks target correctly",
+        "Color coding works (green/yellow/red)",
+        "Performance: arrow update <5ms",
+        "No jitter or lag in tracking"
+      ],
+      "estimatedEffort": "30-40 minutes"
+    },
+    {
+      "id": "RGTEST-003",
+      "title": "Test TextRenderer on device",
+      "description": "Execute test scenarios for TextRenderer. Verify text labels display in 3D space, billboard effect works (always faces camera), background panel provides readability, font scales with distance. Test various text lengths and positions.",
+      "acceptanceCriteria": [
+        "Text renders visible and readable in VR",
+        "Billboard effect works (text faces camera)",
+        "Background panel renders for contrast",
+        "Font size scales with distance (test at 1m, 2m, 3m)",
+        "Multiple text labels can coexist",
+        "Long text strings render correctly (test 50+ chars)",
+        "Special characters render (test symbols, numbers)",
+        "Performance: text update <5ms"
+      ],
+      "estimatedEffort": "30-40 minutes"
+    },
+    {
+      "id": "RGTEST-004",
+      "title": "Test OverlayManager orchestration",
+      "description": "Execute integration tests for OverlayManager. Verify manager can coordinate all overlay types simultaneously, priority system works, show/hide operations succeed, performance with concurrent overlays is acceptable. Test edge cases and stress scenarios.",
+      "acceptanceCriteria": [
+        "OverlayManager initializes successfully",
+        "Can create all overlay types (Box, Arrow, Text)",
+        "showComponentOverlay() works for each type",
+        "updateOverlays() refreshes all active overlays",
+        "clearAllOverlays() removes all overlays",
+        "Priority system works (high overlays drawn last)",
+        "Performance: 10+ concurrent overlays at 20 FPS",
+        "No memory leaks (test over 5 minutes)",
+        "Cleanup succeeds without crashes"
+      ],
+      "estimatedEffort": "40-50 minutes"
+    },
+    {
+      "id": "RGTEST-005",
+      "title": "Create Reality-Grounded test cases and report",
+      "description": "Based on device testing observations, write Reality-Grounded test cases that reflect actual behavior. Document pass/fail results, performance metrics, bugs found, and recommendations for fixes. Create test report following RG-TDD philosophy.",
+      "acceptanceCriteria": [
+        "Test report created (markdown format)",
+        "All 4 components documented (pass/fail)",
+        "Performance metrics table included",
+        "Bugs logged with reproduction steps",
+        "Screenshots/evidence attached",
+        "Reality-Grounded test cases written (Kotlin)",
+        "Recommendations for fixes prioritized",
+        "Comparison to Phase 3 acceptance criteria"
+      ],
+      "estimatedEffort": "30-40 minutes"
+    }
+  ],
+  "technicalNotes": {
+    "test_data": {
+      "bounding_box_tests": [
+        {"id": "GPU1", "x": 1.0, "y": 1.5, "z": 2.0, "w": 0.3, "h": 0.2, "d": 0.15, "confidence": 0.95},
+        {"id": "GPU2", "x": 1.5, "y": 1.5, "z": 2.0, "w": 0.3, "h": 0.2, "d": 0.15, "confidence": 0.75},
+        {"id": "Server", "x": 0.5, "y": 1.0, "z": 3.0, "w": 0.5, "h": 1.5, "d": 0.8, "confidence": 0.88}
+      ],
+      "arrow_tests": [
+        {"target": {"x": 2.0, "y": 1.5, "z": 3.0}, "color": "GREEN"},
+        {"target": {"x": -1.0, "y": 2.0, "z": 4.0}, "color": "YELLOW"},
+        {"target": {"x": 0.0, "y": 0.5, "z": 5.0}, "color": "RED"}
+      ],
+      "text_tests": [
+        {"text": "GPU #3 - Remove", "pos": {"x": 1.0, "y": 1.8, "z": 2.0}},
+        {"text": "Step 1: Disconnect power cable", "pos": {"x": 1.5, "y": 1.2, "z": 2.5}},
+        {"text": "WARNING: Check PPE before proceeding", "pos": {"x": 0.0, "y": 1.5, "z": 1.0}}
+      ]
+    },
+    "monitoring_commands": [
+      "adb logcat | grep -i 'BoundingBoxRenderer\\|ArrowRenderer\\|TextRenderer\\|OverlayManager'",
+      "adb shell dumpsys gfxinfo com.accenture.datacenter framestats",
+      "adb shell dumpsys meminfo com.accenture.datacenter"
+    ],
+    "performance_targets": {
+      "fps": "≥20 FPS (50ms frame time)",
+      "overlay_render_time": "<5ms per overlay",
+      "concurrent_overlays": "10+ at 20 FPS",
+      "memory_usage": "<200MB"
+    },
+    "rg_tdd_test_pattern": "Test actual behavior observed on device, not expected behavior from specs. If device shows different behavior than expected, document the reality and adjust code/tests to match.",
+    "output_location": "QUEST3_PHASE3_AR_OVERLAY_TEST_REPORT.md"
+  },
+  "outOfScope": [
+    "Backend integration testing (Phase 2 complete)",
+    "SOP scenario testing (Phase 4)",
+    "Hand tracking testing (separate component)",
+    "Voice guidance testing (separate component)",
+    "WebSocket testing (Phase 5)"
+  ],
+  "successMetrics": {
+    "test_coverage": "All 4 AR components tested",
+    "evidence_quality": "Screenshots/video + logcat + metrics",
+    "bug_discovery": "All critical bugs identified",
+    "test_case_quality": "Based on real observations, not assumptions",
+    "time": "<3 hours total"
+  },
+  "failure_monitoring": {
+    "track_for_self_improvement": [
+      "Crashes during testing (track type, frequency)",
+      "Performance issues (track FPS drops, lag)",
+      "Visual glitches (track rendering errors)",
+      "Meta SDK API errors (track error messages)",
+      "Test assumptions that were wrong (reality vs expected)",
+      "Missing test scenarios discovered during testing",
+      "Time overruns (>3 hours)"
+    ],
+    "success_indicators": [
+      "All components render correctly",
+      "Performance meets targets (≥20 FPS)",
+      "No critical bugs found",
+      "Test cases written match reality",
+      "Completed in <3 hours"
+    ],
+    "reality_grounded_insights": [
+      "Document what worked differently than expected",
+      "Document what Meta SDK does vs what we thought",
+      "Document performance characteristics we didn't anticipate",
+      "Document visual behavior we didn't mock correctly"
+    ],
+    "improvement_recommendations": [
+      "Better mocking strategies for future components",
+      "Better performance estimation techniques",
+      "Better visual testing without device",
+      "Better Meta SDK API understanding"
+    ]
+  }
+}

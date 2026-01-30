@@ -1,0 +1,130 @@
+# RG-TDD Configuration for Claude-Loop Integration
+# Reality-Grounded Test Driven Development
+
+enabled: true
+ironLawEnforcement: true
+
+# Three-Layer Testing Pyramid
+layers:
+
+  # LAYER 1: Foundation Tests (MUST PASS)
+  foundation:
+    enabled: true
+    tests:
+      - unit_tests
+      - integration_tests
+      - type_checking
+      - linting
+      - security_scan
+    minCoverage: 75
+    blockOnFailure: true
+
+  # LAYER 2: Challenge Tests (MUST PASS for production)
+  challenge:
+    enabled: true
+    tests:
+      - edge_cases  # Harvested from production failures
+      - scale_stress  # 10x expected load
+      - baseline_comparison  # Compare against existing solutions
+      - cross_domain_transfer  # Test on related domains
+    applyToProduction: true
+    blockOnFailure: true
+
+  # LAYER 3: Reality Tests (MUST PASS for release)
+  reality:
+    enabled: false  # Enable after basic implementation
+    tests:
+      - sota_benchmarks  # Compare against state-of-the-art
+      - real_world_deployment  # Deploy to staging/production
+      - adversarial_scenarios  # Red team testing
+      - user_acceptance  # Real user feedback
+    applyToRelease: true
+    blockOnFailure: true
+
+# TDD Iron Law Enforcement
+ironLaw:
+  enabled: true
+  rules:
+    - name: "Test First"
+      description: "Write test before implementation"
+      enforcer: "lib/tdd-enforcer.py"
+
+    - name: "Red Phase"
+      description: "Test must fail before implementation"
+      verifyRedPhase: true
+      blockGreenBeforeRed: true
+
+    - name: "Green Phase"
+      description: "Minimal code to pass test"
+      requireMinimalImplementation: true
+
+    - name: "Refactor Phase"
+      description: "Improve without breaking tests"
+      maintainCoverage: true
+
+# Test Discovery Patterns
+testPatterns:
+  typescript:
+    - "**/*.test.ts"
+    - "**/*.spec.ts"
+    - "**/*.e2e.test.ts"
+  python:
+    - "**/test_*.py"
+    - "**/*_test.py"
+  testFrameworks:
+    - vitest
+    - jest
+    - pytest
+
+# Quality Gates (in order)
+qualityGates:
+  - name: "TDD Iron Law"
+    script: "lib/tdd-enforcer.py"
+    required: true
+
+  - name: "Unit Tests"
+    command: "pnpm test"
+    minCoverage: 75
+    required: true
+
+  - name: "Type Checking"
+    command: "pnpm build"
+    required: true
+
+  - name: "Linting"
+    command: "pnpm lint"
+    required: true
+
+  - name: "Security Scan"
+    command: "pnpm audit"
+    required: true
+
+  - name: "Integration Tests"
+    command: "pnpm test:e2e"
+    required: false  # Run if available
+
+# Failure Handling
+onFailure:
+  action: "block"  # Block story completion
+  logFailure: true
+  recordInExperienceStore: true
+  generateImprovementProposal: true
+
+# Success Criteria
+successCriteria:
+  - "All Layer 1 tests pass"
+  - "All Layer 2 tests pass (if production code)"
+  - "Coverage >= 75%"
+  - "No security vulnerabilities"
+  - "TDD Iron Law verified"
+
+# Reporting
+reporting:
+  generateReport: true
+  reportPath: "prds/active/claude-loop-integration/test-reports/"
+  includeMetrics:
+    - test_count
+    - coverage_percentage
+    - execution_time
+    - failure_reasons
+    - tdd_compliance_rate

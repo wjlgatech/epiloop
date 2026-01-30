@@ -1,0 +1,198 @@
+#========================================================
+# REAL-WORLD BENCHMARK TASK 009
+# Tier: REGRESSION (Bug Fix)
+# Source: Memory management issue
+#========================================================
+
+id: TASK-009
+name: "Memory Leak Fix in Event Listener"
+tier: regression
+source_project: null
+difficulty: 4  # 1-5 scale
+estimated_time_human_minutes: 60
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Bug Report**: Application memory usage grows unbounded over time.
+
+  **Symptoms**:
+  - Memory increases 50MB per hour
+  - Eventually causes OOM (Out of Memory) crash
+  - Happens in production after 8-12 hours uptime
+
+  **Root Cause** (discovered via profiling):
+  Event listeners are added but never removed, causing memory leak:
+
+  ```python
+  class ChatRoom:
+      def __init__(self):
+          self.listeners = []
+
+      def add_listener(self, callback):
+          self.listeners.append(callback)  # Never removed!
+
+      def on_message(self, msg):
+          for callback in self.listeners:
+              callback(msg)
+
+  # Each user adds listener, but never cleans up on disconnect
+  def handle_user_connect(user):
+      room = get_chat_room()
+      room.add_listener(lambda msg: user.send(msg))  # LEAK!
+  ```
+
+  **Task**: Fix memory leak by:
+  1. Adding remove_listener() method
+  2. Cleaning up on user disconnect
+  3. Using weak references for callbacks
+  4. Adding memory profiling test
+  5. Documenting lifecycle management
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Adds remove_listener() method"
+    weight: 0.25
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(remove_listener|unsubscribe|detach)" . -r
+
+  - id: AC2
+    description: "Calls remove_listener on disconnect/cleanup"
+    weight: 0.25
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(disconnect.*remove|cleanup.*listener|finally.*remove)" . -r
+
+  - id: AC3
+    description: "Uses weak references or cleanup pattern"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(weakref|WeakMethod|with.*context|__del__|cleanup)" . -r
+
+  - id: AC4
+    description: "Adds test verifying listeners are removed"
+    weight: 0.20
+    validation_method: "grep"
+    validation_script: |
+      grep -E "(test.*leak|test.*cleanup|assert.*len.*0|assert.*empty)" . -r
+
+  - id: AC5
+    description: "Documents listener lifecycle"
+    weight: 0.10
+    validation_method: "grep"
+    validation_script: |
+      grep -iE "(must.*remove|cleanup.*listener|memory.*leak)" . -r
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach_1: "Explicit cleanup"
+  approach_1_code: |
+    class ChatRoom:
+        def remove_listener(self, callback):
+            self.listeners.remove(callback)
+
+    def handle_user_connect(user):
+        room = get_chat_room()
+        callback = lambda msg: user.send(msg)
+        room.add_listener(callback)
+
+        # Clean up on disconnect
+        user.on_disconnect(lambda: room.remove_listener(callback))
+
+  approach_2: "Weak references"
+  approach_2_code: |
+    import weakref
+
+    class ChatRoom:
+        def __init__(self):
+            self.listeners = weakref.WeakSet()
+
+        def add_listener(self, callback):
+            self.listeners.add(callback)  # Auto-removed when GC'd
+
+  approach_3: "Context manager"
+  approach_3_code: |
+    @contextmanager
+    def subscribe_to_room(room, callback):
+        room.add_listener(callback)
+        try:
+            yield
+        finally:
+            room.remove_listener(callback)
+
+#--------------------------------------------------------
+# TEST DATA
+#--------------------------------------------------------
+test_data:
+  memory_test:
+    description: "Verify memory doesn't grow"
+    steps:
+      - "Create 1000 users"
+      - "Connect and disconnect each"
+      - "Check listener count is 0"
+      - "Measure memory usage (should be constant)"
+
+  expected_behavior:
+    before_fix: "listeners.length grows unbounded"
+    after_fix: "listeners.length stays at 0 after disconnects"
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ remove_listener() method added
+  2. ✓ Cleanup called on disconnect
+  3. ✓ Weak references used OR explicit cleanup
+  4. ✓ Memory leak test passes
+  5. ✓ 1000 connect/disconnect cycles don't increase memory
+  6. ✓ Documented cleanup requirements
+
+#--------------------------------------------------------
+# DEBUGGING HINTS
+#--------------------------------------------------------
+debugging_hints:
+  find_leak: |
+    # Use memory profiler
+    from memory_profiler import profile
+
+    @profile
+    def test_many_connections():
+        for i in range(1000):
+            user = User()
+            handle_user_connect(user)
+            user.disconnect()
+
+  verify_fix: |
+    # Check listener count
+    room = get_chat_room()
+    initial_count = len(room.listeners)
+
+    # Connect and disconnect 100 users
+    for i in range(100):
+        user = User()
+        handle_user_connect(user)
+        user.disconnect()
+
+    final_count = len(room.listeners)
+    assert final_count == initial_count  # Should not grow
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["memory-leak", "debugging", "performance", "lifecycle"]
+  estimated_impact: "critical"
+  complexity_signals:
+    - "Memory management"
+    - "Event listener lifecycle"
+    - "Weak references"
+    - "Profiling"

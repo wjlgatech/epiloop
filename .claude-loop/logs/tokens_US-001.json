@@ -1,0 +1,8 @@
+{
+  "story_id": "US-001",
+  "total_chars": 17808,
+  "estimated_tokens": 4452,
+  "complexity_level": 3,
+  "agents_enabled": true,
+  "experience_enabled": true
+}

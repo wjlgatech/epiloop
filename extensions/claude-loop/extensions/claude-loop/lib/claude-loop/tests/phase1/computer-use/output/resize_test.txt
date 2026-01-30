@@ -1,0 +1,19 @@
++ init_progress TEST-001 'Test Story' 3
++ local prd_file=TEST-001
++ [[ true != \t\r\u\e ]]
++ update_terminal_dimensions
++ command -v tput
+++ tput cols
++ PROGRESS_TERMINAL_WIDTH=80
+++ tput lines
++ PROGRESS_TERMINAL_HEIGHT=24
++ trap handle_terminal_resize WINCH
+++ get_timestamp_ms
++++ uname
+++ [[ Darwin == \D\a\r\w\i\n ]]
+++ perl -MTime::HiRes=time -e 'printf "%.0f\n", time * 1000'
++ PROGRESS_START_TIME=1768330946259
++ [[ -f TEST-001 ]]
++ [[ -f TEST-001 ]]
++ update_progress TEST-001 Running... 1
+./tests/phase1/computer-use/edge-cases.sh: line 93: update_progress: command not found

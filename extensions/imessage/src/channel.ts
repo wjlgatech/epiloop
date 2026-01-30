@@ -19,7 +19,7 @@ import {
   setAccountEnabledInConfigSection,
   type ChannelPlugin,
   type ResolvedIMessageAccount,
-} from "clawdbot/plugin-sdk";
+} from "epiloop/plugin-sdk";
 
 import { getIMessageRuntime } from "./runtime.js";
 

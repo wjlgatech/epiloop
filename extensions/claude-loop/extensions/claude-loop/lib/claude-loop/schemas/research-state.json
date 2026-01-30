@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Research State",
+  "description": "Schema for tracking research loop progress, similar to prd.json for development tasks",
+  "type": "object",
+  "required": ["researchId", "question", "status", "subQuestions"],
+  "properties": {
+    "researchId": {
+      "type": "string",
+      "description": "Unique identifier for this research session",
+      "pattern": "^RES-[0-9]{3}$"
+    },
+    "question": {
+      "type": "string",
+      "description": "The main research question",
+      "minLength": 10
+    },
+    "status": {
+      "type": "string",
+      "description": "Current research status",
+      "enum": ["decomposing", "researching", "synthesizing", "complete", "failed"]
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "ISO timestamp when research started",
+      "format": "date-time"
+    },
+    "completedAt": {
+      "type": "string",
+      "description": "ISO timestamp when research completed",
+      "format": "date-time"
+    },
+    "subQuestions": {
+      "type": "array",
+      "description": "Decomposed sub-questions to be researched",
+      "minItems": 3,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["id", "question", "type", "status"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Sub-question identifier",
+            "pattern": "^SQ-[0-9]{3}$"
+          },
+          "question": {
+            "type": "string",
+            "description": "The sub-question text",
+            "minLength": 5
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of research needed",
+            "enum": ["academic", "technical", "market", "general"]
+          },
+          "status": {
+            "type": "string",
+            "description": "Sub-question research status",
+            "enum": ["pending", "in_progress", "completed", "failed"]
+          },
+          "assignedAgent": {
+            "type": "string",
+            "description": "Agent type assigned to this sub-question",
+            "enum": ["academic-scanner", "technical-diver", "market-analyst", "lead-researcher"]
+          },
+          "findings": {
+            "type": "array",
+            "description": "Research findings for this sub-question",
+            "items": {
+              "type": "object",
+              "required": ["source", "content", "credibilityScore"],
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "description": "Source URL or reference"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Title of the source"
+                },
+                "content": {
+                  "type": "string",
+                  "description": "Finding content or summary"
+                },
+                "credibilityScore": {
+                  "type": "number",
+                  "description": "Source credibility score (0-100)",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "retrievedAt": {
+                  "type": "string",
+                  "description": "When this finding was retrieved",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "confidence": {
+            "type": "number",
+            "description": "Confidence in findings for this sub-question (0-100)",
+            "minimum": 0,
+            "maximum": 100
+          }
+        }
+      }
+    },
+    "synthesis": {
+      "type": "object",
+      "description": "Synthesized research findings",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "description": "Executive summary of findings"
+        },
+        "keyFindings": {
+          "type": "array",
+          "description": "List of key findings",
+          "items": {
+            "type": "object",
+            "required": ["finding", "confidence", "sources"],
+            "properties": {
+              "finding": {
+                "type": "string",
+                "description": "The key finding text"
+              },
+              "confidence": {
+                "type": "number",
+                "description": "Confidence score for this finding (0-100)",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "sources": {
+                "type": "array",
+                "description": "Supporting sources",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "gaps": {
+          "type": "array",
+          "description": "Identified gaps in research",
+          "items": {
+            "type": "string"
+          }
+        },
+        "overallConfidence": {
+          "type": "number",
+          "description": "Overall confidence in research (0-100)",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata",
+      "properties": {
+        "totalSources": {
+          "type": "integer",
+          "description": "Total number of sources consulted"
+        },
+        "domain": {
+          "type": "string",
+          "description": "Research domain (ai-ml, investment, etc.)"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional notes"
+        }
+      }
+    }
+  }
+}

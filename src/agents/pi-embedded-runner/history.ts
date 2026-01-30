@@ -1,6 +1,6 @@
 import type { AgentMessage } from "@mariozechner/pi-agent-core";
 
-import type { ClawdbotConfig } from "../../config/config.js";
+import type { EpiloopConfig } from "../../config/config.js";
 
 /**
  * Limits conversation history to the last N user turns (and their associated
@@ -33,7 +33,7 @@ export function limitHistoryTurns(
  */
 export function getDmHistoryLimitFromSessionKey(
   sessionKey: string | undefined,
-  config: ClawdbotConfig | undefined,
+  config: EpiloopConfig | undefined,
 ): number | undefined {
   if (!sessionKey || !config) return undefined;
 
@@ -63,7 +63,7 @@ export function getDmHistoryLimitFromSessionKey(
   };
 
   const resolveProviderConfig = (
-    cfg: ClawdbotConfig | undefined,
+    cfg: EpiloopConfig | undefined,
     providerId: string,
   ): { dmHistoryLimit?: number; dms?: Record<string, { historyLimit?: number }> } | undefined => {
     const channels = cfg?.channels;

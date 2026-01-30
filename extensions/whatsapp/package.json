@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/whatsapp",
+  "name": "@epiloop/whatsapp",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot WhatsApp channel plugin",
-  "clawdbot": {
+  "description": "Epiloop WhatsApp channel plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ]

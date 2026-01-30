@@ -1,0 +1,91 @@
+{
+  "benchmarks": [
+    {
+      "name": "No-Conflict Test",
+      "passed": true,
+      "target": "0 conflicts",
+      "actual": "0 conflicts",
+      "metric": 0.0,
+      "details": {
+        "conflicts": [],
+        "capabilities_scanned": 0,
+        "components_scanned": 0
+      },
+      "timestamp": "2026-01-17T19:15:12.754481Z"
+    },
+    {
+      "name": "Coverage Test",
+      "passed": true,
+      "target": "100% coverage",
+      "actual": "100.0% coverage",
+      "metric": 1.0,
+      "details": {
+        "documented_skills": [
+          "brainstorming",
+          "api-spec-generator",
+          "test-scaffolder",
+          "prd",
+          "prd-validator",
+          "claude-loop",
+          "commit-formatter",
+          "cost-optimizer",
+          "hello-world"
+        ],
+        "implemented_skills": [
+          "prd-validator",
+          "api-spec-generator",
+          "commit-formatter",
+          "test-scaffolder",
+          "hello-world",
+          "cost-optimizer",
+          "claude-loop",
+          "brainstorming",
+          "prd"
+        ],
+        "missing_skills": [],
+        "coverage_count": "9/9"
+      },
+      "timestamp": "2026-01-17T19:15:12.755055Z"
+    },
+    {
+      "name": "Routing Accuracy Test",
+      "passed": true,
+      "target": "95%+ accuracy",
+      "actual": "100.0% accuracy",
+      "metric": 1.0,
+      "details": {
+        "total_tests": 15,
+        "correct": 15,
+        "incorrect": 0,
+        "errors": []
+      },
+      "timestamp": "2026-01-17T19:15:12.760558Z"
+    },
+    {
+      "name": "Decision Latency Test",
+      "passed": true,
+      "target": "<100ms average",
+      "actual": "0.1ms average",
+      "metric": 0.07321834564208984,
+      "details": {
+        "avg_ms": 0.07321834564208984,
+        "min_ms": 0.06580352783203125,
+        "max_ms": 0.07891654968261719,
+        "p50_ms": 0.07510185241699219,
+        "p95_ms": 0.07891654968261719,
+        "p99_ms": 0.07891654968261719,
+        "test_count": 10
+      },
+      "timestamp": "2026-01-17T19:15:12.761307Z"
+    }
+  ],
+  "summary": {
+    "total_benchmarks": 4,
+    "passed": 4,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "overall_passed": true
+  },
+  "timestamp": "2026-01-17T19:15:12.761315Z",
+  "duration_seconds": 0.008540868759155273
+}

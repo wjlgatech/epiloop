@@ -1,0 +1,193 @@
+# Track Configuration for Claude-Loop
+# Defines implementation tracks derived from complexity levels
+# Part of the Invisible Intelligence system (INV-002)
+#
+# Track Selection:
+#   - Level 0-1 (micro/small) → quick track
+#   - Level 2-3 (medium/large) → standard track
+#   - Level 4 (enterprise) → enterprise track
+
+tracks:
+  quick:
+    name: "Quick"
+    description: "Fast implementation for simple changes"
+    complexity_levels: [0, 1]
+
+    # Quality gates - what must pass before completion
+    quality_gates:
+      tests: true           # Run tests
+      lint: false           # No linting required
+      type_check: false     # No type checking required
+      security_scan: false  # No security scan required
+      coverage_check: false # No coverage threshold
+
+    # Architecture requirements
+    adr_required: false     # No ADR (Architecture Decision Records) needed
+    architecture_doc: false # No architecture.md needed
+
+    # Approval requirements
+    approval:
+      required: false       # No manual approval needed
+      reviewers: 0          # No reviewers required
+
+    # Execution settings
+    max_iterations: 5       # Max iterations per story
+    model_preference: "haiku"  # Prefer fast, cheap model
+    parallel_enabled: true  # Allow parallel execution
+
+  standard:
+    name: "Standard"
+    description: "Balanced approach for typical features"
+    complexity_levels: [2, 3]
+
+    # Quality gates
+    quality_gates:
+      tests: true           # Run tests
+      lint: true            # Linting required
+      type_check: true      # Type checking for Level 3+
+      security_scan: false  # No security scan for Level 2, optional for Level 3
+      coverage_check: false # Coverage encouraged but not required
+
+    # Architecture requirements (Level 3 triggers more requirements)
+    adr_required: false     # ADRs optional for Level 2, encouraged for Level 3
+    architecture_doc: false # architecture.md encouraged for Level 3
+
+    # Approval requirements
+    approval:
+      required: false       # No formal approval, but review encouraged
+      reviewers: 0          # No minimum reviewers
+
+    # Level-specific overrides
+    level_overrides:
+      3:
+        quality_gates:
+          type_check: true
+          security_scan: true
+        adr_required: true
+        architecture_doc: true
+
+    # Execution settings
+    max_iterations: 10      # More iterations allowed
+    model_preference: "sonnet"  # Balanced model
+    parallel_enabled: true  # Allow parallel execution
+
+  enterprise:
+    name: "Enterprise"
+    description: "Rigorous process for critical, cross-team initiatives"
+    complexity_levels: [4]
+
+    # Quality gates - all required
+    quality_gates:
+      tests: true           # Tests mandatory
+      lint: true            # Linting mandatory
+      type_check: true      # Type checking mandatory
+      security_scan: true   # Security scan mandatory
+      coverage_check: true  # Coverage threshold enforced
+      coverage_threshold: 80  # Minimum 80% coverage
+
+    # Architecture requirements - all required
+    adr_required: true      # ADRs mandatory for decisions
+    architecture_doc: true  # architecture.md mandatory
+
+    # Approval requirements
+    approval:
+      required: true        # Manual approval checkpoints
+      reviewers: 2          # At least 2 reviewers
+      checkpoint_phases:    # Phases requiring approval before proceeding
+        - analysis
+        - solutioning
+
+    # Documentation requirements
+    documentation:
+      readme_update: true   # README must be updated
+      changelog_entry: true # CHANGELOG must be updated
+      api_docs: true        # API documentation required
+
+    # Execution settings
+    max_iterations: 20      # Many iterations allowed for complex work
+    model_preference: "opus"  # Use most capable model
+    parallel_enabled: false # Sequential for safety (manual override available)
+
+    # Risk management
+    risk_assessment:
+      required: true
+      categories:
+        - security
+        - performance
+        - data_integrity
+        - compliance
+
+# Phase definitions by complexity
+# (Referenced by get_phases() in complexity-detector.py)
+phases:
+  analysis:
+    description: "Deep dive into requirements, constraints, stakeholders"
+    required_for_levels: [4]
+    outputs:
+      - "requirements.md"
+      - "stakeholder-map.md"
+      - "risk-assessment.md"
+
+  planning:
+    description: "Break down into stories, estimate, prioritize"
+    required_for_levels: [2, 3, 4]
+    outputs:
+      - "prd.json"
+      - "estimation.md"
+
+  solutioning:
+    description: "Design architecture, make technology decisions"
+    required_for_levels: [3, 4]
+    outputs:
+      - "architecture.md"
+      - "adrs/"
+
+  implementation:
+    description: "Write code, tests, documentation"
+    required_for_levels: [0, 1, 2, 3, 4]
+    outputs:
+      - "source code"
+      - "tests"
+      - "documentation"
+
+# Quality gate details
+quality_gate_definitions:
+  tests:
+    name: "Test Suite"
+    description: "Run pytest/jest/etc. test suite"
+    command_hints:
+      python: "pytest"
+      javascript: "npm test"
+      typescript: "npm test"
+    failure_action: "block"  # Block completion if fails
+
+  lint:
+    name: "Linting"
+    description: "Static code analysis for style/errors"
+    command_hints:
+      python: "ruff check ."
+      javascript: "eslint ."
+      typescript: "eslint ."
+    failure_action: "warn"  # Warn but allow completion
+
+  type_check:
+    name: "Type Checking"
+    description: "Static type analysis"
+    command_hints:
+      python: "pyright"
+      typescript: "tsc --noEmit"
+    failure_action: "block"
+
+  security_scan:
+    name: "Security Scan"
+    description: "Check for vulnerabilities and secrets"
+    command_hints:
+      general: "gitleaks detect && bandit -r ."
+    failure_action: "block"
+
+  coverage_check:
+    name: "Coverage Check"
+    description: "Ensure test coverage meets threshold"
+    command_hints:
+      python: "pytest --cov --cov-fail-under=80"
+    failure_action: "block"

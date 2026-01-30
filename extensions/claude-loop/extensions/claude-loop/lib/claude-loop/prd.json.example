@@ -1,0 +1,76 @@
+{
+  "project": "example-feature",
+  "branchName": "feature/example-feature",
+  "description": "A brief description of the feature being implemented. This should explain what the feature does and why it's needed.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Set up project foundation",
+      "description": "As a developer, I want the basic project structure in place so that I can build features on a solid foundation.",
+      "acceptanceCriteria": [
+        "Project directory structure is created",
+        "Configuration files are in place",
+        "Basic dependencies are installed",
+        "Project builds without errors"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Implement core data model",
+      "description": "As a developer, I want the data models defined so that I can implement business logic on top of them.",
+      "acceptanceCriteria": [
+        "Data types/interfaces are defined",
+        "Validation logic is implemented",
+        "Unit tests for models pass"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Build API endpoints",
+      "description": "As a user, I want API endpoints so that I can interact with the system programmatically.",
+      "acceptanceCriteria": [
+        "CRUD endpoints are implemented",
+        "Input validation is in place",
+        "Error responses follow standard format",
+        "API tests pass"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Create user interface",
+      "description": "As a user, I want a user interface so that I can interact with the feature visually.",
+      "acceptanceCriteria": [
+        "UI components are implemented",
+        "UI connects to API endpoints",
+        "UI is responsive",
+        "Visual verification passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Add documentation",
+      "description": "As a developer, I want documentation so that others can understand and use the feature.",
+      "acceptanceCriteria": [
+        "README documents feature usage",
+        "API endpoints are documented",
+        "Code has appropriate comments",
+        "Setup instructions are clear"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

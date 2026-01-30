@@ -1,0 +1,219 @@
+# Orchestrator Routing Rules
+#
+# Defines how the orchestrator routes requests to agents, skills, and workflows
+# based on situation diagnosis results.
+#
+# Rule Priority: mandatory > risk-based > domain-based > sequential
+
+version: "1.0"
+
+# Skill Routing Rules
+skills:
+  # Brainstorming skill (IMPLEMENTED)
+  brainstorming:
+    when:
+      - condition: "complexity >= 5"
+        confidence: 0.95
+      - condition: "keywords contains ['design', 'architect', 'refactor', 'rethink']"
+        confidence: 0.90
+    mandatory: true
+    priority: 1  # Process skills first
+    rationale: "High complexity or design keywords detected - brainstorming prevents misunderstandings"
+
+  # Test-driven development skill (TODO: not yet implemented)
+  test-driven-development:
+    when:
+      - condition: "operation_type in ['creation', 'modification']"
+        confidence: 0.85
+      - condition: "domains contains ['backend', 'frontend']"
+        confidence: 0.80
+    mandatory: true
+    priority: 2
+    rationale: "New features require TDD to ensure tests actually test behavior"
+    note: "TODO: Skill not yet implemented, enforcement disabled"
+
+  # Systematic debugging skill (TODO: not yet implemented)
+  systematic-debugging:
+    when:
+      - condition: "operation_type == 'debugging'"
+        confidence: 0.95
+      - condition: "keywords contains ['bug', 'fix', 'issue', 'error', 'failure']"
+        confidence: 0.90
+    mandatory: true
+    priority: 1
+    rationale: "Debugging requires systematic root cause analysis"
+    note: "TODO: Skill not yet implemented, enforcement disabled"
+
+# Agent Routing Rules
+agents:
+  # Security auditor agent (IMPLEMENTED)
+  security-auditor:
+    when:
+      - condition: "primary_domain == 'security'"
+        confidence: 1.0
+      - condition: "risks contains 'security' with level HIGH"
+        confidence: 0.95
+      - condition: "secondary_domains contains 'security'"
+        confidence: 0.85
+    priority: 1  # High priority for security
+    rationale: "Security domain or HIGH security risk detected"
+
+  # Code reviewer agent (IMPLEMENTED)
+  code-reviewer:
+    when:
+      - condition: "operation_type in ['creation', 'modification']"
+        confidence: 0.90
+    timing: "after_implementation"
+    priority: 3  # After implementation
+    rationale: "Code review required for all implementation work"
+
+  # Test runner agent (IMPLEMENTED)
+  test-runner:
+    when:
+      - condition: "primary_domain == 'testing'"
+        confidence: 1.0
+      - condition: "keywords contains ['test', 'testing', 'coverage']"
+        confidence: 0.85
+    priority: 2
+    rationale: "Testing domain or test keywords detected"
+
+  # Debugger agent (IMPLEMENTED)
+  debugger:
+    when:
+      - condition: "operation_type == 'debugging'"
+        confidence: 0.95
+      - condition: "primary_domain == 'testing'"
+        confidence: 0.80
+    priority: 1
+    rationale: "Debugging operation or testing domain detected"
+
+  # Git workflow agent (IMPLEMENTED)
+  git-workflow:
+    when:
+      - condition: "keywords contains ['commit', 'merge', 'branch', 'git']"
+        confidence: 0.90
+      - condition: "operation_type == 'modification'"
+        confidence: 0.70
+    priority: 4  # Lower priority, support role
+    rationale: "Git operations detected"
+
+# Workflow Routing Rules
+workflows:
+  # Two-stage review workflow (IMPLEMENTED)
+  two-stage-review:
+    when:
+      - condition: "operation_type in ['creation', 'modification']"
+        confidence: 1.0
+    enabled_by_default: true
+    stages:
+      - name: "spec-compliance"
+        description: "Stage 1: Verify all requirements met, nothing extra"
+        tool: "lib/spec-compliance-reviewer.py"
+      - name: "code-quality"
+        description: "Stage 2: Code quality review (only if Stage 1 passes)"
+        tool: "run_review_panel"
+    priority: 5  # After implementation and agent review
+    rationale: "All implementation work requires two-stage review to prevent scope creep"
+
+  # TDD enforcement workflow (IMPLEMENTED)
+  tdd-enforcement:
+    when:
+      - condition: "test-driven-development skill is mandatory"
+        confidence: 0.95
+      - condition: "operation_type == 'creation'"
+        confidence: 0.90
+    timing: "before_implementation"
+    tool: "lib/tdd-enforcer.py"
+    priority: 1  # Before implementation
+    rationale: "TDD Iron Law: NO code without failing test first"
+    note: "Enforces RED phase before allowing implementation"
+
+# Human-in-the-Loop Decision Rules
+human_in_loop:
+  # Essential decisions requiring approval
+  essential_decisions:
+    - category: "destructive_operations"
+      patterns:
+        - "git push --force"
+        - "git reset --hard"
+        - "rm -rf"
+        - "drop database"
+        - "truncate table"
+        - "delete production data"
+      approval_required: true
+      transparency_level: "detailed"
+
+    - category: "production_deployments"
+      patterns:
+        - "deploy to production"
+        - "release to prod"
+        - "production environment"
+      approval_required: true
+      transparency_level: "detailed"
+
+    - category: "architectural_decisions"
+      patterns:
+        - "multiple valid approaches"
+        - "trade-offs between"
+        - "architectural choice"
+      approval_required: true
+      transparency_level: "detailed"
+
+    - category: "budget_thresholds"
+      conditions:
+        - "estimated_cost > 10.00"  # USD
+      approval_required: true
+      transparency_level: "detailed"
+
+  # Routine decisions (automatic, no approval needed)
+  routine_decisions:
+    - "agent selection"
+    - "skill invocation"
+    - "code quality decisions"
+    - "test execution"
+    - "file operations (read/write/edit)"
+
+# Rule Application Priority
+priority_order:
+  1: "mandatory_skills"      # Skills that MUST be used
+  2: "risk_based_agents"     # Agents triggered by HIGH risk
+  3: "domain_based_agents"   # Agents based on primary domain
+  4: "sequential_workflows"  # Workflows with timing constraints
+  5: "supporting_agents"     # Lower priority support agents
+
+# Performance Targets
+performance:
+  decision_time_target_ms: 50
+  rule_evaluation_timeout_ms: 100
+  max_rules_per_category: 20
+
+# Transparency Levels
+transparency:
+  silent:
+    description: "No notification (obvious decisions)"
+    examples:
+      - "Selecting code-reviewer for code review"
+      - "Running tests after implementation"
+
+  brief:
+    description: "One-line notification (automatic significant decisions)"
+    format: "Using {component} ({reason})"
+    examples:
+      - "Using brainstorming skill (complexity: 7/10)"
+      - "Using security-auditor agent (security risk detected)"
+
+  detailed:
+    description: "Full rationale with alternatives (essential decisions)"
+    components:
+      - "Decision rationale"
+      - "Alternatives considered"
+      - "Confidence score"
+      - "User confirmation prompt"
+
+  full_audit:
+    description: "Complete decision log (on demand via --explain)"
+    components:
+      - "All rules evaluated"
+      - "Confidence calculations"
+      - "Learning patterns"
+      - "Historical outcomes"

@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/imessage",
+  "name": "@epiloop/imessage",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot iMessage channel plugin",
-  "clawdbot": {
+  "description": "Epiloop iMessage channel plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ]

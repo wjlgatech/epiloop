@@ -1,0 +1,99 @@
+{
+  "name": "isaac_sim_cli",
+  "description": "Run Isaac Sim commands and scripts from the command line",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "string",
+        "description": "The Isaac Sim command to run",
+        "enum": ["run", "launch", "test", "extension"]
+      },
+      "script_path": {
+        "type": "string",
+        "description": "Path to Python script to execute (for 'run' command)"
+      },
+      "extension_name": {
+        "type": "string",
+        "description": "Extension name (for 'extension' command)"
+      },
+      "args": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Additional arguments to pass to the command"
+      },
+      "headless": {
+        "type": "boolean",
+        "description": "Run in headless mode (no GUI)",
+        "default": false
+      },
+      "timeout_seconds": {
+        "type": "integer",
+        "description": "Maximum execution time in seconds",
+        "default": 300
+      },
+      "isaac_sim_path": {
+        "type": "string",
+        "description": "Path to Isaac Sim installation (auto-detected if not specified)"
+      }
+    },
+    "required": ["command"]
+  },
+  "returns": {
+    "type": "object",
+    "properties": {
+      "exit_code": {
+        "type": "integer",
+        "description": "Command exit code"
+      },
+      "stdout": {
+        "type": "string",
+        "description": "Standard output from the command"
+      },
+      "stderr": {
+        "type": "string",
+        "description": "Standard error from the command"
+      },
+      "success": {
+        "type": "boolean",
+        "description": "Whether the command succeeded"
+      },
+      "duration_ms": {
+        "type": "integer",
+        "description": "Execution time in milliseconds"
+      }
+    }
+  },
+  "examples": [
+    {
+      "description": "Run a Python script in Isaac Sim",
+      "input": {
+        "command": "run",
+        "script_path": "/path/to/my_simulation.py",
+        "headless": true
+      }
+    },
+    {
+      "description": "Launch Isaac Sim with a specific extension",
+      "input": {
+        "command": "launch",
+        "args": ["--ext-folder", "/path/to/extensions"]
+      }
+    },
+    {
+      "description": "Run tests for an extension",
+      "input": {
+        "command": "test",
+        "extension_name": "omni.isaac.my_extension"
+      }
+    }
+  ],
+  "implementation_notes": [
+    "Uses Isaac Sim's python.sh wrapper for proper environment",
+    "Auto-detects Isaac Sim installation from standard paths",
+    "Supports NVIDIA Container runtime for Docker deployments",
+    "Captures and returns simulation logs for debugging"
+  ]
+}

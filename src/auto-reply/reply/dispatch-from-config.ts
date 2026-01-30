@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "../../config/config.js";
+import type { EpiloopConfig } from "../../config/config.js";
 import { logVerbose } from "../../globals.js";
 import { isDiagnosticsEnabled } from "../../infra/diagnostic-events.js";
 import {
@@ -23,7 +23,7 @@ export type DispatchFromConfigResult = {
 
 export async function dispatchReplyFromConfig(params: {
   ctx: FinalizedMsgContext;
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   dispatcher: ReplyDispatcher;
   replyOptions?: Omit<GetReplyOptions, "onToolResult" | "onBlockReply">;
   replyResolver?: typeof getReplyFromConfig;

@@ -1,0 +1,75 @@
+
+═══════════════════════════════════════════════════════════════
+             CLAUDE-LOOP - Autonomous Feature Builder
+═══════════════════════════════════════════════════════════════
+
+[0;34m[INFO][0m Running pre-flight checks...
+[0;34m[INFO][0m Bundled agents: 5 core agents available
+[0;34m[INFO][0m Project: unity-automation-for-quest3
+[0;34m[INFO][0m Branch: feature/unity-automation
+[0;34m[INFO][0m Stories: 11 incomplete out of 12 total
+[0;34m[INFO][0m Max iterations: 15
+[0;35m[AGENT][0m Agents: Enabled (tiers: 1,2, max: 2)
+
+[0;36m[ITERATION 1/15][0m Stories remaining: 11
+[0;36m[ITERATION 1/15][0m Working on: UNITY-002 - Implement Package Manager automation
+[0;34m[DEBUG][0m Prompt size: 4558 chars
+[0;34m[INFO][0m Waiting 2s before next iteration...
+[0;36m[ITERATION 2/15][0m Stories remaining: 10
+[0;36m[ITERATION 2/15][0m Working on: UNITY-003 - Implement Project Settings automation
+[0;34m[DEBUG][0m Prompt size: 4233 chars
+[0;34m[INFO][0m Waiting 2s before next iteration...
+[0;36m[ITERATION 3/15][0m Stories remaining: 9
+[0;36m[ITERATION 3/15][0m Working on: UNITY-004 - Implement Meta XR Setup Tool automation
+[0;34m[DEBUG][0m Prompt size: 8559 chars
+[0;34m[INFO][0m Waiting 2s before next iteration...
+[0;36m[ITERATION 4/15][0m Stories remaining: 8
+[0;36m[ITERATION 4/15][0m Working on: UNITY-005 - Implement Build automation
+[0;34m[DEBUG][0m Prompt size: 8559 chars
+[0;34m[INFO][0m Waiting 2s before next iteration...
+[0;36m[ITERATION 5/15][0m Stories remaining: 7
+[0;36m[ITERATION 5/15][0m Working on: UNITY-006 - Implement Scripting Define Symbols automation
+[0;34m[DEBUG][0m Prompt size: 4463 chars
+[0;34m[INFO][0m Waiting 2s before next iteration...
+[0;36m[ITERATION 6/15][0m Stories remaining: 6
+[0;36m[ITERATION 6/15][0m Working on: UNITY-007 - Implement Unity state detection
+[0;34m[DEBUG][0m Prompt size: 8559 chars
+[0;34m[INFO][0m Waiting 2s before next iteration...
+[0;36m[ITERATION 7/15][0m Stories remaining: 5
+[0;36m[ITERATION 7/15][0m Working on: UNITY-008 - Implement Dialog handling
+[0;34m[DEBUG][0m Prompt size: 8559 chars
+[0;34m[INFO][0m Waiting 2s before next iteration...
+[0;36m[ITERATION 8/15][0m Stories remaining: 4
+[0;36m[ITERATION 8/15][0m Working on: UNITY-009 - Create Unity workflow orchestrator
+[0;34m[DEBUG][0m Prompt size: 4558 chars
+[0;34m[INFO][0m Waiting 2s before next iteration...
+[0;36m[ITERATION 9/15][0m Stories remaining: 3
+[0;36m[ITERATION 9/15][0m Working on: UNITY-010 - Integrate Unity agent with claude-loop CLI
+[0;34m[DEBUG][0m Prompt size: 4546 chars
+[0;34m[INFO][0m Waiting 2s before next iteration...
+[0;36m[ITERATION 10/15][0m Stories remaining: 2
+[0;36m[ITERATION 10/15][0m Working on: UNITY-011 - Create Unity automation tests
+[0;34m[DEBUG][0m Prompt size: 12539 chars
+[0;34m[INFO][0m Waiting 2s before next iteration...
+[0;36m[ITERATION 11/15][0m Stories remaining: 1
+[0;36m[ITERATION 11/15][0m Working on: UNITY-012 - Execute Quest 3 XR setup workflow
+[0;34m[DEBUG][0m Prompt size: 8559 chars
+[0;32m[SUCCESS][0m All stories complete!
+
+═══════════════════════════════════════════════════════════════
+                      CLAUDE-LOOP SUMMARY
+═══════════════════════════════════════════════════════════════
+
+  Stories: 12/12 complete
+
+  Status: [0;32mALL STORIES COMPLETE[0m
+
+  Agents: [0;35mEnabled[0m (max 2 per story)
+
+  Files:
+    - prd.json:     Task state (check passes: true/false)
+    - progress.txt: Iteration learnings
+    - AGENTS.md:    Discovered patterns
+
+═══════════════════════════════════════════════════════════════
+[0;32m[SUCCESS][0m Feature implementation complete!

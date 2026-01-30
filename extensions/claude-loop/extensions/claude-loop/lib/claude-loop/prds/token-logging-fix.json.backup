@@ -1,0 +1,69 @@
+{
+  "project": "token-logging-fix",
+  "branchName": "feature/fix-token-logging",
+  "description": "Fix token logging to always create provider_usage.jsonl regardless of --no-dashboard --no-progress flags. Currently all benchmark runs show 0 tokens/$0.00 because token files aren't created.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Always log tokens to provider_usage.jsonl",
+      "description": "As a benchmarker, I want token usage always logged to .claude-loop/logs/provider_usage.jsonl so that I can track costs accurately even with --no-dashboard --no-progress flags",
+      "acceptanceCriteria": [
+        "Token logging works with all flag combinations (--no-dashboard, --no-progress, both, neither)",
+        "File .claude-loop/logs/provider_usage.jsonl is created even when dashboard disabled",
+        "Contains input_tokens, output_tokens, cost_usd for each API call",
+        "Test by running sample execution with flags and verifying file exists with data",
+        "Tokens are non-zero in provider_usage.jsonl after execution"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented unconditional token logging to provider_usage.jsonl. Added log_provider_usage_jsonl() function to lib/monitoring.sh that is called after each iteration. Logging works regardless of --no-dashboard or --no-progress flags. Tested and verified with both flag combinations. Commit: 2d377b1",
+      "fileScope": [
+        "lib/worker.sh",
+        "lib/monitoring.sh",
+        "lib/cost_tracker.py"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-002",
+      "title": "Extract token data from Claude API responses",
+      "description": "As the system, I need to extract token counts from Claude API responses and pass them to the logging system",
+      "acceptanceCriteria": [
+        "Parse input_tokens and output_tokens from Claude API response metadata",
+        "Handle missing token data gracefully (log warning, don't crash)",
+        "Calculate cost based on model pricing (use existing calculate_cost_for_model function)",
+        "Pass token data to track_iteration function",
+        "Test with sample Claude response"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Modified lib/worker.sh to use --output-format json and extract actual token counts from Claude API response. Added extract_token_usage() function to parse input_tokens, output_tokens, cache_read_input_tokens, and cache_creation_input_tokens. Updated main execution flow to use actual tokens instead of estimates.",
+      "fileScope": [
+        "lib/worker.sh"
+      ],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    },
+    {
+      "id": "US-003",
+      "title": "Persist token data to JSONL file",
+      "description": "As the system, I need to write token data to provider_usage.jsonl file after every API call",
+      "acceptanceCriteria": [
+        "Create .claude-loop/logs/ directory if it doesn't exist",
+        "Append token data to provider_usage.jsonl (JSON Lines format)",
+        "Include timestamp, model, input_tokens, output_tokens, cost_usd",
+        "Use atomic writes to prevent corruption",
+        "Test by checking file contents after multiple API calls"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "Modify lib/monitoring.sh lines 763-845 to write JSONL",
+      "fileScope": [
+        "lib/monitoring.sh"
+      ],
+      "estimatedComplexity": "simple",
+      "suggestedModel": "haiku"
+    }
+  ]
+}

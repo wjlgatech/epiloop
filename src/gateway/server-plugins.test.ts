@@ -3,10 +3,10 @@ import type { PluginRegistry } from "../plugins/registry.js";
 import type { PluginDiagnostic } from "../plugins/types.js";
 import { loadGatewayPlugins } from "./server-plugins.js";
 
-const loadClawdbotPlugins = vi.hoisted(() => vi.fn());
+const loadEpiloopPlugins = vi.hoisted(() => vi.fn());
 
 vi.mock("../plugins/loader.js", () => ({
-  loadClawdbotPlugins,
+  loadEpiloopPlugins,
 }));
 
 const createRegistry = (diagnostics: PluginDiagnostic[]): PluginRegistry => ({
@@ -33,7 +33,7 @@ describe("loadGatewayPlugins", () => {
         message: "failed to load plugin: boom",
       },
     ];
-    loadClawdbotPlugins.mockReturnValue(createRegistry(diagnostics));
+    loadEpiloopPlugins.mockReturnValue(createRegistry(diagnostics));
 
     const log = {
       info: vi.fn(),

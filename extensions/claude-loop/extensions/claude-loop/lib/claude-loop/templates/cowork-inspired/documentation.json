@@ -1,0 +1,162 @@
+{
+  "metadata": {
+    "templateName": "documentation",
+    "templateVersion": "1.0.0",
+    "description": "Documentation update with examples, tutorials, and comprehensive guides",
+    "estimatedComplexity": "simple",
+    "typicalDuration": "2-4 hours",
+    "requiredSkills": ["technical writing", "documentation", "examples"],
+    "variables": [
+      {
+        "name": "PROJECT_NAME",
+        "description": "Name of the project",
+        "required": true,
+        "example": "task-manager"
+      },
+      {
+        "name": "DOC_TOPIC",
+        "description": "Topic or feature being documented",
+        "required": true,
+        "example": "api-integration"
+      },
+      {
+        "name": "BRANCH_NAME",
+        "description": "Git branch name for documentation",
+        "required": false,
+        "default": "docs/{{DOC_TOPIC}}",
+        "example": "docs/api-integration"
+      },
+      {
+        "name": "DOC_TYPE",
+        "description": "Type of documentation (getting-started, tutorial, reference, guide)",
+        "required": false,
+        "default": "guide",
+        "example": "tutorial"
+      }
+    ]
+  },
+  "prd": {
+    "project": "{{PROJECT_NAME}}-docs-{{DOC_TOPIC}}",
+    "branchName": "{{BRANCH_NAME}}",
+    "description": "Create comprehensive documentation for {{DOC_TOPIC}} including {{DOC_TYPE}}, code examples, troubleshooting guide, and FAQs. Documentation should be clear, accurate, and accessible to target audience.",
+    "userStories": [
+      {
+        "id": "DOC-001",
+        "title": "Documentation Structure and Outline",
+        "description": "Create documentation structure and detailed outline for {{DOC_TOPIC}}",
+        "acceptanceCriteria": [
+          "Create documentation directory structure",
+          "Write detailed outline covering all aspects of {{DOC_TOPIC}}",
+          "Define target audience and their knowledge level",
+          "Identify prerequisites and dependencies",
+          "Plan sections: overview, setup, usage, examples, troubleshooting, FAQ",
+          "Determine appropriate documentation format (Markdown, MDX, etc.)",
+          "Create table of contents with clear hierarchy",
+          "Define code example requirements",
+          "Plan diagrams or visual aids if needed"
+        ],
+        "priority": 1,
+        "dependencies": [],
+        "fileScope": ["docs/{{DOC_TOPIC}}/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "DOC-002",
+        "title": "Core Documentation Content",
+        "description": "Write main documentation content with clear explanations and descriptions",
+        "acceptanceCriteria": [
+          "Write clear introduction explaining what {{DOC_TOPIC}} is",
+          "Document key concepts and terminology",
+          "Explain architecture and design decisions",
+          "Document all features and capabilities",
+          "Write installation and setup instructions",
+          "Document configuration options",
+          "Use clear, concise language appropriate for target audience",
+          "Break complex topics into digestible sections",
+          "Add cross-references to related documentation"
+        ],
+        "priority": 2,
+        "dependencies": ["DOC-001"],
+        "fileScope": ["docs/{{DOC_TOPIC}}/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "DOC-003",
+        "title": "Code Examples and Tutorials",
+        "description": "Create working code examples and step-by-step tutorials",
+        "acceptanceCriteria": [
+          "Write 'Hello World' or quickstart example",
+          "Create examples for common use cases",
+          "Add examples for advanced features",
+          "Ensure all code examples are tested and working",
+          "Add inline comments explaining key parts",
+          "Provide complete, runnable example projects",
+          "Create step-by-step tutorial walking through typical workflow",
+          "Add 'Try it yourself' exercises or challenges",
+          "Include expected outputs and results"
+        ],
+        "priority": 2,
+        "dependencies": ["DOC-001"],
+        "fileScope": ["docs/{{DOC_TOPIC}}/examples/", "examples/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "sonnet",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "DOC-004",
+        "title": "API Reference and Specifications",
+        "description": "Document API reference, function signatures, and technical specifications",
+        "acceptanceCriteria": [
+          "Document all public APIs, functions, and classes",
+          "Include function signatures with parameter types",
+          "Document return values and error conditions",
+          "Add usage examples for each API",
+          "Document configuration options and defaults",
+          "Add type definitions or interfaces",
+          "Create OpenAPI/Swagger docs if applicable",
+          "Document version compatibility and deprecations",
+          "Generate API docs from code if tooling available"
+        ],
+        "priority": 3,
+        "dependencies": ["DOC-002"],
+        "fileScope": ["docs/{{DOC_TOPIC}}/api/"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      },
+      {
+        "id": "DOC-005",
+        "title": "Troubleshooting, FAQ, and Polish",
+        "description": "Add troubleshooting guide, FAQ section, and polish documentation",
+        "acceptanceCriteria": [
+          "Create troubleshooting guide for common issues",
+          "Document error messages and their solutions",
+          "Add FAQ section answering common questions",
+          "Include debugging tips and best practices",
+          "Add performance optimization tips",
+          "Document known limitations and workarounds",
+          "Proofread all documentation for clarity and accuracy",
+          "Check all links and ensure they work",
+          "Verify all code examples run correctly",
+          "Update main README with links to new documentation",
+          "Add search keywords and metadata for discoverability"
+        ],
+        "priority": 4,
+        "dependencies": ["DOC-003", "DOC-004"],
+        "fileScope": ["docs/{{DOC_TOPIC}}/", "README.md"],
+        "estimatedComplexity": "simple",
+        "suggestedModel": "haiku",
+        "passes": false,
+        "notes": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+task_id: TASK-001
+title: Optimize Token Usage in Vision Processing
+description: |
+  Remove unnecessary vision bytes from API calls to reduce token usage in vision processing.
+  Current implementation sends full resolution images which consume excessive tokens.
+  Implement image compression/resizing before API calls to reduce token consumption by at least 30%.
+
+acceptance_criteria:
+  - "Image preprocessing function implemented that resizes images before API calls"
+  - "Token usage reduced by at least 30% compared to baseline"
+  - "Visual quality remains acceptable for the use case"
+  - "Unit tests added for image preprocessing function"
+  - "Documentation updated with token optimization strategy"
+
+context:
+  background: "Vision API calls consume significant tokens due to image data. Current implementation sends full-resolution images unnecessarily."
+  constraints:
+    - "Must maintain visual quality sufficient for the task"
+    - "Preprocessing should not add significant latency"
+    - "Solution should be configurable (compression level, target size)"
+
+fileScope:
+  - "lib/vision_analyzer.py"
+  - "tests/test_vision_analyzer.py"
+  - "docs/features/vision-processing.md"

@@ -1,0 +1,65 @@
+{
+  "$schema": "../schemas/prd.schema.json",
+  "$comment": "Template for feature PRDs. Replace {{VAR}} placeholders with actual values.",
+  "project": "{{PROJECT_NAME}}",
+  "branchName": "feature/{{PRD_ID_LOWER}}",
+  "description": "{{DESCRIPTION}}",
+  "userStories": [
+    {
+      "id": "{{PRD_ID}}-001",
+      "title": "Initial Setup and Configuration",
+      "description": "Set up the basic structure and configuration for this feature",
+      "acceptanceCriteria": [
+        "Create necessary files and directories for the feature",
+        "Add configuration options if needed",
+        "Set up any required dependencies",
+        "Document initial setup in progress.txt"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "{{PRD_ID}}-002",
+      "title": "Core Implementation",
+      "description": "Implement the core functionality of the feature",
+      "acceptanceCriteria": [
+        "Implement main feature logic",
+        "Handle edge cases appropriately",
+        "Follow existing code patterns and conventions",
+        "Add inline documentation where needed"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "{{PRD_ID}}-003",
+      "title": "Integration and Testing",
+      "description": "Integrate the feature and add comprehensive tests",
+      "acceptanceCriteria": [
+        "Integrate feature with existing codebase",
+        "Add unit tests for core functionality",
+        "Add integration tests if applicable",
+        "All tests pass successfully"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "{{PRD_ID}}-004",
+      "title": "Documentation and Cleanup",
+      "description": "Document the feature and clean up any technical debt",
+      "acceptanceCriteria": [
+        "Update relevant documentation",
+        "Add usage examples if applicable",
+        "Remove any debug code or temporary scaffolding",
+        "Code review checklist completed"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

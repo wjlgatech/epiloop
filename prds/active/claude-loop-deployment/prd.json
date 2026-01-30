@@ -1,0 +1,238 @@
+{
+  "project": "claude-loop-deployment",
+  "branchName": "feature/claude-loop-deployment",
+  "description": "Deploy claude-loop integration to production, complete full system integration testing, and prepare for user testing with both common and edge cases",
+  "domain": "deployment:testing:integration",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Fix integration test failures",
+      "description": "As a developer, I want all integration tests passing so that the system is verified to work correctly",
+      "acceptanceCriteria": [
+        "Tests written FIRST (RED phase), then minimal implementation (GREEN phase), following TDD Iron Law",
+        "AutonomousCodingSkill.handleCommand() properly implemented for all commands",
+        "WorkspaceManager properly initializes with config defaults",
+        "All 14 integration tests pass",
+        "No TypeErrors or undefined config issues",
+        "Mock implementations for external dependencies"
+      ],
+      "priority": 1,
+      "passes": true,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "extensions/claude-loop/src/skill-handler.ts",
+        "extensions/claude-loop/src/workspace-manager.ts",
+        "extensions/claude-loop/src/integration.test.ts"
+      ]
+    },
+    {
+      "id": "US-002",
+      "title": "Create configuration files and defaults",
+      "description": "As a user, I want sensible default configurations so that the system works out-of-the-box",
+      "acceptanceCriteria": [
+        "Tests written FIRST (RED phase), then minimal implementation (GREEN phase), following TDD Iron Law",
+        "Create docs/CONFIGURATION.md with all options documented",
+        "Create extensions/claude-loop/config/defaults.json",
+        "Environment-based config loading (~/.epiloop/config/autonomous-coding.json)",
+        "Validation of config values with helpful error messages",
+        "Config schema with TypeScript types"
+      ],
+      "priority": 2,
+      "passes": true,
+      "estimatedComplexity": "simple",
+      "fileScope": [
+        "extensions/claude-loop/src/config.ts",
+        "extensions/claude-loop/config/defaults.json",
+        "extensions/claude-loop/docs/CONFIGURATION.md"
+      ],
+      "dependencies": ["US-001"]
+    },
+    {
+      "id": "US-003",
+      "title": "Create API reference documentation",
+      "description": "As a developer, I want complete API documentation so that I can integrate and extend the system",
+      "acceptanceCriteria": [
+        "Tests written FIRST (RED phase), then minimal implementation (GREEN phase), following TDD Iron Law",
+        "Create docs/API.md with all exported classes and functions",
+        "Document all interfaces with examples",
+        "Code snippets for common use cases",
+        "Event system documentation with event signatures",
+        "TypeScript type definitions clearly documented"
+      ],
+      "priority": 3,
+      "passes": false,
+      "estimatedComplexity": "simple",
+      "fileScope": [
+        "extensions/claude-loop/docs/API.md"
+      ],
+      "dependencies": ["US-002"]
+    },
+    {
+      "id": "US-004",
+      "title": "Create troubleshooting guide",
+      "description": "As a user, I want a troubleshooting guide so that I can resolve common issues quickly",
+      "acceptanceCriteria": [
+        "Tests written FIRST (RED phase), then minimal implementation (GREEN phase), following TDD Iron Law",
+        "Create docs/TROUBLESHOOTING.md",
+        "Document common error messages and solutions",
+        "Debug mode instructions",
+        "Log location and analysis guide",
+        "Performance tuning tips",
+        "Known issues and workarounds"
+      ],
+      "priority": 4,
+      "passes": false,
+      "estimatedComplexity": "simple",
+      "fileScope": [
+        "extensions/claude-loop/docs/TROUBLESHOOTING.md"
+      ],
+      "dependencies": ["US-003"]
+    },
+    {
+      "id": "US-005",
+      "title": "Register plugin with Epiloop",
+      "description": "As the system, I want the extension properly registered so that Epiloop loads it on startup",
+      "acceptanceCriteria": [
+        "Tests written FIRST (RED phase), then minimal implementation (GREEN phase), following TDD Iron Law",
+        "Update extensions/claude-loop/src/index.ts with proper plugin exports",
+        "Implement plugin lifecycle hooks (init, activate, deactivate)",
+        "Register skill with Epiloop skill system",
+        "Export plugin metadata (name, version, description)",
+        "Ensure plugin loads without errors in Epiloop"
+      ],
+      "priority": 5,
+      "passes": true,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "extensions/claude-loop/src/index.ts",
+        "extensions/claude-loop/epiloop.plugin.json"
+      ],
+      "dependencies": ["US-001", "US-002"]
+    },
+    {
+      "id": "US-006",
+      "title": "Build and install extension",
+      "description": "As a user, I want the extension built and installed so that I can use it with Epiloop",
+      "acceptanceCriteria": [
+        "Tests written FIRST (RED phase), then minimal implementation (GREEN phase), following TDD Iron Law",
+        "npm run build completes without errors",
+        "TypeScript compilation produces clean dist/ output",
+        "Extension installed in Epiloop's extension directory",
+        "Dependencies properly resolved",
+        "Build script handles both development and production modes"
+      ],
+      "priority": 6,
+      "passes": true,
+      "estimatedComplexity": "simple",
+      "fileScope": [
+        "extensions/claude-loop/package.json",
+        "extensions/claude-loop/tsconfig.json"
+      ],
+      "dependencies": ["US-005"]
+    },
+    {
+      "id": "US-007",
+      "title": "Create comprehensive test suite for common cases",
+      "description": "As a QA engineer, I want tests for all common use cases so that typical user workflows are verified",
+      "acceptanceCriteria": [
+        "Tests written FIRST (RED phase), then minimal implementation (GREEN phase), following TDD Iron Law",
+        "Test: Simple feature request (single story)",
+        "Test: Medium complexity feature (3-5 stories)",
+        "Test: Feature with external API integration",
+        "Test: Feature with database changes",
+        "Test: UI component addition",
+        "Test: Bug fix workflow",
+        "All tests pass with mock Claude API"
+      ],
+      "priority": 7,
+      "passes": false,
+      "estimatedComplexity": "complex",
+      "fileScope": [
+        "extensions/claude-loop/src/test-cases/common.test.ts"
+      ],
+      "dependencies": ["US-006"]
+    },
+    {
+      "id": "US-008",
+      "title": "Create comprehensive test suite for edge cases",
+      "description": "As a QA engineer, I want tests for edge cases so that unusual scenarios are handled correctly",
+      "acceptanceCriteria": [
+        "Tests written FIRST (RED phase), then minimal implementation (GREEN phase), following TDD Iron Law",
+        "Test: Empty/invalid feature descriptions",
+        "Test: Very large PRD (50+ stories)",
+        "Test: Timeout and recovery",
+        "Test: Network failures during execution",
+        "Test: Disk space exhaustion",
+        "Test: Memory pressure scenarios",
+        "Test: Concurrent resource conflicts",
+        "Test: Malformed code in PRD",
+        "Test: Security vulnerabilities in generated code",
+        "All edge cases handled gracefully"
+      ],
+      "priority": 8,
+      "passes": false,
+      "estimatedComplexity": "complex",
+      "fileScope": [
+        "extensions/claude-loop/src/test-cases/edge.test.ts"
+      ],
+      "dependencies": ["US-007"]
+    },
+    {
+      "id": "US-009",
+      "title": "Activate and smoke test in Epiloop",
+      "description": "As a developer, I want to verify the extension works in live Epiloop so that it's ready for user testing",
+      "acceptanceCriteria": [
+        "Tests written FIRST (RED phase), then minimal implementation (GREEN phase), following TDD Iron Law",
+        "Extension loads in Epiloop without errors",
+        "/autonomous-coding command registered and responds",
+        "Simple test feature executes successfully",
+        "Progress messages appear correctly",
+        "Logs written to correct location",
+        "Metrics tracked correctly",
+        "No memory leaks during execution"
+      ],
+      "priority": 9,
+      "passes": false,
+      "estimatedComplexity": "medium",
+      "fileScope": [
+        "extensions/claude-loop/scripts/smoke-test.sh"
+      ],
+      "dependencies": ["US-006"]
+    },
+    {
+      "id": "US-010",
+      "title": "Create user acceptance test plan",
+      "description": "As a product owner, I want a structured test plan so that user testing is thorough and systematic",
+      "acceptanceCriteria": [
+        "Tests written FIRST (RED phase), then minimal implementation (GREEN phase), following TDD Iron Law",
+        "Document test scenarios for common workflows",
+        "Document test scenarios for edge cases",
+        "Expected results for each test case",
+        "Pass/fail criteria clearly defined",
+        "Regression test checklist",
+        "Performance baseline measurements"
+      ],
+      "priority": 10,
+      "passes": false,
+      "estimatedComplexity": "simple",
+      "fileScope": [
+        "extensions/claude-loop/docs/UAT_PLAN.md"
+      ],
+      "dependencies": ["US-007", "US-008", "US-009"]
+    }
+  ],
+  "qualityGates": {
+    "requireTests": true,
+    "requireTypecheck": true,
+    "requireLint": true,
+    "minCoverage": 75,
+    "securityScan": true
+  },
+  "metadata": {
+    "createdAt": "2026-01-29T02:20:00Z",
+    "author": "Claude Sonnet 4.5",
+    "estimatedDuration": "2-3 hours",
+    "parallelizable": true,
+    "maxParallelStories": 3
+  }
+}

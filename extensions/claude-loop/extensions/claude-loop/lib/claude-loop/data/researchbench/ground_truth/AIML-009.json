@@ -1,0 +1,117 @@
+{
+  "question_id": "AIML-009",
+  "question": "What are the key challenges in building reliable AI agents that can use tools and take actions?",
+  "expert_sources": [
+    {
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": ["Yao et al."],
+      "venue": "ICLR 2023",
+      "url": "https://arxiv.org/abs/2210.03629",
+      "relevance": "Foundational agent architecture combining reasoning and action"
+    },
+    {
+      "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+      "authors": ["Schick et al."],
+      "venue": "NeurIPS 2023",
+      "url": "https://arxiv.org/abs/2302.04761",
+      "relevance": "Self-supervised tool learning"
+    },
+    {
+      "title": "AgentBench: Evaluating LLMs as Agents",
+      "authors": ["Liu et al."],
+      "venue": "arXiv 2023",
+      "url": "https://arxiv.org/abs/2308.03688",
+      "relevance": "Comprehensive agent evaluation benchmark"
+    },
+    {
+      "title": "The Rise and Potential of Large Language Model Based Agents",
+      "authors": ["Xi et al."],
+      "venue": "arXiv 2023",
+      "url": "https://arxiv.org/abs/2309.07864",
+      "relevance": "Survey of LLM-based agents"
+    },
+    {
+      "title": "Language Agents: From Next-Token Prediction to Digital Automation",
+      "authors": ["Sumers et al."],
+      "venue": "arXiv 2023",
+      "url": "https://arxiv.org/abs/2309.17421",
+      "relevance": "Theoretical framework for language agents"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "Agents struggle with long-horizon planning and task decomposition",
+      "importance": "critical",
+      "sources": ["AgentBench", "Xi et al. 2023"]
+    },
+    {
+      "finding": "Error recovery and handling unexpected states remains challenging",
+      "importance": "critical",
+      "sources": ["Liu et al. 2023", "Sumers et al. 2023"]
+    },
+    {
+      "finding": "Tool use requires careful prompt engineering and API design",
+      "importance": "high",
+      "sources": ["Schick et al. 2023", "Yao et al. 2023"]
+    },
+    {
+      "finding": "Safety concerns include unintended actions and prompt injection attacks",
+      "importance": "critical",
+      "sources": ["Xi et al. 2023"]
+    },
+    {
+      "finding": "Agents often fail silently or produce plausible but incorrect results",
+      "importance": "high",
+      "sources": ["AgentBench"]
+    },
+    {
+      "finding": "ReAct pattern helps but doesn't eliminate reasoning failures",
+      "importance": "medium",
+      "sources": ["Yao et al. 2023"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "More capable base models will solve agent reliability issues",
+      "validity": "Partially valid, but some issues are architectural",
+      "sources": ["Scaling observations"]
+    },
+    {
+      "argument": "Human oversight can compensate for agent failures",
+      "validity": "True for some use cases, but limits autonomy benefits",
+      "sources": ["Safety research"]
+    },
+    {
+      "argument": "Formal verification can ensure agent safety",
+      "validity": "Limited applicability to open-ended language agents",
+      "sources": ["Verification literature"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.78,
+    "areas_of_uncertainty": [
+      "Scalability of current approaches",
+      "Emergence of planning capabilities",
+      "Safety guarantees for deployed agents"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "Planning and task decomposition challenges",
+      "Error handling and recovery",
+      "Safety concerns (unintended actions)",
+      "Tool use mechanisms"
+    ],
+    "should_include": [
+      "ReAct or similar architectures",
+      "Evaluation benchmarks",
+      "Prompt injection risks"
+    ],
+    "bonus_points": [
+      "Multi-agent coordination",
+      "Memory and context management",
+      "Specific failure case examples"
+    ]
+  }
+}

@@ -1,12 +1,12 @@
 ---
 summary: "Windows (WSL2) support + companion app status"
 read_when:
-  - Installing Clawdbot on Windows
+  - Installing Epiloop on Windows
   - Looking for Windows companion app status
 ---
 # Windows (WSL2)
 
-Clawdbot on Windows is recommended **via WSL2** (Ubuntu recommended). The
+Epiloop on Windows is recommended **via WSL2** (Ubuntu recommended). The
 CLI + Gateway run inside Linux, which keeps the runtime consistent. Native
 Windows installs are untested and more problematic.
 
@@ -26,19 +26,19 @@ Native Windows companion apps are planned.
 Inside WSL2:
 
 ```
-clawdbot onboard --install-daemon
+epiloop onboard --install-daemon
 ```
 
 Or:
 
 ```
-clawdbot gateway install
+epiloop gateway install
 ```
 
 Or:
 
 ```
-clawdbot configure
+epiloop configure
 ```
 
 Select **Gateway service** when prompted.
@@ -46,7 +46,7 @@ Select **Gateway service** when prompted.
 Repair/migrate:
 
 ```
-clawdbot doctor
+epiloop doctor
 ```
 
 ## Advanced: expose WSL services over LAN (portproxy)
@@ -88,7 +88,7 @@ netsh interface portproxy add v4tov4 listenport=$ListenPort listenaddress=0.0.0.
 Notes:
 - SSH from another machine targets the **Windows host IP** (example: `ssh user@windows-host -p 2222`).
 - Remote nodes must point at a **reachable** Gateway URL (not `127.0.0.1`); use
-  `clawdbot status --all` to confirm.
+  `epiloop status --all` to confirm.
 - Use `listenaddress=0.0.0.0` for LAN access; `127.0.0.1` keeps it local only.
 - If you want this automatic, register a Scheduled Task to run the refresh
   step at login.
@@ -131,17 +131,17 @@ Re-open Ubuntu, then verify:
 systemctl --user status
 ```
 
-### 3) Install Clawdbot (inside WSL)
+### 3) Install Epiloop (inside WSL)
 
 Follow the Linux Getting Started flow inside WSL:
 
 ```bash
-git clone https://github.com/clawdbot/clawdbot.git
-cd clawdbot
+git clone https://github.com/epiloop/epiloop.git
+cd epiloop
 pnpm install
 pnpm ui:build # auto-installs UI deps on first run
 pnpm build
-clawdbot onboard
+epiloop onboard
 ```
 
 Full guide: [Getting Started](/start/getting-started)

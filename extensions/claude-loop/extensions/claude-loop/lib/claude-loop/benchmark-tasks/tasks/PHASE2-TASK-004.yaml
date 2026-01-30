@@ -1,0 +1,26 @@
+task_id: PHASE2-TASK-004
+title: Implement File Hash Cache (Simple)
+description: |
+  Create a simple file content hash cache to detect file changes.
+  Use SHA256 hashing with mtime-based invalidation.
+  Store cache in JSON format.
+
+acceptance_criteria:
+  - "FileHashCache class with get_hash() and invalidate() methods"
+  - "SHA256 hashing of file contents"
+  - "mtime-based cache invalidation (fast check)"
+  - "Cache persistence to JSON file"
+  - "Unit tests verify caching and invalidation"
+
+context:
+  background: "Simple caching utility to test file operations."
+  constraints:
+    - "Use hashlib for SHA256"
+    - "Check mtime before hashing (optimization)"
+    - "Handle missing files gracefully"
+
+complexity: simple
+estimated_hours: 2
+fileScope:
+  - "lib/file_cache.py"
+  - "tests/test_file_cache.py"

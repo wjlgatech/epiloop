@@ -1,0 +1,32 @@
+{
+  "qualityGates": {
+    "requireTests": true,
+    "requireTypecheck": true,
+    "requireLint": true,
+    "minCoverage": 75,
+    "securityScan": true
+  },
+  "execution": {
+    "maxConcurrent": 3,
+    "timeout": 3600000,
+    "maxMemoryPerTask": 512,
+    "maxDiskPerTask": 1024
+  },
+  "workspace": {
+    "cleanupDays": 30,
+    "maxConcurrentPerUser": 3
+  },
+  "reporting": {
+    "verbosity": "normal",
+    "batchDelay": 2000
+  },
+  "improvement": {
+    "autoGenerateProposals": true,
+    "minPatternFrequency": 3,
+    "reportPeriod": "monthly"
+  },
+  "claudeLoop": {
+    "path": "/Users/jialiang.wu/Documents/Projects/claude-loop",
+    "workspaceRoot": "~/.epiloop/workspaces/autonomous-coding"
+  }
+}

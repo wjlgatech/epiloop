@@ -7,13 +7,13 @@ import type {
   MSTeamsConfig,
   MSTeamsReplyStyle,
   MSTeamsTeamConfig,
-} from "clawdbot/plugin-sdk";
+} from "epiloop/plugin-sdk";
 import {
   buildChannelKeyCandidates,
   normalizeChannelSlug,
   resolveChannelEntryMatchWithFallback,
   resolveNestedAllowlistDecision,
-} from "clawdbot/plugin-sdk";
+} from "epiloop/plugin-sdk";
 
 export type MSTeamsResolvedRouteConfig = {
   teamConfig?: MSTeamsTeamConfig;

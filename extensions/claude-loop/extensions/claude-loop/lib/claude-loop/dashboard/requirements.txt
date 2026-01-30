@@ -1,0 +1,2 @@
+# Flask web dashboard dependencies
+Flask>=2.3.0

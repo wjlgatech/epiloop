@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/signal",
+  "name": "@epiloop/signal",
   "version": "2026.1.23",
   "type": "module",
-  "description": "Clawdbot Signal channel plugin",
-  "clawdbot": {
+  "description": "Epiloop Signal channel plugin",
+  "epiloop": {
     "extensions": [
       "./index.ts"
     ]

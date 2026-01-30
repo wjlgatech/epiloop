@@ -4,7 +4,7 @@
 
 ### Initial Setup
 - Created feature branch: feature/claude-loop-integration
-- Copied claude-loop core files to clawdbot directory
+- Copied claude-loop core files to epiloop directory
 - Configured advanced features: parallel execution, experience store, logging
 - Prepared PRD with 15 user stories
 
@@ -17,7 +17,7 @@
 - Max parallel PRDs: 5
 - Quality gates: All enabled
 - Self-improvement: Enabled
-- Experience store: Enabled at ~/.clawdbot/claude-loop/experience-store/
+- Experience store: Enabled at ~/.epiloop/claude-loop/experience-store/
 
 ---
 
@@ -31,22 +31,22 @@
 
 **What was implemented**:
 - Created extensions/claude-loop directory with proper structure
-- Added package.json with @clawdbot/claude-loop package configuration
+- Added package.json with @epiloop/claude-loop package configuration
 - Configured TypeScript with tsconfig.json extending base config
 - Created src/index.ts with plugin registration boilerplate
-- Added clawdbot.plugin.json metadata file
+- Added epiloop.plugin.json metadata file
 - Documented architecture and purpose in README.md
 
 **Files changed**:
 - extensions/claude-loop/package.json (new)
 - extensions/claude-loop/tsconfig.json (new)
 - extensions/claude-loop/src/index.ts (new)
-- extensions/claude-loop/clawdbot.plugin.json (new)
+- extensions/claude-loop/epiloop.plugin.json (new)
 - extensions/claude-loop/README.md (new)
 
 **Learnings for future iterations**:
-- Extension structure follows clawdbot plugin SDK patterns (index.ts default export, clawdbot.extensions in package.json)
+- Extension structure follows epiloop plugin SDK patterns (index.ts default export, epiloop.extensions in package.json)
 - TypeScript compilation errors expected until extension is properly installed in workspace
-- Use @clawdbot/* namespace for extension packages
-- Plugin registration uses ClawdbotPluginApi with register() method
+- Use @epiloop/* namespace for extension packages
+- Plugin registration uses EpiloopPluginApi with register() method
 - README should document both current state and planned features for clarity

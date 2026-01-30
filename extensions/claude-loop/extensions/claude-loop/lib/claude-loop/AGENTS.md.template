@@ -1,0 +1,121 @@
+# AGENTS.md - Pattern Documentation
+
+This file documents patterns discovered during development. It serves as persistent
+memory for AI agents across claude-loop iterations and as documentation for future
+developers.
+
+**Auto-updated by**: claude-loop iterations
+**Last updated**: [DATE]
+
+---
+
+## Project Overview
+
+<!-- Brief description of the project and its purpose -->
+
+## Project Structure
+
+```
+project/
+├── src/           # Source code
+├── tests/         # Test files
+├── docs/          # Documentation
+└── ...
+```
+
+<!-- Document key directories and their purposes -->
+
+## Common Commands
+
+```bash
+# Build
+npm run build          # or: cargo build, go build, etc.
+
+# Test
+npm test               # Run all tests
+npm run test:watch     # Watch mode
+
+# Lint
+npm run lint           # Check code style
+npm run lint:fix       # Auto-fix issues
+
+# Type Check
+npm run typecheck      # TypeScript type checking
+```
+
+<!-- Add project-specific commands -->
+
+## Architecture Patterns
+
+### Pattern: [Name]
+**When to use**: [Context]
+**Implementation**:
+```
+[Code example or description]
+```
+
+<!-- Document discovered architectural patterns -->
+
+## Code Conventions
+
+- **Naming**: [camelCase/snake_case/etc.]
+- **File structure**: [How files should be organized]
+- **Imports**: [Import ordering conventions]
+- **Error handling**: [How errors should be handled]
+
+<!-- Document code style conventions -->
+
+## Discovered Patterns
+
+<!--
+Patterns learned during implementation - updated by each iteration.
+Format:
+### [Pattern Name]
+- **Discovered in**: [Story ID]
+- **Problem**: [What problem it solves]
+- **Solution**: [How to apply the pattern]
+-->
+
+## Gotchas & Warnings
+
+<!--
+Common pitfalls to avoid - updated by each iteration.
+Format:
+### [Gotcha Name]
+- **Symptom**: [What goes wrong]
+- **Cause**: [Why it happens]
+- **Fix**: [How to avoid/fix it]
+-->
+
+## Dependencies
+
+| Package | Purpose | Notes |
+|---------|---------|-------|
+| [name]  | [why]   | [any caveats] |
+
+<!-- Document key dependencies and their purposes -->
+
+## API Reference
+
+<!-- Quick reference for key APIs, endpoints, or interfaces -->
+
+## Testing Strategy
+
+- **Unit tests**: [Where and how]
+- **Integration tests**: [Where and how]
+- **E2E tests**: [Where and how]
+
+<!-- Document testing approach -->
+
+---
+
+## Iteration Log Summary
+
+<!-- High-level summary of what each iteration accomplished -->
+
+| Iteration | Story | Key Changes |
+|-----------|-------|-------------|
+| 1 | US-001 | [Brief description] |
+| 2 | US-002 | [Brief description] |
+
+<!-- Updated automatically by iterations -->

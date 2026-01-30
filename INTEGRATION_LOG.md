@@ -26,7 +26,7 @@
 - US-004: Loop executor
 - US-005: Progress reporter
 
-### Phase 3: Clawdbot Integration (Stories 6-7) - PARALLEL
+### Phase 3: Epiloop Integration (Stories 6-7) - PARALLEL
 - US-006: Skill integration
 - US-007: Session management
 
@@ -60,9 +60,9 @@
 ## Failure Tracking
 
 All failures, deficiencies, and improvement opportunities will be logged to:
-- **Structured Logs:** ~/.clawdbot/logs/claude-loop/execution-YYYYMMDD-HHMMSS.jsonl
-- **Failure Analysis:** ~/.clawdbot/logs/claude-loop/failures/
-- **Improvement Queue:** ~/.clawdbot/claude-loop/improvements/
+- **Structured Logs:** ~/.epiloop/logs/claude-loop/execution-YYYYMMDD-HHMMSS.jsonl
+- **Failure Analysis:** ~/.epiloop/logs/claude-loop/failures/
+- **Improvement Queue:** ~/.epiloop/claude-loop/improvements/
 
 ## Self-Upgrade Inputs
 

@@ -1,0 +1,30 @@
+task_id: PHASE2-TASK-006
+title: Implement Cost Tracking Dashboard (Medium)
+description: |
+  Create a cost tracking module that aggregates LLM costs across providers.
+  Support multiple providers (OpenAI, Anthropic, Google, DeepSeek).
+  Generate daily/weekly cost reports with breakdown by provider and model.
+
+acceptance_criteria:
+  - "CostTracker class with track_usage() and get_report() methods"
+  - "Support for 5+ providers with different pricing models"
+  - "Daily and weekly cost aggregation"
+  - "Cost breakdown by provider, model, and time period"
+  - "Export reports to JSON and CSV formats"
+  - "Unit tests cover multiple providers"
+  - "Documentation includes pricing model examples"
+
+context:
+  background: "Medium complexity task requiring data aggregation and reporting."
+  constraints:
+    - "Pricing data configurable via YAML"
+    - "Handle per-token pricing variations"
+    - "Support batch cost import from logs"
+
+complexity: medium
+estimated_hours: 5
+fileScope:
+  - "lib/cost_tracker.py"
+  - "lib/cost_report.py"
+  - "tests/test_cost_tracker.py"
+  - "docs/features/cost-tracking.md"

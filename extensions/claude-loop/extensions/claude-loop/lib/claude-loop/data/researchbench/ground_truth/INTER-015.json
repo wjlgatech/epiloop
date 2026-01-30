@@ -1,0 +1,117 @@
+{
+  "question_id": "INTER-015",
+  "question": "How do privacy technologies balance security needs with civil liberties?",
+  "expert_sources": [
+    {
+      "title": "Keys Under Doormats",
+      "authors": ["Abelson et al."],
+      "venue": "MIT 2015",
+      "url": "https://doi.org/10.7916/D8PG1YCM",
+      "relevance": "Technical analysis of encryption backdoors"
+    },
+    {
+      "title": "Zero-Knowledge Proofs",
+      "authors": ["Goldreich et al."],
+      "venue": "FOCS 1986",
+      "url": "https://doi.org/10.1145/116825.116852",
+      "relevance": "Zero-knowledge proof foundations"
+    },
+    {
+      "title": "End-to-End Encryption and Child Safety",
+      "authors": ["EFF, ACLU, various analyses"],
+      "venue": "Multiple sources",
+      "url": "Various",
+      "relevance": "Policy debate analysis"
+    },
+    {
+      "title": "GDPR and Privacy by Design",
+      "authors": ["EU Commission"],
+      "venue": "European Union 2018",
+      "url": "https://gdpr-info.eu/",
+      "relevance": "European regulatory framework"
+    },
+    {
+      "title": "Apple vs FBI San Bernardino Case",
+      "authors": ["Court documents and analyses"],
+      "venue": "2016",
+      "url": "Various",
+      "relevance": "Major encryption conflict case study"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "End-to-end encryption prevents any third party, including providers, from reading messages",
+      "importance": "critical",
+      "sources": ["Technical documentation"]
+    },
+    {
+      "finding": "Cryptographic backdoors would weaken security for everyone, not just targets",
+      "importance": "critical",
+      "sources": ["Abelson et al. 2015"]
+    },
+    {
+      "finding": "Zero-knowledge proofs enable verification without revealing underlying data",
+      "importance": "high",
+      "sources": ["Goldreich et al. 1986"]
+    },
+    {
+      "finding": "Law enforcement argues encryption enables criminals; privacy advocates cite civil liberties",
+      "importance": "critical",
+      "sources": ["Apple v FBI", "Policy debates"]
+    },
+    {
+      "finding": "Different democracies take different positions (EU emphasizes privacy, Five Eyes push access)",
+      "importance": "high",
+      "sources": ["Policy comparisons"]
+    },
+    {
+      "finding": "Client-side scanning proposals attempt compromise but face technical and privacy concerns",
+      "importance": "high",
+      "sources": ["Apple CSAM proposal, critiques"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "Strong encryption makes legitimate investigations impossible",
+      "validity": "Partially valid, but metadata and other evidence often available",
+      "sources": ["Law enforcement testimony"]
+    },
+    {
+      "argument": "Privacy is not absolute and must yield to safety",
+      "validity": "Value judgment, but technical tradeoffs matter",
+      "sources": ["Policy discussions"]
+    },
+    {
+      "argument": "Technical solutions can provide lawful access without weakening security",
+      "validity": "Cryptographers largely disagree",
+      "sources": ["Abelson et al. 2015"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.82,
+    "areas_of_uncertainty": [
+      "Future technical solutions that don't exist yet",
+      "Evolving social consensus on privacy",
+      "Effectiveness of current policies"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "End-to-end encryption explanation",
+      "Backdoor risks",
+      "Law enforcement vs civil liberties tension",
+      "At least one technical approach (ZKP or similar)"
+    ],
+    "should_include": [
+      "Specific case (Apple v FBI)",
+      "International regulatory differences",
+      "Metadata as alternative"
+    ],
+    "bonus_points": [
+      "Client-side scanning debate",
+      "Differential privacy",
+      "Homomorphic encryption possibilities"
+    ]
+  }
+}

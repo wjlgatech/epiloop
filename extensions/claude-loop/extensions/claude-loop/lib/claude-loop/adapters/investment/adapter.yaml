@@ -1,0 +1,313 @@
+---
+# Investment Research Domain Adapter Configuration
+# Specializes research-loop for investment analysis with paper trading support
+#
+# DISCLAIMER: This is research synthesis, NOT financial advice.
+# Past performance does not guarantee future results.
+# Never invest more than you can afford to lose.
+
+name: investment
+description: "Investment research domain adapter for stocks, crypto, options, and real estate analysis with paper trading support"
+version: 1.0.0
+
+# CRITICAL: Paper trading mode - no real money involved
+paper_trading:
+  enabled: true  # ALWAYS default to true
+  mode: simulation
+  disclaimer: |
+    PAPER TRADING MODE ACTIVE - NO REAL MONEY INVOLVED
+    This is research synthesis, NOT financial advice.
+    Past performance does not guarantee future results.
+    Never invest more than you can afford to lose.
+
+# Domain configuration
+domain:
+  # Keywords that trigger this adapter
+  keywords:
+    # Stocks
+    - stock
+    - stocks
+    - equity
+    - equities
+    - shares
+    - dividend
+    - earnings
+    - PE ratio
+    - market cap
+    - SEC filing
+    - 10-K
+    - 10-Q
+    - quarterly report
+    - annual report
+
+    # Crypto
+    - cryptocurrency
+    - crypto
+    - bitcoin
+    - ethereum
+    - token
+    - defi
+    - blockchain
+    - altcoin
+    - stablecoin
+    - NFT
+    - web3
+
+    # Options
+    - options
+    - calls
+    - puts
+    - strike price
+    - expiration
+    - implied volatility
+    - greeks
+    - delta
+    - theta
+    - gamma
+    - vega
+
+    # Real Estate
+    - real estate
+    - REIT
+    - property
+    - rental yield
+    - cap rate
+    - NOI
+    - real estate investment
+
+    # General Investment
+    - investment
+    - portfolio
+    - asset allocation
+    - risk management
+    - valuation
+    - fundamental analysis
+    - technical analysis
+    - buy signal
+    - sell signal
+    - entry point
+    - exit point
+
+  # Asset classes supported
+  asset_classes:
+    stocks:
+      enabled: true
+      description: "Public equities and ETFs"
+      data_sources:
+        - yahoo_finance
+        - sec_edgar
+        - alpha_vantage
+    crypto:
+      enabled: true
+      description: "Cryptocurrencies and tokens"
+      data_sources:
+        - coingecko
+        - coinmarketcap
+    options:
+      enabled: true
+      description: "Stock and index options"
+      data_sources:
+        - yahoo_finance
+        - cboe
+    real_estate:
+      enabled: true
+      description: "REITs and real estate markets"
+      data_sources:
+        - yahoo_finance
+        - zillow
+
+# Data source configurations
+sources:
+  yahoo_finance:
+    enabled: true
+    description: "Stock quotes, financials, historical data"
+    rate_limit:
+      requests_per_second: 2
+      burst: 10
+    endpoints:
+      quote: "/v6/finance/quote"
+      financials: "/v10/finance/quoteSummary"
+      history: "/v8/finance/chart"
+    fields:
+      - price
+      - volume
+      - marketCap
+      - trailingPE
+      - forwardPE
+      - dividendYield
+      - eps
+      - revenue
+      - profitMargin
+
+  coingecko:
+    enabled: true
+    description: "Cryptocurrency prices and market data"
+    base_url: "https://api.coingecko.com/api/v3"
+    rate_limit:
+      requests_per_second: 1
+      burst: 5
+    endpoints:
+      coins: "/coins/markets"
+      coin_detail: "/coins/{id}"
+      trending: "/search/trending"
+      history: "/coins/{id}/market_chart"
+    fields:
+      - current_price
+      - market_cap
+      - total_volume
+      - price_change_percentage_24h
+      - circulating_supply
+      - ath
+      - atl
+
+  sec_edgar:
+    enabled: true
+    description: "SEC filings for public companies"
+    base_url: "https://data.sec.gov"
+    rate_limit:
+      requests_per_second: 1
+      burst: 3
+    filing_types:
+      - 10-K  # Annual report
+      - 10-Q  # Quarterly report
+      - 8-K   # Current report
+      - DEF 14A  # Proxy statement
+
+# Quality gates specific to investment research
+quality_gates:
+  source_recency:
+    enabled: true
+    description: "Data freshness requirements"
+    thresholds:
+      trading_decisions:
+        max_age_hours: 24
+        warning_age_hours: 12
+      investment_research:
+        max_age_days: 7
+        warning_age_days: 3
+      fundamental_analysis:
+        max_age_days: 90
+        warning_age_days: 30
+
+  confirmation_bias:
+    enabled: true
+    description: "Require opposing viewpoints"
+    requirements:
+      - require_bear_case  # Always include bearish perspective
+      - require_bull_case  # Always include bullish perspective
+      - min_opposing_sources: 2
+      - flag_one_sided_analysis: true
+
+  risk_disclosure:
+    enabled: true
+    description: "Mandatory risk disclosures"
+    required_disclosures:
+      - paper_trading_notice
+      - not_financial_advice
+      - past_performance_warning
+      - position_sizing_warning
+      - volatility_warning
+
+  liquidity_check:
+    enabled: true
+    description: "Verify adequate liquidity"
+    thresholds:
+      stocks:
+        min_avg_volume: 100000
+        min_market_cap: 10000000  # $10M
+      crypto:
+        min_24h_volume: 1000000  # $1M
+        min_market_cap: 10000000  # $10M
+
+  backtesting_caveat:
+    enabled: true
+    description: "Warn about backtesting limitations"
+    warnings:
+      - "Backtested results do not guarantee future performance"
+      - "Slippage and fees not included"
+      - "Market conditions change"
+      - "Survivorship bias may be present"
+
+# Confidence scoring weights for investment domain
+confidence_weights:
+  source_authority: 0.25      # Official sources (SEC, exchanges)
+  data_recency: 0.20          # How fresh is the data
+  confirmation: 0.20          # Multiple sources agree
+  liquidity: 0.15             # Trading volume adequacy
+  risk_adjusted: 0.10         # Risk metrics included
+  backtesting: 0.10           # Historical validation
+
+# Agent assignments for investment queries
+agents:
+  primary:
+    - fundamental-analyst  # Financial statement analysis
+    - technical-analyst    # Chart patterns and indicators
+    - risk-assessor       # Risk management
+  secondary:
+    - market-analyst      # Market conditions
+    - fact-checker        # Verify claims
+  quality_control:
+    - devils-advocate     # Challenge thesis
+
+# Output template customization
+output:
+  mandatory_disclaimer: |
+    ---
+    DISCLAIMER: This is research synthesis, NOT financial advice.
+    Past performance does not guarantee future results.
+    Never invest more than you can afford to lose.
+    Paper trading mode is enabled - no real money involved.
+    ---
+
+  include_sections:
+    - executive_summary
+    - fundamental_analysis
+    - technical_analysis
+    - risk_assessment
+    - bull_case
+    - bear_case
+    - position_sizing
+    - entry_exit_levels
+    - disclaimer
+
+  format:
+    confidence_levels:
+      high: ">= 0.8"
+      medium: "0.5 - 0.79"
+      low: "< 0.5"
+    risk_levels:
+      low: "< 20% volatility"
+      medium: "20-50% volatility"
+      high: "> 50% volatility"
+
+# Rate limiting and caching
+rate_limits:
+  yahoo_finance:
+    requests_per_second: 2
+    burst: 10
+  coingecko:
+    requests_per_second: 1
+    burst: 5
+  sec_edgar:
+    requests_per_second: 1
+    burst: 3
+
+cache:
+  enabled: true
+  ttl_hours:
+    quotes: 0.25       # 15 minutes for prices
+    financials: 24     # 24 hours for financials
+    filings: 168       # 7 days for SEC filings
+  max_size_mb: 100
+
+# Paper trading configuration
+paper_trading_config:
+  initial_balance: 100000.0  # $100k paper money
+  data_file: "data/paper_trades.json"
+  commission_per_trade: 0.0  # Paper trading has no fees
+  track_metrics:
+    - total_pnl
+    - win_rate
+    - sharpe_ratio
+    - max_drawdown
+    - avg_holding_period

@@ -1,0 +1,306 @@
+#========================================================
+# REAL-WORLD BENCHMARK TASK 003
+# Tier: REGRESSION (Bug Fix)
+# Source: Agent-Zero codebase
+#========================================================
+
+id: TASK-003
+name: "Fix Scheduler Sleep Time Bug - Prevent Duplicate Job Execution"
+tier: regression
+source_project: agent-zero
+difficulty: 3  # 1-5 scale
+estimated_time_human_minutes: 45
+
+#--------------------------------------------------------
+# PROBLEM DESCRIPTION
+#--------------------------------------------------------
+description: |
+  **Current Issue** (agent-zero/python/helpers/job_loop.py:34):
+  TODO comment states: "if we lower it under 1min, it can run a 5min job multiple times in it's target minute"
+
+  **Bug**: The job scheduler has a timing bug where jobs scheduled to run
+  every 5 minutes can execute multiple times within the same minute if
+  SLEEP_TIME is reduced below 60 seconds.
+
+  **Root Cause**: The scheduler tick logic doesn't track which jobs have
+  already run in the current time window, so rapid polling can trigger
+  the same job multiple times.
+
+  **Impact**:
+  - Duplicate job executions (waste of resources)
+  - Incorrect behavior (e.g., sending notification twice)
+  - Race conditions if jobs modify shared state
+
+  **Expected Behavior**: Each scheduled job should execute exactly once
+  per scheduled interval, regardless of polling frequency.
+
+#--------------------------------------------------------
+# CONTEXT
+#--------------------------------------------------------
+context:
+  file: "agent-zero/python/helpers/job_loop.py"
+  function: "job_loop"
+  lines: 19-35
+
+  related_files:
+    - "agent-zero/python/helpers/task_scheduler.py"  # Scheduler implementation
+    - "agent-zero/python/tools/scheduler.py"  # Schedule tool
+
+  background: |
+    Agent-zero has a background job scheduler that runs tasks at specified
+    intervals (cron-style). The main loop polls the scheduler every SLEEP_TIME
+    (currently 60 seconds).
+
+    The bug manifests when:
+    1. SLEEP_TIME is lowered to <60s (e.g., 30s for faster responsiveness)
+    2. A job scheduled for 5-minute intervals may execute at:
+       - 10:00:00
+       - 10:00:30 (duplicate!)
+       - 10:05:00
+       - 10:05:30 (duplicate!)
+
+    This happens because the scheduler checks "should run now?" without
+    remembering "did I just run this?"
+
+#--------------------------------------------------------
+# ACCEPTANCE CRITERIA
+#--------------------------------------------------------
+acceptance_criteria:
+  - id: AC1
+    description: "Jobs execute exactly once per interval"
+    weight: 0.40
+    validation_method: "integration_test"
+    validation_script: |
+      python -m pytest agent-zero/tests/test_scheduler_no_duplicates.py -v
+
+  - id: AC2
+    description: "Works correctly with SLEEP_TIME < 60s"
+    weight: 0.25
+    validation_method: "integration_test"
+    validation_script: |
+      # Run scheduler with SLEEP_TIME=10s, verify no duplicates
+      python -m pytest agent-zero/tests/test_scheduler_fast_polling.py -v
+
+  - id: AC3
+    description: "No race conditions or state corruption"
+    weight: 0.20
+    validation_method: "stress_test"
+    validation_script: |
+      # Run 100 iterations with random SLEEP_TIME (1-60s)
+      python -m pytest agent-zero/tests/test_scheduler_stress.py -v
+
+  - id: AC4
+    description: "Existing scheduled jobs still work"
+    weight: 0.10
+    validation_method: "regression_test"
+    validation_script: |
+      cd agent-zero && python -m pytest tests/test_scheduler.py -v
+
+  - id: AC5
+    description: "TODO comment removed or updated"
+    weight: 0.05
+    validation_method: "code_inspection"
+    validation_script: |
+      grep -n "TODO" agent-zero/python/helpers/job_loop.py | grep -c "5min job"
+      # Should return 0
+
+#--------------------------------------------------------
+# IMPLEMENTATION HINTS
+#--------------------------------------------------------
+implementation_hints:
+  approach: |
+    Option 1: Track Last Execution Time
+    - Store timestamp of last execution for each job
+    - Before executing, check if enough time has elapsed
+    - Update timestamp after successful execution
+
+    Option 2: Use Cron-Style Minute Tracking
+    - Track current minute (time.time() // 60)
+    - Only execute if current_minute != last_executed_minute
+    - Reset tracking on minute boundary
+
+    Option 3: Modify Scheduler Tick Logic
+    - Make TaskScheduler.tick() idempotent within same minute
+    - Return "already_run" flag to skip duplicate executions
+
+  example_code: |
+    # Option 1 (Recommended)
+    last_execution_times = {}  # job_id -> timestamp
+
+    async def scheduler_tick():
+        scheduler = TaskScheduler.get()
+        pending_jobs = await scheduler.get_pending_jobs()
+
+        for job in pending_jobs:
+            last_run = last_execution_times.get(job.id, 0)
+            time_since_last = time.time() - last_run
+
+            if time_since_last >= job.interval_seconds:
+                await job.execute()
+                last_execution_times[job.id] = time.time()
+
+  edge_cases:
+    - "Job scheduled for every 1 minute with SLEEP_TIME=10s (6 polls per minute)"
+    - "Job added/removed while scheduler is running"
+    - "System clock changes (DST, manual adjustment)"
+    - "Job execution takes longer than interval"
+    - "Multiple jobs scheduled for same time"
+    - "Agent restart mid-interval (should resume correctly)"
+
+#--------------------------------------------------------
+# TEST DATA
+#--------------------------------------------------------
+test_data:
+  scenario_1:
+    setup: |
+      - SLEEP_TIME = 10 seconds
+      - Job A: every 5 minutes
+      - Job B: every 1 minute
+    duration: "10 minutes"
+    expected_executions:
+      job_a: 2  # At 0:00, 5:00
+      job_b: 10  # At 0:00, 1:00, 2:00, ..., 9:00
+
+  scenario_2:
+    setup: |
+      - SLEEP_TIME = 30 seconds
+      - Job C: every 2 minutes
+    duration: "6 minutes"
+    expected_executions:
+      job_c: 3  # At 0:00, 2:00, 4:00
+
+  bug_reproduction:
+    setup: |
+      # Current bug behavior
+      - SLEEP_TIME = 30 seconds
+      - Job D: every 5 minutes
+    duration: "5 minutes"
+    current_behavior:
+      job_d: 2  # At 0:00, 0:30 (BUG!)
+    expected_behavior:
+      job_d: 1  # At 0:00 only
+
+#--------------------------------------------------------
+# VALIDATION CHECKLIST
+#--------------------------------------------------------
+validation_checklist:
+  code_quality:
+    - "Thread-safe if running in async context"
+    - "Handles edge cases (system clock changes)"
+    - "Clear variable naming (last_execution_times)"
+    - "Minimal performance overhead"
+
+  testing:
+    - "Unit test for duplicate detection logic"
+    - "Integration test with real scheduler"
+    - "Stress test with rapid polling (SLEEP_TIME=1s)"
+    - "Regression test for existing functionality"
+
+  robustness:
+    - "Survives agent restart (persistent state if needed)"
+    - "Works with job addition/removal"
+    - "No memory leaks (clean up completed jobs)"
+
+  documentation:
+    - "Update TODO with solution explanation"
+    - "Add comment explaining duplicate prevention"
+    - "Document SLEEP_TIME constraints (if any remain)"
+
+#--------------------------------------------------------
+# BASELINE SOLUTION (Ground Truth)
+#--------------------------------------------------------
+ground_truth_approach: |
+  The correct solution:
+  1. Maintain dict mapping job_id → last_execution_timestamp
+  2. Before executing job, check:
+     - current_time - last_execution_time >= job.interval
+  3. Only execute if enough time has passed
+  4. Update timestamp after execution
+  5. Clean up timestamps for removed jobs (prevent memory leak)
+
+  Alternative: Use minute-level granularity (simpler but less flexible)
+  1. Track last_executed_minute = time.time() // 60
+  2. Only execute if current_minute > last_executed_minute
+  3. Works for minute-granularity jobs (most common case)
+
+#--------------------------------------------------------
+# FAILURE MODES TO AVOID
+#--------------------------------------------------------
+common_mistakes:
+  - mistake: "Only fixing SLEEP_TIME to 60s without addressing root cause"
+    why_wrong: "Loses flexibility, doesn't solve the actual bug"
+
+  - mistake: "Adding sleep() calls to prevent rapid execution"
+    why_wrong: "Delays all processing, not just duplicate prevention"
+
+  - mistake: "Checking job state in database on every tick"
+    why_wrong: "Performance overhead, especially with many jobs"
+
+  - mistake: "Using global lock to prevent concurrent execution"
+    why_wrong: "Over-synchronization, reduces parallelism"
+
+  - mistake: "Ignoring edge case of job interval < SLEEP_TIME"
+    why_wrong: "Job might be skipped entirely"
+
+#--------------------------------------------------------
+# SUCCESS CRITERIA SUMMARY
+#--------------------------------------------------------
+success_definition: |
+  Task is complete when:
+  1. ✓ SLEEP_TIME can be set to any value (1-60s) without duplicates
+  2. ✓ Jobs execute exactly once per interval (verified by test)
+  3. ✓ No race conditions under stress testing
+  4. ✓ Existing scheduler tests pass (no regressions)
+  5. ✓ Performance overhead < 5ms per tick
+  6. ✓ TODO comment removed/updated
+  7. ✓ Code is clean, documented, and maintainable
+
+#--------------------------------------------------------
+# REPRODUCTION STEPS
+#--------------------------------------------------------
+reproduction_steps: |
+  To reproduce the bug:
+
+  1. Edit agent-zero/python/helpers/job_loop.py
+     Change: SLEEP_TIME = 30  # Was 60
+
+  2. Create test job:
+     python -c "
+     from python.helpers.task_scheduler import TaskScheduler
+     scheduler = TaskScheduler.get()
+     scheduler.add_job('test_job', '*/5 * * * *', lambda: print('JOB RAN'))
+     "
+
+  3. Run agent-zero and observe logs:
+     python initialize.py
+
+  4. Expected (buggy) behavior:
+     JOB RAN  # At 10:00:00
+     JOB RAN  # At 10:00:30 (DUPLICATE!)
+     JOB RAN  # At 10:05:00
+     JOB RAN  # At 10:05:30 (DUPLICATE!)
+
+  5. Expected (fixed) behavior:
+     JOB RAN  # At 10:00:00
+     JOB RAN  # At 10:05:00
+     JOB RAN  # At 10:10:00
+
+#--------------------------------------------------------
+# METADATA
+#--------------------------------------------------------
+metadata:
+  tags: ["bug", "scheduler", "concurrency", "timing", "reliability"]
+  related_issues: []
+  created_by: "benchmark-task-generator"
+  created_at: "2026-01-19"
+  estimated_impact: "high"  # Prevents resource waste and incorrect behavior
+  complexity_signals:
+    - "Timing-sensitive bug (requires careful testing)"
+    - "Edge cases with async and concurrency"
+    - "State management (last execution tracking)"
+    - "Performance considerations (overhead per tick)"
+    - "Backwards compatibility (existing jobs must work)"
+
+  bug_severity: "medium"
+  bug_frequency: "occurs when SLEEP_TIME < 60s"
+  user_impact: "duplicate job executions, wasted resources"

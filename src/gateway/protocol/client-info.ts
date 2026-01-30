@@ -1,16 +1,16 @@
 export const GATEWAY_CLIENT_IDS = {
   WEBCHAT_UI: "webchat-ui",
-  CONTROL_UI: "clawdbot-control-ui",
+  CONTROL_UI: "epiloop-control-ui",
   WEBCHAT: "webchat",
   CLI: "cli",
   GATEWAY_CLIENT: "gateway-client",
-  MACOS_APP: "clawdbot-macos",
-  IOS_APP: "clawdbot-ios",
-  ANDROID_APP: "clawdbot-android",
+  MACOS_APP: "epiloop-macos",
+  IOS_APP: "epiloop-ios",
+  ANDROID_APP: "epiloop-android",
   NODE_HOST: "node-host",
   TEST: "test",
   FINGERPRINT: "fingerprint",
-  PROBE: "clawdbot-probe",
+  PROBE: "epiloop-probe",
 } as const;
 
 export type GatewayClientId = (typeof GATEWAY_CLIENT_IDS)[keyof typeof GATEWAY_CLIENT_IDS];

@@ -1,0 +1,208 @@
+{
+  "project": "phase-3-multi-channel-testing",
+  "branchName": "feature/channels-v1-7-0",
+  "description": "Enable multi-channel architecture for team workflows and production-grade testing. Support Slack, Discord, GitHub, and email channels for PRD submission and notifications.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Channel System Architecture",
+      "description": "As a developer, I want a plugin-based channel framework so that new communication channels can be added without modifying core code",
+      "acceptanceCriteria": [
+        "Create lib/channels/base_channel.py with abstract interface",
+        "Define standard methods: send_message, receive_message, authenticate",
+        "Channel registry for discovery and lifecycle management",
+        "Event routing: channel → core → channel",
+        "Message queue for async processing",
+        "Retry logic with exponential backoff",
+        "Rate limiting per channel",
+        "Channel health monitoring",
+        "Unit tests for base channel",
+        "Integration test: mock channel implementation",
+        "Document in docs/channels/architecture.md"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/channels/base_channel.py",
+        "lib/channels/channel_registry.py",
+        "tests/test_base_channel.py",
+        "docs/channels/architecture.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-002",
+      "title": "Slack Integration",
+      "description": "As a team member, I want to submit PRDs and receive notifications via Slack so that I can use claude-loop without leaving my primary communication tool",
+      "acceptanceCriteria": [
+        "Create lib/channels/slack_channel.py",
+        "Slack app manifest for bot permissions",
+        "Slash commands: /claude-loop submit-prd, /claude-loop status, /claude-loop stop",
+        "File upload support for PRD.json",
+        "Interactive buttons: pause, resume, view logs",
+        "Rich notifications with story progress",
+        "Thread replies for story updates",
+        "OAuth authentication flow",
+        "Unit tests with mocked Slack API",
+        "Integration test with Slack test workspace",
+        "Document in docs/channels/slack.md"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/channels/slack_channel.py",
+        "config/slack-app-manifest.yaml",
+        "tests/test_slack_channel.py",
+        "docs/channels/slack.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-003",
+      "title": "GitHub Integration",
+      "description": "As a developer, I want to trigger claude-loop from GitHub PR comments so that feature implementation can be automated from issue tracking",
+      "acceptanceCriteria": [
+        "Create lib/channels/github_channel.py",
+        "GitHub App for webhook subscriptions",
+        "Trigger on PR comment: @claude-loop implement <description>",
+        "Auto-generate PRD from issue/PR description",
+        "Commit results back to PR branch",
+        "Update PR with status comments",
+        "Integration with GitHub Checks API",
+        "OAuth app authentication",
+        "Unit tests with mocked GitHub API",
+        "Integration test with test repository",
+        "Document in docs/channels/github.md"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/channels/github_channel.py",
+        "config/github-app-manifest.yaml",
+        "tests/test_github_channel.py",
+        "docs/channels/github.md"
+      ],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-004",
+      "title": "Email Channel",
+      "description": "As a user, I want to submit PRDs and receive results via email so that I can use claude-loop without any special software",
+      "acceptanceCriteria": [
+        "Create lib/channels/email_channel.py",
+        "SMTP sending with HTML templates",
+        "IMAP receiving with attachment parsing",
+        "Email parsing: extract PRD JSON from email body or attachment",
+        "Reply-to for status updates",
+        "Progress emails: hourly digest vs real-time",
+        "Security: sender verification, attachment scanning",
+        "HTML email templates with inline CSS",
+        "Unit tests with mocked SMTP/IMAP",
+        "Integration test with test email account",
+        "Document in docs/channels/email.md"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/channels/email_channel.py",
+        "templates/email/",
+        "tests/test_email_channel.py",
+        "docs/channels/email.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-005",
+      "title": "Comprehensive Test Suite",
+      "description": "As a maintainer, I want 70%+ test coverage with unit, integration, and E2E tests so that claude-loop is production-ready",
+      "acceptanceCriteria": [
+        "Unit test coverage: 70%+ across all modules",
+        "Integration tests: all Quick Wins + Phase 2 features",
+        "E2E tests: full PRD execution with Playwright",
+        "Performance tests: load testing with Locust",
+        "Security tests: OWASP scanning, dependency audit",
+        "CI/CD pipeline: GitHub Actions",
+        "Test matrix: Python 3.9, 3.10, 3.11",
+        "Coverage reporting: Codecov integration",
+        "Mutation testing: verify test quality",
+        "Document in docs/testing/strategy.md"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "tests/",
+        ".github/workflows/",
+        "tests/e2e/",
+        "tests/performance/",
+        "docs/testing/strategy.md"
+      ],
+      "estimatedComplexity": "complex",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-006",
+      "title": "Onboarding Wizard",
+      "description": "As a new user, I want an interactive setup wizard so that I can configure claude-loop in under 5 minutes",
+      "acceptanceCriteria": [
+        "Create lib/onboarding_wizard.py with interactive CLI",
+        "Step 1: API key input with validation",
+        "Step 2: Model selection with cost comparison",
+        "Step 3: Optional features (failover, hooks, channels)",
+        "Step 4: Test PRD execution with sample",
+        "Generate config.yaml from wizard answers",
+        "Web-based wizard alternative (UI)",
+        "Import configuration from file",
+        "Success confirmation with next steps",
+        "Unit tests for wizard flow",
+        "Document in docs/getting-started/wizard.md"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "lib/onboarding_wizard.py",
+        "web-ui/src/components/OnboardingWizard.tsx",
+        "tests/test_onboarding_wizard.py",
+        "docs/getting-started/wizard.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    },
+    {
+      "id": "US-007",
+      "title": "Documentation Site",
+      "description": "As a user, I want comprehensive documentation in a searchable website so that I can learn and reference features easily",
+      "acceptanceCriteria": [
+        "Choose framework: Mintlify or Docusaurus",
+        "Migrate existing markdown docs",
+        "Structure: Getting Started, Tutorials, API Reference, Architecture",
+        "Search functionality (Algolia or built-in)",
+        "Code examples with syntax highlighting",
+        "Interactive API explorer (for WebSocket/REST)",
+        "Versioned docs (v1.5, v1.6, v1.7)",
+        "Deploy to GitHub Pages or Vercel",
+        "Analytics: track popular pages",
+        "Community: contribution guide, Discord link"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": "",
+      "fileScope": [
+        "docs-site/",
+        ".github/workflows/deploy-docs.yml",
+        "docs/contributing.md"
+      ],
+      "estimatedComplexity": "medium",
+      "suggestedModel": "sonnet"
+    }
+  ]
+}

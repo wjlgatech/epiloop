@@ -27,7 +27,7 @@ const NodeHostSchema = z
   .strict()
   .optional();
 
-export const ClawdbotSchema = z
+export const EpiloopSchema = z
   .object({
     meta: z
       .object({

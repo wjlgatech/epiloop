@@ -1,0 +1,110 @@
+{
+  "question_id": "TECH-022",
+  "question": "How do service meshes improve microservices communication?",
+  "expert_sources": [
+    {
+      "title": "Istio: Connect, Secure, Control, and Observe Services",
+      "authors": ["Istio Authors"],
+      "venue": "istio.io",
+      "url": "https://istio.io/latest/docs/concepts/what-is-istio/",
+      "relevance": "Leading service mesh documentation"
+    },
+    {
+      "title": "Linkerd: The Service Mesh",
+      "authors": ["Buoyant"],
+      "venue": "linkerd.io",
+      "url": "https://linkerd.io/2.14/overview/",
+      "relevance": "Alternative service mesh approach"
+    },
+    {
+      "title": "The Service Mesh: What Every Software Engineer Needs to Know about the World's Most Over-Hyped Technology",
+      "authors": ["Morgan"],
+      "venue": "Buoyant Blog 2020",
+      "url": "https://buoyant.io/service-mesh-manifesto",
+      "relevance": "Service mesh fundamentals"
+    },
+    {
+      "title": "Envoy Proxy",
+      "authors": ["Lyft"],
+      "venue": "envoyproxy.io",
+      "url": "https://www.envoyproxy.io/docs/envoy/latest/intro/what_is_envoy",
+      "relevance": "Core sidecar proxy technology"
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "Service meshes use sidecar proxies to intercept all network traffic",
+      "importance": "critical",
+      "sources": ["Istio docs", "Linkerd docs"]
+    },
+    {
+      "finding": "Traffic management includes load balancing, routing, and circuit breaking",
+      "importance": "critical",
+      "sources": ["Istio docs", "Envoy docs"]
+    },
+    {
+      "finding": "mTLS between services provides encryption and authentication",
+      "importance": "critical",
+      "sources": ["Istio docs", "Linkerd docs"]
+    },
+    {
+      "finding": "Observability features include distributed tracing, metrics, and logging",
+      "importance": "high",
+      "sources": ["Istio docs", "Morgan 2020"]
+    },
+    {
+      "finding": "Istio has richer features but higher complexity; Linkerd is simpler",
+      "importance": "high",
+      "sources": ["Comparison analyses"]
+    },
+    {
+      "finding": "Sidecar injection adds latency and resource overhead",
+      "importance": "medium",
+      "sources": ["Performance benchmarks"]
+    }
+  ],
+  "known_counterarguments": [
+    {
+      "argument": "Service meshes add operational complexity",
+      "validity": "Valid, requires significant expertise",
+      "sources": ["Industry feedback"]
+    },
+    {
+      "argument": "Latency overhead from sidecar proxies",
+      "validity": "True but typically <1ms, acceptable for most use cases",
+      "sources": ["Benchmark studies"]
+    },
+    {
+      "argument": "Many benefits can be achieved with libraries or simpler tools",
+      "validity": "Partially valid for smaller deployments",
+      "sources": ["Morgan 2020"]
+    }
+  ],
+  "confidence_bounds": {
+    "overall_confidence": 0.88,
+    "areas_of_uncertainty": [
+      "When service mesh is worth the complexity",
+      "eBPF-based mesh evolution",
+      "Multi-cluster mesh patterns"
+    ],
+    "last_updated": "2024-01"
+  },
+  "evaluation_rubric": {
+    "must_include": [
+      "Sidecar proxy pattern",
+      "Traffic management capabilities",
+      "mTLS for service-to-service security",
+      "Observability features"
+    ],
+    "should_include": [
+      "Istio or Linkerd as examples",
+      "Control plane vs data plane",
+      "Circuit breaking/retries"
+    ],
+    "bonus_points": [
+      "Envoy as common data plane",
+      "Ambient mesh (sidecarless)",
+      "Performance overhead discussion"
+    ]
+  }
+}

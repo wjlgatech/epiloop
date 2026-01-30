@@ -1,15 +1,15 @@
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  ClawdbotConfig,
+  EpiloopConfig,
   WizardPrompter,
-} from "clawdbot/plugin-sdk";
+} from "epiloop/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
   promptAccountId,
-} from "clawdbot/plugin-sdk";
+} from "epiloop/plugin-sdk";
 
 import {
   listZaloAccountIds,
@@ -22,7 +22,7 @@ const channel = "zalo" as const;
 type UpdateMode = "polling" | "webhook";
 
 function setZaloDmPolicy(
-  cfg: ClawdbotConfig,
+  cfg: EpiloopConfig,
   dmPolicy: "pairing" | "allowlist" | "open" | "disabled",
 ) {
   const allowFrom = dmPolicy === "open" ? addWildcardAllowFrom(cfg.channels?.zalo?.allowFrom) : undefined;
@@ -36,17 +36,17 @@ function setZaloDmPolicy(
         ...(allowFrom ? { allowFrom } : {}),
       },
     },
-  } as ClawdbotConfig;
+  } as EpiloopConfig;
 }
 
 function setZaloUpdateMode(
-  cfg: ClawdbotConfig,
+  cfg: EpiloopConfig,
   accountId: string,
   mode: UpdateMode,
   webhookUrl?: string,
   webhookSecret?: string,
   webhookPath?: string,
-): ClawdbotConfig {
+): EpiloopConfig {
   const isDefault = accountId === DEFAULT_ACCOUNT_ID;
   if (mode === "polling") {
     if (isDefault) {
@@ -62,7 +62,7 @@ function setZaloUpdateMode(
           ...cfg.channels,
           zalo: rest,
         },
-      } as ClawdbotConfig;
+      } as EpiloopConfig;
     }
     const accounts = { ...(cfg.channels?.zalo?.accounts ?? {}) } as Record<
       string,
@@ -85,7 +85,7 @@ function setZaloUpdateMode(
           accounts,
         },
       },
-    } as ClawdbotConfig;
+    } as EpiloopConfig;
   }
 
   if (isDefault) {
@@ -100,7 +100,7 @@ function setZaloUpdateMode(
           webhookPath,
         },
       },
-    } as ClawdbotConfig;
+    } as EpiloopConfig;
   }
 
   const accounts = { ...(cfg.channels?.zalo?.accounts ?? {}) } as Record<
@@ -122,7 +122,7 @@ function setZaloUpdateMode(
         accounts,
       },
     },
-  } as ClawdbotConfig;
+  } as EpiloopConfig;
 }
 
 async function noteZaloTokenHelp(prompter: WizardPrompter): Promise<void> {
@@ -139,10 +139,10 @@ async function noteZaloTokenHelp(prompter: WizardPrompter): Promise<void> {
 }
 
 async function promptZaloAllowFrom(params: {
-  cfg: ClawdbotConfig;
+  cfg: EpiloopConfig;
   prompter: WizardPrompter;
   accountId: string;
-}): Promise<ClawdbotConfig> {
+}): Promise<EpiloopConfig> {
   const { cfg, prompter, accountId } = params;
   const resolved = resolveZaloAccount({ cfg, accountId });
   const existingAllowFrom = resolved.config.allowFrom ?? [];
@@ -176,7 +176,7 @@ async function promptZaloAllowFrom(params: {
           allowFrom: unique,
         },
       },
-    } as ClawdbotConfig;
+    } as EpiloopConfig;
   }
 
   return {
@@ -197,7 +197,7 @@ async function promptZaloAllowFrom(params: {
         },
       },
     },
-  } as ClawdbotConfig;
+  } as EpiloopConfig;
 }
 
 const dmPolicy: ChannelOnboardingDmPolicy = {
@@ -206,14 +206,14 @@ const dmPolicy: ChannelOnboardingDmPolicy = {
   policyKey: "channels.zalo.dmPolicy",
   allowFromKey: "channels.zalo.allowFrom",
   getCurrent: (cfg) => (cfg.channels?.zalo?.dmPolicy ?? "pairing") as "pairing",
-  setPolicy: (cfg, policy) => setZaloDmPolicy(cfg as ClawdbotConfig, policy),
+  setPolicy: (cfg, policy) => setZaloDmPolicy(cfg as EpiloopConfig, policy),
   promptAllowFrom: async ({ cfg, prompter, accountId }) => {
     const id =
       accountId && normalizeAccountId(accountId)
         ? normalizeAccountId(accountId) ?? DEFAULT_ACCOUNT_ID
-        : resolveDefaultZaloAccountId(cfg as ClawdbotConfig);
+        : resolveDefaultZaloAccountId(cfg as EpiloopConfig);
     return promptZaloAllowFrom({
-      cfg: cfg as ClawdbotConfig,
+      cfg: cfg as EpiloopConfig,
       prompter,
       accountId: id,
     });
@@ -224,8 +224,8 @@ export const zaloOnboardingAdapter: ChannelOnboardingAdapter = {
   channel,
   dmPolicy,
   getStatus: async ({ cfg }) => {
-    const configured = listZaloAccountIds(cfg as ClawdbotConfig).some((accountId) =>
-      Boolean(resolveZaloAccount({ cfg: cfg as ClawdbotConfig, accountId }).token),
+    const configured = listZaloAccountIds(cfg as EpiloopConfig).some((accountId) =>
+      Boolean(resolveZaloAccount({ cfg: cfg as EpiloopConfig, accountId }).token),
     );
     return {
       channel,
@@ -237,13 +237,13 @@ export const zaloOnboardingAdapter: ChannelOnboardingAdapter = {
   },
   configure: async ({ cfg, prompter, accountOverrides, shouldPromptAccountIds, forceAllowFrom }) => {
     const zaloOverride = accountOverrides.zalo?.trim();
-    const defaultZaloAccountId = resolveDefaultZaloAccountId(cfg as ClawdbotConfig);
+    const defaultZaloAccountId = resolveDefaultZaloAccountId(cfg as EpiloopConfig);
     let zaloAccountId = zaloOverride
       ? normalizeAccountId(zaloOverride)
       : defaultZaloAccountId;
     if (shouldPromptAccountIds && !zaloOverride) {
       zaloAccountId = await promptAccountId({
-        cfg: cfg as ClawdbotConfig,
+        cfg: cfg as EpiloopConfig,
         prompter,
         label: "Zalo",
         currentId: zaloAccountId,
@@ -252,7 +252,7 @@ export const zaloOnboardingAdapter: ChannelOnboardingAdapter = {
       });
     }
 
-    let next = cfg as ClawdbotConfig;
+    let next = cfg as EpiloopConfig;
     const resolvedAccount = resolveZaloAccount({ cfg: next, accountId: zaloAccountId });
     const accountConfigured = Boolean(resolvedAccount.token);
     const allowEnv = zaloAccountId === DEFAULT_ACCOUNT_ID;
@@ -280,7 +280,7 @@ export const zaloOnboardingAdapter: ChannelOnboardingAdapter = {
               enabled: true,
             },
           },
-        } as ClawdbotConfig;
+        } as EpiloopConfig;
       } else {
         token = String(
           await prompter.text({
@@ -323,7 +323,7 @@ export const zaloOnboardingAdapter: ChannelOnboardingAdapter = {
               botToken: token,
             },
           },
-        } as ClawdbotConfig;
+        } as EpiloopConfig;
       } else {
         next = {
           ...next,
@@ -342,7 +342,7 @@ export const zaloOnboardingAdapter: ChannelOnboardingAdapter = {
               },
             },
           },
-        } as ClawdbotConfig;
+        } as EpiloopConfig;
       }
     }
 
