@@ -23,6 +23,124 @@ If you want a personal, single-user assistant that feels local, fast, and always
 
 [Website](https://epiloop.com) · [Docs](https://docs.clawd.bot) · [Getting Started](https://docs.clawd.bot/start/getting-started) · [Updating](https://docs.clawd.bot/install/updating) · [Showcase](https://docs.clawd.bot/start/showcase) · [FAQ](https://docs.clawd.bot/start/faq) · [Wizard](https://docs.clawd.bot/start/wizard) · [Nix](https://github.com/epiloop/nix-epiloop) · [Docker](https://docs.clawd.bot/install/docker) · [Discord](https://discord.gg/clawd)
 
+---
+
+## 🚀 NEWS: Welcome to EPILOOP
+
+**Ship Epic. Loop Infinite.**
+
+Epiloop just got a massive upgrade with **autonomous coding capabilities**. You can now ship entire features while you sleep—literally.
+
+### ✨ What's New
+
+🔥 **Autonomous Feature Implementation**
+- Message "Add JWT authentication" via WhatsApp/Google Chat → wake up to fully implemented, tested features
+- Powered by Reality-Grounded TDD (Foundation → Challenge → Reality loops)
+- Quality gates built-in: tests, type checking, linting, security scans
+
+⚡ **The EPILOOP System**
+```bash
+# Via messaging (WhatsApp, Google Chat, Telegram, etc.)
+/autonomous-coding start Add user authentication with JWT tokens
+
+# Via CLI
+epiloop epiloop start "Implement dark mode toggle"
+```
+
+🎯 **Key Features**
+- **Epiphanies → Code**: Natural language → PRD → Implementation → Tests → Production
+- **Continuous Loop**: Each feature builds upon the last, compounding momentum
+- **Epic Scale**: What used to take days now runs overnight in autonomous loops
+- **Progress Tracking**: Real-time updates on story completion, test coverage, quality gates
+
+📊 **Reality-Grounded TDD**
+- **Foundation**: Core implementation with baseline tests
+- **Challenge**: Edge cases, error handling, integration
+- **Reality**: Production-grade quality, security, performance
+
+💎 **Benefits**
+- **Ship while you sleep**: Start a feature before bed, wake up to a PR
+- **Compounding velocity**: Each feature makes the next one easier
+- **Quality guaranteed**: 75%+ test coverage, type-safe, security-scanned
+- **Focus on vision**: You design, EPILOOP implements
+
+### 📖 Getting Started with Autonomous Coding
+
+1. **Configure** (one-time setup):
+```bash
+# Create config at ~/.epiloop/config/autonomous-coding.json
+{
+  "claudeLoop": {
+    "path": "/path/to/claude-loop",
+    "workspaceRoot": "~/.epiloop/workspaces/autonomous-coding"
+  },
+  "execution": {
+    "maxConcurrent": 3,
+    "timeout": 3600000
+  }
+}
+```
+
+2. **Ship via messaging**:
+```
+# WhatsApp, Google Chat, Telegram, Discord, etc.
+/autonomous-coding start Implement user profile page with avatar upload
+
+/autonomous-coding status
+/autonomous-coding list
+```
+
+3. **Or via CLI**:
+```bash
+epiloop epiloop start "Add Redis caching layer"
+epiloop epiloop status
+epiloop epiloop list
+```
+
+### 🎬 Example: From Idea to Production
+
+```
+You (11:30 PM): /autonomous-coding start Add two-factor authentication with SMS
+
+EPILOOP (11:30 PM): 🚀 Starting autonomous implementation...
+                    Session ID: abc-123
+                    PRD: 5 stories identified
+                    Estimated: 45-60 minutes
+
+EPILOOP (12:15 AM): ✅ US-001: SMS provider integration (COMPLETE)
+EPILOOP (12:45 AM): ✅ US-002: 2FA enrollment flow (COMPLETE)
+EPILOOP (01:10 AM): ✅ US-003: Login verification (COMPLETE)
+EPILOOP (01:35 AM): ✅ US-004: Backup codes (COMPLETE)
+EPILOOP (02:00 AM): ✅ US-005: Tests & docs (COMPLETE)
+
+EPILOOP (02:00 AM): 🎉 Autonomous implementation complete!
+                    All quality gates passed ✅
+                    Coverage: 82% | Type-safe | Security-scanned
+```
+
+You wake up to fully implemented 2FA. Ship epic. Loop infinite.
+
+### 📚 Documentation
+
+- **User Guide**: `extensions/claude-loop/docs/USER_GUIDE.md`
+- **Architecture**: `extensions/claude-loop/docs/ARCHITECTURE.md`
+- **Configuration**: `extensions/claude-loop/docs/CONFIGURATION.md`
+- **Commands**: `extensions/claude-loop/SKILL.md`
+
+### 🎯 Why EPILOOP?
+
+Traditional development: Idea → Manual coding → Testing → Debugging → Deploy (days/weeks)
+
+**EPILOOP**: Epiphany → Autonomous Loop → Wake Up → Ship (hours, overnight)
+
+The name says it all:
+- **EPI**: Epic features, Epiphanies, Episodes of creation
+- **LOOP**: Continuous autonomous coding, never stops improving
+
+This is the future of software development: **You dream it. EPILOOP ships it.**
+
+---
+
 Preferred setup: run the onboarding wizard (`epiloop onboard`). It walks through gateway, workspace, channels, and skills. The CLI wizard is the recommended path and works on **macOS, Linux, and Windows (via WSL2; strongly recommended)**.
 Works with npm, pnpm, or bun.
 New install? Start here: [Getting started](https://docs.clawd.bot/start/getting-started)
