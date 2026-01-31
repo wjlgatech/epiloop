@@ -28,8 +28,8 @@ if ! git remote get-url upstream &>/dev/null; then
     exit 1
 fi
 
-# Check working directory is clean
-if [[ -n "$(git status --porcelain | grep -v '^??')" ]]; then
+# Check working directory is clean (ignore submodule changes)
+if [[ -n "$(git status --porcelain | grep -v '^??' | grep -v 'extensions/claude-loop/lib/claude-loop')" ]]; then
     log_error "Working directory has uncommitted changes. Commit or stash them first."
     git status --short
     exit 1
