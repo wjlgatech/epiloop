@@ -119,11 +119,11 @@ git log --oneline upstream/main ^main | head -20
 ./scripts/sync-upstream.sh
 ```
 
-### Automated Weekly Sync
+### Automated Daily Sync
 
 Configured via launchd (see `~/Library/LaunchAgents/com.epiloop.sync-upstream.plist`)
 
-Runs every Sunday at 2 AM, creates a branch, and notifies if conflicts need manual resolution.
+Runs every day at 2 AM, creates a branch, and notifies if conflicts need manual resolution.
 
 ## Testing After Sync
 
@@ -168,7 +168,7 @@ If you develop generic features (not epiloop-specific) that could benefit opencl
 
 ## Maintenance Schedule
 
-- **Weekly**: Automated sync check (Sundays 2 AM)
+- **Daily**: Automated sync check (every day at 2 AM)
 - **Monthly**: Manual review of new upstream features
 - **Per-release**: Sync before epiloop releases
 - **Security**: Immediate sync for upstream security fixes

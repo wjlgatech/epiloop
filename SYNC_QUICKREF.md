@@ -92,9 +92,9 @@ git reset --hard backup-pre-sync-YYYYMMDD-HHMMSS
 git push origin main --force-with-lease
 ```
 
-## Weekly Schedule
+## Daily Schedule
 
-- **When**: Every Sunday at 2:00 AM
+- **When**: Every day at 2:00 AM
 - **What**: Automatic fetch and merge attempt
 - **Notifications**: macOS notification on success/conflict
 - **Logs**: `~/.epiloop/logs/sync-upstream-*.log`
@@ -104,7 +104,7 @@ git push origin main --force-with-lease
 - `EPILOOP_FORK.md` - Customization documentation
 - `FIRST_SYNC_GUIDE.md` - Detailed sync strategies
 - `scripts/sync-upstream.sh` - Smart sync script
-- `scripts/sync-upstream-weekly.sh` - Weekly automation wrapper
+- `scripts/sync-upstream-daily.sh` - Daily automation wrapper
 - `~/Library/LaunchAgents/com.epiloop.sync-upstream.plist` - launchd config
 
 ## Branding Rules

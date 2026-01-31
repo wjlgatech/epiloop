@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# sync-upstream-weekly.sh - Weekly automated sync wrapper
+# sync-upstream-daily.sh - Daily automated sync wrapper
 #
-# This script runs weekly and handles notification/logging
+# This script runs daily and handles notification/logging
 
 set -euo pipefail
 

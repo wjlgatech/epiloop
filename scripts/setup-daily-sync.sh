@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
-# setup-weekly-sync.sh - Configure weekly upstream sync automation
+# setup-daily-sync.sh - Configure daily upstream sync automation
 #
 # This script sets up a launchd agent to automatically sync with upstream
-# every Sunday at 2 AM
+# every day at 2 AM
 
 set -euo pipefail
 
@@ -43,8 +43,6 @@ cat > "$PLIST_PATH" <<EOF
 
     <key>StartCalendarInterval</key>
     <dict>
-        <key>Weekday</key>
-        <integer>0</integer> <!-- Sunday -->
         <key>Hour</key>
         <integer>2</integer>
         <key>Minute</key>
@@ -152,9 +150,9 @@ fi
 
 # Show status
 echo ""
-log_info "Weekly sync is now configured!"
+log_info "Daily sync is now configured!"
 echo ""
-echo "Schedule: Every Sunday at 2:00 AM"
+echo "Schedule: Every day at 2:00 AM"
 echo "Logs: ~/.epiloop/logs/sync-upstream*.log"
 echo "Config: $PLIST_PATH"
 echo ""

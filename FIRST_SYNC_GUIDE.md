@@ -5,7 +5,7 @@ Your epiloop fork is ready to sync with upstream openclaw/openclaw! However, the
 ## Current Status
 
 - ✅ Upstream remote added: `upstream` → openclaw/openclaw
-- ✅ Weekly automation configured (Sundays 2 AM)
+- ✅ Daily automation configured (every day at 2 AM)
 - ✅ Smart sync scripts created
 - ⏳ First manual sync needed (555 commits behind)
 
@@ -126,9 +126,9 @@ git log --oneline --grep="feat:\|Feat:" upstream/main ^main | head -20
 git cherry-pick <commit-hash>
 ```
 
-### Phase 3: Automated Incremental Sync (Weekly)
+### Phase 3: Automated Incremental Sync (Daily)
 
-The weekly automation will handle small incremental updates going forward. After the initial gap is closed, syncing will be much easier.
+The daily automation will handle small incremental updates going forward. After the initial gap is closed, syncing will be much easier.
 
 ## Handling Branding Conflicts
 
@@ -209,9 +209,9 @@ git push origin main --force-with-lease
 
 ## Automation is Ready
 
-Once you've done the initial sync manually, the weekly automation will keep you updated:
+Once you've done the initial sync manually, the daily automation will keep you updated:
 
-- **Every Sunday at 2 AM**: Auto-sync attempt
+- **Every day at 2 AM**: Auto-sync attempt
 - **Notifications**: macOS notifications on success/conflict
 - **Logs**: `~/.epiloop/logs/sync-upstream*.log`
 - **Manual trigger**: `launchctl start com.epiloop.sync-upstream`
